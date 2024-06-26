@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Mission Log</title>
+    <link href="/src/main/resources/css/mydiary.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a class="logo">Me Mission Log</a>
+        <div class="menu-bar">
+            <a class="button">둘러보기</a>
+            <a class="button">오늘의 일기</a>
+            <a class="button">마이 다이어리</a>
+            <button class="sign-in-btn">Log Out</button>
+        </div>
+    </div>
+
+    <div class="user-container">
+        <div class="user-profile">
+            <img src="/src/main/resources/img/profile.jpeg" alt="Profile Picture">
+            <p>돌멩이님</p>
+        </div>
+
+        <div class="user-info">
+
+            <div class="info-header">
+                <strong>아이디</strong>
+                <p class="email">blip0819@gmail.com</p>
+            </div>
+
+            <div class="total-mood">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+                <canvas id="bar-chart-horizontal"></canvas>
+            </div>
+
+        </div>
+
+        <div class="user-mood-chart">
+            <p>Tracking My Mood</p>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <canvas id="line-chart"></canvas>
+        </div>
+    </div>
+
+    <div class="posts">
+        <nav class="mydiary-menu-bar">
+            <a href="#" class="menu-item">모아보기</a>
+            <a href="#" class="menu-item">일자별 보기</a>
+        </nav>
+        <div class="post-card-container">
+            <div class="post-card">
+                <img src="/src/main/resources/img/flim_img.png" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image2.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image3.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image4.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image5.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image6.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image7.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image8.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image9.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image10.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image11.jpg" alt="Post Image">
+            </div>
+            <div class="post-card">
+                <img src="path/to/image12.jpg" alt="Post Image">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new Chart(document.getElementById("bar-chart-horizontal"), {
+            type: 'horizontalBar',
+            data: {
+                labels: ["😀", "😊", "😐", "😎", "😢"],
+                datasets: [{
+                    label: "Emotions (total)",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                    data: [25,62,39,43,58]
+                }]
+            },
+            options: {
+                legend: { display: false },
+                layout: {
+                    padding : {
+                        left: 5,
+                        right: 5
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                datasets: [{
+                    data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
+                    label: "😀",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }, {
+                    data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
+                    label: "😊",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                }, {
+                    data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
+                    label: "😐",
+                    borderColor: "#3cba9f",
+                    fill: false
+                }, {
+                    data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
+                    label: "😎",
+                    borderColor: "#e8c3b9",
+                    fill: false
+                }, {
+                    data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
+                    label: "😢",
+                    borderColor: "#c45850",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+
+            }
+        });
+    });
+</script>
+</body>
+</html>
