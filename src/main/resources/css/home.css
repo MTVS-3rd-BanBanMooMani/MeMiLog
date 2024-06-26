@@ -1,0 +1,193 @@
+.container {
+}
+
+.header {
+    width: 100%; 
+    height: 8vh; 
+    padding-top: 4vh; 
+    padding-bottom: 3vh; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    background: white; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 20vw; 
+    display: inline-flex
+}
+
+.header .logo {
+    color: black; 
+    font-size: 1.3rem; 
+    font-family: Inter; 
+    font-weight: 500;
+    word-wrap: break-word;
+    width: 28vw;
+}
+
+.header .menu-bar {
+    justify-content: flex-end; 
+    align-items: center; 
+    gap: 3vw; 
+    display: inline-flex
+}
+
+.header .menu-bar .button {
+    color: black; 
+    font-size: 1.1rem; 
+    font-family: Inter; 
+    font-weight: 500; 
+    line-height: 30px; 
+    word-wrap: break-word
+}
+
+.header .menu-bar .sign-in-btn {
+    padding-left: 1.5vw; 
+    padding-right: 1.5vw; 
+    padding-top: 1vh; 
+    padding-bottom: 1vh; 
+    background: black; 
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); 
+    border-radius: 8px; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 8px; 
+    display: flex;
+    /*text attribute*/
+    color: white; 
+    font-size: 1.1rem; 
+    font-family: Inter; 
+    font-weight: 500; 
+    line-height: 24px; 
+    word-wrap: break-word
+}
+
+.middle-container{
+    text-align: center;
+}
+
+.mission-container {
+    margin-top: 15vh;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.mission-container .mission-img {
+    width: 90vw;height: 100%;
+}
+
+.mission-container div:nth-of-type(1) {
+    left: 11%; 
+    top: 16vh; 
+    position: absolute; 
+    color: white; 
+    font-size: 1.2rem; 
+    font-family: KoreanCNML; 
+    font-weight: 400; 
+    line-height: 36px; 
+    word-wrap: break-word
+}
+
+.mission-container div:nth-of-type(2) {
+    width: 50%; 
+    left: 25%; 
+    top: 25%; 
+    position: absolute; 
+    text-align: center; 
+    color: white; 
+    font-size: 3rem; 
+    font-family: KoreanCNML; 
+    font-weight: 400; 
+    word-wrap: break-word
+}
+
+.today-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.today-container .today-label {
+    padding: 1vw;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.today-container .today-label p{
+    text-align: left;
+    margin-left: 5px;
+    flex-grow: 1;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.today-container .today-label button{
+    border-radius: 20px;
+}
+
+.today-container .today-photo-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 1vw;
+    height: 150px;
+}
+
+.photo-div {
+    background: #fffde7; box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+}
+.photo-div p {
+    width: 106px;
+    margin: 0;
+    color: black;
+    font-size: 12px;
+    font-family: KoreanEMPJL;
+    font-weight: 400;
+    line-height: 18px;
+    word-wrap: break-word
+}
+
+.random-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.random-container .random-label {
+    padding: 1vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.random-container .random-label p {
+    text-align: left;
+    margin-left: 5px;
+}
+
+.random-container .random-photo-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 1vw;
+    height: 150px;
+}
+
+
+
+.footer {
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    color: black;
+    border-top: 1px solid #ccc;
+}
+
+.upScrollBtn {
+
+}
