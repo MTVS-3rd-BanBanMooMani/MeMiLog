@@ -92,6 +92,9 @@ body {
     justify-content: center;
     align-items: center;
     margin-right: 30px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
 .user-profile img {
@@ -104,6 +107,18 @@ body {
 
 .user-profile p {
     margin-top: 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    font-size: 20px;
+}
+
+.user-profile img:last-child {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
 }
 
 .user-info {
@@ -113,22 +128,20 @@ body {
     align-items: center;
     padding: 20px;
     width: 100%;
-    max-width: 450px;
-    margin-right: 30px;
+    max-width: 400px;
 }
 
 .user-info .info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .user-info .total-mood {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 10px;
+    margin: 10px 10px 0;
     width: 100%;
     max-width: 300px;
 }
@@ -161,8 +174,8 @@ body {
 
 .posts {
     display: flex;
-    margin: 0 auto;
-    width: 1350px;
+    margin: 0 auto 100px;
+    width: 1250px;
     justify-content: center;
 }
 
@@ -173,16 +186,15 @@ body {
     background-color: #f8f8f8;
     margin-bottom: 20px;
     border-right: 1px solid #ddd;
-    width: 180px;
+    width: 210px;
     height: auto;
 }
 
 .posts .post-card-container {
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
     flex-wrap: wrap;
-    width: 1170px;
+    width: 975px;
 }
 
 .posts .post-card {
@@ -190,7 +202,6 @@ body {
     width: 190px;
     height: 175px;
     border: #000 1px solid;
-    margin: 10px auto;
     background-image: url("/src/main/resources/img/film_frame.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -200,6 +211,7 @@ body {
     text-align: center;
     align-items: center;
     position: relative;
+    margin: 0;
 }
 
 .posts .post-card img {
@@ -207,6 +219,8 @@ body {
     height: 120px;
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+    overflow: hidden;
 }
 
 .menu-item {
