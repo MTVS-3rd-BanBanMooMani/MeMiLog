@@ -80,7 +80,7 @@ body {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    margin: 20px 20px;
+    margin: 10px 20px;
 }
 
 .user-profile {
@@ -174,27 +174,55 @@ body {
 
 .posts {
     display: flex;
-    margin: 0 auto 100px;
-    width: 1250px;
+    margin: 0 auto 80px;
+    width: 1300px;
     justify-content: center;
 }
 
 .posts .mydiary-menu-bar {
+    float: left;
+    background-color: #f1f1f1;
+    width: 180px;
+    height: 120px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    background-color: #f8f8f8;
-    margin-bottom: 20px;
-    border-right: 1px solid #ddd;
-    width: 210px;
-    height: auto;
 }
 
-.posts .post-card-container {
+.posts .mydiary-menu-bar button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: large;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.posts .mydiary-menu-bar button:hover {
+    background-color: #ddd;
+}
+
+.posts .mydiary-menu-bar button.active{
+    background-color: #ccc;
+}
+
+.posts #post-card-container {
+    padding: 20px;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    width: 975px;
+    width: 1000px;
+}
+
+.posts .tabcontent{
+    display: none;
+    width: 1000px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
 .posts .post-card {
@@ -211,7 +239,7 @@ body {
     text-align: center;
     align-items: center;
     position: relative;
-    margin: 0;
+    margin: 10px 0;
 }
 
 .posts .post-card img {
@@ -221,6 +249,68 @@ body {
     margin: 0 auto;
     object-fit: cover;
     overflow: hidden;
+}
+
+.posts #calendar-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 1000px;
+    background-image: url("/src/main/resources/img/calendar.png");
+    margin-left: 20px;
+    padding-top: 80px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.date-selector {
+    width: 50px;
+    height: 360px;
+    overflow-y: scroll;
+    margin-left: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.date-selector ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+}
+
+.date-selector ul li {
+    padding: 10px 0;
+}
+
+.date-selector ul li:hover {
+    background-color: #ddd;
+}
+
+.posts .calendar-contents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+    width: calc(100% - 70px);
+}
+
+.posts .calendar-card {
+    box-sizing: border-box;
+    width: 150px;
+    height: 180px;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.calendar-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
 }
 
 .menu-item {
