@@ -22,11 +22,83 @@
         <div class="user-profile">
             <img src="/src/main/resources/img/profile.jpeg" alt="Profile Picture">
             <p>돌멩이님</p>
-            <img src="/src/main/resources/img/settings.png" alt="Settings Icon">
+            <img src="/src/main/resources/img/settings.png" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
+        </div>
+
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('userModal')">&times;</span>
+                <h2>회원 정보</h2>
+                <div class="modal-body">
+                    <div class="modal-left">
+                        <p><strong>아이디:</strong> blip0819@gmail.com</p>
+                        <p><strong>닉네임:</strong> 돌멩이님</p>
+                        <p><strong>가입일:</strong> 2023-01-01</p>
+                    </div>
+                    <div class="modal-right">
+                        <div class="profile-pic-container">
+                            <img src="/src/main/resources/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                            <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="openModal('editModal')">정보 수정</button>
+                    <button onclick="openModal('deleteModal')">회원 탈퇴</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('editModal')">&times;</span>
+                <h2>정보 수정</h2>
+                <form id="editForm">
+                    <label for="nickname">닉네임:</label>
+                    <input type="text" id="nickname" name="nickname" value="돌멩이님"><br><br>
+                    <label for="password">비밀번호:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <label for="password2">비밀번호 확인:</label>
+                    <input type="password" id="password2" name="password"><br><br>
+                    <div class="form-footer">
+                        <button type="submit">수정</button>
+                        <button type="button" onclick="closeModal('editModal')">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="profilePicModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('profilePicModal')">&times;</span>
+                <h2>프로필 사진 변경</h2>
+                <form id="profilePicForm" onsubmit="return updateProfilePic(event)">
+                    <input type="file" id="profilePic" name="profilePic"><br><br>
+                    <div class="form-footer">
+                        <button type="submit">업로드</button>
+                        <button type="button" onclick="deleteProfilePic()">삭제</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+                <h2>회원 탈퇴</h2>
+                <p>탈퇴 후 계정 복구가 불가합니다.<br>정말 탈퇴를 진행하시겠습니까?<br>탈퇴를 원하시면 비밀번호를 입력해주세요.</p>
+                <form id="deleteForm">
+                    <label for="deletePassword">비밀번호:</label>
+                    <input type="password" id="deletePassword" name="deletePassword"><br><br>
+                    <div class="form-footer">
+                        <button type="submit">탈퇴</button>
+                        <button type="button" onclick="closeModal('deleteModal')">취소</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="user-info">
-
             <div class="info-header">
                 <strong>아이디</strong>
                 <p class="email">blip0819@gmail.com</p>
@@ -36,7 +108,6 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
                 <canvas id="bar-chart-horizontal" height=240px></canvas>
             </div>
-
         </div>
 
         <div class="user-mood-chart">
@@ -177,22 +248,92 @@
     </div>
 </div>
 <script>
-    function openPage(evt, pageName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        function openPage(evt, pageName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(pageName).style.display = "flex";
+        evt.currentTarget.className += " active";
     }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+    function openModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = "block";
+        } else {
+            console.error(`Modal with ID '${modalId}' not found.`);
+        }
     }
-    document.getElementById(pageName).style.display = "flex";
-    evt.currentTarget.className += " active";
-}
+
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = "none";
+        } else {
+            console.error(`Modal with ID '${modalId}' not found.`);
+        }
+    }
+
+    function updateProfilePic(event) {
+        event.preventDefault();
+
+        var fileInput = document.getElementById('profilePic');
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e){
+            document.querySelector(".profile-pic").src = e.target.result;
+            closeModal('profilePicModal');
+            alert("회원 정보 수정이 완료되었습니다.");
+        }
+
+        if(file){
+            reader.readAsDataURL(file);
+        } else {
+            alert("파일을 선택해주세요.")
+        }
+        return false;
+    }
+
+    function deleteProfilePic() {
+        document.querySelector('.profile-pic').src = '/src/main/resources/img/default_profile.png';
+        alert("프로필 사진이 삭제되었습니다.");
+        closeModal('profilePicModal')
+    }
+
+    window.onclick = function(event) {
+        var modals = document.getElementsByClassName('modal');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+            }
+        }
+    }
+
+    document.getElementById('editForm').onsubmit = function(event) {
+        event.preventDefault();
+        alert("정보가 수정되었습니다.");
+        closeModal('editModal');
+    }
+
+    document.getElementById('deleteForm').onsubmit = function(event) {
+        event.preventDefault();
+        alert("회원 탈퇴가 완료되었습니다.");
+        closeModal('deleteModal');
+        closeModal('userModal');
+    }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector(".tablinks").click();
+    const firstTabLink = document.querySelector(".tablinks");
+    if (firstTabLink) {
+        firstTabLink.click();
+    }
 
     new Chart(document.getElementById("bar-chart-horizontal"), {
         type: 'horizontalBar',
