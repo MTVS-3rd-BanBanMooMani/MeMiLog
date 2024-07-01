@@ -153,6 +153,7 @@ body {
 
 .modal-content p {
     text-align: center;
+    margin: 5px p;
 }
 
 .modal-content input {
@@ -200,6 +201,28 @@ body {
     border-radius: 50%;
     overflow: hidden;
     object-fit: cover;
+}
+
+.profile-pic-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-profile-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.change-profile-button:hover {
+    background-color: #333;
 }
 
 .modal-footer {
@@ -258,7 +281,7 @@ form input {
 
 form input {
     text-align: left;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .user-info {

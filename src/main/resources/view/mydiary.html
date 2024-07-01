@@ -36,7 +36,10 @@
                         <p><strong>가입일:</strong> 2023-01-01</p>
                     </div>
                     <div class="modal-right">
-                        <img src="/src/main/resources/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                        <div class="profile-pic-container">
+                            <img src="/src/main/resources/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                            <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -60,6 +63,20 @@
                     <div class="form-footer">
                         <button type="submit">수정</button>
                         <button type="button" onclick="closeModal('editModal')">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="profilePicModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('profilePicModal')">&times;</span>
+                <h2>프로필 사진 변경</h2>
+                <form id="profilePicForm" onsubmit="return updateProfilePic(event)">
+                    <input type="file" id="profilePic" name="profilePic"><br><br>
+                    <div class="form-footer">
+                        <button type="submit">업로드</button>
+                        <button type="button" onclick="deleteProfilePic()">삭제</button>
                     </div>
                 </form>
             </div>
@@ -261,6 +278,33 @@
         } else {
             console.error(`Modal with ID '${modalId}' not found.`);
         }
+    }
+
+    function updateProfilePic(event) {
+        event.preventDefault();
+
+        var fileInput = document.getElementById('profilePic');
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e){
+            document.querySelector(".profile-pic").src = e.target.result;
+            closeModal('profilePicModal');
+            alert("회원 정보 수정이 완료되었습니다.");
+        }
+
+        if(file){
+            reader.readAsDataURL(file);
+        } else {
+            alert("파일을 선택해주세요.")
+        }
+        return false;
+    }
+
+    function deleteProfilePic() {
+        document.querySelector('.profile-pic').src = '/src/main/resources/img/default_profile.png';
+        alert("프로필 사진이 삭제되었습니다.");
+        closeModal('profilePicModal')
     }
 
     window.onclick = function(event) {
