@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Mission Log</title>
+    <link href="../documentation/css/membership.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a class="logo">Me Mission Log</a>
+        <div class="menu-bar">
+            <a class="button">둘러보기</a>
+            <a class="button">오늘의 일기</a>
+            <a class="button">마이 다이어리</a>
+            <button class="sign-in-btn">Sign Up</button>
+        </div>
+    </div>
+    <div class="middle-container">
+        <div class="form-container">
+            <h1>회원가입</h1>
+            <form>
+                <div class="input-group email">
+                    <label for="email">이메일</label>
+                    <div class="email-container">
+                        <input type="text" id="email-local-part" placeholder="이메일을 입력하세요." />
+                        <div>@</div>
+                        <select id="email-domain-select" onchange="toggleEmailDomainInput(this)">
+                            <option value="">직접 입력</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="daum.net">daum.net</option>
+                        </select>
+                        <input type="text" id="email-domain-input" placeholder="도메인을 입력하세요." style="display:none;" onblur="restoreEmailDomainSelect()" />
+                    </div>
+                </div>
+                <div id="duplicate-check-message" class="verification-message"></div>
+                <div id="send-verification-message" class="verification-message"></div>
+                <div class="input-group verification-input-group" style="display:none;">
+                    <input type="text" id="verification-code" placeholder="인증코드를 입력하세요." />
+                </div>
+                <div id="verify-message" class="verification-message"></div>
+                <div class="input-group password">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" placeholder="비밀번호를 입력하세요." />
+                </div>
+                <div class="input-group check">
+                    <label for="password-confirm">비밀번호 확인</label>
+                    <input type="password" id="password-confirm" placeholder="비밀번호를 다시 입력해주세요." />
+                </div>
+                <div class="input-group name">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" placeholder="이름을 입력하세요." />
+                </div>
+                <div class="input-group age">
+                    <label for="age">연령대</label>
+                    <select id="age" name="age">
+                        <option value="10">10대</option>
+                        <option value="20">20대</option>
+                        <option value="30">30대</option>
+                        <option value="40">40대</option>
+                        <option value="50">50대</option>
+                        <option value="60">60대 이상</option>
+                    </select>
+                </div>
+                <div class="input-group nickname">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" id="nickname" placeholder="닉네임을 입력하세요." />
+                </div>
+                <button type="submit" class="submit-btn">회원가입</button>
+            </form>
+        </div>
+        <div class="duplicate-check-container">
+            <div class="verification-check">
+                <button type="button" class="check-btn duplicate-check-btn" onclick="handleDuplicateCheck()">중복확인</button>
+                <button type="button" class="verification-code-btn" style="display:none;" onclick="sendVerificationCode()">인증코드 받기</button>
+            </div>
+            <button type="button" class="verify-btn" style="display:none;" onclick="verifyCode()">인증확인</button>
+        </div>
+    </div>
+    <div class="footer">
+        <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
+    </div>
+</div>
+<script src="../documentation/js/membership.js"></script>
+</body>
+</html>
