@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Mission Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link href="../documentation/css/post.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a class="logo">Me Mission Log</a>
+        <div class="menu-bar">
+            <a class="button">둘러보기</a>
+            <a class="button">오늘의 일기</a>
+            <a class="button">마이 다이어리</a>
+            <button class="sign-in-btn">Log Out</button>
+        </div>
+    </div>
+    <div class="middle-container">
+        <div class="left-container">
+            <div class="date-category">
+                <span class="date">06월 22일</span>
+                <span class="category">자연</span>
+            </div>
+            <div class="title">미미들이 생각하는 여름 낭만은?</div>
+            <div class="image-container">
+            </div>
+            <div class="image-thumbnails" id="plus-thumbnail">
+                <div class="thumbnail add-thumbnail" id="addBtn">+
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <p class="note">* 최대 5장까지 등록 가능합니다.</p>
+        </div>
+        <div class="right-container">
+            <div class="text-area">
+                <textarea placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <div class="questions">
+                <div class="question">누구와 함께 했나요?</div>
+                <div class="answers">
+                    <button class="answer-left answer" onclick="toggleSelection(this)">나</button>
+                    <button class="answer-middle answer" onclick="toggleSelection(this)">친구</button>
+                    <button class="answer-middle answer" onclick="toggleSelection(this)">가족</button>
+                    <button class="answer-right answer" onclick="toggleSelection(this)">연인</button>
+                </div>
+                <div class="question">어떤 기분이었나요?</div>
+                <div class="emotion-box">
+
+                    <div class="main-box">
+
+                        <ul class="icon-box">
+                            <li id="happy" onclick="changeIconColor('happy', 'purple')">
+                                <img src="../documentation/img/happy.png" alt="아이콘" class="icon1">
+                            </li>
+                            <li id="cool" onclick="changeIconColor('cool', 'purple')">
+                                <img src="../documentation/img/cool.png" alt="아이콘" class="icon1">
+                            </li>
+                            <li id="surprised" onclick="changeIconColor('surprised', 'purple')">
+                                <img src="../documentation/img/surprised.png" alt="아이콘" class="icon1">
+                            </li>
+                            <li id="soso" onclick="changeIconColor('soso', 'purple')">
+                                <img src="../documentation/img/soso.png" alt="아이콘" class="icon1">
+                            </li>
+                            <li id="sad" onclick="changeIconColor('sad', 'purple')">
+                                <img src="../documentation/img/sad.png" alt="아이콘" class="icon1">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="submit-btn">작성 완료</button>
+                <button class="back-btn">돌아가기</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
+    </div>
+</div>
+<script src="../documentation/js/post.js"></script>
+</body>
+</html>
