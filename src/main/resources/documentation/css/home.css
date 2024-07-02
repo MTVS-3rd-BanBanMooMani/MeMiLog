@@ -115,21 +115,19 @@
     display: flex;
     flex-direction: row;
     width: 82vw;
-    margin: auto;
-    
+    margin: auto;    
 }
 
 .today-container .today-label p{
     text-align: left;
+    margin-left: 5px;
     flex-grow: 1;
-    margin-left: 2px;
     margin-top: 1vh;
     margin-bottom: 1vh;
 }
 
 .today-container .today-label button{
     border-radius: 20px;
-    background-color: white;
 }
 
 .today-container .today-photo-container {
@@ -169,32 +167,22 @@
 }
 
 .random-container .random-label {
-    padding: 1vw, 1vw, 0, 1vw;
+    padding: 1vw;
     display: flex;
     flex-direction: row;
-    width: 82vw;
-    margin: auto;
 }
 
 .random-container .random-label p {
     text-align: left;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    margin-left: 5px;
 }
 
 .random-container .random-photo-container {
     display: flex;
     justify-content: space-around;
-    align-items: center;
     padding: 1vw;
     height: 150px;
 }
-
-.random-container .random-photo-container > img {
-    height: 20px;
-}
-
-
 
 .footer {
     padding: 10px;
