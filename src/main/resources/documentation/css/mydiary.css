@@ -393,7 +393,7 @@ form input {
     width: 190px;
     height: 175px;
     border: #000 1px solid;
-    background-image: url("/src/main/resources/img/film_frame.png");
+    background-image: url("../img/film_frame.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -418,7 +418,7 @@ form input {
     display: flex;
     justify-content: flex-start;
     width: 1000px;
-    background-image: url("/src/main/resources/img/calendar.png");
+    background-image: url("../img/calendar.png");
     padding-top: 80px;
     padding-bottom: 40px;
     box-sizing: border-box;
