@@ -1,0 +1,78 @@
+/* 디자인1 */
+/* .search-bar {
+  width: 700px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #999999;
+}
+.search-bar {
+  font-size: 25px;
+  font-weight: 100;
+  padding: 5px;
+  text-align: center;
+}
+.search-bar:focus {
+  outline: 1.5px solid #999999;
+}
+.search-bar:focus::placeholder {
+  color: transparent;
+}
+.search-box {
+  position: relative;
+  width: 700px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.search-Img {
+  height: 30px;
+}
+.search-Img:hover {
+  filter: invert(62%) sepia(87%) saturate(275%) hue-rotate(344deg)
+    brightness(102%) contrast(98%);
+}
+.search-btn {
+  border: none;
+  background-color: #ffffff;
+  position: absolute;
+  right: 15px;
+  top: 7px;
+  cursor: pointer;
+} */
+
+/* 디자인2 */
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px 0 0 20px;
+  font-size: 16px;
+  /* background-color: #f1f1f1; */
+  background-color: white;
+  outline: none;
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 38.2px;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  /* background-color: #f1f1f1; */
+  background-color: white;
+  cursor: pointer;
+}
+
+.search-Img {
+  width: 20px;
+  height: 20px;
+}
