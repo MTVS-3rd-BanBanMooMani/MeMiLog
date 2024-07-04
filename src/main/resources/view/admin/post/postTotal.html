@@ -1,104 +1,748 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/libs/css/style.css">
-    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="../../../assets/vendor/vector-map/jqvmap.css">
-    <link href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/chartist-bundle/chartist.css">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css">
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <link
+      href="../../../assets/vendor/fonts/circular-std/style.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/libs/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/vector-map/jqvmap.css"
+    />
+    <link
+      href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/charts/chartist-bundle/chartist.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/charts/c3charts/c3.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../assets/vendor/charts/morris-bundle/morris.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../assets/vendor/daterangepicker/daterangepicker.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../assets/vendor/datatables/css/dataTables.bootstrap4.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../assets/vendor/datatables/css/buttons.bootstrap4.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../assets/vendor/datatables/css/select.bootstrap4.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../assets/vendor/datatables/css/fixedHeader.bootstrap4.css"
+    />
     <title>Admin - Me Mission Log</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
-        <!-- ============================================================== -->
-        <!-- navbar -->
-        <!-- ============================================================== -->
-        <div class="dashboard-header">
-            <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="index.html">Me Mission Log</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-right-top">
-                        <li class="nav-item dropdown notification">
-                            <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
-                            <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
-                                <li>
-                                    <div class="notification-title"> Notification</div>
-                                    <div class="notification-list">
-                                        <div class="list-group">
-                                            <a href="#" class="list-group-item list-group-item-action active">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham </span>is now following you
-                                                        <div class="notification-date">2 days ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> is watching your main repository
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="list-footer"> <a href="#">View all notifications</a></div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
-                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-                                <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
-                                    <span class="status"></span><span class="ml-2">Available</span>
-                                </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+      <!-- ============================================================== -->
+      <!-- navbar -->
+      <!-- ============================================================== -->
+      <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+          <a class="navbar-brand" href="index.html">Me Mission Log</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto navbar-right-top">
+              <li class="nav-item dropdown notification">
+                <a
+                  class="nav-link nav-icons"
+                  href="#"
+                  id="navbarDropdownMenuLink1"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  ><i class="fas fa-fw fa-bell"></i>
+                  <span class="indicator"></span
+                ></a>
+                <ul
+                  class="dropdown-menu dropdown-menu-right notification-dropdown"
+                >
+                  <li>
+                    <div class="notification-title">Notification</div>
+                    <div class="notification-list">
+                      <div class="list-group">
+                        <a
+                          href="#"
+                          class="list-group-item list-group-item-action active"
+                        >
+                          <div class="notification-info">
+                            <div class="notification-list-user-img">
+                              <img
+                                src="../../../assets/images/avatar-2.jpg"
+                                alt=""
+                                class="user-avatar-md rounded-circle"
+                              />
                             </div>
-                        </li>
-                    </ul>
+                            <div class="notification-list-user-block">
+                              <span class="notification-list-user-name"
+                                >Jeremy Rakestraw</span
+                              >accepted your invitation to join the team.
+                              <div class="notification-date">2 min ago</div>
+                            </div>
+                          </div>
+                        </a>
+                        <a
+                          href="#"
+                          class="list-group-item list-group-item-action"
+                        >
+                          <div class="notification-info">
+                            <div class="notification-list-user-img">
+                              <img
+                                src="../../../assets/images/avatar-3.jpg"
+                                alt=""
+                                class="user-avatar-md rounded-circle"
+                              />
+                            </div>
+                            <div class="notification-list-user-block">
+                              <span class="notification-list-user-name"
+                                >John Abraham </span
+                              >is now following you
+                              <div class="notification-date">2 days ago</div>
+                            </div>
+                          </div>
+                        </a>
+                        <a
+                          href="#"
+                          class="list-group-item list-group-item-action"
+                        >
+                          <div class="notification-info">
+                            <div class="notification-list-user-img">
+                              <img
+                                src="../../../assets/images/avatar-4.jpg"
+                                alt=""
+                                class="user-avatar-md rounded-circle"
+                              />
+                            </div>
+                            <div class="notification-list-user-block">
+                              <span class="notification-list-user-name"
+                                >Monaan Pechi</span
+                              >
+                              is watching your main repository
+                              <div class="notification-date">2 min ago</div>
+                            </div>
+                          </div>
+                        </a>
+                        <a
+                          href="#"
+                          class="list-group-item list-group-item-action"
+                        >
+                          <div class="notification-info">
+                            <div class="notification-list-user-img">
+                              <img
+                                src="../../../assets/images/avatar-5.jpg"
+                                alt=""
+                                class="user-avatar-md rounded-circle"
+                              />
+                            </div>
+                            <div class="notification-list-user-block">
+                              <span class="notification-list-user-name"
+                                >Jessica Caruso</span
+                              >accepted your invitation to join the team.
+                              <div class="notification-date">2 min ago</div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="list-footer">
+                      <a href="#">View all notifications</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown nav-user">
+                <a
+                  class="nav-link nav-user-img"
+                  href="#"
+                  id="navbarDropdownMenuLink2"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  ><img
+                    src="../../../assets/images/avatar-1.jpg"
+                    alt=""
+                    class="user-avatar-md rounded-circle"
+                /></a>
+                <div
+                  class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                  aria-labelledby="navbarDropdownMenuLink2"
+                >
+                  <div class="nav-user-info">
+                    <h5 class="mb-0 text-white nav-user-name">John Abraham</h5>
+                    <span class="status"></span
+                    ><span class="ml-2">Available</span>
+                  </div>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-user mr-2"></i>Account</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-cog mr-2"></i>Setting</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-power-off mr-2"></i>Logout</a
+                  >
                 </div>
-            </nav>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end navbar -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- left sidebar -->
+      <!-- ============================================================== -->
+      <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav flex-column">
+                <li class="nav-divider">Menu</li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="../admin.html"
+                    ><i class="fa fa-fw fa-clipboard"></i>Dashboard</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    data-target="#submenu-2"
+                    aria-controls="submenu-2"
+                    ><i class="fa fa-fw fa-user-circle"></i>User Management</a
+                  >
+                  <div id="submenu-2" class="collapse submenu" style="">
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link" href="../user/userDashboard.html"
+                          >Dashboard</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="../user/userTotal.html"
+                          >Total User</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="../user/userBlackList.html"
+                          >BlackList</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    data-target="#submenu-3"
+                    aria-controls="submenu-3"
+                    ><i class="fas fa-fw fa-image"></i>Post Management</a
+                  >
+                  <div id="submenu-3" class="collapse submenu" style="">
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link" href="./postDashboard.html"
+                          >Dashboard</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="./postTotal.html"
+                          >Total Posts</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="./postHidden.html"
+                          >Hidden Posts</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    data-target="#submenu-4"
+                    aria-controls="submenu-4"
+                    ><i class="fas fa-fw fa-file-excel"></i>Declaration</a
+                  >
+                  <div id="submenu-4" class="collapse submenu" style="">
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          href="../declaration/declarationDashboard.html"
+                          >Dashboard</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          href="../declaration/declarationTotal.html"
+                          >Total Declaration</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end left sidebar -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- wrapper  -->
+      <!-- ============================================================== -->
+      <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+          <div class="container-fluid dashboard-content">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+              <!-- ============================================================== -->
+              <!-- data table rowgroup  -->
+              <!-- ============================================================== -->
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0 font-bold">모든 게시물</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table
+                        id="example2"
+                        class="table table-striped table-bordered"
+                        style="width: 100%"
+                      >
+                        <thead>
+                          <tr>
+                            <th class="font-bold">날짜</th>
+                            <th class="font-bold">닉네임</th>
+                            <th class="font-bold">주제</th>
+                            <th class="font-bold">내용</th>
+                            <th class="font-bold">나이</th>
+                            <th class="font-bold">성별</th>
+                            <th class="font-bold">신고</th>
+                            <th class="font-bold">수정</th>
+                            <th class="font-bold">삭제</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>2024/04/14</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>제목이 길어지면 타이틀이 깨질수도 있음</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/14</td>
+                            <td>오리는</td>
+                            <td>일상</td>
+                            <td>꿱꿱</td>
+                            <td>27</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/01/17</td>
+                            <td>말티쥬</td>
+                            <td>음식</td>
+                            <td>참지 않음</td>
+                            <td>16</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/17</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>나는 오늘</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/07</td>
+                            <td>imm</td>
+                            <td>음식</td>
+                            <td>오늘은</td>
+                            <td>28</td>
+                            <td>여</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/02/14</td>
+                            <td>오리리</td>
+                            <td>여행</td>
+                            <td>꾸엑꾸웩</td>
+                            <td>37</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2022/01/17</td>
+                            <td>말랭이</td>
+                            <td>자연</td>
+                            <td>말랑말랑 구름</td>
+                            <td>41</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/14</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>나는 오늘</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/14</td>
+                            <td>오리는</td>
+                            <td>일상</td>
+                            <td>꿱꿱</td>
+                            <td>27</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/01/17</td>
+                            <td>말티쥬</td>
+                            <td>음식</td>
+                            <td>참지 않음</td>
+                            <td>16</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/17</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>나는 오늘</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/07</td>
+                            <td>imm</td>
+                            <td>음식</td>
+                            <td>오늘은</td>
+                            <td>28</td>
+                            <td>여</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/02/14</td>
+                            <td>오리리</td>
+                            <td>여행</td>
+                            <td>꾸엑꾸웩</td>
+                            <td>37</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2022/01/17</td>
+                            <td>말랭이</td>
+                            <td>자연</td>
+                            <td>말랑말랑 구름</td>
+                            <td>41</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/14</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>나는 오늘</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/14</td>
+                            <td>오리는</td>
+                            <td>일상</td>
+                            <td>꿱꿱</td>
+                            <td>27</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/01/17</td>
+                            <td>말티쥬</td>
+                            <td>음식</td>
+                            <td>참지 않음</td>
+                            <td>16</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/17</td>
+                            <td>roaddong</td>
+                            <td>자연</td>
+                            <td>뿅뿅</td>
+                            <td>18</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/04/07</td>
+                            <td>immmm</td>
+                            <td>일상</td>
+                            <td>나는 오늘</td>
+                            <td>25</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2024/05/07</td>
+                            <td>imm</td>
+                            <td>음식</td>
+                            <td>오늘은</td>
+                            <td>28</td>
+                            <td>여</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                            <td>Y</td>
+                          </tr>
+                          <tr>
+                            <td>2024/02/14</td>
+                            <td>오리리</td>
+                            <td>여행</td>
+                            <td>꾸엑꾸웩</td>
+                            <td>37</td>
+                            <td>남</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>N</td>
+                          </tr>
+                          <tr>
+                            <td>2022/01/17</td>
+                            <td>말랭이</td>
+                            <td>자연</td>
+                            <td>말랑말랑 구름</td>
+                            <td>41</td>
+                            <td>여</td>
+                            <td>N</td>
+                            <td>N</td>
+                            <td>Y</td>
+                          </tr>
+                        </tbody>
+                        <!-- <tfoot>
+                          <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                          </tr>
+                        </tfoot> -->
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ============================================================== -->
+              <!-- end data table rowgroup  -->
+              <!-- ============================================================== -->
+            </div>
+          </div>
         </div>
         <!-- ============================================================== -->
-        <!-- end navbar -->
+        <!-- footer -->
         <!-- ============================================================== -->
+<<<<<<< HEAD
+        <div class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                Copyright © 2018 Concept. All rights reserved. Dashboard by
+                <a href="https://colorlib.com/wp/">Colorlib</a>.
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="text-md-right footer-links d-none d-sm-block">
+                  <a href="javascript: void(0);">About</a>
+                  <a href="javascript: void(0);">Support</a>
+                  <a href="javascript: void(0);">Contact Us</a>
+                </div>
+              </div>
+=======
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
@@ -165,66 +809,17 @@
                         </ul>
                     </div>
                 </nav>
+>>>>>>> 51d9dfb1642378f64ee84cd8990279ae1245846b
             </div>
+          </div>
         </div>
         <!-- ============================================================== -->
-        <!-- end left sidebar -->
+        <!-- end footer -->
         <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- wrapper  -->
-        <!-- ============================================================== -->
-        <div class="dashboard-wrapper">
-            <div class="dashboard-finance">
-                <div class="container-fluid dashboard-content">
-                    <!-- ============================================================== -->
-                    <!-- pageheader  -->
-                    <!-- ============================================================== -->
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="page-header">
-                                <h3 class="mb-2">Dashboard </h3>
-                                <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                                <div class="page-breadcrumb">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                        </ol>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- end pageheader  -->
-                    <!-- ============================================================== -->
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <div class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>. 
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript: void(0);">About</a>
-                                <a href="javascript: void(0);">Support</a>
-                                <a href="javascript: void(0);">Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- end wrapper  -->
-        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- end wrapper  -->
+      <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
@@ -260,14 +855,39 @@
     <!-- daterangepicker js -->
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- rowgroup table -->
+    <!-- <script src="../../../assets/vendor/datatables/js/totalpost-data-table.js"></script> -->
+    <script src="../../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="../../../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../../assets/vendor/datatables/js/data-table.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
     <script>
-    $(function() {
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-    });
+      $(function () {
+        $('input[name="daterange"]').daterangepicker(
+          {
+            opens: "left",
+          },
+          function (start, end, label) {
+            console.log(
+              "A new date selection was made: " +
+                start.format("YYYY-MM-DD") +
+                " to " +
+                end.format("YYYY-MM-DD")
+            );
+          }
+        );
+      });
     </script>
-</body>
+  </body>
 </html>
