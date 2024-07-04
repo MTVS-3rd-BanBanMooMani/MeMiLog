@@ -1,0 +1,268 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif; /* 폰트 적용 */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    width: 100%; 
+    height: 8vh; 
+    padding-top: 4vh; 
+    padding-bottom: 5px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    background: white; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 20vw; 
+    display: flex;
+    box-sizing: border-box;
+}
+
+.header .logo {
+    color: #000;/* Body text */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 30px */
+    word-wrap: break-word;
+    width: 28vw;
+}
+
+.header .menu-bar {
+    justify-content: flex-end; 
+    align-items: center; 
+    gap: 3vw; 
+    display: flex;
+}
+
+.header .menu-bar .button {
+    color: black; 
+    font-size: 1.1rem; 
+    font-family: Inter, sans-serif; 
+    font-weight: 500; 
+    line-height: 30px; 
+    word-wrap: break-word;
+}
+
+.header .menu-bar .sign-in-btn {
+    padding-left: 1.5vw; 
+    padding-right: 1.5vw; 
+    padding-top: 1vh; 
+    padding-bottom: 1vh; 
+    background: black; 
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); 
+    border-radius: 8px; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 8px; 
+    display: flex;
+    color: white; 
+    font-size: 1.1rem; 
+    font-family: Inter, sans-serif; 
+    font-weight: 500; 
+    line-height: 24px; 
+    word-wrap: break-word;
+}
+
+.middle-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    flex: 1;
+    
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-container h1 {
+    font-size: 2rem;
+    font-family: Inter;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group input {
+    width: 420px; 
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #D9D9D9;
+    background: #FFF;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.20);
+    color: #8C8C8C;
+    text-align: justify;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}
+
+.input-group select, .input-group button {
+    margin-top: 0.7rem;
+}
+
+.btn-1 button {
+    width: 420px;
+    height: var(--Spacing-M, 48px);
+    flex-shrink: 0;
+    background-color: #000;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: 2px solid #013252;
+    border-radius: 30px;
+}
+
+.btn-2 button {
+    width: 420px;
+    height: var(--Spacing-M, 48px);
+    flex-shrink: 0;
+    color: #013252;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-radius: 30px;
+    border: 2px solid #013252;
+    background: #FFF;
+}
+
+.href-button {
+        width:123px;
+        height:16px;
+        color: #000;
+        text-align: center;
+        font-family: Inter;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+}
+
+
+.caption{
+    margin-top: 2px;
+    text-align: right;
+}
+
+.caption a {
+    width:123px;
+    height:16px;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration: none;
+}
+
+/* .caption-b{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.caption b {
+    color: #401E20;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
+}    */
+
+.caption-c{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.path-d{
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}  
+
+.line {
+    display:flex;
+    flex: basic 100%;
+    align-items: center;
+    color:rgba(0, 0, 0, 0.35);
+    font-size:14px;
+    margin:8px 0px;
+}
+
+.line::before {
+    content:"간편 로그인/회원가입";
+    flex-grow:1;
+    margin:0px 16px;
+    background:rgba(0,0,0,0.35);
+    height:1px;
+    font-size:0px;
+    line-height: 0px;
+    color: #776f6f;
+}
+
+.line::after {
+    content:"간편 로그인/회원가입";
+    flex-grow:1;
+    margin:0px 16px;
+    background:rgba(0,0,0,0.35);
+    height:1px;
+    font-size:0px;
+    line-height: 0px;
+    color: #776f6f;
+}
+.login-form {
+    width:1440px;
+    height:1024px;
+    flex-shrink: 0;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+}
+
