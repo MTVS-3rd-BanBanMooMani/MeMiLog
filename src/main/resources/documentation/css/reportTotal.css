@@ -1,0 +1,155 @@
+.dashboard-wrapper {
+    position: relative;
+}
+
+.container-fluid.dashboard-content {
+    padding-bottom: 0;
+}
+
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+.page-header h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    width: 100%;
+}
+
+.left-text {
+    margin-right: auto;
+    padding-left: 10px;
+}
+
+.input-group {
+    width: 300px;
+    margin: 10px;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.report-table {
+    font-size: 12pt;
+}
+
+.btn-secondary {
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.btn-secondary :active{
+    background-color: #ddd;
+    border-color: #ddd;
+    color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-footer button:hover {
+    background-color: #333;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+		
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 6px 12px;
+    margin: 0 5px;
+    border-radius: 16px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination a:hover,
+.pagination-active {
+    color: #fff;
+    background-color: #2c3e50;
+}
+
+.pagination-active {
+    background-color: #2c3e50;
+}
+
+.pagination-newer,
+.pagination-older {
+    margin: 0 20px;
+}

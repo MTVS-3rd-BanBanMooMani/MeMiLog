@@ -1,30 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/vendor/fonts/circular-std/style.css">
     <link rel="stylesheet" href="../../../assets/libs/css/style.css">
     <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="../../../assets/vendor/vector-map/jqvmap.css">
-    <link href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/chartist-bundle/chartist.css">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css">
-    <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css">
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../../../documentation/css/reportTotal.css">
     <title>Admin - Me Mission Log</title>
 </head>
 <body>
-    <!-- ============================================================== -->
-    <!-- main wrapper -->
-    <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
-        <!-- ============================================================== -->
-        <!-- navbar -->
-        <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
                 <a class="navbar-brand" href="index.html">Me Mission Log</a>
@@ -96,12 +83,7 @@
                 </div>
             </nav>
         </div>
-        <!-- ============================================================== -->
-        <!-- end navbar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- left sidebar -->
-        <!-- ============================================================== -->
+
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
@@ -167,41 +149,188 @@
                 </nav>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end left sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- wrapper  -->
-        <!-- ============================================================== -->
+
         <div class="dashboard-wrapper">
             <div class="dashboard-finance">
                 <div class="container-fluid dashboard-content">
-                    <!-- ============================================================== -->
-                    <!-- pageheader  -->
-                    <!-- ============================================================== -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h3 class="mb-2">Dashboard </h3>
-                                <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                                <div class="page-breadcrumb">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                        </ol>
-                                    </nav>
-                                </div>
+                                <h3 class="mb-2">Total Report </h3>
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- end pageheader  -->
-                    <!-- ============================================================== -->
+                    
+                    <div class="table-header">
+                        <span class="left-text">블라인드 처리 시 해당 게시글은 즉각 비공개 게시물로 전환됩니다.</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="닉네임으로 검색">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="report-table">
+                        <table id="reportTable" class="table table-hover bg-white">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th scope="col">신고번호</th>
+                                <th scope="col">닉네임</th>
+                                <th scope="col">내용</th>
+                                <th scope="col">신고일</th>
+                                <th scope="col">처리여부</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>신고합니다.</td>
+                                <td>2024-08-12</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                                <td>2024-12-03</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>스팸 메세지 그만 보게 해주세요.</td>
+                                <td>2024-05-03</td>
+                                <td>N</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">4</th>
+                                <td>Mark</td>
+                                <td>신고합니다.</td>
+                                <td>2024-08-12</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">5</th>
+                                <td>Jacob</td>
+                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                                <td>2024-12-03</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">6</th>
+                                <td>Larry</td>
+                                <td>스팸 메세지 그만 보게 해주세요.</td>
+                                <td>2024-05-03</td>
+                                <td>N</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">7</th>
+                                <td>Mark</td>
+                                <td>신고합니다.</td>
+                                <td>2024-08-12</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">8</th>
+                                <td>Jacob</td>
+                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                                <td>2024-12-03</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">9</th>
+                                <td>Larry</td>
+                                <td>스팸 메세지 그만 보게 해주세요.</td>
+                                <td>2024-05-03</td>
+                                <td>N</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">10</th>
+                                <td>Mark</td>
+                                <td>신고합니다.</td>
+                                <td>2024-08-12</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">11</th>
+                                <td>Jacob</td>
+                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                                <td>2024-12-03</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">12</th>
+                                <td>Larry</td>
+                                <td>스팸 메세지 그만 보게 해주세요.</td>
+                                <td>2024-05-03</td>
+                                <td>N</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">13</th>
+                                <td>Mark</td>
+                                <td>신고합니다.</td>
+                                <td>2024-08-12</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">14</th>
+                                <td>Jacob</td>
+                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                                <td>2024-12-03</td>
+                                <td>Y</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">15</th>
+                                <td>Larry</td>
+                                <td>스팸 메세지 그만 보게 해주세요.</td>
+                                <td>2024-05-03</td>
+                                <td>N</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+
+                    <div id="reportDetailModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal('reportDetailModal')">&times;</span>
+                                <h2>신고 내용</h2>
+                                <div class="modal-body">
+                                    <p id="reportDetailContent"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="hideButton">블라인드 처리</button>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <nav class="pagination-container">
+                            <div class="pagination">
+                                    <a class="pagination-newer" href="#">PREV</a>
+                                    <span class="pagination-inner">
+                                        <a href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a> 
+                                    </span>
+                                    <a class="pagination-older" href="#">NEXT</a>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
+        
             <div class="footer">
                 <div class="container-fluid">
                     <div class="row">
@@ -218,48 +347,15 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
+            
         </div>
-        <!-- ============================================================== -->
-        <!-- end wrapper  -->
-        <!-- ============================================================== -->
+        
     </div>
-    <!-- ============================================================== -->
-    <!-- end main wrapper  -->
-    <!-- ============================================================== -->
-    <!-- jquery 3.3.1  -->
+  
     <script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <!-- bootstap bundle js -->
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <!-- slimscroll js -->
     <script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-    <!-- chart chartist js -->
-    <script src="../../../assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
-    <script src="../../../assets/vendor/charts/chartist-bundle/Chartistjs.js"></script>
-    <script src="../../../assets/vendor/charts/chartist-bundle/chartist-plugin-threshold.js"></script>
-    <!-- chart C3 js -->
-    <script src="../../../assets/vendor/charts/c3charts/c3.min.js"></script>
-    <script src="../../../assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
-    <!-- chartjs js -->
-    <script src="../../../assets/vendor/charts/charts-bundle/Chart.bundle.js"></script>
-    <script src="../../../assets/vendor/charts/charts-bundle/chartjs.js"></script>
-    <!-- sparkline js -->
-    <script src="../../../assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
-    <!-- dashboard finance js -->
-    <script src="../../../assets/libs/js/dashboard-finance.js"></script>
-    <!-- main js -->
     <script src="../../../assets/libs/js/main-js.js"></script>
-    <!-- gauge js -->
-    <script src="../../../assets/vendor/gauge/gauge.min.js"></script>
-    <!-- morris js -->
-    <script src="../../../assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morris.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morrisjs.html"></script>
-    <!-- daterangepicker js -->
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script>
     $(function() {
         $('input[name="daterange"]').daterangepicker({
@@ -269,5 +365,42 @@
         });
     });
     </script>
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+    
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+    
+        $("#reportTable").on('click', 'tbody tr', function () {
+            var reportId = $(this).find("th").text();
+            var nickname = $(this).find("td:eq(0)").text();
+            var content = $(this).find("td:eq(1)").text();
+            var reportDate = $(this).find("td:eq(2)").text();
+            var status = $(this).find("td:eq(3)").text();
+    
+            var reportDetailContent = `
+                <p><strong>신고번호:</strong> ${reportId}</p>
+                <p><strong>닉네임:</strong> ${nickname}</p>
+                <p><strong>내용:</strong> ${content}</p>
+                <p><strong>신고일:</strong> ${reportDate}</p>
+                <p><strong>처리여부:</strong> ${status}</p>
+            `;
+    
+            document.getElementById("reportDetailContent").innerHTML = reportDetailContent;
+    
+            openModal('reportDetailModal');
+        });
+    
+        function hidePost() {
+            alert('블라인드 처리가 완료되었습니다.');
+            closeModal('reportDetailModal');
+        }
+    
+        document.getElementById("hideButton").addEventListener("click", hidePost);
+    </script>
+    
 </body>
 </html>
