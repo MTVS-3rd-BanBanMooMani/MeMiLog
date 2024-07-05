@@ -101,13 +101,25 @@
   text-align: center;
 }
 
-.close-btn {
+.modal-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 25px;
+}
+
+.modal-btn > span {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* .close-btn {
   position: absolute;
   top: 0rem;
   right: 1rem;
   cursor: pointer;
   font-size: 2rem;
-}
+} */
 
 .modal-content-title {
   font-weight: bold;
