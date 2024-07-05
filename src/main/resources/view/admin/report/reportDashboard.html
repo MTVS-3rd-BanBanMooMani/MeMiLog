@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../assets/libs/css/style.css">
@@ -15,16 +13,11 @@
     <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css">
     <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="../../../documentation/css/reportDashboard.css" />
     <title>Admin - Me Mission Log</title>
 </head>
 <body>
-    <!-- ============================================================== -->
-    <!-- main wrapper -->
-    <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
-        <!-- ============================================================== -->
-        <!-- navbar -->
-        <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
                 <a class="navbar-brand" href="index.html">Me Mission Log</a>
@@ -96,12 +89,6 @@
                 </div>
             </nav>
         </div>
-        <!-- ============================================================== -->
-        <!-- end navbar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- left sidebar -->
-        <!-- ============================================================== -->
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
@@ -167,41 +154,89 @@
                 </nav>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end left sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- wrapper  -->
-        <!-- ============================================================== -->
+    
         <div class="dashboard-wrapper">
             <div class="dashboard-finance">
                 <div class="container-fluid dashboard-content">
-                    <!-- ============================================================== -->
-                    <!-- pageheader  -->
-                    <!-- ============================================================== -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
                                 <h3 class="mb-2">Dashboard </h3>
-                                <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                                <div class="page-breadcrumb">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                        </ol>
-                                    </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+
+                            <div class="card mb-4 draggable" style="width: 550px;">
+                                <div class="card-header pb-0 d-flex align-items-center">
+                                    <div>
+                                        <h4 class="mb-1">월간 신고 건수</h6>
+                                        <p class="text-sm mb-0">
+                                        전주 대비 증가량(+20%)
+                                        </p>
+                                    </div>
+                                    <select class="form-select form-select-sm ms-auto w-20 font-weight-bolder bg-gray-100" aria-label=".form-select-sm example" style="margin-left: auto;">
+                                        <option selected>7월</option>
+                                        <option value="June">6월</option>
+                                        <option value="May">5월</option>
+                                        <option value="April">4월</option>
+                                        <option value="March">3월</option>
+                                        <option value="Febuary">2월</option>
+                                        <option value="January">1월</option>
+                                    </select>
+                                </div>
+                                <div class="card-body p-3 d-flex justify-content-between">
+                                    <div class="chart">
+                                        <canvas class="chart-line" class="chart-canvas" height="330" width="500"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h4 class="card-header">누적 신고 건수 상위 5건</h5>
+                                <div class="card-body">
+                                    <ul class="list-group" id="report-list">
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- end pageheader  -->
-                    <!-- ============================================================== -->
+
+                    <div class="bottom-container">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card" style="width: 540px; height: 300px;">
+                                <div class="card-body">
+                                    <h5 class="text-muted">오늘의 신고 건수</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h1 class="mb-1 text-primary">7건</h1>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-danger">
+                                        <i class="fa fa-fw fa-caret-up"></i><span>75%</span>(전일 대비)
+                                    </div>
+                                </div>
+                                <div class="sparkline-container">
+                                    <div id="sparkline-1" class="sparkline"></div>
+                                    <div class="day-labels" id="day-labels">
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">신고 유형 분석</h5>
+                                <div class="card-body">
+                                    <canvas id="accountPieChart" width="500" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
             <div class="footer">
                 <div class="container-fluid">
                     <div class="row">
@@ -218,18 +253,8 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- end wrapper  -->
-        <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- end main wrapper  -->
-    <!-- ============================================================== -->
-    <!-- jquery 3.3.1  -->
     <script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <!-- bootstap bundle js -->
     <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
@@ -251,12 +276,6 @@
     <script src="../../../assets/libs/js/dashboard-finance.js"></script>
     <!-- main js -->
     <script src="../../../assets/libs/js/main-js.js"></script>
-    <!-- gauge js -->
-    <script src="../../../assets/vendor/gauge/gauge.min.js"></script>
-    <!-- morris js -->
-    <script src="../../../assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morris.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morrisjs.html"></script>
     <!-- daterangepicker js -->
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -268,6 +287,190 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+    </script>
+
+    <script>
+    var ctx2 = document.querySelectorAll(".chart-line");
+
+    new Chart(ctx2[ctx2.length-1], {
+        type: "line",
+        data: {
+            labels: ["1주차", "2주차", "3주차", "4주차", "5주차"],
+            datasets: [{
+                label: "Weekly Reports",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#00ab55",
+                borderWidth: 3,
+                backgroundColor: "transparent",
+                data: [20, 60, 20, 50, 60],
+                maxBarThickness: 6
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                enabled: true,
+                mode: "index",
+                intersect: false,
+                backgroundColor: '#ffffff',
+                titleFontColor: '#000000',
+                bodyFontColor: '#000000',
+                footerFontColor: '#000000',
+                fontSize: '20px',
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel;
+                        return label;
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        borderDash: [2],
+                        borderDashOffset: [2],
+                        color: '#dee2e6',
+                        zeroLineColor: '#dee2e6',
+                        zeroLineWidth: 1,
+                        zeroLineBorderDash: [2],
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        beginAtZero: true,
+                        padding: 10,
+                        fontSize: 20,
+                        fontColor: '#000',
+                        lineHeight: 3,
+                        fontStyle: 'normal',
+                        fontFamily: "Public Sans",
+                    },
+                }],
+                xAxes: [{
+                    gridLines: {
+                        zeroLineColor: 'rgba(0,0,0,0)',
+                        display: false,
+                    },
+                    ticks: {
+                        padding: 10,
+                        fontSize: 20,
+                        fontColor: '#adb5bd',
+                        lineHeight: 3,
+                        fontStyle: 'normal',
+                        fontFamily: "Public Sans",
+                        },
+                    }],
+                },
+            },
+        });
+
+    </script>
+
+    <script>
+        const reportedPosts = [
+            {id: 13, 작성자: 'dddafsa', 내용: '♨︎고수익♦︎투자♛종목♤추천☏', 신고건수: 10},
+            {id: 22, 작성자: '영이', 내용: '집에서 쉽게 하는 부업', 신고건수: 8},
+            {id: 32, 작성자: 'ㅁㅎㄹ', 내용: '블로그로 월수익 3000만원 만들기💖', 신고건수: 6},
+            {id: 24, 작성자: 'ㅇㅇ', 내용: '[Web발신] 전회차 L0TT0 2등나왔내요 인증 꼭 약속 해주시면 무료입니다', 신고건수: 4},
+            {id: 35, 작성자: 'sadfwg', 내용: '안녕하세요, 저 기억나요? 저는 한국에 온 지 얼마 되지 않았지만, 당신과 연락이 되지 않습니다. 당신은 나의 라인을 추가하여 답장할 수 있습니다.나의 라인은:2222222', 신고건수: 3}
+        ];
+
+        function renderReportedPosts(){
+            const reportList = document.getElementById('report-list');
+            reportedPosts.forEach(post => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.textContent = `[작성자 : ${post.작성자}] ${post.내용} ------- ${post.신고건수} reports`;
+                reportList.appendChild(listItem);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderReportedPosts);
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        $('#sparkline-1').sparkline([3, 4, 6, 7, 9, 4, 7], {
+        type: 'line',
+        width: '100%',
+        height: '120',
+        lineColor: '#1e88e5',
+        fillColor: 'rgba(30, 136, 229, 0.2)',
+        spotColor: '#1e88e5',
+        minSpotColor: '#1e88e5',
+        maxSpotColor: '#1e88e5',
+        highlightLineColor: '#1e88e5',
+        spotRadius: 4,
+        highlightSpotColor: '#1e88e5'
+        });
+
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        const today = new Date();
+        const todayIndex = today.getDay();
+
+        let labelsHtml = '';
+        for (let i=0; i<7; i++){
+            const dayIndex = (todayIndex - i + 7) % 7;
+            labelsHtml = `<span>${days[dayIndex]}</span>` + labelsHtml;
+        }
+
+        $('#day-labels').html(labelsHtml);
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('accountPieChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                labels: ['스팸 및 광고', '선정적인 게시물', '개인정보노출', '영리목적/홍보성', '개인정보 노출'],
+                datasets: [{
+                    data: [2.50, 16.69, 6.34, 23.03, 51.44],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#555555']
+                }]
+            };
+
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = data.labels[tooltipItem.dataIndex] || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex] + '건';
+                                return label;
+                            }
+
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
+        });
     </script>
 </body>
 </html>

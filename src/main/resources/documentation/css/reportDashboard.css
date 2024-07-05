@@ -1,0 +1,21 @@
+.sparkline-container {
+    position: relative;
+    margin-top: -15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sparkline {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+.day-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #6c757d;
+}
