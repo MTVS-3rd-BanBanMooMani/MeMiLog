@@ -18,7 +18,8 @@
 }
 
 .filter-toggle-btn {
-  width: 50px;
+  width: 87px;
+  font-weight: bold;
   display: flex;
   justify-content: space-between;
 }

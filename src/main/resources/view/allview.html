@@ -11,6 +11,16 @@
     <link href="../documentation/css/layout.css" rel="stylesheet" />
     <link href="../documentation/css/allview.css" rel="stylesheet" />
     <link href="../documentation/css/searchbar.css" rel="stylesheet" />
+    <!-- sweetalert2 -->
+    <link
+      href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.min.css
+    "
+      rel="stylesheet"
+    />
+    <script src="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js
+    "></script>
   </head>
   <body>
     <header>
@@ -60,7 +70,7 @@
         </div>
         <div class="filter-toggle">
           <div class="filter-toggle-btn">
-            <p>필터</p>
+            <p>카테고리</p>
             <p class="filter-toggle-arrow">▼</p>
           </div>
           <div class="filter-box">
@@ -465,6 +475,30 @@
           });
           selectedCategories.length = 0;
           console.log("초기화");
+        });
+
+        // 삭제 버튼
+        const deleteAlert = document.querySelector(".board-delete-btn");
+
+        deleteAlert.addEventListener("click", () => {
+          Swal.fire({
+            title: "정말로 삭제하시겠습니까?",
+            // text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "gray",
+            confirmButtonText: "네, 삭제하겠습니다.",
+            cancelButtonText: "취소",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "삭제되었습니다!",
+                // text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          });
         });
       });
     </script>
