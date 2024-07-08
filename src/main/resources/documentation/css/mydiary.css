@@ -300,13 +300,13 @@ form input {
     align-items: center;
 }
 
-.user-info .total-mood {
+.total-mood {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 10px 0;
-    width: 100%;
-    max-width: 300px;
+    width: 400px;
+    height: auto;
+    text-align: center;
 }
 
 .user-info strong {
@@ -318,6 +318,8 @@ form input {
 }
 
 .user-info canvas {
+    width: 100%;
+    height: 100%;
     margin: 10px 10px;
     border: 1px solid #ccc;
 }
@@ -327,12 +329,10 @@ form input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 360px;
-    width: 480px;
-    max-width: 100%;
+    width: 400px;
+    height: auto;
     overflow: hidden;
     text-align: center;
-    margin-right: 30px;
 }
 
 .posts {

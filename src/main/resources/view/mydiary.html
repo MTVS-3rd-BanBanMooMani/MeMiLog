@@ -104,16 +104,20 @@
                 <p class="email">blip0819@gmail.com</p>
             </div>
 
-            <div class="total-mood">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-                <canvas id="bar-chart-horizontal" height=240px></canvas>
-            </div>
         </div>
 
-        <div class="user-mood-chart">
-            <p>Tracking My Mood</p>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-            <canvas id="line-chart"></canvas>
+        <div id="chart-container" class="chart-container">
+            <div class="total-mood">
+                <p>My Whole Mood</p><br>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+                <canvas id="bar-chart-horizontal" height="150"></canvas>
+            </div>
+
+            <div class="user-mood-chart">
+                <p>Tracking My Mood</p>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+                <canvas id="line-chart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -248,7 +252,16 @@
     </div>
 </div>
 <script>
-        function openPage(evt, pageName) {
+    var barChart;
+    var lineChart;
+    document.addEventListener("DOMContentLoaded", function () {
+        const firstTabLink = document.querySelector(".tablinks");
+        if (firstTabLink) {
+            firstTabLink.click();
+        }
+    });
+    
+    function openPage(evt, pageName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
@@ -260,8 +273,19 @@
         }
         document.getElementById(pageName).style.display = "flex";
         evt.currentTarget.className += " active";
+    
+        if (pageName === 'post-card-container') {
+            document.querySelector('.total-mood').style.display = 'block';
+            document.querySelector('.user-mood-chart').style.display = 'none';
+            displayBarChart();
+        } else if (pageName === 'calendar-container') {
+            document.querySelector('.total-mood').style.display = 'none';
+            document.querySelector('.user-mood-chart').style.display = 'block';
+            document.querySelector('.calendar-contents').style.display = 'flex';
+            displayLineChart();
+        }
     }
-
+    
     function openModal(modalId) {
         var modal = document.getElementById(modalId);
         if (modal) {
@@ -270,7 +294,7 @@
             console.error(`Modal with ID '${modalId}' not found.`);
         }
     }
-
+    
     function closeModal(modalId) {
         var modal = document.getElementById(modalId);
         if (modal) {
@@ -279,20 +303,19 @@
             console.error(`Modal with ID '${modalId}' not found.`);
         }
     }
-
+    
     function updateProfilePic(event) {
         event.preventDefault();
-
         var fileInput = document.getElementById('profilePic');
         var file = fileInput.files[0];
         var reader = new FileReader();
-
+    
         reader.onload = function(e){
             document.querySelector(".profile-pic").src = e.target.result;
             closeModal('profilePicModal');
             alert("회원 정보 수정이 완료되었습니다.");
         }
-
+    
         if(file){
             reader.readAsDataURL(file);
         } else {
@@ -300,13 +323,13 @@
         }
         return false;
     }
-
+    
     function deleteProfilePic() {
         document.querySelector('.profile-pic').src = '../img/default_profile.png';
         alert("프로필 사진이 삭제되었습니다.");
-        closeModal('profilePicModal')
+        closeModal('profilePicModal');
     }
-
+    
     window.onclick = function(event) {
         var modals = document.getElementsByClassName('modal');
         for (var i = 0; i < modals.length; i++) {
@@ -315,27 +338,26 @@
             }
         }
     }
-
+    
     document.getElementById('editForm').onsubmit = function(event) {
         event.preventDefault();
         alert("정보가 수정되었습니다.");
         closeModal('editModal');
     }
-
+    
     document.getElementById('deleteForm').onsubmit = function(event) {
         event.preventDefault();
         alert("회원 탈퇴가 완료되었습니다.");
         closeModal('deleteModal');
         closeModal('userModal');
     }
-
-document.addEventListener("DOMContentLoaded", function() {
-    const firstTabLink = document.querySelector(".tablinks");
-    if (firstTabLink) {
-        firstTabLink.click();
+    
+    function displayBarChart() {
+    if (barChart) {
+        barChart.destroy();
     }
-
-    new Chart(document.getElementById("bar-chart-horizontal"), {
+    var barChartCanvas = document.getElementById("bar-chart-horizontal").getContext("2d");
+    barChart = new Chart(barChartCanvas, {
         type: 'horizontalBar',
         data: {
             labels: ["😀", "😊", "😐", "😎", "😢"],
@@ -347,62 +369,75 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         options: {
             legend: { display: false },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10
-                }
-            },
             scales: {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        fontSize: 20
                     }
                 }],
                 yAxes: [{
-                    barThickness: 20,
-                    categoryPercentage: 0.8,
-                    barPercentage: 0.8
+                    ticks: {
+                        fontSize: 20
+                    },
+                    barPercentage: 0.6,
+                    categoryPercentage: 1.2
                 }]
             }
         }
     });
+}
 
-    new Chart(document.getElementById("line-chart"), {
-        type: 'line',
-        data: {
-            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-            datasets: [{
-                data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
-                label: "😀",
-                borderColor: "#3e95cd",
-                fill: false
-            }, {
-                data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
-                label: "😊",
-                borderColor: "#8e5ea2",
-                fill: false
-            }, {
-                data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
-                label: "😐",
-                borderColor: "#3cba9f",
-                fill: false
-            }, {
-                data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
-                label: "😎",
-                borderColor: "#e8c3b9",
-                fill: false
-            }, {
-                data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
-                label: "😢",
-                borderColor: "#c45850",
-                fill: false
-            }]
-        },
-        options: {}
+    
+    function displayLineChart() {
+        if (lineChart) {
+            lineChart.destroy();
+        }
+        var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
+        lineChart = new Chart(lineChartCanvas, {
+            type: 'line',
+            data: {
+                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                datasets: [{
+                    data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
+                    label: "😀",
+                    borderColor: "#3e95cd",
+                    fill: false,
+                }, {
+                    data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
+                    label: "😊",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                }, {
+                    data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
+                    label: "😐",
+                    borderColor: "#3cba9f",
+                    fill: false
+                }, {
+                    data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
+                    label: "😎",
+                    borderColor: "#e8c3b9",
+                    fill: false
+                }, {
+                    data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
+                    label: "😢",
+                    borderColor: "#c45850",
+                    fill: false
+                }]
+            },
+            options: {
+            legend: {
+                labels: {
+                    fontSize: 16
+                }
+            }
+        }
     });
-});
+    }
+    </script>
 
-</script>
 </body>
 </html>
