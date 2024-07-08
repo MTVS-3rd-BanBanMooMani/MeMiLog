@@ -274,7 +274,7 @@
     <div id="modal-bg" class="modal-bg">
       <div class="modal-content">
         <div class="modal-btn">
-          <span style="color: #ff5858">신고</span>
+          <span class="report-btn" style="color: #ff5858">신고</span>
           <span class="close-btn" style="font-size: 2rem">&times;</span>
         </div>
         <br />
@@ -498,6 +498,28 @@
                 icon: "success",
               });
             }
+          });
+        });
+
+        // 신고 버튼
+        const reportAlert = document.querySelector(".report-btn");
+
+        reportAlert.addEventListener("click", () => {
+          Swal.fire({
+            title: "신고 내용을 입력해주세요.",
+            icon: "warning",
+            input: "select",
+            inputOptions: {
+              option1: "음란물",
+              option2: "광고",
+              option3: "종교권유",
+            },
+            inputPlaceholder: "신고 사유 선택",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "gray",
+            confirmButtonText: "네, 신고하겠습니다.",
+            cancelButtonText: "취소",
           });
         });
       });
