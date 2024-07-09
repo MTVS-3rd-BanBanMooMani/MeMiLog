@@ -148,10 +148,29 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
+                            <h5 class="card-header">전체 회원 수 추이</h5>
+                            <div class="card-body">
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">35,902</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">4%</span>
+                                </div>
+                            </div>
+                            <div class="card-body bg-light p-t-40 p-b-30">
+                                <div id="sparkline-revenue0"></div>
+                            </div>
+                            <div class="card-footer text-center bg-white">
+                                <a href="#" class="card-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
                             <h5 class="card-header">오늘 접속자 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">79,000</h1>
+                                    <h1 class="mb-1">6776</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">25%</span>
@@ -170,7 +189,7 @@
                             <h5 class="card-header">오늘 등록된 포스트 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">79,000</h1>
+                                    <h1 class="mb-1">3752</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">15%</span>
@@ -181,6 +200,14 @@
                             </div>
                             <div class="card-footer text-center bg-white">
                                 <a href="#" class="card-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">연령대 총 회원</h5>
+                            <div class="card-body">
+                                <div id="ct-chart2" class="ct-chart ct-golden-section"></div>
                             </div>
                         </div>
                     </div>
@@ -308,5 +335,6 @@
         });
     });
 </script>
+<script src="../../documentation/js/userdashboard.js"></script>
 </body>
 </html>
