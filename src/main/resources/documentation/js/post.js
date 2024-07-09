@@ -13,11 +13,6 @@ function changeIconColor(id) {
     selectedLi.setAttribute('onclick', `resetIconColor('${id}')`);
 }
 
-function resetIconColor(id) {
-    var li = document.getElementById(id);
-    li.querySelector('img').setAttribute('src', `../documentation/img/${id}.png`);
-    li.setAttribute('onclick', `changeIconColor('${id}')`);
-}
 function toggleSelection(element) {
     var buttons = document.querySelectorAll('.answers .answer');
     buttons.forEach(function(button) {
@@ -37,16 +32,21 @@ document.getElementById('imageUpload').addEventListener('change', function(event
         reader.onload = function(e) {
             const newThumbnail = document.createElement('div');
             newThumbnail.classList.add('thumbnail');
+            newThumbnail.setAttribute('draggable', 'true');
             newThumbnail.innerHTML = `
                 <img src="${e.target.result}" alt="이미지" onclick="showImageInContainer('${e.target.result}')">
                 <button class="image-close-btn" onclick="removeThumbnail(this)"></button>
             `;
             document.querySelector('.image-thumbnails').insertBefore(newThumbnail, document.querySelector('.add-thumbnail'));
+            addDragAndDropHandlers(newThumbnail);
 
             var div = document.getElementById("plus-thumbnail");
             var remove = document.getElementById("addBtn");
-            if(div.children.length == 6) {
+            if (div.children.length === 6) {
                 div.removeChild(remove);
+            }
+            if (div.children.length === 2) {
+                showImageInContainer(e.target.result);
             }
         };
         reader.readAsDataURL(files[0]);
@@ -58,11 +58,6 @@ function showImageInContainer(imageSrc) {
     imageContainer.innerHTML = `
         <img src="${imageSrc}" alt="확대된 이미지" class="main-image">
     `;
-}
-
-function clearImageContainer() {
-    const imageContainer = document.querySelector('.image-container');
-    imageContainer.innerHTML = '';
 }
 
 function removeThumbnail(button) {
@@ -89,17 +84,13 @@ function removeThumbnail(button) {
                     reader.onload = function(e) {
                         const newThumbnail = document.createElement('div');
                         newThumbnail.classList.add('thumbnail');
+                        newThumbnail.setAttribute('draggable', 'true');
                         newThumbnail.innerHTML = `
-                            <img src="${e.target.result}" alt="이미지" onclick="showImageInContainer('${e.target.result}')">
+                            <img src="${e.target.result}" alt="이미지">
                             <button class="image-close-btn" onclick="removeThumbnail(this)"></button>
                         `;
                         document.querySelector('.image-thumbnails').insertBefore(newThumbnail, document.querySelector('.add-thumbnail'));
-
-                        var div = document.getElementById("plus-thumbnail");
-                        var remove = document.getElementById("addBtn");
-                        if(div.children.length == 6) {
-                            div.removeChild(remove);
-                        }
+                        addDragAndDropHandlers(newThumbnail);
                     };
                     reader.readAsDataURL(files[0]);
                 }
@@ -107,3 +98,65 @@ function removeThumbnail(button) {
         }
     }
 }
+
+
+function addDragAndDropHandlers(element) {
+    element.addEventListener('dragstart', handleDragStart);
+    element.addEventListener('dragover', handleDragOver);
+    element.addEventListener('drop', handleDrop);
+    element.addEventListener('dragend', handleDragEnd);
+}
+
+let draggedElement = null;
+
+
+function handleDragStart(event) {
+    draggedElement = event.target;
+    event.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => { event.target.style.opacity = '0.5'; }, 0);
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const targetElement = event.target.closest('.thumbnail');
+    const parentElement = document.getElementById('plus-thumbnail');
+
+    if (draggedElement && targetElement && targetElement !== draggedElement) {
+        const draggedImgSrc = draggedElement.querySelector('img').getAttribute('src');
+        const targetImgSrc = targetElement.querySelector('img').getAttribute('src');
+
+        draggedElement.querySelector('img').setAttribute('src', targetImgSrc);
+        targetElement.querySelector('img').setAttribute('src', draggedImgSrc);
+
+        const draggedOnClick = draggedElement.querySelector('img').getAttribute('onclick');
+        const targetOnClick = targetElement.querySelector('img').getAttribute('onclick');
+
+        draggedElement.querySelector('img').setAttribute('onclick', targetOnClick);
+        targetElement.querySelector('img').setAttribute('onclick', draggedOnClick);
+    }
+
+    draggedElement.style.opacity = '1';
+    draggedElement = null;
+}
+
+
+
+function handleDragEnd(event) {
+    if (draggedElement) {
+        draggedElement.style.opacity = '1';
+    }
+    draggedElement = null;
+}
+
+
+
+document.querySelectorAll('.thumbnail[draggable="true"]').forEach(function(element) {
+    addDragAndDropHandlers(element);
+});
