@@ -54,12 +54,21 @@
                 <span class="close" onclick="closeModal('editModal')">&times;</span>
                 <h2>정보 수정</h2>
                 <form id="editForm">
+                    <div class="form-group">
                     <label for="nickname">닉네임:</label>
-                    <input type="text" id="nickname" name="nickname" value="돌멩이님"><br><br>
+                    <input type="text" id="nickname" name="nickname" value="돌멩이님"><br>
+                    </div>
+
+                    <div class="form-group">
                     <label for="password">비밀번호:</label>
-                    <input type="password" id="password" name="password"><br><br>
+                    <input type="password" id="password" name="password"><br>
+                    </div>
+
+                    <div class="form-group">
                     <label for="password2">비밀번호 확인:</label>
-                    <input type="password" id="password2" name="password"><br><br>
+                    <input type="password" id="password2" name="password"><br>
+                    </div>
+
                     <div class="form-footer">
                         <button type="submit">수정</button>
                         <button type="button" onclick="closeModal('editModal')">취소</button>
@@ -86,10 +95,10 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal('deleteModal')">&times;</span>
                 <h2>회원 탈퇴</h2>
-                <p>탈퇴 후 계정 복구가 불가합니다.<br>정말 탈퇴를 진행하시겠습니까?<br>탈퇴를 원하시면 비밀번호를 입력해주세요.</p>
+                <p>탈퇴 후 계정 복구가 불가합니다.<br>정말 탈퇴를 진행하시겠습니까?<br>탈퇴를 원하시면 비밀번호를 입력해주세요.</p><br>
                 <form id="deleteForm">
-                    <label for="deletePassword">비밀번호:</label>
-                    <input type="password" id="deletePassword" name="deletePassword"><br><br>
+                    <input type="password" id="deletePassword" name="deletePassword" placeholder="비밀번호 확인"><br>
+
                     <div class="form-footer">
                         <button type="submit">탈퇴</button>
                         <button type="button" onclick="closeModal('deleteModal')">취소</button>
@@ -98,25 +107,15 @@
             </div>
         </div>
 
-        <div class="user-info">
-            <div class="info-header">
-                <strong>아이디</strong>
-                <p class="email">blip0819@gmail.com</p>
-            </div>
-
-        </div>
-
         <div id="chart-container" class="chart-container">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
             <div class="total-mood">
-                <p>My Whole Mood</p><br>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-                <canvas id="bar-chart-horizontal" height="150"></canvas>
+                <canvas id="bar-chart-horizontal"></canvas>
             </div>
 
             <div class="user-mood-chart">
-                <p>Tracking My Mood</p>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-                <canvas id="line-chart"></canvas>
+                <canvas id="line-chart" width="400" height="240"></canvas>
             </div>
         </div>
     </div>
@@ -325,7 +324,7 @@
     }
     
     function deleteProfilePic() {
-        document.querySelector('.profile-pic').src = '../img/default_profile.png';
+        document.querySelector('.profile-pic').src = '../documentation/img/default_profile.png';
         alert("프로필 사진이 삭제되었습니다.");
         closeModal('profilePicModal');
     }
@@ -351,92 +350,181 @@
         closeModal('deleteModal');
         closeModal('userModal');
     }
-    
-    function displayBarChart() {
-    if (barChart) {
-        barChart.destroy();
-    }
-    var barChartCanvas = document.getElementById("bar-chart-horizontal").getContext("2d");
-    barChart = new Chart(barChartCanvas, {
-        type: 'horizontalBar',
-        data: {
-            labels: ["😀", "😊", "😐", "😎", "😢"],
-            datasets: [{
-                label: "Emotions (total)",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: [25,62,39,43,58]
-            }]
-        },
-        options: {
-            legend: { display: false },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        fontSize: 20
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        fontSize: 20
-                    },
-                    barPercentage: 0.6,
-                    categoryPercentage: 1.2
-                }]
-            }
-        }
-    });
-}
 
-    
-    function displayLineChart() {
-        if (lineChart) {
-            lineChart.destroy();
+    function displayBarChart() {
+        if (barChart) {
+            barChart.destroy();
         }
-        var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
-        lineChart = new Chart(lineChartCanvas, {
-            type: 'line',
-            data: {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                datasets: [{
-                    data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
-                    label: "😀",
-                    borderColor: "#3e95cd",
-                    fill: false,
-                }, {
-                    data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
-                    label: "😊",
-                    borderColor: "#8e5ea2",
-                    fill: false
-                }, {
-                    data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
-                    label: "😐",
-                    borderColor: "#3cba9f",
-                    fill: false
-                }, {
-                    data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
-                    label: "😎",
-                    borderColor: "#e8c3b9",
-                    fill: false
-                }, {
-                    data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
-                    label: "😢",
-                    borderColor: "#c45850",
-                    fill: false
-                }]
-            },
-            options: {
-            legend: {
-                labels: {
-                    fontSize: 16
+
+        var barChartCanvas = document.getElementById("bar-chart-horizontal");
+        barChartCanvas.height = 240;
+        barChartCanvas.width = 400;
+        var ctx = barChartCanvas.getContext("2d");
+
+        var labels = [
+            { img: '../documentation/img/colored_happy.png', text: '😃' },
+            { img: '../documentation/img/colored_cool.png', text: '😎' },
+            { img: '../documentation/img/colored_surprised.png', text: '😮' },
+            { img: '../documentation/img/colored_soso.png', text: '😐' },
+            { img: '../documentation/img/colored_sad.png', text: '🥲' }
+        ];
+
+        var images = [];
+        var imagesLoaded = 0;
+
+        labels.forEach((label, index) => {
+            var image = new Image();
+            image.src = label.img;
+            image.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === labels.length) {
+                    drawChart();
                 }
-            }
+            };
+            images.push(image);
+        });
+
+        function drawChart() {
+            barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(label => label.text),
+                    datasets: [{
+                        backgroundColor: ["#8D7CB3", "#83A1B5", "#B39F7F", "#98B681", "#AE7E8A"],
+                        data: [25, 62, 39, 43, 58]
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'My Whole Mood',
+                            align: 'center',
+                            font: {
+                                size: 20,
+                                weight: 'normal'
+                            },
+                            padding: 20
+                        },
+                        legend: {
+                            display: false
+                        },
+                    },
+                    layout: {
+                        padding: {
+                            left: 30
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            title: {
+                                display: true,
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                display: true,
+                                callback: function(value, index) {
+                                    return '';
+                                }
+                            },
+                            barPercentage: 0.6,
+                            categoryPercentage: 1.8
+                        }
+                    }
+                },
+                plugins: [{
+                    afterDraw: chart => {
+                        var ctx = chart.ctx;
+                        chart.data.labels.forEach((label, index) => {
+                            var image = images[index];
+                            var y = chart.scales.y.getPixelForValue(index) - 15;
+                            var x = chart.scales.x.left - 40;
+                            ctx.drawImage(image, x, y, 30, 30);
+                        });
+                    }
+                }]
+            });
         }
-    });
     }
+
+    function displayLineChart() {
+            if (window.lineChart) {
+                window.lineChart.destroy();
+            }
+
+            var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
+            lineChartCanvas.height = 240;
+            lineChartCanvas.width = 400;
+
+            window.lineChart = new Chart(lineChartCanvas, {
+                type: 'line',
+                data: {
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    datasets: [{
+                        data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
+                        label: "😀",
+                        borderColor: "#8D7CB3",
+                        fill: false,
+                    }, {
+                        data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
+                        label: "😎",
+                        borderColor: "#83A1B5",
+                        fill: false
+                    }, {
+                        data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
+                        label: "😮",
+                        borderColor: "#B39F7F",
+                        fill: false
+                    }, {
+                        data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
+                        label: "😐",
+                        borderColor: "#98B681",
+                        fill: false
+                    }, {
+                        data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
+                        label: "😢",
+                        borderColor: "#AE7E8A",
+                        fill: false
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '  Tracking My Mood',
+                            font: {
+                                size: 20,
+                                weight: 'normal'
+                            },
+                            padding: 20
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                    y: {
+                        ticks: {
+                            display: false // y축 숫자 제거
+                            }
+                        }
+                    }
+                }
+            });
+        }
     </script>
 
 </body>
