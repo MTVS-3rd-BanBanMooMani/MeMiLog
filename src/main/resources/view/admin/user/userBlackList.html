@@ -18,12 +18,14 @@
     <style>
         .arrow-buttons {
             text-align: center;
-            margin-top:150px;
+            margin-top: 150px;
         }
+
         .arrow-buttons button {
             display: block;
             margin: 10px auto;
         }
+
         .dashboard-content .col-xl-2 {
             max-width: 75px;
         }
@@ -39,107 +41,19 @@
 <div class="dashboard-main-wrapper">
     <div class="dashboard-header">
         <nav class="navbar navbar-expand-lg bg-white fixed-top">
-            <a class="navbar-brand" href="../index.html">ME MISSION LOG</a>
+            <a class="navbar-brand" href="index.html">Me Mission Log</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto navbar-right-top">
-                    <li class="nav-item">
-                        <div id="custom-search" class="top-search-bar">
-                            <input class="form-control" type="text" placeholder="Search..">
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown notification">
-                        <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
-                        <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
-                            <li>
-                                <div class="notification-title"> Notification</div>
-                                <div class="notification-list">
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item list-group-item-action active">
-                                            <div class="notification-info">
-                                                <div class="notification-list-user-img"><img src="../../../assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
-                                                    <div class="notification-date">2 min ago</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                            <div class="notification-info">
-                                                <div class="notification-list-user-img"><img src="../../../assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                <div class="notification-list-user-block"><span class="notification-list-user-name">
-John Abraham</span>is now following you
-                                                    <div class="notification-date">2 days ago</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                            <div class="notification-info">
-                                                <div class="notification-list-user-img"><img src="../../../assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                <div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> is watching your main repository
-                                                    <div class="notification-date">2 min ago</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                            <div class="notification-info">
-                                                <div class="notification-list-user-img"><img src="../../../assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                <div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
-                                                    <div class="notification-date">2 min ago</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="list-footer"> <a href="#">View all notifications</a></div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown connection">
-                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
-                        <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
-                            <li class="connection-list">
-                                <div class="row">
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/github.png" alt="" > <span>Github</span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/dribbble.png" alt="" > <span>Dribbble</span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/dropbox.png" alt="" > <span>Dropbox</span></a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/bitbucket.png" alt=""> <span>Bitbucket</span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/mail_chimp.png" alt="" ><span>Mail chimp</span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                        <a href="#" class="connection-item"><img src="../../../assets/images/slack.png" alt="" > <span>Slack</span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="conntection-footer"><a href="#">More</a></div>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="nav-item dropdown nav-user">
                         <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                             <div class="nav-user-info">
-                                <h5 class="mb-0 text-white nav-user-name">
-                                    John Abraham</h5>
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
                                 <span class="status"></span><span class="ml-2">Available</span>
                             </div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>
                             <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                         </div>
                     </li>
@@ -170,9 +84,6 @@ John Abraham</span>is now following you
                                         <a class="nav-link" href="./userDashboard.html">Dashboard</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="./userTotal.html">Total User</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link" href="./userBlackList.html">BlackList</a>
                                     </li>
                                 </ul>
@@ -195,14 +106,14 @@ John Abraham</span>is now following you
                             </div>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Declaration</a>
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Report</a>
                             <div id="submenu-4" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="../declaration/declarationDashboard.html">Dashboard</a>
+                                        <a class="nav-link" href="../report/reportDashboard.html">Dashboard</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="../declaration/declarationTotal.html">Total Declaration</a>
+                                        <a class="nav-link" href="../report/reportTotal.html">Total Report</a>
                                     </li>
                                 </ul>
                             </div>
@@ -213,7 +124,7 @@ John Abraham</span>is now following you
         </div>
     </div>
     <div class="dashboard-wrapper">
-        <div class="container-fluid  dashboard-content">
+        <div class="container-fluid dashboard-content">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
@@ -232,56 +143,62 @@ John Abraham</span>is now following you
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header">총 회원</h5>
+                        <h5 class="card-header">활동 정지 회원</h5>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="total-users-table" class="table table-striped table-bordered first">
+                                <table id="suspended-users-table" class="table table-striped table-bordered first">
                                     <thead>
                                     <tr>
-                                        <th><input type="checkbox" id="checkAll"></th>
+                                        <th><input type="checkbox" id="checkAllSuspended"></th>
                                         <th>이름</th>
                                         <th>닉네임</th>
                                         <th>나이 대</th>
-                                        <th>신고횟수</th>
+                                        <th>신고 누적 횟수</th>
+                                        <th>남은 정지 기간</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>fiber Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>40</td>
-                                        <td>61</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>김철수</td>
+                                        <td>철수킹</td>
+                                        <td>30대</td>
+                                        <td>5</td>
+                                        <td>10일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>wontkd Winters</td>
-                                        <td>Accountant</td>
-                                        <td>30</td>
-                                        <td>63</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>이영희</td>
+                                        <td>영희짱</td>
+                                        <td>20대</td>
+                                        <td>3</td>
+                                        <td>20일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>qnfkld Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>50</td>
-                                        <td>66</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>박민수</td>
+                                        <td>민수짱</td>
+                                        <td>40대</td>
+                                        <td>7</td>
+                                        <td>5일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>qnltd Kelly</td>
-                                        <td>Senior Javascript Developer</td>
-                                        <td>20</td>
-                                        <td>22</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>홍길동</td>
+                                        <td>길동이</td>
+                                        <td>30대</td>
+                                        <td>2</td>
+                                        <td>15일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>qnflksn Bartlett</td>
-                                        <td>Technical Author</td>
-                                        <td>10</td>
-                                        <td>27</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>최미영</td>
+                                        <td>미영이</td>
+                                        <td>20대</td>
+                                        <td>4</td>
+                                        <td>12일</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -289,60 +206,56 @@ John Abraham</span>is now following you
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12 arrow-buttons">
-                    <button id="toBlacklist" class="btn btn-primary">→</button>
-                    <button id="toTotalUsers" class="btn btn-secondary">←</button>
-                </div>
-                <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header">블랙 회원</h5>
+                        <h5 class="card-header">블랙 리스트 회원</h5>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="blacklist-table" class="table table-striped table-bordered first">
+                                <table id="blacklist-users-table" class="table table-striped table-bordered first">
                                     <thead>
                                     <tr>
-                                        <td><input type="checkbox" id="checkAll1"></td>
+                                        <th><input type="checkbox" id="checkAllBlacklist"></th>
                                         <th>이름</th>
                                         <th>닉네임</th>
                                         <th>나이 대</th>
-                                        <th>신고횟수</th>
+                                        <th>영구 정지 날짜</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>40</td>
-                                        <td>61</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김영수</td>
+                                        <td>영수킹</td>
+                                        <td>40대</td>
+                                        <td>2023-06-01</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>30</td>
-                                        <td>63</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>박지민</td>
+                                        <td>지민짱</td>
+                                        <td>30대</td>
+                                        <td>2023-07-15</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>Ashton Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>50</td>
-                                        <td>66</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>이서연</td>
+                                        <td>서연이</td>
+                                        <td>20대</td>
+                                        <td>2023-08-20</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>Cedric Kelly</td>
-                                        <td>Senior Javascript Developer</td>
-                                        <td>20</td>
-                                        <td>22</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>최준영</td>
+                                        <td>준영이</td>
+                                        <td>30대</td>
+                                        <td>2023-09-05</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItem small-checkbox"></td>
-                                        <td>Prescott Bartlett</td>
-                                        <td>Technical Author</td>
-                                        <td>10</td>
-                                        <td>27</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김민지</td>
+                                        <td>민지짱</td>
+                                        <td>20대</td>
+                                        <td>2023-10-12</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -371,6 +284,17 @@ John Abraham</span>is now following you
             <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
             <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
             <script src="../../../documentation/js/userblack.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#checkAllSuspended').click(function() {
+                        $('.checkItemSuspended').prop('checked', this.checked);
+                    });
+
+                    $('#checkAllBlacklist').click(function() {
+                        $('.checkItemBlacklist').prop('checked', this.checked);
+                    });
+                });
+            </script>
         </div>
         <div class="footer">
             <div class="container-fluid">

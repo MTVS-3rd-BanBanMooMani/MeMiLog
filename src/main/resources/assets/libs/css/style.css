@@ -1944,7 +1944,9 @@ Container / Wrapper
     position: relative;
     left: 0;
     margin-left: 264px;
-    min-height: 870px !important;
+    min-height: calc(100vh - 50px); /* Adjust the height to account for the footer */
+    box-sizing: border-box;
+    padding-bottom: 50px; /* Add padding to prevent content from being hidden behind the footer */
 }
 
 .dashboard-content {
@@ -2064,7 +2066,6 @@ Pageheader
     color: #71748d;
     background-color: #fff;
     width: 100%;
-    /*position: absolute; bottom: 0;*/
 }
 
 .footer-links {}

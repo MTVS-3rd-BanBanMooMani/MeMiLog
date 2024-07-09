@@ -11,308 +11,253 @@
     <title>Admin - Me Mission Log</title>
 </head>
 <body>
-    <div class="dashboard-main-wrapper">
-        <div class="dashboard-header">
-            <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="index.html">Me Mission Log</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<div class="dashboard-main-wrapper">
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" href="index.html">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+                                <span class="status"></span><span class="ml-2">Available</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-right-top">
-                        <li class="nav-item dropdown notification">
-                            <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
-                            <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
-                                <li>
-                                    <div class="notification-title"> Notification</div>
-                                    <div class="notification-list">
-                                        <div class="list-group">
-                                            <a href="#" class="list-group-item list-group-item-action active">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham </span>is now following you
-                                                        <div class="notification-date">2 days ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> is watching your main repository
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="notification-info">
-                                                    <div class="notification-list-user-img"><img src="../../../assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-                                                    <div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
-                                                        <div class="notification-date">2 min ago</div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="list-footer"> <a href="#">View all notifications</a></div>
-                                </li>
-                            </ul>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
                         </li>
-                        <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
-                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-                                <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
-                                    <span class="status"></span><span class="ml-2">Available</span>
-                                </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-user-circle"></i>User Management</a>
+                            <div id="submenu-2" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="../user/userDashboard.html">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="../user/userBlackList.html">BlackList</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-image"></i>Post Management</a>
+                            <div id="submenu-3" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="../post/postDashboard.html">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="../post/postTotal.html">Total Posts</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="../post/postHidden.html">Hidden Posts</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                            <div id="submenu-4" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="./reportDashboard.html">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="./reportTotal.html">Total Report</a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
         </div>
+    </div>
 
-        <div class="nav-left-sidebar sidebar-dark">
-            <div class="menu-list">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav flex-column">
-                            <li class="nav-divider">
-                                Menu
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-user-circle"></i>User Management</a>
-                                <div id="submenu-2" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../user/userDashboard.html">Dashboard</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../user/userTotal.html">Total User</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../user/userBlackList.html">BlackList</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-image"></i>Post Management</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../post/postDashboard.html">Dashboard</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../post/postTotal.html">Total Posts</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="../post/postHidden.html">Hidden Posts</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Report</a>
-                                <div id="submenu-4" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="./reportDashboard.html">Dashboard</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="./reportTotal.html">Total Report</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-
-        <div class="dashboard-wrapper">
-            <div class="dashboard-finance">
-                <div class="container-fluid dashboard-content">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="page-header">
-                                <h3 class="mb-2">Total Report </h3>
-                            </div>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+            <div class="container-fluid dashboard-content">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h3 class="mb-2">Total Report </h3>
                         </div>
                     </div>
-                    
-                    <div class="table-header">
-                        <span class="left-text">블라인드 처리 시 해당 게시글은 즉각 비공개 게시물로 전환됩니다.</span>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="닉네임으로 검색">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
+                </div>
+
+                <div class="table-header">
+                    <span class="left-text">블라인드 처리 시 해당 게시글은 즉각 비공개 게시물로 전환됩니다.</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="닉네임으로 검색">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
-                
+                </div>
 
-                    <div class="report-table">
-                        <table id="reportTable" class="table table-hover bg-white">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">신고번호</th>
-                                <th scope="col">닉네임</th>
-                                <th scope="col">내용</th>
-                                <th scope="col">신고일</th>
-                                <th scope="col">처리여부</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>신고합니다.</td>
-                                <td>2024-08-12</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                <td>2024-12-03</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>스팸 메세지 그만 보게 해주세요.</td>
-                                <td>2024-05-03</td>
-                                <td>N</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">4</th>
-                                <td>Mark</td>
-                                <td>신고합니다.</td>
-                                <td>2024-08-12</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">5</th>
-                                <td>Jacob</td>
-                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                <td>2024-12-03</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">6</th>
-                                <td>Larry</td>
-                                <td>스팸 메세지 그만 보게 해주세요.</td>
-                                <td>2024-05-03</td>
-                                <td>N</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">7</th>
-                                <td>Mark</td>
-                                <td>신고합니다.</td>
-                                <td>2024-08-12</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">8</th>
-                                <td>Jacob</td>
-                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                <td>2024-12-03</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">9</th>
-                                <td>Larry</td>
-                                <td>스팸 메세지 그만 보게 해주세요.</td>
-                                <td>2024-05-03</td>
-                                <td>N</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">10</th>
-                                <td>Mark</td>
-                                <td>신고합니다.</td>
-                                <td>2024-08-12</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">11</th>
-                                <td>Jacob</td>
-                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                <td>2024-12-03</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">12</th>
-                                <td>Larry</td>
-                                <td>스팸 메세지 그만 보게 해주세요.</td>
-                                <td>2024-05-03</td>
-                                <td>N</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">13</th>
-                                <td>Mark</td>
-                                <td>신고합니다.</td>
-                                <td>2024-08-12</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">14</th>
-                                <td>Jacob</td>
-                                <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                <td>2024-12-03</td>
-                                <td>Y</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">15</th>
-                                <td>Larry</td>
-                                <td>스팸 메세지 그만 보게 해주세요.</td>
-                                <td>2024-05-03</td>
-                                <td>N</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
+                <div class="report-table">
+                    <table id="reportTable" class="table table-hover table-striped bg-white">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">신고번호</th>
+                            <th scope="col">닉네임</th>
+                            <th scope="col">내용</th>
+                            <th scope="col">신고일</th>
+                            <th scope="col">처리여부</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>신고합니다.</td>
+                            <td>2024-08-12</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                            <td>2024-12-03</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>스팸 메세지 그만 보게 해주세요.</td>
+                            <td>2024-05-03</td>
+                            <td>N</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>Mark</td>
+                            <td>신고합니다.</td>
+                            <td>2024-08-12</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td>Jacob</td>
+                            <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                            <td>2024-12-03</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">6</th>
+                            <td>Larry</td>
+                            <td>스팸 메세지 그만 보게 해주세요.</td>
+                            <td>2024-05-03</td>
+                            <td>N</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">7</th>
+                            <td>Mark</td>
+                            <td>신고합니다.</td>
+                            <td>2024-08-12</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">8</th>
+                            <td>Jacob</td>
+                            <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                            <td>2024-12-03</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">9</th>
+                            <td>Larry</td>
+                            <td>스팸 메세지 그만 보게 해주세요.</td>
+                            <td>2024-05-03</td>
+                            <td>N</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">10</th>
+                            <td>Mark</td>
+                            <td>신고합니다.</td>
+                            <td>2024-08-12</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">11</th>
+                            <td>Jacob</td>
+                            <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                            <td>2024-12-03</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">12</th>
+                            <td>Larry</td>
+                            <td>스팸 메세지 그만 보게 해주세요.</td>
+                            <td>2024-05-03</td>
+                            <td>N</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">13</th>
+                            <td>Mark</td>
+                            <td>신고합니다.</td>
+                            <td>2024-08-12</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">14</th>
+                            <td>Jacob</td>
+                            <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
+                            <td>2024-12-03</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">15</th>
+                            <td>Larry</td>
+                            <td>스팸 메세지 그만 보게 해주세요.</td>
+                            <td>2024-05-03</td>
+                            <td>N</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div id="reportDetailModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close" onclick="closeModal('reportDetailModal')">&times;</span>
-                                <h2>신고 내용</h2>
-                                <div class="modal-body">
-                                    <p id="reportDetailContent"></p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button id="hideButton">블라인드 처리</button>
-                                </div>
+                <div id="reportDetailModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('reportDetailModal')">&times;</span>
+                        <h2>신고 내용</h2>
+                        <div class="modal-body">
+                            <p id="reportDetailContent"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="hideButton">블라인드 처리</button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="pagination">
-                        <nav class="pagination-container">
-                            <div class="pagination">
-                                    <a class="pagination-newer" href="#">PREV</a>
-                                    <span class="pagination-inner">
+                <div class="pagination">
+                    <nav class="pagination-container">
+                        <div class="pagination">
+                            <a class="pagination-newer" href="#">PREV</a>
+                            <span class="pagination-inner">
                                         <a href="#">1</a>
                                         <a href="#">2</a>
                                         <a href="#">3</a>
@@ -322,41 +267,41 @@
                                         <a href="#">7</a>
                                         <a href="#">8</a>
                                         <a href="#">9</a>
-                                        <a href="#">10</a> 
+                                        <a href="#">10</a>
                                     </span>
-                                    <a class="pagination-older" href="#">NEXT</a>
-                            </div>
-                        </nav>
-                    </div>
+                            <a class="pagination-older" href="#">NEXT</a>
+                        </div>
+                    </nav>
                 </div>
             </div>
-        
-            <div class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>. 
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript: void(0);">About</a>
-                                <a href="javascript: void(0);">Support</a>
-                                <a href="javascript: void(0);">Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
         </div>
-        
+
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  
-    <script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-    <script src="../../../assets/libs/js/main-js.js"></script>
-    <script>
+
+</div>
+
+<script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<script src="../../../assets/libs/js/main-js.js"></script>
+<script>
     $(function() {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
@@ -364,43 +309,42 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
-    </script>
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = "block";
-        }
-    
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
-        }
-    
-        $("#reportTable").on('click', 'tbody tr', function () {
-            var reportId = $(this).find("th").text();
-            var nickname = $(this).find("td:eq(0)").text();
-            var content = $(this).find("td:eq(1)").text();
-            var reportDate = $(this).find("td:eq(2)").text();
-            var status = $(this).find("td:eq(3)").text();
-    
-            var reportDetailContent = `
-                <p><strong>신고번호:</strong> ${reportId}</p>
-                <p><strong>닉네임:</strong> ${nickname}</p>
-                <p><strong>내용:</strong> ${content}</p>
-                <p><strong>신고일:</strong> ${reportDate}</p>
-                <p><strong>처리여부:</strong> ${status}</p>
-            `;
-    
-            document.getElementById("reportDetailContent").innerHTML = reportDetailContent;
-    
-            openModal('reportDetailModal');
-        });
-    
-        function hidePost() {
-            alert('블라인드 처리가 완료되었습니다.');
-            closeModal('reportDetailModal');
-        }
-    
-        document.getElementById("hideButton").addEventListener("click", hidePost);
-    </script>
-    
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    $("#reportTable").on('click', 'tbody tr', function () {
+        var reportId = $(this).find("th").text();
+        var nickname = $(this).find("td:eq(0)").text();
+        var content = $(this).find("td:eq(1)").text();
+        var reportDate = $(this).find("td:eq(2)").text();
+        var status = $(this).find("td:eq(3)").text();
+
+        var reportDetailContent = `
+            <p><strong>신고번호:</strong> ${reportId}</p>
+            <p><strong>닉네임:</strong> ${nickname}</p>
+            <p><strong>내용:</strong> ${content}</p>
+            <p><strong>신고일:</strong> ${reportDate}</p>
+            <p><strong>처리여부:</strong> ${status}</p>
+        `;
+
+        document.getElementById("reportDetailContent").innerHTML = reportDetailContent;
+
+        openModal('reportDetailModal');
+    });
+
+    function hidePost() {
+        alert('블라인드 처리가 완료되었습니다.');
+        closeModal('reportDetailModal');
+    }
+
+    document.getElementById("hideButton").addEventListener("click", hidePost);
+</script>
+
 </body>
 </html>
