@@ -9,7 +9,25 @@ $(function() {
     
     // ============================================================== 
     // Revenue Cards
-    // ============================================================== 
+    // ==============================================================
+
+
+
+    $("#sparkline-revenue0").sparkline([2, 2.3, 3.4, 4.3, 4.0, 5, 5.9, 6.7, 7.0, 8.9, 8.6, 9], {
+        type: 'line',
+        width: '99.5%',
+        height: '100',
+        lineColor: '#000000',
+        fillColor: '',
+        lineWidth: 2,
+        spotColor: undefined,
+        minSpotColor: undefined,
+        maxSpotColor: undefined,
+        highlightSpotColor: undefined,
+        highlightLineColor: undefined,
+        resize:true
+    });
+
     $("#sparkline-revenue").sparkline([5, 5, 7, 7, 9, 5, 3, 5, 2, 4, 6, 7], {
         type: 'line',
         width: '99.5%',
@@ -24,7 +42,6 @@ $(function() {
         highlightLineColor: undefined,
         resize:true
     });
-
 
 
     $("#sparkline-revenue2").sparkline([3, 7, 6, 4, 5, 4, 3, 5, 5, 2, 3, 1], {

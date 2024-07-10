@@ -21,6 +21,11 @@
             margin-top: 150px;
         }
 
+        .table-controls {
+            text-align: right;
+            margin: 10px 0;
+        }
+
         .arrow-buttons button {
             display: block;
             margin: 10px auto;
@@ -61,68 +66,38 @@
             </div>
         </nav>
     </div>
+
     <div class="nav-left-sidebar sidebar-dark">
         <div class="menu-list">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                <a class="d-xl-none d-lg-none" href="../admin.html">Dashboard</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-column">
-                        <li class="nav-divider">
-                            Menu
-                        </li>
+                        <li class="nav-divider">Menu</li>
                         <li class="nav-item ">
                             <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-user-circle"></i>User Management</a>
-                            <div id="submenu-2" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./userDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./userBlackList.html">BlackList</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a class="nav-link" href="../user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-image"></i>Post Management</a>
-                            <div id="submenu-3" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../post/postDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../post/postTotal.html">Total Posts</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../post/postHidden.html">Hidden Posts</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a class="nav-link" href="../cause/point.html"><i class="fas fa-fw fa-image"></i>Ban Points</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Report</a>
-                            <div id="submenu-4" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../report/reportDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="../report/reportTotal.html">Total Report</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </div>
     </div>
+
     <div class="dashboard-wrapper">
         <div class="container-fluid dashboard-content">
             <div class="row">
@@ -130,15 +105,6 @@
                     <div class="page-header">
                         <h2 class="pageheader-title">Data Tables</h2>
                         <p class="pageheader-text"></p>
-                        <div class="page-breadcrumb">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Tables</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
-                                </ol>
-                            </nav>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -202,6 +168,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div class="table-controls">
+                                    <button id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -286,12 +255,30 @@
             <script src="../../../documentation/js/userblack.js"></script>
             <script>
                 $(document).ready(function() {
+                    var suspendedTable = $('#suspended-users-table').DataTable({
+                        // DataTable 옵션을 여기에 추가하십시오.
+                    });
+
+                    var blacklistTable = $('#blacklist-users-table').DataTable({
+                        // DataTable 옵션을 여기에 추가하십시오.
+                    });
+
                     $('#checkAllSuspended').click(function() {
                         $('.checkItemSuspended').prop('checked', this.checked);
                     });
 
                     $('#checkAllBlacklist').click(function() {
                         $('.checkItemBlacklist').prop('checked', this.checked);
+                    });
+
+                    $('#moveToBlacklist').click(function() {
+                        $('#suspended-users-table tbody tr').each(function() {
+                            if ($(this).find('.checkItemSuspended').is(':checked')) {
+                                var row = suspendedTable.row(this).data();
+                                blacklistTable.row.add(row).draw();
+                                suspendedTable.row(this).remove().draw();
+                            }
+                        });
                     });
                 });
             </script>

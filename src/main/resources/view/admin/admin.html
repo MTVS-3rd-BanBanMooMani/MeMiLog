@@ -62,53 +62,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-column">
-                        <li class="nav-divider">
-                            Menu
-                        </li>
+                        <li class="nav-divider">Menu</li>
                         <li class="nav-item ">
                             <a class="nav-link active" href="./admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-user-circle"></i>User Management</a>
-                            <div id="submenu-2" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./user/userDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./user/userBlackList.html">BlackList</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a class="nav-link" href="./user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-fw fa-image"></i>Post Management</a>
-                            <div id="submenu-3" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./post/postDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./post/postTotal.html">All Posts</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./post/postHidden.html">Hidden Posts</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a class="nav-link" href="./cause/point.html"><i class="fas fa-fw fa-image"></i>Ban Points</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fas fa-fw fa-file-excel"></i>Report</a>
-                            <div id="submenu-4" class="collapse submenu" style="">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./report/reportDashboard.html">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="./report/reportTotal.html">Total Report</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
                         </li>
                     </ul>
                 </div>
@@ -132,13 +100,6 @@
                         <div class="page-header">
                             <h3 class="mb-2">Dashboard </h3>
                             <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                            <div class="page-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
-                                    </ol>
-                                </nav>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,10 +109,29 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
+                            <h5 class="card-header">전체 회원 수 추이</h5>
+                            <div class="card-body">
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">35,902</h1>
+                                </div>
+                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">4%</span>
+                                </div>
+                            </div>
+                            <div class="card-body bg-light p-t-40 p-b-30">
+                                <div id="sparkline-revenue0"></div>
+                            </div>
+                            <div class="card-footer text-center bg-white">
+                                <a href="#" class="card-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
                             <h5 class="card-header">오늘 접속자 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">79,000</h1>
+                                    <h1 class="mb-1">6776</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">25%</span>
@@ -170,7 +150,7 @@
                             <h5 class="card-header">오늘 등록된 포스트 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">79,000</h1>
+                                    <h1 class="mb-1">3752</h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">15%</span>
@@ -181,6 +161,14 @@
                             </div>
                             <div class="card-footer text-center bg-white">
                                 <a href="#" class="card-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">연령대 총 회원</h5>
+                            <div class="card-body">
+                                <div id="ct-chart2" class="ct-chart ct-golden-section"></div>
                             </div>
                         </div>
                     </div>
@@ -308,5 +296,6 @@
         });
     });
 </script>
+<script src="../../documentation/js/userdashboard.js"></script>
 </body>
 </html>
