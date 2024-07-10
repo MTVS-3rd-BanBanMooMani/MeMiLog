@@ -115,6 +115,7 @@
                 <div class="row mb-3">
                     <div class="col text-right">
                         <button class="btn btn-success" data-toggle="modal" data-target="#addReasonModal">Add New Reason</button>
+                        <button class="btn btn-danger" onclick="deleteSelectedReasons()">Delete Selected Reasons</button>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -128,29 +129,37 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
+                                <th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxes(this)"></th>
                                 <th scope="col">사유</th>
                                 <th scope="col">점수</th>
+                                <th scope="col">활동 정지 일수</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody id="banReasonTableBody">
                             <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
                                 <td>정치</td>
                                 <td><input type="number" class="form-control score" value="5"></td>
+                                <td><input type="number" class="form-control days" value="7"></td>
                                 <td>
                                     <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                                 </td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
                                 <td>광고</td>
                                 <td><input type="number" class="form-control score" value="3"></td>
+                                <td><input type="number" class="form-control days" value="5"></td>
                                 <td>
                                     <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                                 </td>
                             </tr>
                             <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
                                 <td>욕설</td>
                                 <td><input type="number" class="form-control score" value="4"></td>
+                                <td><input type="number" class="form-control days" value="10"></td>
                                 <td>
                                     <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                                 </td>
@@ -217,6 +226,10 @@
                         <label for="score">점수</label>
                         <input type="number" class="form-control" id="score" required>
                     </div>
+                    <div class="form-group">
+                        <label for="days">활동 정지 일수</label>
+                        <input type="number" class="form-control" id="days" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
@@ -236,13 +249,45 @@
 <script>
     function saveChanges(buttonElement) {
         var row = buttonElement.closest('tr');
-        var reason = row.cells[0].innerText;
+        var reason = row.cells[1].innerText;
         var score = row.querySelector('.score').value;
+        var days = row.querySelector('.days').value;
 
         // Do something with the updated values, for example, send to server
-        console.log('Updated Reason:', reason, 'Updated Score:', score);
+        console.log('Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
 
-        alert('Ban reason "' + reason + '" updated to score: ' + score);
+        alert('Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
+    }
+
+    function deleteReason(buttonElement) {
+        var row = buttonElement.closest('tr');
+        var reason = row.cells[1].innerText;
+
+        // Remove the row from the table
+        row.remove();
+
+        // Do something with the deleted reason, for example, send to server
+        console.log('Deleted Reason:', reason);
+
+        alert('Ban reason "' + reason + '" has been deleted.');
+    }
+
+    function selectAllCheckboxes(selectAllCheckbox) {
+        var checkboxes = document.querySelectorAll('.selectReason');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    function deleteSelectedReasons() {
+        var checkboxes = document.querySelectorAll('.selectReason:checked');
+        checkboxes.forEach(function(checkbox) {
+            var row = checkbox.closest('tr');
+            var reason = row.cells[1].innerText;
+            row.remove();
+            console.log('Deleted Reason:', reason);
+        });
+        alert('Selected reasons have been deleted.');
     }
 
     document.getElementById('addReasonForm').addEventListener('submit', function(event) {
@@ -250,11 +295,14 @@
 
         var reason = document.getElementById('reason').value;
         var score = document.getElementById('score').value;
+        var days = document.getElementById('days').value;
 
         var newRow = `
                 <tr>
+                    <td><input type="checkbox" class="selectReason"></td>
                     <td>${reason}</td>
                     <td><input type="number" class="form-control score" value="${score}"></td>
+                    <td><input type="number" class="form-control days" value="${days}"></td>
                     <td>
                         <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                     </td>
