@@ -18,207 +18,299 @@
     <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css">
     <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
-    
+
     <title>Admin - Me Mission Log</title>
 </head>
 <body>
+<!-- ============================================================== -->
+<!-- main wrapper -->
+<!-- ============================================================== -->
+<div class="dashboard-main-wrapper">
     <!-- ============================================================== -->
-    <!-- main wrapper -->
+    <!-- navbar -->
     <!-- ============================================================== -->
-    <div class="dashboard-main-wrapper">
-        <!-- ============================================================== -->
-        <!-- navbar -->
-        <!-- ============================================================== -->
-        <div class="dashboard-header">
-            <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="index.html">Me Mission Log</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" href="index.html">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+                                <span class="status"></span><span class="ml-2">Available</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end navbar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- left sidebar -->
+    <!-- ============================================================== -->
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" href="../admin.html">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto navbar-right-top">
-                        <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
-                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-                                <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
-                                    <span class="status"></span><span class="ml-2">Available</span>
-                                </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
-                            </div>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../post/postHidden.html"><i class="fas fa-fw fa-image"></i>Hidden Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </div>
-        <!-- ============================================================== -->
-        <!-- end navbar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- left sidebar -->
-        <!-- ============================================================== -->
-        <div class="nav-left-sidebar sidebar-dark">
-            <div class="menu-list">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="../admin.html">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav flex-column">
-                            <li class="nav-divider">Menu</li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../post/postHidden.html"><i class="fas fa-fw fa-image"></i>Hidden Posts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+    </div>
 
-        <!-- ============================================================== -->
-        <!-- end left sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- wrapper  -->
-        <!-- ============================================================== -->
-        <div class="dashboard-wrapper">
-            <div class="dashboard-finance">
-                <div class="container-fluid dashboard-content">
-                    <!-- ============================================================== -->
-                    <!-- pageheader  -->
-                    <!-- ============================================================== -->
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="page-header">
-                                <h3 class="mb-2">Hidden Post</h3>
-                                <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- end pageheader  -->
-                    <!-- ============================================================== -->
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="card">
-                                <h5 class="card-header">Filter</h5>
-                                <div class="card-body">
-                                    <div class="card-body">
-                                        <a href="#" class="btn btn-primary active">정치</a>
-                                        <a href="#" class="btn btn-brand active">불법광고</a>
-                                        <a href="#" class="btn btn-secondary active">지칭욕설</a>
-                                        <a href="#" class="btn btn-success active">과한노출</a>
-                                        <a href="#" class="btn btn-danger active">cate5</a>
-                                        <a href="#" class="btn btn-warning active">cate6</a>
-                                        <a href="#" class="btn btn-info active">cate7</a>
-                                        <a href="#" class="btn btn-light active">cate8</a>
-                                        <a href="#" class="btn btn-dark active">cate9</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="card">
-                                <h5 class="card-header">Hidden Post Table</h5>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered first">
-                                            <thead>
-                                                <tr>
-                                                    <th>Author</th>
-                                                    <th>Title</th>
-                                                    <th>Category</th>
-                                                    <th>Reason</th>
-                                                    <th>Start date</th>
-                                                    <th>Hidden By</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>이유</td>
-                                                    <td>2011/04/25</td>
-                                                    <td>root</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ============================================================== -->
-                        <!-- end basic table  -->
-                        <!-- ============================================================== -->
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <div class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>. 
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript: void(0);">About</a>
-                                <a href="javascript: void(0);">Support</a>
-                                <a href="javascript: void(0);">Contact Us</a>
-                            </div>
+    <!-- ============================================================== -->
+    <!-- end left sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- wrapper  -->
+    <!-- ============================================================== -->
+    <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+            <div class="container-fluid dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h3 class="mb-2">Hidden Post</h3>
+                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
                         </div>
                     </div>
                 </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Hidden Post Table</h5>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered first">
+                                        <thead>
+                                        <tr>
+                                            <th>Author</th>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Reason</th>
+                                            <th>Start date</th>
+                                            <th>Hidden By</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>정치</td><td>이유</td>
+                                                <td>2011/04/25</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>음란물</td>
+                                                <td>이유</td>
+                                                <td>2011/07/25</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td>욕설</td>
+                                                <td>이유</td>
+                                                <td>2009/01/12</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td>광고</td>
+                                                <td>이유</td>
+                                                <td>2012/03/29</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td>정치</td>
+                                                <td>이유</td>
+                                                <td>2008/11/28</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brielle Williamson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>정치</td><td>이유</td>
+                                                <td>2012/12/02</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Herrod Chandler</td>
+                                                <td>Sales Assistant</td>
+                                                <td>욕설</td>
+                                                <td>이유</td>
+                                                <td>2012/08/06</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rhona Davidson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>음란물</td>
+                                                <td>이유</td>
+                                                <td>2010/10/14</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Colleen Hurst</td>
+                                                <td>Javascript Developer</td>
+                                                <td>정치</td>
+                                                <td>이유</td>
+                                                <td>2009/09/15</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sonya Frost</td>
+                                                <td>Software Engineer</td>
+                                                <td>광고</td>
+                                                <td>이유</td>
+                                                <td>2008/12/13</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jena Gaines</td>
+                                                <td>Office Manager</td>
+                                                <td>정치</td>
+                                                <td>이유</td>
+                                                <td>2008/12/19</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>Support Lead</td>
+                                                <td>광고</td>
+                                                <td>이유</td>
+                                                <td>2013/03/03</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Charde Marshall</td>
+                                                <td>Regional Director</td>
+                                                <td>정치</td>
+                                                <td>이유</td>
+                                                <td>2008/10/16</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Haley Kennedy</td>
+                                                <td>Senior Marketing Designer</td>
+                                                <td>욕설</td>
+                                                <td>이유</td>
+                                                <td>2012/12/18</td>
+                                                <td>root</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tatyana Fitzpatrick</td>
+                                                <td>Regional Director</td>
+                                                <td>정치</td>
+                                                <td>이유</td>
+                                                <td>2010/03/17</td>
+                                                <td>root</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- end wrapper  -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end footer -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- end main wrapper  -->
+    <!-- end wrapper  -->
     <!-- ============================================================== -->
-    <!-- jquery 3.3.1  -->
-    <script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <!-- bootstap bundle js -->
-    <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <!-- slimscroll js -->
-    <script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-    <!-- sparkline js -->
-    <script src="../../../assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
-    <!-- dashboard finance js -->
-    <script src="../../../assets/libs/js/dashboard-finance.js"></script>
-    <!-- main js -->
-    <script src="../../../assets/libs/js/main-js.js"></script>
-    <!-- gauge js -->
-    <script src="../../../assets/vendor/gauge/gauge.min.js"></script>
-    <!-- morris js -->
-    <script src="../../../assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morris.js"></script>
-    <script src="../../../assets/vendor/charts/morris-bundle/morrisjs.html"></script>
-    <!-- daterangepicker js -->
-    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script>
+</div>
+<!-- ============================================================== -->
+<!-- end main wrapper  -->
+<!-- ============================================================== -->
+<!-- jquery 3.3.1  -->
+<script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+<!-- bootstap bundle js -->
+<script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<!-- slimscroll js -->
+<script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<!-- sparkline js -->
+<script src="../../../assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+<!-- dashboard finance js -->
+<script src="../../../assets/libs/js/dashboard-finance.js"></script>
+<!-- main js -->
+<script src="../../../assets/libs/js/main-js.js"></script>
+<!-- gauge js -->
+<script src="../../../assets/vendor/gauge/gauge.min.js"></script>
+<!-- morris js -->
+<script src="../../../assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+<script src="../../../assets/vendor/charts/morris-bundle/morris.js"></script>
+<script src="../../../assets/vendor/charts/morris-bundle/morrisjs.html"></script>
+<!-- daterangepicker js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
     $(function() {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
@@ -226,19 +318,19 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
-    </script>
-    <!-- data table js -->
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="../../../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-    <script src="../../../assets/vendor/datatables/js/data-table.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-    
+</script>
+<!-- data table js -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="../../../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+<script src="../../../assets/vendor/datatables/js/data-table.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
 </body>
 </html>
