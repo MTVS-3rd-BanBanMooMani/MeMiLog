@@ -371,7 +371,7 @@
 <script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
 <script src="../../../assets/vendor/datatables/js/data-table.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
@@ -424,7 +424,58 @@
         $('#searchProcessed').click(function() {
             processedTable.search($('#searchProcessedInput').val()).draw();
         });
+
+        // 처리 안 된 게시물 행 클릭 시 모달 띄우기
+        $('#unprocessedPosts tbody').on('click', 'tr', function() {
+            var data = unprocessedTable.row(this).data();
+            var modalContent = `
+                <p><strong>신고번호:</strong> ${data[1]}</p>
+                <p><strong>닉네임:</strong> ${data[2]}</p>
+                <p><strong>내용:</strong> ${data[3]}</p>
+                <p><strong>신고자:</strong> ${data[4]}</p>
+                <p><strong>신고 사유:</strong> ${data[5]}</p>
+                <p><strong>신고일:</strong> ${data[6]}</p>
+            `;
+            $('#modalBody').html(modalContent);
+            $('#detailModal').modal('show');
+        });
+
+        // 처리된 게시물 행 클릭 시 모달 띄우기
+        $('#processedPosts tbody').on('click', 'tr', function() {
+            var data = processedTable.row(this).data();
+            var modalContent = `
+                <p><strong>신고번호:</strong> ${data[1]}</p>
+                <p><strong>닉네임:</strong> ${data[2]}</p>
+                <p><strong>내용:</strong> ${data[3]}</p>
+                <p><strong>신고자:</strong> ${data[4]}</p>
+                <p><strong>신고 사유:</strong> ${data[5]}</p>
+                <p><strong>신고일:</strong> ${data[6]}</p>
+                <p><strong>처리 날짜:</strong> ${data[7]}</p>
+            `;
+            $('#modalBody').html(modalContent);
+            $('#detailModal').modal('show');
+        });
     });
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel">신고 상세 정보</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 상세 내용이 여기에 표시됩니다. -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
