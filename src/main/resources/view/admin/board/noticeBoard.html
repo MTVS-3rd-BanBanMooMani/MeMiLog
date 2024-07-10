@@ -102,7 +102,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h3 class="mb-2">공지사항 관리</h3>
+                            <h2 class="mb-2">공지사항 관리</h3>
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                 <div id="createNoticeModal" class="modal">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="createNoticeModalLabel">공지사항 작성</h5>
+                                <h2 class="modal-title">공지사항 작성</h2>
                                 <span class="close" onclick="closeModal('createNoticeModal')">&times;</span>
                             </div>
                             <div class="modal-body">
@@ -222,21 +222,59 @@
                                         <label for="noticeContent">내용</label>
                                         <textarea class="form-control" id="noticeContent" rows="5" placeholder="내용을 입력해주세요."></textarea>
                                     </div>
-                                    <button class="btn btn-primary mb-2" onclick="uploadNotice()">저장</button>
                                 </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary mb-2" onclick="uploadNotice()">저장</button>
                             </div>
                         </div>
                 </div>
 
                 <div id="noticeDetailModal" class="modal">
                     <div class="modal-content">
-                        <span class="close" onclick="closeModal('noticeDetailModal')">&times;</span>
-                        <h2>신고 내용</h2>
+                        <div class="modal-header">
+                            <span class="close" onclick="closeModal('noticeDetailModal')">&times;</span>
+                            <h2 class="modal-title">공지사항</h2>
+                        </div>
                         <div class="modal-body">
                             <p id="noticeDetailContent"></p>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-danger" onclick="hideNotice()">노출여부 수정</button>
+                            <button class="btn btn-danger" onclick="modifyNotice()">수정</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modifyNoticeModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">공지사항 수정</h2>
+                            <span class="close" onclick="closeModal('modifyNoticeModal')">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modifyTitle">제목</label>
+                                    <input type="text" class="form-control" id="modifyNoticeTitle">
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="modifyContent">내용</label>
+                                    <textarea class="form-control" id="modifyNoticeContent" rows="5"></textarea>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="noticeVisibility">노출여부</label>
+                                    <select class="form-control" id="noticeVisibility">
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button class="btn btn-primary mb-2" onclick="uploadModifiedNotice()">저장</button>
                         </div>
                     </div>
                 </div>
@@ -324,15 +362,39 @@
     });
 
     function uploadNotice() {
+        //서버에서 데이터 반영해 수정하는 로직 추가 예정
+
         alert('공지사항 등록이 완료되었습니다.');
-        $('#noticeDetailModal').modal('hide');
+        closeModal('createNoticeModal');
     }
 
-    function hideNotice() {
-        alert('비공개 처리가 완료되었습니다.');
-        $('#noticeDetailModal').modal('hide');
+    
+    function modifyNotice() {
+        closeModal('noticeDetailModal');
+        openModal('modifyNoticeModal');
+
+        let noticeTitle = document.getElementById('noticeDetailContent').querySelector('p:nth-child(2)').innerText.replace('제목: ', '');
+        let noticeContent = document.getElementById('noticeDetailContent').querySelector('p:nth-child(3)').innerText.replace('내용: ', '');
+
+        document.getElementById('modifyNoticeTitle').value = noticeTitle;
+        document.getElementById('modifyNoticeContent').value = noticeContent;
+    }
+
+    function uploadModifiedNotice() {
+        let modifyNoticeTitle = document.getElementById('modifyNoticeTitle').value;
+        let modifyNoticeContent = document.getElementById('modifyNoticeContent').value;
+        let noticeVisibility = document.getElementById('noticeVisibility').value;
+
+        if (!modifyNoticeTitle || !modifyNoticeContent) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        // 서버에 데이터 전송하는 코드 추가 예정
+
+        alert("공지사항 수정이 완료되었습니다.");
+        closeModal('modifyNoticeModal');
     }
 </script>
-
 </body>
 </html>
