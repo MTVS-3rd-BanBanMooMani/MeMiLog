@@ -1,0 +1,189 @@
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+.page-header h2 {
+    margin: 10px 0;
+    padding: 0;
+}
+
+#noticeTable {
+    font-size: 16px;
+    text-align: left;
+}
+
+#topicTable {
+    font-size: 20px;
+    text-align: center;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    width: 100%;
+}
+
+.left-text {
+    margin-right: auto;
+    padding-left: 10px;
+}
+
+.input-group {
+    width: 300px;
+    margin: 10px;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.btn-primary{
+    font-size: 16px;
+}
+
+.btn-secondary {
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.btn-secondary :active{
+    background-color: #ddd;
+    border-color: #ddd;
+    color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding-top: 50px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    font-size: 15pt;
+    text-align: center;
+    align-items: center;
+}
+
+.form-group {
+    margin: 30px 0;
+}
+
+.form-group label{
+    font-size: 24px;
+    font-weight: 400;
+    color: #000;
+}
+
+.form-group input{
+    font-size: 20px;
+    width: 300px;
+}
+
+.form-group button {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    border-top: none;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.modal-footer button:hover {
+    background-color: #333;
+}
+
+#createTopicModal .modal-content {
+    height: 70%;
+}
+
+#createTopicModal .modal-body {
+    padding: 0;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+		
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 6px 12px;
+    margin: 0 5px;
+    border-radius: 16px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination a:hover,
+.pagination-active {
+    color: #fff;
+    background-color: #2c3e50;
+}
+
+.pagination-active {
+    background-color: #2c3e50;
+}
+
+.pagination-newer,
+.pagination-older {
+    margin: 0 20px;
+}
