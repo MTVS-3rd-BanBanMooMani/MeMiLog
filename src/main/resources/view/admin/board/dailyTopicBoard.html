@@ -124,7 +124,7 @@
                 <table id="topicTable" class="table table-hover table-striped bg-white">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">주제번호</th>
+                            <th scope="col">번호</th>
                             <th scope="col">주제</th>
                             <th scope="col">태그</th>
                             <th scope="col">노출일</th>
@@ -202,6 +202,7 @@
                                 <h2 class="modal-title" id="createTopicModal">데일리미션 작성</h2>
                                 <span class="close" onclick="closeModal('createTopicModal')">&times;</span>
                             </div>
+
                             <div class="modal-body">
                                 <form>
                                     <div class="form-group">
@@ -225,12 +226,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <h3>배너 이미지</h3>
+                                        <label for="topicImg" style="font-size: smaller;">배너 이미지</label>
                                         <input type="file" class="form-control-file" id="bannerImage">
                                     </div>
-
-                                    <button class="btn btn-primary mb-2" onclick="uploadTopic()">저장</button>
                                 </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary mb-2" onclick="uploadTopic()">저장</button>
                             </div>
                         </div>
                 </div>
@@ -277,12 +280,14 @@
                             </div>
 
                             <div class="form-group">
-                                <h3>배너 이미지</h3>
+                                <label for="modifyTopicImg" style="font-size: smaller;">배너 이미지</label>
                                 <input type="file" class="form-control-file" id="modifyBannerImage">
                             </div>
-
-                            <button class="btn btn-primary mb-2" onclick="uploadModifiedTopic()">저장</button>
                         </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary mb-2" onclick="uploadModifiedTopic()">저장</button>
                     </div>
                 </div>
             </div>
@@ -362,10 +367,11 @@
         document.getElementById("topicDetailTitle").innerText = displayDate;
 
         const topicDetailContent = `
-            <p><strong>주제번호:</strong> ${topicId}</p>
-            <p><strong>내용:</strong> ${topic}</p>
+            <p><strong>주제 번호:</strong> ${topicId}</p>
+            <p><strong>주제:</strong> ${topic}</p>
             <p><strong>태그:</strong> ${tag}</p>
-            <p><strong>배너 이미지:</strong> ${image}</p>
+            <strong>배너 이미지:</strong><br>
+            <p>${image}</p>
         `;
 
         document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
