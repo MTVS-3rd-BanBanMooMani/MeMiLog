@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/libs/css/style.css">
+    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="../../../assets/vendor/vector-map/jqvmap.css">
+    <link href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/vendor/charts/chartist-bundle/chartist.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/buttons.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/select.bootstrap4.css">
+    <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css">
+    <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
+    <title>Admin - Me Mission Log</title>
+</head>
+<body>
+<!-- ============================================================== -->
+<!-- main wrapper -->
+<!-- ============================================================== -->
+<div class="dashboard-main-wrapper">
+    <!-- ============================================================== -->
+    <!-- navbar -->
+    <!-- ============================================================== -->
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" href="index.html">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+                                <span class="status"></span><span class="ml-2">Available</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end navbar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- left sidebar -->
+    <!-- ============================================================== -->
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" href="./admin.html">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="../admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../cause/point.html"><i class="fas fa-fw fa-image"></i>Ban Points</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end left sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- wrapper  -->
+    <!-- ============================================================== -->
+    <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+            <div class="container-fluid dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h3 class="mb-2">Ban Reason Management</h3>
+                            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Add New Reason Button -->
+                <!-- ============================================================== -->
+                <div class="row mb-3">
+                    <div class="col text-right">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#addReasonModal">Add New Reason</button>
+                        <button class="btn btn-danger" onclick="deleteSelectedReasons()">Delete Selected Reasons</button>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end Add New Reason Button -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Ban Reason Table -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col"><input type="checkbox" id="selectAll" onclick="selectAllCheckboxes(this)"></th>
+                                <th scope="col">사유</th>
+                                <th scope="col">점수</th>
+                                <th scope="col">활동 정지 일수</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="banReasonTableBody">
+                            <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
+                                <td>정치</td>
+                                <td><input type="number" class="form-control score" value="5"></td>
+                                <td><input type="number" class="form-control days" value="7"></td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
+                                <td>광고</td>
+                                <td><input type="number" class="form-control score" value="3"></td>
+                                <td><input type="number" class="form-control days" value="5"></td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="selectReason"></td>
+                                <td>욕설</td>
+                                <td><input type="number" class="form-control score" value="4"></td>
+                                <td><input type="number" class="form-control days" value="10"></td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end Ban Reason Table -->
+                <!-- ============================================================== -->
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end main wrapper  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Add Reason Modal -->
+<!-- ============================================================== -->
+<div class="modal fade" id="addReasonModal" tabindex="-1" aria-labelledby="addReasonModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addReasonModalLabel">Add New Ban Reason</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addReasonForm">
+                    <div class="form-group">
+                        <label for="reason">사유</label>
+                        <input type="text" class="form-control" id="reason" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="score">점수</label>
+                        <input type="number" class="form-control" id="score" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="days">활동 정지 일수</label>
+                        <input type="number" class="form-control" id="days" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- end Add Reason Modal -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- JavaScript -->
+<!-- ============================================================== -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function saveChanges(buttonElement) {
+        var row = buttonElement.closest('tr');
+        var reason = row.cells[1].innerText;
+        var score = row.querySelector('.score').value;
+        var days = row.querySelector('.days').value;
+
+        // Do something with the updated values, for example, send to server
+        console.log('Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+
+        alert('Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
+    }
+
+    function deleteReason(buttonElement) {
+        var row = buttonElement.closest('tr');
+        var reason = row.cells[1].innerText;
+
+        // Remove the row from the table
+        row.remove();
+
+        // Do something with the deleted reason, for example, send to server
+        console.log('Deleted Reason:', reason);
+
+        alert('Ban reason "' + reason + '" has been deleted.');
+    }
+
+    function selectAllCheckboxes(selectAllCheckbox) {
+        var checkboxes = document.querySelectorAll('.selectReason');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    function deleteSelectedReasons() {
+        var checkboxes = document.querySelectorAll('.selectReason:checked');
+        checkboxes.forEach(function(checkbox) {
+            var row = checkbox.closest('tr');
+            var reason = row.cells[1].innerText;
+            row.remove();
+            console.log('Deleted Reason:', reason);
+        });
+        alert('Selected reasons have been deleted.');
+    }
+
+    document.getElementById('addReasonForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var reason = document.getElementById('reason').value;
+        var score = document.getElementById('score').value;
+        var days = document.getElementById('days').value;
+
+        var newRow = `
+                <tr>
+                    <td><input type="checkbox" class="selectReason"></td>
+                    <td>${reason}</td>
+                    <td><input type="number" class="form-control score" value="${score}"></td>
+                    <td><input type="number" class="form-control days" value="${days}"></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                    </td>
+                </tr>
+            `;
+
+        document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
+        $('#addReasonModal').modal('hide');
+        document.getElementById('addReasonForm').reset();
+    });
+</script>
+</body>
+</html>
