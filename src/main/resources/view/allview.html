@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MeMissionLog</title>
+    <!-- css 초기화 -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
     />
+    <!-- 전체 레이아웃 css -->
     <link href="../documentation/css/layout.css" rel="stylesheet" />
-    <link href="../documentation/css/allview.css" rel="stylesheet" />
     <link href="../documentation/css/searchbar.css" rel="stylesheet" />
+    <link href="../documentation/css/allview.css" rel="stylesheet" />
+
     <!-- sweetalert2 -->
     <link
       href="
@@ -21,6 +24,12 @@
     <script src="
     https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js
     "></script>
+
+    <!-- animate -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
   </head>
   <body>
     <header>
@@ -31,254 +40,107 @@
         <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
         <button class="login-btn">로그인</button>
       </div>
-      <!-- 사이드바 -->
-      <div class="sidebar-open">
-        <a href="#">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgNmgtMjR2LTRoMjR2NHptMCA0aC0yNHY0aDI0di00em0wIDhoLTI0djRoMjR2LTR6Ii8+PC9zdmc+"
-          />
-        </a>
-      </div>
-      <div class="sidebar-bg"></div>
-      <div class="sidebar">
-        <div class="sidebar-close">
-          <a href="#">
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuOTU0IDIxLjAzbC05LjE4NC05LjA5NSA5LjA5Mi05LjE3NC0yLjgzMi0yLjgwNy05LjA5IDkuMTc5LTkuMTc2LTkuMDg4LTIuODEgMi44MSA5LjE4NiA5LjEwNS05LjA5NSA5LjE4NCAyLjgxIDIuODEgOS4xMTItOS4xOTIgOS4xOCA5LjF6Ii8+PC9zdmc+"
-            />
-          </a>
-        </div>
-        <div class="sidebar-content">
-          <a class="menu-btn" href="../view/allview.html">둘러보기</a>
-          <a class="menu-btn" href="../view/post.html">오늘일기</a>
-          <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
-          <button class="login-btn">로그인</button>
-        </div>
-      </div>
     </header>
     <main>
       <div class="content">
+        <!-- 검색바 -->
         <div class="search-box">
-          <input type="text" placeholder="검색" class="search-bar" />
-          <button class="search-btn">
-            <img
-              src="../documentation/img/search.png"
-              alt="search icon"
-              class="search-Img"
-            />
-          </button>
+          <input
+            type="text"
+            placeholder="찾고싶은 질문 키워드를 검색해보세요!"
+            class="search-bar"
+          />
+          <img
+            src="../documentation/img/search.png"
+            alt="search icon"
+            class="search-Img"
+          />
         </div>
-        <div class="filter-toggle">
-          <div class="filter-toggle-btn">
-            <p>카테고리</p>
-            <p class="filter-toggle-arrow">▼</p>
-          </div>
-          <div class="filter-box">
-            <div class="category">
-              <p class="category-title">테마</p>
-              <button class="category-btn">자연</button>
-              <button class="category-btn">여행</button>
-              <button class="category-btn">취미</button>
-              <button class="category-btn">일상</button>
-              <button class="category-btn">음식</button>
-              <button class="category-btn">공부</button>
-            </div>
-            <div class="category">
-              <p class="category-title">누구와</p>
-              <button class="category-btn">혼자</button>
-              <button class="category-btn">친구</button>
-              <button class="category-btn">가족</button>
-              <button class="category-btn">연인</button>
-              <button class="category-btn">동료</button>
-              <button class="category-btn">기타</button>
-            </div>
-            <div class="category">
-              <p class="category-title">언제</p>
-              <button class="category-btn">1월</button>
-              <button class="category-btn">2월</button>
-              <button class="category-btn">3월</button>
-              <button class="category-btn">4월</button>
-              <button class="category-btn">5월</button>
-              <button class="category-btn">6월</button>
-              <button class="category-btn">7월</button>
-              <button class="category-btn">8월</button>
-              <button class="category-btn">9월</button>
-              <button class="category-btn">10월</button>
-              <button class="category-btn">11월</button>
-              <button class="category-btn">12월</button>
-            </div>
-            <div class="category-result-box">
-              <button class="category-search">선택된 조건 검색하기</button>
-              <button class="category-reset">초기화</button>
-            </div>
+        <!-- 테마 선택 -->
+        <div class="category-box">
+          <span class="category-title">테마</span>
+          <button class="category-btn">자연</button>
+          <button class="category-btn">여행</button>
+          <button class="category-btn">취미</button>
+          <button class="category-btn">일상</button>
+          <button class="category-btn">음식</button>
+          <button class="category-btn">공부</button>
+        </div>
+        <div class="note-container" id="note-container"></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </main>
+    <div id="missionModal" class="modal-bg">
+      <div class="modal-container">
+        <div class="modal-function">
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-mission-container">
+          <img
+            class="modal-mission-img"
+            src="../documentation/img/banner.jpg"
+          />
+          <div>6월 20일의 미션</div>
+          <div>미미들이 생각하는 여름 낭만은?</div>
+        </div>
+        <div class="modal-mission-filter-container">
+          <div class="category-box">
+            <span class="category-title">누구와</span>
+            <button class="category-btn">나</button>
+            <button class="category-btn">친구</button>
+            <button class="category-btn">가족</button>
+            <button class="category-btn">연인</button>
+            <button class="category-btn">동료</button>
+            <button class="category-btn">반려동물</button>
           </div>
         </div>
-        <div class="board-box">
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
+        <div class="modal-photo-greed-container">
+          <div class="modal-row">
+            <div class="photo-div">
+              <img src="../documentation/img/home-post-photo.jpg" />
+              <p>잠실2동 불주먹</p>
             </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
+            <div class="photo-div">
+              <img src="../documentation/img/home-post-photo.jpg" />
+              <p>잠실2동 불주먹</p>
             </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
+            <div class="photo-div">
+              <img src="../documentation/img/home-post-photo.jpg" />
+              <p>잠실2동 불주먹</p>
             </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
+            <div class="photo-div">
+              <img src="../documentation/img/home-post-photo.jpg" />
+              <p>잠실2동 불주먹</p>
             </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
-            </div>
-          </div>
-          <div class="board">
-            <div class="board-content">
-              <img
-                src="../documentation/img/superhappy.jpg"
-                alt="게시물이미지"
-                width="100%"
-                height="135px"
-              />
-              <p class="board-nickname">망원동 망원경</p>
+            <div class="photo-div">
+              <img src="../documentation/img/home-post-photo.jpg" />
+              <p>잠실2동 불주먹</p>
             </div>
           </div>
         </div>
       </div>
-    </main>
-    <div id="modal-bg" class="modal-bg">
-      <div class="modal-content">
-        <div class="modal-btn">
-          <span class="report-btn" style="color: #ff5858">신고</span>
-          <span class="close-btn" style="font-size: 2rem">&times;</span>
+      <div class="post-modal">
+        <div class="modal-function">
+          <div class="etc-dropdown">
+            <img
+              src="../documentation/img/etc.png"
+              height="25px"
+              alt="etc이미지"
+              class="etc-img"
+            />
+            <div class="dropdown-content">
+              <span class="report-btn" style="color: red">신고</span>
+            </div>
+          </div>
+          <button class="post-modal-close-btn">&times;</button>
         </div>
-        <br />
-        <p class="modal-content-title">나의 인생 여행지는?</p>
+        <div class="post-modal-title" style="margin: 50px 0 20px 0">
+          <button class="category-btn active">여행</button>
+          <button class="category-btn active">연인</button>
+          <h1 style="font-weight: bold; font-size: 32px">
+            미미들이 생각하는 여름 낭만은?
+          </h1>
+        </div>
         <div class="modal-top">
           <div class="modal-profile">
             <img
@@ -303,22 +165,22 @@
           <div class="modal-board-img">
             <span class="arrow arrow-left hidden">&lt;</span>
             <img
-              src="../documentation/img/stone.jpg"
+              src="../documentation/img/home-post-photo.jpg"
               alt="게시물이미지"
               class="modal-image"
             />
             <img
-              src="../documentation/img/superhappy.jpg"
+              src="../documentation/img/banner.jpg"
               alt="게시물이미지"
               class="modal-image"
             />
             <img
-              src="../documentation/img/stone.jpg"
+              src="../documentation/img/home-post-photo.jpg"
               alt="게시물이미지"
               class="modal-image"
             />
             <img
-              src="../documentation/img/superhappy.jpg"
+              src="../documentation/img/banner.jpg"
               alt="게시물이미지"
               class="modal-image"
             />
@@ -328,28 +190,15 @@
             꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
             꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
             꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-          </div>
-          <div class="modal-category-box">
-            <div class="category">
-              <p class="category-title">테마</p>
-              <button class="category-btn">자연</button>
-              <button class="category-btn">여행</button>
-              <button class="category-btn">취미</button>
-              <button class="category-btn">일상</button>
-              <button class="category-btn">예시1</button>
-              <button class="category-btn">예시2</button>
-              <button class="category-btn">일상</button>
-              <button class="category-btn">미리보기</button>
-            </div>
-            <div class="category">
-              <p class="category-title">누구와</p>
-              <button class="category-btn">혼자</button>
-              <button class="category-btn">친구</button>
-              <button class="category-btn">가족</button>
-              <button class="category-btn">연인</button>
-              <button class="category-btn">동료</button>
-              <button class="category-btn">기타</button>
-            </div>
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
+            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
           </div>
         </div>
         <div class="modal-footer">
@@ -363,167 +212,7 @@
       <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
     </footer>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const boards = document.querySelectorAll(".board");
-        const modalBg = document.getElementById("modal-bg");
-        const closeBtn = document.querySelector(".close-btn");
-        const modalImages = document.querySelectorAll(".modal-image");
-        const arrowLeft = document.querySelector(".arrow-left");
-        const arrowRight = document.querySelector(".arrow-right");
-        let currentIndex = 0;
-
-        function updateArrows() {
-          if (modalImages.length <= 1) {
-            arrowLeft.classList.add("hidden");
-            arrowRight.classList.add("hidden");
-          } else {
-            arrowLeft.classList.toggle("hidden", currentIndex === 0);
-            arrowRight.classList.toggle(
-              "hidden",
-              currentIndex === modalImages.length - 1
-            );
-          }
-        }
-
-        boards.forEach((board) => {
-          board.addEventListener("click", function () {
-            modalBg.style.display = "flex";
-            updateArrows();
-          });
-        });
-
-        closeBtn.addEventListener("click", function () {
-          modalBg.style.display = "none";
-        });
-
-        window.addEventListener("click", function (event) {
-          if (event.target === modalBg) {
-            modalBg.style.display = "none";
-          }
-        });
-
-        arrowLeft.addEventListener("click", function () {
-          if (currentIndex > 0) {
-            modalImages[currentIndex].style.display = "none";
-            currentIndex--;
-            modalImages[currentIndex].style.display = "block";
-            updateArrows();
-          }
-        });
-
-        arrowRight.addEventListener("click", function () {
-          if (currentIndex < modalImages.length - 1) {
-            modalImages[currentIndex].style.display = "none";
-            currentIndex++;
-            modalImages[currentIndex].style.display = "block";
-            updateArrows();
-          }
-        });
-
-        modalImages.forEach((img, index) => {
-          img.style.display = index === currentIndex ? "block" : "none";
-        });
-        updateArrows();
-
-        const filterToggleBtn = document.querySelector(".filter-toggle-btn");
-        const filterBox = document.querySelector(".filter-box");
-        const filterArrow = document.querySelector(".filter-toggle-arrow");
-
-        filterToggleBtn.addEventListener("click", function () {
-          const isHidden = filterBox.style.display === "none";
-          filterBox.style.display = isHidden ? "block" : "none";
-          filterArrow.textContent = isHidden ? "▲" : "▼";
-        });
-
-        filterBox.style.display = "none";
-
-        // 카테고리 버튼
-        const categoryBtns = document.querySelectorAll(".category-btn");
-        const searchBtn = document.querySelector(".category-search");
-        const resetBtn = document.querySelector(".category-reset");
-
-        // 선택된 카테고리를 저장할 배열
-        const selectedCategories = [];
-
-        categoryBtns.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            // 버튼 클릭 시 선택된 카테고리 추가/제거
-            btn.classList.toggle("active");
-            if (btn.classList.contains("active")) {
-              selectedCategories.push(btn.textContent);
-            } else {
-              const index = selectedCategories.indexOf(btn.textContent);
-              if (index !== -1) {
-                selectedCategories.splice(index, 1);
-              }
-            }
-          });
-        });
-
-        // 검색 버튼
-        searchBtn.addEventListener("click", () => {
-          // 선택된 카테고리 출력
-          console.log(selectedCategories);
-          console.log("검색");
-        });
-
-        // 리셋 버튼
-        resetBtn.addEventListener("click", () => {
-          categoryBtns.forEach((btn) => {
-            btn.classList.remove("active");
-          });
-          selectedCategories.length = 0;
-          console.log("초기화");
-        });
-
-        // 삭제 버튼
-        const deleteAlert = document.querySelector(".board-delete-btn");
-
-        deleteAlert.addEventListener("click", () => {
-          Swal.fire({
-            title: "정말로 삭제하시겠습니까?",
-            // text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "gray",
-            confirmButtonText: "네, 삭제하겠습니다.",
-            cancelButtonText: "취소",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "삭제되었습니다!",
-                // text: "Your file has been deleted.",
-                icon: "success",
-              });
-            }
-          });
-        });
-
-        // 신고 버튼
-        const reportAlert = document.querySelector(".report-btn");
-
-        reportAlert.addEventListener("click", () => {
-          Swal.fire({
-            title: "신고 내용을 입력해주세요.",
-            icon: "warning",
-            input: "select",
-            inputOptions: {
-              option1: "음란물",
-              option2: "광고",
-              option3: "종교권유",
-            },
-            inputPlaceholder: "신고 사유 선택",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "gray",
-            confirmButtonText: "네, 신고하겠습니다.",
-            cancelButtonText: "취소",
-          });
-        });
-      });
-    </script>
-    <script src="../documentation/js/layout.js"></script>
+    <script src="../documentation/js/missionPost.js"></script>
+    <script src="../documentation/js/allviewModal.js"></script>
   </body>
 </html>
