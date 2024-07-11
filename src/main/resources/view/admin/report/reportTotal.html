@@ -16,6 +16,9 @@
             text-align: right;
             margin-bottom: 10px;
         }
+        .fixed-height-row {
+            height: 50px; /* 원하는 높이로 조정 */
+        }
     </style>
 </head>
 
@@ -104,7 +107,6 @@
                                 </select>
                                 <input type="text" id="searchUnprocessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchUnprocessed" class="btn btn-secondary ml-2">Search</button>
-
                             </div>
                             <div class="table-responsive">
                                 <table id="unprocessedPosts" class="table table-striped table-bordered">
@@ -114,54 +116,54 @@
                                         <th scope="col">신고번호</th>
                                         <th scope="col">닉네임</th>
                                         <th scope="col">내용</th>
-                                        <th scope="col">신고자</th>
+                                        <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
                                         <th scope="col">신고일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
                                         <th scope="row">3</th>
                                         <td>Larry</td>
                                         <td>스팸 메세지 그만 보게 해주세요.</td>
-                                        <td>Alice</td>
+                                        <td>70</td>
                                         <td>스팸</td>
                                         <td>2024-05-03</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
                                         <th scope="row">6</th>
                                         <td>Barry</td>
                                         <td>광고성 메세지입니다.</td>
-                                        <td>Bob</td>
+                                        <td>85</td>
                                         <td>광고</td>
                                         <td>2024-05-04</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
                                         <th scope="row">9</th>
                                         <td>Jane</td>
                                         <td>욕설을 사용했습니다.</td>
-                                        <td>John</td>
+                                        <td>112</td>
                                         <td>욕설</td>
                                         <td>2024-05-05</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
                                         <th scope="row">12</th>
                                         <td>Chris</td>
                                         <td>정치적 발언을 했습니다.</td>
-                                        <td>Clara</td>
+                                        <td>34</td>
                                         <td>정치</td>
                                         <td>2024-05-06</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
                                         <th scope="row">15</th>
                                         <td>Mike</td>
                                         <td>비속어를 사용했습니다.</td>
-                                        <td>Mary</td>
+                                        <td>45</td>
                                         <td>비속어</td>
                                         <td>2024-05-07</td>
                                     </tr>
@@ -189,7 +191,6 @@
                                 </select>
                                 <input type="text" id="searchProcessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchProcessed" class="btn btn-secondary ml-2">Search</button>
-
                             </div>
                             <div class="table-responsive">
                                 <table id="processedPosts" class="table table-striped table-bordered">
@@ -199,109 +200,109 @@
                                         <th scope="col">신고번호</th>
                                         <th scope="col">닉네임</th>
                                         <th scope="col">내용</th>
-                                        <th scope="col">신고자</th>
+                                        <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
                                         <th scope="col">신고일</th>
                                         <th scope="col">처리 날짜</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">1</th>
                                         <td>Mark</td>
                                         <td>신고합니다.</td>
-                                        <td>Peter</td>
+                                        <td>21</td>
                                         <td>비속어</td>
                                         <td>2024-08-12</td>
                                         <td>2024-08-13</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">2</th>
                                         <td>Jacob</td>
                                         <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Paul</td>
+                                        <td>45</td>
                                         <td>도배</td>
                                         <td>2024-12-03</td>
                                         <td>2024-12-04</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">4</th>
                                         <td>Mark</td>
                                         <td>신고합니다.</td>
-                                        <td>David</td>
+                                        <td>73</td>
                                         <td>욕설</td>
                                         <td>2024-08-12</td>
                                         <td>2024-08-13</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">5</th>
                                         <td>Jacob</td>
                                         <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>James</td>
+                                        <td>78</td>
                                         <td>도배</td>
                                         <td>2024-12-03</td>
                                         <td>2024-12-04</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">7</th>
                                         <td>Mark</td>
                                         <td>신고합니다.</td>
-                                        <td>John</td>
+                                        <td>32</td>
                                         <td>비속어</td>
                                         <td>2024-08-12</td>
                                         <td>2024-08-13</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">8</th>
                                         <td>Jacob</td>
                                         <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Robert</td>
+                                        <td>42</td>
                                         <td>도배</td>
                                         <td>2024-12-03</td>
                                         <td>2024-12-04</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">10</th>
                                         <td>Mark</td>
                                         <td>신고합니다.</td>
-                                        <td>Michael</td>
+                                        <td>24</td>
                                         <td>욕설</td>
                                         <td>2024-08-12</td>
                                         <td>2024-08-13</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">11</th>
                                         <td>Jacob</td>
                                         <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Tom</td>
+                                        <td>44</td>
                                         <td>도배</td>
                                         <td>2024-12-03</td>
                                         <td>2024-12-04</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">13</th>
                                         <td>Mark</td>
                                         <td>신고합니다.</td>
-                                        <td>Steve</td>
+                                        <td>18</td>
                                         <td>비속어</td>
                                         <td>2024-08-12</td>
                                         <td>2024-08-13</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                                         <th scope="row">14</th>
                                         <td>Jacob</td>
                                         <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Chris</td>
+                                        <td>99</td>
                                         <td>도배</td>
                                         <td>2024-12-03</td>
                                         <td>2024-12-04</td>
@@ -379,7 +380,7 @@
                     var 신고일 = $(this).find('td').eq(5).text();
                     var 처리날짜 = new Date().toISOString().split('T')[0];
                     var newRow = `
-                        <tr>
+                        <tr class="fixed-height-row">
                             <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
                             <th scope="row">${신고번호}</th>
                             <td>${닉네임}</td>
