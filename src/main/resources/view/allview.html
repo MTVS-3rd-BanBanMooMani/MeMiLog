@@ -38,7 +38,9 @@
         <a class="menu-btn" href="../view/allview.html">둘러보기</a>
         <a class="menu-btn" href="../view/post.html">오늘일기</a>
         <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
-        <button class="login-btn" onclick="location.href='./login.html'">로그인</button>
+        <button class="login-btn" onclick="location.href='./login.html'">
+          로그인
+        </button>
       </div>
     </header>
     <main>
@@ -120,8 +122,15 @@
         </div>
       </div>
       <div class="post-modal">
-        <div class="modal-function">
-          <div class="etc-dropdown">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            align-items: center;
+          "
+        >
+          <div>
             <img
               src="../documentation/img/etc.png"
               height="25px"
@@ -129,81 +138,87 @@
               class="etc-img"
             />
             <div class="dropdown-content">
-              <span class="report-btn" style="color: red">신고</span>
+              <span class="post-report-btn" style="color: red">신고</span>
+              <span class="post-edit-btn">수정</span>
+              <span class="post-delete-btn">삭제</span>
             </div>
           </div>
-          <button class="post-modal-close-btn">&times;</button>
+          <button
+            class="post-modal-close-btn"
+            style="
+              background-color: rgba(0, 0, 0, 0);
+              border: none;
+              font-size: 40px;
+              color: grey;
+              cursor: pointer;
+            "
+          >
+            &times;
+          </button>
         </div>
-        <div class="post-modal-title" style="margin: 50px 0 20px 0">
-          <button class="category-btn active">여행</button>
-          <button class="category-btn active">연인</button>
-          <h1 style="font-weight: bold; font-size: 32px">
-            미미들이 생각하는 여름 낭만은?
-          </h1>
-        </div>
-        <div class="modal-top">
-          <div class="modal-profile">
-            <img
-              src="../documentation/img/stone.jpg"
-              alt="프로필이미지"
-              width="35px"
-              height="35px"
-            />
-            <p>돌멩이</p>
+        <!-- post modal content -->
+        <div class="post-modal-content" style="display: flex">
+          <!-- post modal 왼쪽 -->
+          <div class="post-modal-left">
+            <div style="margin: 0 32px 20px 32px">
+              <div style="margin-bottom: 15px">
+                <button class="category-btn active">여행</button>
+                <button class="category-btn active">연인</button>
+              </div>
+              <p style="font-size: 24px; font-weight: bold">
+                미미들이 생각하는 여름 낭만은?
+              </p>
+            </div>
+
+            <div class="modal-board-img">
+              <span class="arrow arrow-left hidden">&lt;</span>
+              <img
+                src="../documentation/img/home-post-photo.jpg"
+                alt="게시물이미지"
+              />
+              <span class="arrow arrow-right">&gt;</span>
+            </div>
+
+            <div class="post-modal-info">
+              <div class="post-modal-profile" style="width: 90px">
+                <img
+                  src="../documentation/img/stone.jpg"
+                  alt="프로필이미지"
+                  width="35px"
+                  height="35px"
+                  style="border-radius: 50%"
+                />
+                <p>돌멩이</p>
+              </div>
+              <div class="post-modal-log-details" style="width: 180px">
+                <p>작성일: 24.06.22</p>
+                <img
+                  src="../documentation/img/colored_happy.png"
+                  alt="프로필이미지"
+                  width="25px"
+                  height="25px"
+                  style="border-radius: 50%"
+                />
+                <img
+                  src="../documentation/img/heart.png"
+                  alt="좋아요"
+                  width="30px"
+                  height="30px"
+                  class="post-like-btn"
+                  style="cursor: pointer"
+                />
+              </div>
+            </div>
+
+            <!-- ================================== -->
           </div>
-          <div class="modal-log-details">
-            <p>작성일: 24.06.22</p>
-            <img
-              src="../documentation/img/colored_happy.png"
-              alt="프로필이미지"
-              width="25px"
-              height="25px"
-            />
+
+          <!-- post modal 오른쪽 -->
+          <div class="post-modal-right">
+            <div>
+              꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
+            </div>
           </div>
-        </div>
-        <div class="modal-middle">
-          <div class="modal-board-img">
-            <span class="arrow arrow-left hidden">&lt;</span>
-            <img
-              src="../documentation/img/home-post-photo.jpg"
-              alt="게시물이미지"
-              class="modal-image"
-            />
-            <img
-              src="../documentation/img/banner.jpg"
-              alt="게시물이미지"
-              class="modal-image"
-            />
-            <img
-              src="../documentation/img/home-post-photo.jpg"
-              alt="게시물이미지"
-              class="modal-image"
-            />
-            <img
-              src="../documentation/img/banner.jpg"
-              alt="게시물이미지"
-              class="modal-image"
-            />
-            <span class="arrow arrow-right">&gt;</span>
-          </div>
-          <div class="modal-board-content">
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로강아지도걸어다닙니다
-            꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="board-submit-btn">수정하기</button>
-          <button class="board-delete-btn">삭제하기</button>
         </div>
       </div>
     </div>
