@@ -22,7 +22,7 @@
             <h1>회원가입</h1>
             <form>
                 <div class="input-group email">
-                    <label for="email">이메일</label>
+                    <label for="email-local-part">이메일</label>
                     <div class="email-container">
                         <input type="text" id="email-local-part" placeholder="이메일을 입력하세요." />
                         <div>@</div>
@@ -53,20 +53,28 @@
                     <label for="name">이름</label>
                     <input type="text" id="name" placeholder="이름을 입력하세요." />
                 </div>
-                <div class="input-group age">
-                    <label for="age">연령대</label>
-                    <select id="age" name="age">
-                        <option value="10">10대</option>
-                        <option value="20">20대</option>
-                        <option value="30">30대</option>
-                        <option value="40">40대</option>
-                        <option value="50">50대</option>
-                        <option value="60">60대 이상</option>
+                <div class="input-group birthday">
+                    <label for="year">생년월일</label>
+                    <select id="year" name="year" class="birthday-select">
+                        <option value="">년</option>
+                    </select>
+                    <select id="month" name="month" class="birthday-select">
+                        <option value="">월</option>
+                    </select>
+                    <select id="day" name="day" class="birthday-select">
+                        <option value="">일</option>
                     </select>
                 </div>
                 <div class="input-group nickname">
                     <label for="nickname">닉네임</label>
                     <input type="text" id="nickname" placeholder="닉네임을 입력하세요." />
+                </div>
+                <div class="input-group gender">
+                    <label for="gender">성별</label>
+                    <select id="gender" name="gender">
+                        <option value="men">남자</option>
+                        <option value="women">여자</option>
+                    </select>
                 </div>
                 <button type="submit" class="submit-btn">회원가입</button>
             </form>
