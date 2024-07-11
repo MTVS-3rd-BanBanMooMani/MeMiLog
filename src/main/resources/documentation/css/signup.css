@@ -82,16 +82,19 @@ body, html {
     width: 100%;
     margin: 0 auto;
 }
+.verification-timer {
+    font-size: 15px;
+    display: none;
 
+}
 .input-group.email,
 .input-group.password,
 .input-group.check,
 .input-group.name,
 .input-group.age,
-.input-group.nickname{
-    margin-bottom: 15px;
-}
-.input-group.birthday{
+.input-group.nickname,
+.input-group.birthday,
+.input-group.email-code {
     margin-bottom: 15px;
 }
 
@@ -161,19 +164,20 @@ body, html {
 
 .input-group .email-container {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
     align-items: center;
     flex-grow: 1;
     position: relative;
 }
 
 .email-container input,
-.email-container select {
+.email-container select
+.email-container small{
     flex-grow: 1;
 }
 
 .check-btn {
-    width: auto;
+    width: 135px;
     padding: 1rem;
     background-color: black;
     color: white;
@@ -213,7 +217,6 @@ body, html {
 
 .verification-message.success {
     color: blue;
-    text-align: right;
 }
 
 .verification-message.error {
@@ -256,6 +259,14 @@ body, html {
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
+.verification-message {
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: blue;
+    margin-left: auto;
+    text-align: right;
+    display: none;
+}
 
 .submit-btn {
     padding: 1rem;
@@ -277,14 +288,6 @@ input::placeholder {
     font-size: 1rem;
 }
 
-.input-group small {
-    font-size: 0.9rem;
-    color: #888;
-    display: block;
-    width: 100%;
-    margin-top: 0.5rem;
-    margin-left: calc(100px + 1rem);
-}
 
 .footer {
     padding: 10px;
