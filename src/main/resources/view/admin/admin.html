@@ -38,7 +38,7 @@
                         <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                             <div class="nav-user-info">
                                 <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
-                                <span class="status"></span><span class="ml-2">Available</span>
+                                <span class="status"></span><span class="ml-2">ja@naver.com</span>
                             </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                         </div>
@@ -64,22 +64,22 @@
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider">Menu</li>
                         <li class="nav-item ">
-                            <a class="nav-link active" href="./admin.html"><i class="fa fa-fw fa-clipboard"></i>Dashboard</a>
+                            <a class="nav-link active" href="./admin.html"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./user/userBlackList.html"><i class="fa fa-fw fa-user-circle"></i>BlackList</a>
+                            <a class="nav-link" href="./user/userBlackList.html"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./cause/point.html"><i class="fas fa-fw fa-image"></i>Ban Points</a>
+                            <a class="nav-link" href="./report/reportTotal.html"><i class="fas fa-fw fa-file-alt"></i>Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./report/reportTotal.html"><i class="fas fa-fw fa-file-excel"></i>Report</a>
+                            <a class="nav-link" href="./cause/point.html"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./board/noticeBoard.html"><i class="fas fa-fw fa-file-excel"></i>Notice</a>
+                            <a class="nav-link" href="./board/noticeBoard.html"><i class="fas fa-fw fa-database"></i>Notice</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./board/dailyTopicBoard.html"><i class="fas fa-fw fa-file-excel"></i>Mission</a>
+                            <a class="nav-link" href="./board/dailyTopicBoard.html"><i class="fas fa-fw fa-box-open"></i>Mission</a>
                         </li>
                     </ul>
                 </div>
@@ -169,7 +169,7 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">연령대 총 회원</h5>
+                            <h5 class="card-header">연령대별 총 회원</h5>
                             <div class="card-body">
                                 <div id="ct-chart2" class="ct-chart ct-golden-section"></div>
                             </div>
@@ -187,45 +187,49 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Title</th>
-                                        <th scope="col"></th>
                                         <th scope="col">Author</th>
+                                        <th scope="col">신고 누적 점수</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td colspan="2">Mark</td>
+                                        <td>Mark</td>
                                         <td>@mdo</td>
+                                        <td>15</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">2</th>
-                                        <td colspan="2">Jacob</td>
+                                        <td>Jacob</td>
                                         <td>@fat</td>
+                                        <td>10</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
+                                        <td>Larry the Bird</td>
                                         <td>@twitter</td>
+                                        <td>8</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">4</th>
-                                        <td colspan="2">Larry the Bird</td>
+                                        <td>Larry the Bird</td>
                                         <td>@twitter</td>
+                                        <td>7</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">5</th>
-                                        <td colspan="2">Larry the Bird</td>
+                                        <td>Larry the Bird</td>
                                         <td>@twitter</td>
+                                        <td>6</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="card-footer text-center bg-white">
-                                <a href="#" class="card-link">View Details</a>
+                                <a href="./report/reportTotal.html" class="card-link">View Details</a>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
