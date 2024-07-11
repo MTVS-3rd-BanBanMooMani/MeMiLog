@@ -219,6 +219,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div class="table-controls">
+                                    <button id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -256,6 +259,14 @@
                                     </tr>
                                 `;
                                 $('#blacklist-users-table tbody').append(newRow);
+                                $(this).remove();
+                            }
+                        });
+                    });
+
+                    $('#deleteFromBlacklist').click(function() {
+                        $('#blacklist-users-table tbody tr').each(function() {
+                            if ($(this).find('.checkItemBlacklist').is(':checked')) {
                                 $(this).remove();
                             }
                         });
