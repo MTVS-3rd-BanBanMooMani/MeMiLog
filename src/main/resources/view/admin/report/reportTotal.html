@@ -1,34 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css" />
-    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../assets/libs/css/style.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/vector-map/jqvmap.css" />
-    <link href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/chartist-bundle/chartist.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/dataTables.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/buttons.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/select.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/fixedHeader.bootstrap4.css" />
-    <title>Admin - Me Mission Log</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/libs/css/style.css">
+    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+        .table-controls {
+            text-align: right;
+            margin: 10px 0;
+        }
+    </style>
 </head>
+
 <body>
-<!-- ============================================================== -->
-<!-- main wrapper -->
-<!-- ============================================================== -->
 <div class="dashboard-main-wrapper">
-    <!-- ============================================================== -->
-    <!-- navbar -->
-    <!-- ============================================================== -->
     <div class="dashboard-header">
         <nav class="navbar navbar-expand-lg bg-white fixed-top">
             <a class="navbar-brand" href="index.html">Me Mission Log</a>
@@ -51,12 +43,7 @@
             </div>
         </nav>
     </div>
-    <!-- ============================================================== -->
-    <!-- end navbar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- left sidebar -->
-    <!-- ============================================================== -->
+
     <div class="nav-left-sidebar sidebar-dark">
         <div class="menu-list">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -87,238 +74,142 @@
             </nav>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- end left sidebar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- wrapper  -->
-    <!-- ============================================================== -->
+
     <div class="dashboard-wrapper">
-        <div class="container-fluid  dashboard-content">
-            <!-- ============================================================== -->
-            <!-- pageheader -->
-            <!-- ============================================================== -->
+        <div class="container-fluid dashboard-content">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
-                        <h2 class="pageheader-title">Report</h2>
+                        <h2 class="pageheader-title">Data Tables</h2>
+                        <p class="pageheader-text"></p>
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end pageheader -->
-            <!-- ============================================================== -->
             <div class="row">
-                <!-- ============================================================== -->
-                <!-- data table rowgroup - 처리 안 된 게시물 -->
-                <!-- ============================================================== -->
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                            처리 안 된 게시물
-                            <div>
-                                <input type="text" id="searchUnprocessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
-                                <button id="searchUnprocessed" class="btn btn-secondary ml-2">Search</button>
-                            </div>
-                        </h5>
+                        <h5 class="card-header">활동 정지 회원</h5>
                         <div class="card-body">
+                            <div class="table-controls">
+                                <input type="text" id="searchSuspendedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
+                                <button id="searchSuspended" class="btn btn-secondary ml-2">Search</button>
+                            </div>
                             <div class="table-responsive">
-                                <table id="unprocessedPosts" class="table table-striped table-bordered first">
+                                <table id="suspended-users-table" class="table table-striped table-bordered first">
                                     <thead>
                                     <tr>
-                                        <th><input type="checkbox" id="checkAllUnprocessed"></th>
-                                        <th scope="col">신고번호</th>
-                                        <th scope="col">닉네임</th>
-                                        <th scope="col">내용</th>
-                                        <th scope="col">신고자</th>
-                                        <th scope="col">신고 사유</th>
-                                        <th scope="col">신고일</th>
+                                        <th><input type="checkbox" id="checkAllSuspended"></th>
+                                        <th>이름</th>
+                                        <th>닉네임</th>
+                                        <th>나이 대</th>
+                                        <th>신고 누적 횟수</th>
+                                        <th>남은 정지 기간</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>스팸 메세지 그만 보게 해주세요.</td>
-                                        <td>Alice</td>
-                                        <td>스팸</td>
-                                        <td>2024-05-03</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>김철수</td>
+                                        <td>철수킹</td>
+                                        <td>30대</td>
+                                        <td>5</td>
+                                        <td>10일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">6</th>
-                                        <td>Barry</td>
-                                        <td>광고성 메세지입니다.</td>
-                                        <td>Bob</td>
-                                        <td>광고</td>
-                                        <td>2024-05-04</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>이영희</td>
+                                        <td>영희짱</td>
+                                        <td>20대</td>
+                                        <td>3</td>
+                                        <td>20일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">9</th>
-                                        <td>Jane</td>
-                                        <td>욕설을 사용했습니다.</td>
-                                        <td>John</td>
-                                        <td>욕설</td>
-                                        <td>2024-05-05</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>박민수</td>
+                                        <td>민수짱</td>
+                                        <td>40대</td>
+                                        <td>7</td>
+                                        <td>5일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">12</th>
-                                        <td>Chris</td>
-                                        <td>정치적 발언을 했습니다.</td>
-                                        <td>Clara</td>
-                                        <td>정치</td>
-                                        <td>2024-05-06</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>홍길동</td>
+                                        <td>길동이</td>
+                                        <td>30대</td>
+                                        <td>2</td>
+                                        <td>15일</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">15</th>
-                                        <td>Mike</td>
-                                        <td>비속어를 사용했습니다.</td>
-                                        <td>Mary</td>
-                                        <td>비속어</td>
-                                        <td>2024-05-07</td>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>최미영</td>
+                                        <td>미영이</td>
+                                        <td>20대</td>
+                                        <td>4</td>
+                                        <td>12일</td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div class="table-controls">
+                                    <button id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                </div>
                             </div>
-                            <button id="processSelected" class="btn btn-primary mt-3">선택 항목 처리</button>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- end data table rowgroup - 처리 안 된 게시물 -->
-                <!-- ============================================================== -->
-
-                <!-- ============================================================== -->
-                <!-- data table rowgroup - 처리된 게시물 -->
-                <!-- ============================================================== -->
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                            처리된 게시물
-                            <div>
-                                <input type="text" id="searchProcessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
-                                <button id="searchProcessed" class="btn btn-secondary ml-2">Search</button>
-                            </div>
-                        </h5>
+                        <h5 class="card-header">블랙 리스트 회원</h5>
                         <div class="card-body">
+                            <div class="table-controls">
+                                <input type="text" id="searchBlacklistInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
+                                <button id="searchBlacklist" class="btn btn-secondary ml-2">Search</button>
+                            </div>
                             <div class="table-responsive">
-                                <table id="processedPosts" class="table table-striped table-bordered first">
+                                <table id="blacklist-users-table" class="table table-striped table-bordered first">
                                     <thead>
                                     <tr>
-                                        <th><input type="checkbox" id="checkAllProcessed"></th>
-                                        <th scope="col">신고번호</th>
-                                        <th scope="col">닉네임</th>
-                                        <th scope="col">내용</th>
-                                        <th scope="col">신고자</th>
-                                        <th scope="col">신고 사유</th>
-                                        <th scope="col">신고일</th>
-                                        <th scope="col">처리 날짜</th>
+                                        <th><input type="checkbox" id="checkAllBlacklist"></th>
+                                        <th>이름</th>
+                                        <th>닉네임</th>
+                                        <th>나이 대</th>
+                                        <th>영구 정지 날짜</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>Peter</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김영수</td>
+                                        <td>영수킹</td>
+                                        <td>40대</td>
+                                        <td>2023-06-01</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Paul</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>박지민</td>
+                                        <td>지민짱</td>
+                                        <td>30대</td>
+                                        <td>2023-07-15</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">4</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>David</td>
-                                        <td>욕설</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>이서연</td>
+                                        <td>서연이</td>
+                                        <td>20대</td>
+                                        <td>2023-08-20</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">5</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>James</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>최준영</td>
+                                        <td>준영이</td>
+                                        <td>30대</td>
+                                        <td>2023-09-05</td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">7</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>John</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">8</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Robert</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">10</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>Michael</td>
-                                        <td>욕설</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">11</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Tom</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">13</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>Steve</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">14</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>Chris</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김민지</td>
+                                        <td>민지짱</td>
+                                        <td>20대</td>
+                                        <td>2023-10-12</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -326,15 +217,58 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- end data table rowgroup - 처리된 게시물 -->
-                <!-- ============================================================== -->
-
             </div>
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#checkAllSuspended').click(function() {
+                        $('.checkItemSuspended').prop('checked', this.checked);
+                    });
+
+                    $('#checkAllBlacklist').click(function() {
+                        $('.checkItemBlacklist').prop('checked', this.checked);
+                    });
+
+                    $('#moveToBlacklist').click(function() {
+                        $('#suspended-users-table tbody tr').each(function() {
+                            if ($(this).find('.checkItemSuspended').is(':checked')) {
+                                var name = $(this).find('td').eq(1).text();
+                                var nickname = $(this).find('td').eq(2).text();
+                                var ageGroup = $(this).find('td').eq(3).text();
+                                var currentDate = new Date().toISOString().split('T')[0];
+                                var newRow = `
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>${name}</td>
+                                        <td>${nickname}</td>
+                                        <td>${ageGroup}</td>
+                                        <td>${currentDate}</td>
+                                    </tr>
+                                `;
+                                $('#blacklist-users-table tbody').append(newRow);
+                                $(this).remove();
+                            }
+                        });
+                    });
+
+                    $('#searchSuspended').click(function() {
+                        var searchValue = $('#searchSuspendedInput').val().toLowerCase();
+                        $('#suspended-users-table tbody tr').filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1)
+                        });
+                    });
+
+                    $('#searchBlacklist').click(function() {
+                        var searchValue = $('#searchBlacklistInput').val().toLowerCase();
+                        $('#blacklist-users-table tbody tr').filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1)
+                        });
+                    });
+                });
+            </script>
         </div>
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
         <div class="footer">
             <div class="container-fluid">
                 <div class="row">
@@ -351,131 +285,8 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end footer -->
-        <!-- ============================================================== -->
-    </div>
-</div>
-<!-- ============================================================== -->
-<!-- end main wrapper -->
-<!-- ============================================================== -->
-<!-- Optional JavaScript -->
-<script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-<script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-<script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-<script src="../../../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
-<script src="../../../assets/libs/js/main-js.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/data-table.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-<script>
-    $(document).ready(function() {
-        var processedTable = $('#processedPosts').DataTable({
-            // DataTable 옵션을 여기에 추가하십시오.
-        });
-
-        var unprocessedTable = $('#unprocessedPosts').DataTable({
-            // DataTable 옵션을 여기에 추가하십시오.
-        });
-
-        $('#checkAllProcessed').click(function() {
-            $('.checkItemProcessed').prop('checked', this.checked);
-        });
-
-        $('#checkAllUnprocessed').click(function() {
-            $('.checkItemUnprocessed').prop('checked', this.checked);
-        });
-
-        $('#processSelected').click(function() {
-            $('#unprocessedPosts tbody tr').each(function() {
-                if ($(this).find('.checkItemUnprocessed').is(':checked')) {
-                    var row = unprocessedTable.row(this).data();
-                    processedTable.row.add([
-                        '<input type="checkbox" class="checkItemProcessed small-checkbox">',
-                        row[1], // 신고번호
-                        row[2], // 닉네임
-                        row[3], // 내용
-                        row[4], // 신고자
-                        row[5], // 신고 사유
-                        row[6], // 신고일
-                        new Date().toISOString().split('T')[0] // 처리 날짜 (오늘 날짜)
-                    ]).draw();
-                    unprocessedTable.row(this).remove().draw();
-                }
-            });
-        });
-
-        // 검색 버튼에 대한 이벤트 핸들러 추가
-        $('#searchUnprocessed').click(function() {
-            unprocessedTable.search($('#searchUnprocessedInput').val()).draw();
-        });
-
-        $('#searchProcessed').click(function() {
-            processedTable.search($('#searchProcessedInput').val()).draw();
-        });
-
-        // 처리 안 된 게시물 행 클릭 시 모달 띄우기
-        $('#unprocessedPosts tbody').on('click', 'tr', function() {
-            var data = unprocessedTable.row(this).data();
-            var modalContent = `
-                <p><strong>신고번호:</strong> ${data[1]}</p>
-                <p><strong>닉네임:</strong> ${data[2]}</p>
-                <p><strong>내용:</strong> ${data[3]}</p>
-                <p><strong>신고자:</strong> ${data[4]}</p>
-                <p><strong>신고 사유:</strong> ${data[5]}</p>
-                <p><strong>신고일:</strong> ${data[6]}</p>
-            `;
-            $('#modalBody').html(modalContent);
-            $('#detailModal').modal('show');
-        });
-
-        // 처리된 게시물 행 클릭 시 모달 띄우기
-        $('#processedPosts tbody').on('click', 'tr', function() {
-            var data = processedTable.row(this).data();
-            var modalContent = `
-                <p><strong>신고번호:</strong> ${data[1]}</p>
-                <p><strong>닉네임:</strong> ${data[2]}</p>
-                <p><strong>내용:</strong> ${data[3]}</p>
-                <p><strong>신고자:</strong> ${data[4]}</p>
-                <p><strong>신고 사유:</strong> ${data[5]}</p>
-                <p><strong>신고일:</strong> ${data[6]}</p>
-                <p><strong>처리 날짜:</strong> ${data[7]}</p>
-            `;
-            $('#modalBody').html(modalContent);
-            $('#detailModal').modal('show');
-        });
-    });
-</script>
-
-<!-- Modal -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">신고 상세 정보</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- 상세 내용이 여기에 표시됩니다. -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-            </div>
-        </div>
     </div>
 </div>
 </body>
+
 </html>
