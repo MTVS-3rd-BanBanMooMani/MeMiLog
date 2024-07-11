@@ -38,7 +38,6 @@
                     <div class="modal-right">
                         <div class="profile-pic-container">
                             <img src="../documentation/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
-                            <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
                 </div>
@@ -53,29 +52,41 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal('editModal')">&times;</span>
                 <h2>정보 수정</h2>
-                <form id="editForm">
-                    <div class="form-group">
-                    <label for="nickname">닉네임:</label>
-                    <input type="text" id="nickname" name="nickname" value="돌멩이님"><br>
+                <div class="modal-body">
+                    <div class="modal-left">
+                        <form id="editForm">
+                            <div class="form-group">
+                                <label for="email">아이디:</label>
+                                <input type="text" id="email" name="email" value="blip0819@gmail.com"><br>
+                            </div>
+                            <div class="form-group">
+                                <label for="nickname">닉네임:</label>
+                                <input type="text" id="nickname" name="nickname" value="돌멩이님"><br>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">비밀번호:</label>
+                                <input type="password" id="password" name="password"><br>
+                            </div>
+                            <div class="form-group">
+                                <label for="password2">비밀번호 확인:</label>
+                                <input type="password" id="password2" name="password"><br>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="form-group">
-                    <label for="password">비밀번호:</label>
-                    <input type="password" id="password" name="password"><br>
+                    <div class="modal-right">
+                        <div class="profile-pic-container">
+                            <img src="../documentation/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                            <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                    <label for="password2">비밀번호 확인:</label>
-                    <input type="password" id="password2" name="password"><br>
-                    </div>
-
-                    <div class="form-footer">
-                        <button type="submit">수정</button>
-                        <button type="button" onclick="closeModal('editModal')">취소</button>
-                    </div>
-                </form>
+                </div>
+                <div class="form-footer">
+                    <button type="submit">수정</button>
+                    <button type="button" onclick="closeModal('editModal')">취소</button>
+                </div>
             </div>
         </div>
+        
 
         <div id="profilePicModal" class="modal">
             <div class="modal-content">
@@ -115,7 +126,8 @@
             </div>
 
             <div class="user-mood-chart">
-                <canvas id="line-chart" width="400" height="240"></canvas>
+                <canvas id="line-chart" style="width: 500px;"></canvas>
+                <div class="legend-container" id="legend"></div>
             </div>
         </div>
     </div>
@@ -455,14 +467,23 @@
         }
     }
 
+    function getEmojiImage(emoji) {
+                switch (emoji) {
+                    case "😀": return '../documentation/img/colored_happy.png';
+                    case "😎": return '../documentation/img/colored_cool.png';
+                    case "😮": return '../documentation/img/colored_surprised.png';
+                    case "😐": return '../documentation/img/colored_soso.png';
+                    case "😢": return '../documentation/img/colored_sad.png';
+                    default: return '';
+                }
+            }
+
     function displayLineChart() {
             if (window.lineChart) {
                 window.lineChart.destroy();
             }
 
             var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
-            lineChartCanvas.height = 240;
-            lineChartCanvas.width = 400;
 
             window.lineChart = new Chart(lineChartCanvas, {
                 type: 'line',
@@ -499,33 +520,63 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: '  Tracking My Mood',
+                            text: 'Track My Mood',
                             font: {
                                 size: 20,
                                 weight: 'normal'
                             },
-                            padding: 20
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
                         },
                         legend: {
-                            display: true,
-                            labels: {
-                                font: {
-                                    size: 16
-                                }
-                            }
+                            display: false
                         }
                     },
                     scales: {
-                    y: {
-                        ticks: {
-                            display: false // y축 숫자 제거
+                        y: {
+                            ticks: {
+                                display: false
                             }
                         }
                     }
-                }
+                },
+                plugins: [{
+                    afterRender: function(chart) {
+                        var legendContainer = document.getElementById('legend');
+                        legendContainer.innerHTML = '';
+                        
+                        chart.data.datasets.forEach(function(dataset, i) {
+                            var legendItem = document.createElement('div');
+                            legendItem.classList.add('legend-item');
+                            legendItem.onclick = function() {
+                                var meta = chart.getDatasetMeta(i);
+                                meta.hidden = meta.hidden === null ? !chart.data.datasets[i].hidden : null;
+                                chart.update();
+                            };
+
+                            var colorBox = document.createElement('span');
+                            colorBox.classList.add('color-box');
+                            colorBox.style.borderColor = dataset.borderColor;
+
+                            var img = document.createElement('img');
+                            img.src = getEmojiImage(dataset.label);
+                            img.classList.add('legend-image');
+
+                            legendItem.appendChild(colorBox);
+                            legendItem.appendChild(img);
+                            legendContainer.appendChild(legendItem);
+                        });
+                    }
+                }]
             });
         }
-    </script>
 
+        window.onload = function() {
+            displayLineChart();
+        };
+        
+    </script>
 </body>
 </html>
