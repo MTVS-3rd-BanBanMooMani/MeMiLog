@@ -94,8 +94,9 @@ li {
 }
 
 .right-container {
-    width: 40%;
+    width: 100%;
     margin-top: 4%;
+    max-width: 450px;
 }
 
 .date-category {
@@ -215,10 +216,9 @@ li {
     font-size: 0.8rem;
 }
 
-
 .text-area textarea {
-    width: 570px;
-    height: 600px;
+    width: 450px;
+    height: 500px;
     resize: none;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -303,7 +303,7 @@ li {
 .buttons {
     display: flex;
     gap: 10px;
-    margin-top: 80px;
+    margin-top: 55px;
     width: 100%;
     justify-content: flex-end;
 }
