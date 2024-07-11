@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("click", function (event) {
     if (event.target === modalBg) {
       modalBg.style.display = "none";
+      postModal.style.display = "none";
     }
     if (event.target === postModal) {
       postModal.style.display = "none";
@@ -87,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   etcImg.addEventListener("click", function () {
     dropdownContent.classList.toggle("show");
-    console.log("클릭");
   });
 
   // 다른 곳 클릭 시 dropdown 닫기
@@ -99,8 +99,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // 좋아요 기능
+  const likeBtn = document.querySelector(".post-like-btn");
+
+  likeBtn.addEventListener("click", function () {
+    if (likeBtn.src.includes("heart.png")) {
+      likeBtn.src = "../documentation/img/fullHeart.png";
+    } else {
+      likeBtn.src = "../documentation/img/heart.png";
+    }
+  });
+
   // 삭제 버튼 클릭 시 alert
-  const deleteAlert = document.querySelector(".board-delete-btn");
+  const deleteAlert = document.querySelector(".post-delete-btn");
 
   deleteAlert.addEventListener("click", () => {
     Swal.fire({
@@ -124,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 신고 버튼 클릭 시 alert
-  const reportAlert = document.querySelector(".report-btn");
+  const reportAlert = document.querySelector(".post-report-btn");
 
   reportAlert.addEventListener("click", () => {
     Swal.fire({
