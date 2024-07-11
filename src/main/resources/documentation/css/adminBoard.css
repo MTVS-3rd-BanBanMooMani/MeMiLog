@@ -44,7 +44,35 @@
 
 #topicTable {
     font-size: 20px;
+    text-align: left;
+}
+
+#topicTable th:first-child, td:first-child {
+    width: 10%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-align: center;
+}
+
+#topicTable td:nth-child(2) {
+    width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#topicTable td:nth-child(3) {
+    width: 10%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#topicTable td:nth-child(4) {
+    width: 30%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .table-header {
