@@ -1,34 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css" />
-    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../assets/libs/css/style.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/vector-map/jqvmap.css" />
-    <link href="../../../assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/chartist-bundle/chartist.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/c3charts/c3.css" />
-    <link rel="stylesheet" href="../../../assets/vendor/charts/morris-bundle/morris.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/dataTables.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/buttons.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/select.bootstrap4.css" />
-    <link rel="stylesheet" type="text/css" href="../../../assets/vendor/datatables/css/fixedHeader.bootstrap4.css" />
-    <title>Admin - Me Mission Log</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="../../../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/libs/css/style.css">
+    <link rel="stylesheet" href="../../../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+        .table-controls {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
-<!-- ============================================================== -->
-<!-- main wrapper -->
-<!-- ============================================================== -->
 <div class="dashboard-main-wrapper">
-    <!-- ============================================================== -->
-    <!-- navbar -->
-    <!-- ============================================================== -->
     <div class="dashboard-header">
         <nav class="navbar navbar-expand-lg bg-white fixed-top">
             <a class="navbar-brand" href="index.html">Me Mission Log</a>
@@ -51,12 +43,7 @@
             </div>
         </nav>
     </div>
-    <!-- ============================================================== -->
-    <!-- end navbar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- left sidebar -->
-    <!-- ============================================================== -->
+
     <div class="nav-left-sidebar sidebar-dark">
         <div class="menu-list">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -87,43 +74,37 @@
             </nav>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- end left sidebar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- wrapper  -->
-    <!-- ============================================================== -->
+
     <div class="dashboard-wrapper">
-        <div class="container-fluid  dashboard-content">
-            <!-- ============================================================== -->
-            <!-- pageheader -->
-            <!-- ============================================================== -->
+        <div class="container-fluid dashboard-content">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
-                        <h2 class="pageheader-title">Report</h2>
+                        <h2 class="pageheader-title">Data Tables</h2>
+                        <p class="pageheader-text"></p>
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- end pageheader -->
-            <!-- ============================================================== -->
             <div class="row">
-                <!-- ============================================================== -->
-                <!-- data table rowgroup - 처리 안 된 게시물 -->
-                <!-- ============================================================== -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                            처리 안 된 게시물
-                            <div>
+                        <h5 class="card-header">미처리된 게시물</h5>
+                        <div class="card-body">
+                            <div class="table-controls">
+                                <select id="filterUnprocessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
+                                    <option value="">신고 사유</option>
+                                    <option value="스팸">스팸</option>
+                                    <option value="광고">광고</option>
+                                    <option value="욕설">욕설</option>
+                                    <option value="정치">정치</option>
+                                    <option value="비속어">비속어</option>
+                                </select>
                                 <input type="text" id="searchUnprocessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchUnprocessed" class="btn btn-secondary ml-2">Search</button>
+
                             </div>
-                        </h5>
-                        <div class="card-body">
                             <div class="table-responsive">
-                                <table id="unprocessedPosts" class="table table-striped table-bordered first">
+                                <table id="unprocessedPosts" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllUnprocessed"></th>
@@ -184,29 +165,31 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <button id="processSelected" class="btn btn-primary mt-3">선택 항목 처리</button>
+                            <div class="table-controls">
+                                <button id="processSelected" class="btn btn-primary mt-3">선택 항목 처리</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- end data table rowgroup - 처리 안 된 게시물 -->
-                <!-- ============================================================== -->
-
-                <!-- ============================================================== -->
-                <!-- data table rowgroup - 처리된 게시물 -->
-                <!-- ============================================================== -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                            처리된 게시물
-                            <div>
+                        <h5 class="card-header">처리된 게시물</h5>
+                        <div class="card-body">
+                            <div class="table-controls">
+                                <select id="filterProcessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
+                                    <option value="">신고 사유</option>
+                                    <option value="스팸">스팸</option>
+                                    <option value="광고">광고</option>
+                                    <option value="욕설">욕설</option>
+                                    <option value="정치">정치</option>
+                                    <option value="비속어">비속어</option>
+                                </select>
                                 <input type="text" id="searchProcessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchProcessed" class="btn btn-secondary ml-2">Search</button>
+
                             </div>
-                        </h5>
-                        <div class="card-body">
                             <div class="table-responsive">
-                                <table id="processedPosts" class="table table-striped table-bordered first">
+                                <table id="processedPosts" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllProcessed"></th>
@@ -326,15 +309,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- end data table rowgroup - 처리된 게시물 -->
-                <!-- ============================================================== -->
-
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
         <div class="footer">
             <div class="container-fluid">
                 <div class="row">
@@ -351,90 +327,89 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end footer -->
-        <!-- ============================================================== -->
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- end main wrapper -->
-<!-- ============================================================== -->
+
 <!-- Optional JavaScript -->
 <script src="../../../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="../../../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
 <script src="../../../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
 <script src="../../../assets/libs/js/main-js.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-<script src="../../../assets/vendor/datatables/js/data-table.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 <script>
     $(document).ready(function() {
-        var processedTable = $('#processedPosts').DataTable({
-            // DataTable 옵션을 여기에 추가하십시오.
+        // 처리된 게시물 테이블 검색 기능
+        $('#searchProcessed').click(function() {
+            var value = $('#searchProcessedInput').val().toLowerCase();
+            $('#processedPosts tbody tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
         });
 
-        var unprocessedTable = $('#unprocessedPosts').DataTable({
-            // DataTable 옵션을 여기에 추가하십시오.
+        // 처리 안 된 게시물 테이블 검색 기능
+        $('#searchUnprocessed').click(function() {
+            var value = $('#searchUnprocessedInput').val().toLowerCase();
+            $('#unprocessedPosts tbody tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
         });
 
+        // 처리된 게시물 전체 선택/해제
         $('#checkAllProcessed').click(function() {
             $('.checkItemProcessed').prop('checked', this.checked);
         });
 
+        // 처리 안 된 게시물 전체 선택/해제
         $('#checkAllUnprocessed').click(function() {
             $('.checkItemUnprocessed').prop('checked', this.checked);
         });
 
+        // 선택 항목 처리
         $('#processSelected').click(function() {
             $('#unprocessedPosts tbody tr').each(function() {
                 if ($(this).find('.checkItemUnprocessed').is(':checked')) {
-                    var row = unprocessedTable.row(this).data();
-                    processedTable.row.add([
-                        '<input type="checkbox" class="checkItemProcessed small-checkbox">',
-                        row[1], // 신고번호
-                        row[2], // 닉네임
-                        row[3], // 내용
-                        row[4], // 신고자
-                        row[5], // 신고 사유
-                        row[6], // 신고일
-                        new Date().toISOString().split('T')[0] // 처리 날짜 (오늘 날짜)
-                    ]).draw();
-                    unprocessedTable.row(this).remove().draw();
+                    var 신고번호 = $(this).find('th').eq(0).text();
+                    var 닉네임 = $(this).find('td').eq(1).text();
+                    var 내용 = $(this).find('td').eq(2).text();
+                    var 신고자 = $(this).find('td').eq(3).text();
+                    var 신고사유 = $(this).find('td').eq(4).text();
+                    var 신고일 = $(this).find('td').eq(5).text();
+                    var 처리날짜 = new Date().toISOString().split('T')[0];
+                    var newRow = `
+                        <tr>
+                            <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
+                            <th scope="row">${신고번호}</th>
+                            <td>${닉네임}</td>
+                            <td>${내용}</td>
+                            <td>${신고자}</td>
+                            <td>${신고사유}</td>
+                            <td>${신고일}</td>
+                            <td>${처리날짜}</td>
+                        </tr>
+                    `;
+                    $('#processedPosts tbody').append(newRow);
+                    $(this).remove();
                 }
             });
         });
 
-        // 검색 버튼에 대한 이벤트 핸들러 추가
-        $('#searchUnprocessed').click(function() {
-            unprocessedTable.search($('#searchUnprocessedInput').val()).draw();
-        });
-
-        $('#searchProcessed').click(function() {
-            processedTable.search($('#searchProcessedInput').val()).draw();
-        });
-
         // 처리 안 된 게시물 행 클릭 시 모달 띄우기
         $('#unprocessedPosts tbody').on('click', 'tr', function() {
-            var data = unprocessedTable.row(this).data();
+            var data = {
+                신고번호: $(this).find('th').eq(0).text(),
+                닉네임: $(this).find('td').eq(1).text(),
+                내용: $(this).find('td').eq(2).text(),
+                신고자: $(this).find('td').eq(3).text(),
+                신고사유: $(this).find('td').eq(4).text(),
+                신고일: $(this).find('td').eq(5).text(),
+            };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data[1]}</p>
-                <p><strong>닉네임:</strong> ${data[2]}</p>
-                <p><strong>내용:</strong> ${data[3]}</p>
-                <p><strong>신고자:</strong> ${data[4]}</p>
-                <p><strong>신고 사유:</strong> ${data[5]}</p>
-                <p><strong>신고일:</strong> ${data[6]}</p>
+                <p><strong>신고번호:</strong> ${data.신고번호}</p>
+                <p><strong>닉네임:</strong> ${data.닉네임}</p>
+                <p><strong>내용:</strong> ${data.내용}</p>
+                <p><strong>신고자:</strong> ${data.신고자}</p>
+                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
+                <p><strong>신고일:</strong> ${data.신고일}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
@@ -442,18 +417,49 @@
 
         // 처리된 게시물 행 클릭 시 모달 띄우기
         $('#processedPosts tbody').on('click', 'tr', function() {
-            var data = processedTable.row(this).data();
+            var data = {
+                신고번호: $(this).find('th').eq(0).text(),
+                닉네임: $(this).find('td').eq(1).text(),
+                내용: $(this).find('td').eq(2).text(),
+                신고자: $(this).find('td').eq(3).text(),
+                신고사유: $(this).find('td').eq(4).text(),
+                신고일: $(this).find('td').eq(5).text(),
+                처리날짜: $(this).find('td').eq(6).text(),
+            };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data[1]}</p>
-                <p><strong>닉네임:</strong> ${data[2]}</p>
-                <p><strong>내용:</strong> ${data[3]}</p>
-                <p><strong>신고자:</strong> ${data[4]}</p>
-                <p><strong>신고 사유:</strong> ${data[5]}</p>
-                <p><strong>신고일:</strong> ${data[6]}</p>
-                <p><strong>처리 날짜:</strong> ${data[7]}</p>
+                <p><strong>신고번호:</strong> ${data.신고번호}</p>
+                <p><strong>닉네임:</strong> ${data.닉네임}</p>
+                <p><strong>내용:</strong> ${data.내용}</p>
+                <p><strong>신고자:</strong> ${data.신고자}</p>
+                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
+                <p><strong>신고일:</strong> ${data.신고일}</p>
+                <p><strong>처리 날짜:</strong> ${data.처리날짜}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
+        });
+
+        // 신고 사유 필터링 기능
+        $('#filterUnprocessedReason').change(function() {
+            var selectedReason = $(this).val().toLowerCase();
+            $('#unprocessedPosts tbody tr').filter(function() {
+                if (selectedReason === "") {
+                    $(this).show();
+                } else {
+                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                }
+            });
+        });
+
+        $('#filterProcessedReason').change(function() {
+            var selectedReason = $(this).val().toLowerCase();
+            $('#processedPosts tbody tr').filter(function() {
+                if (selectedReason === "") {
+                    $(this).show();
+                } else {
+                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                }
+            });
         });
     });
 </script>
@@ -478,4 +484,5 @@
     </div>
 </div>
 </body>
+
 </html>
