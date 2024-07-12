@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: MeMiLog
+
+  thymeleaf:
+    prefix: classpath:/templates/

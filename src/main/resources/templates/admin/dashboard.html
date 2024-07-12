@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="../../../resources/static/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../resources/static/assets/libs/css/style.css">
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/vector-map/jqvmap.css">
-    <link href="../../../resources/static/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/charts/chartist-bundle/chartist.css">
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/charts/c3charts/c3.css">
-    <link rel="stylesheet" href="../../../resources/static/assets/vendor/charts/morris-bundle/morris.css">
-    <link rel="stylesheet" type="text/css" href="../../../resources/static/assets/vendor/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/circular-std/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/libs/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/vector-map/jqvmap.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/charts/chartist-bundle/chartist.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/charts/c3charts/c3.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/charts/morris-bundle/morris.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/daterangepicker/daterangepicker.css}" />
     <title>Admin - Me Mission Log</title>
 </head>
 <body>
@@ -226,7 +226,7 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center bg-white">
-                                <a href="./report/reportTotal.html" class="card-link">View Details</a>
+                                <a href="/admin/reportTotal" class="card-link">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -263,34 +263,34 @@
 <!-- ============================================================== -->
 <!-- end main wrapper  -->
 <!-- ============================================================== -->
-<!-- jquery 3.3.1  -->
-<script src="../../../resources/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-<!-- bootstap bundle js -->
-<script src="../../../resources/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<!-- jquery 3.3.1 -->
+<script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+<!-- bootstrap bundle js -->
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
 <!-- slimscroll js -->
-<script src="../../../resources/static/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
 <!-- chart chartist js -->
-<script src="../../../resources/static/assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/chartist-bundle/Chartistjs.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/chartist-bundle/chartist-plugin-threshold.js"></script>
+<script th:src="@{/assets/vendor/charts/chartist-bundle/chartist.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/chartist-bundle/Chartistjs.js}"></script>
+<script th:src="@{/assets/vendor/charts/chartist-bundle/chartist-plugin-threshold.js}"></script>
 <!-- chart C3 js -->
-<script src="../../../resources/static/assets/vendor/charts/c3charts/c3.min.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/c3.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/d3-5.4.0.min.js}"></script>
 <!-- chartjs js -->
-<script src="../../../resources/static/assets/vendor/charts/charts-bundle/Chart.bundle.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/charts-bundle/chartjs.js"></script>
+<script th:src="@{/assets/vendor/charts/charts-bundle/Chart.bundle.js}"></script>
+<script th:src="@{/assets/vendor/charts/charts-bundle/chartjs.js}"></script>
 <!-- sparkline js -->
-<script src="../../../resources/static/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+<script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
 <!-- dashboard finance js -->
-<script src="../../../resources/static/assets/libs/js/dashboard-finance.js"></script>
+<script th:src="@{/assets/libs/js/dashboard-finance.js}"></script>
 <!-- main js -->
-<script src="../../../resources/static/assets/libs/js/main-js.js"></script>
+<script th:src="@{/assets/libs/js/main-js.js}"></script>
 <!-- gauge js -->
-<script src="../../../resources/static/assets/vendor/gauge/gauge.min.js"></script>
+<script th:src="@{/assets/vendor/gauge/gauge.min.js}"></script>
 <!-- morris js -->
-<script src="../../../resources/static/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/morris-bundle/morris.js"></script>
-<script src="../../../resources/static/assets/vendor/charts/morris-bundle/morrisjs.html"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/raphael.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/morris.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/morrisjs.html}"></script>
 <!-- daterangepicker js -->
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -303,6 +303,6 @@
         });
     });
 </script>
-<script src="../../../resources/static/document/js/userdashboard.js"></script>
+<script th:src="@{/document/js/userdashboard.js}"></script>
 </body>
 </html>

@@ -375,7 +375,7 @@
                     var 신고번호 = $(this).find('th').eq(0).text();
                     var 닉네임 = $(this).find('td').eq(1).text();
                     var 내용 = $(this).find('td').eq(2).text();
-                    var 신고자 = $(this).find('td').eq(3).text();
+                    var 신고누적점수 = $(this).find('td').eq(3).text();
                     var 신고사유 = $(this).find('td').eq(4).text();
                     var 신고일 = $(this).find('td').eq(5).text();
                     var 처리날짜 = new Date().toISOString().split('T')[0];
@@ -385,7 +385,7 @@
                             <th scope="row">${신고번호}</th>
                             <td>${닉네임}</td>
                             <td>${내용}</td>
-                            <td>${신고자}</td>
+                            <td>${신고누적점수}</td>
                             <td>${신고사유}</td>
                             <td>${신고일}</td>
                             <td>${처리날짜}</td>
@@ -403,7 +403,7 @@
                 신고번호: $(this).find('th').eq(0).text(),
                 닉네임: $(this).find('td').eq(1).text(),
                 내용: $(this).find('td').eq(2).text(),
-                신고자: $(this).find('td').eq(3).text(),
+                신고누적점수: $(this).find('td').eq(3).text(),
                 신고사유: $(this).find('td').eq(4).text(),
                 신고일: $(this).find('td').eq(5).text(),
             };
@@ -411,7 +411,7 @@
                 <p><strong>신고번호:</strong> ${data.신고번호}</p>
                 <p><strong>닉네임:</strong> ${data.닉네임}</p>
                 <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고자:</strong> ${data.신고자}</p>
+                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
                 <p><strong>신고 사유:</strong> ${data.신고사유}</p>
                 <p><strong>신고일:</strong> ${data.신고일}</p>
             `;
@@ -425,7 +425,7 @@
                 신고번호: $(this).find('th').eq(0).text(),
                 닉네임: $(this).find('td').eq(1).text(),
                 내용: $(this).find('td').eq(2).text(),
-                신고자: $(this).find('td').eq(3).text(),
+                신고누적점수: $(this).find('td').eq(3).text(),
                 신고사유: $(this).find('td').eq(4).text(),
                 신고일: $(this).find('td').eq(5).text(),
                 처리날짜: $(this).find('td').eq(6).text(),
@@ -434,7 +434,7 @@
                 <p><strong>신고번호:</strong> ${data.신고번호}</p>
                 <p><strong>닉네임:</strong> ${data.닉네임}</p>
                 <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고자:</strong> ${data.신고자}</p>
+                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
                 <p><strong>신고 사유:</strong> ${data.신고사유}</p>
                 <p><strong>신고일:</strong> ${data.신고일}</p>
                 <p><strong>처리 날짜:</strong> ${data.처리날짜}</p>

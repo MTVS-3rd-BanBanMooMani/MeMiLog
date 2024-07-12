@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @GetMapping("/dashBoard")
-    public void dashBoardhh() {}
+    public void dashBoard() {}
 
     @GetMapping("/userBlackList")
     public void userBlackList() {}
