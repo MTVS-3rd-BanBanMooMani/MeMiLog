@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/admin")
-    public void admin() {}
+    @GetMapping("/dashBoard")
+    public void dashBoard() {}
 
     @GetMapping("/userBlackList")
     public void userBlackList() {}
