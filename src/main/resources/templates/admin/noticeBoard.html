@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/circular-std/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/libs/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}">
+    <link rel="stylesheet" th:href="@{/document/css/adminBoard.css}">
+    <title>Admin - Me Mission Log</title>
+</head>
+<body>
+<div class="dashboard-main-wrapper">
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" th:href="@{/admin/dashBoard}">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+                                <span class="status"></span><span class="ml-2">ja@naver.com</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" th:href="@{/admin/dashBoard}">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item ">
+                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/noticeBoard}"><i class="fas fa-fw fa-database"></i>Notice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/dailyTopicBoard}"><i class="fas fa-fw fa-box-open"></i>Mission</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+            <div class="container-fluid dashboard-content">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="mb-2">Notice</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-header">
+                    <button class="btn btn-primary mb-2" id="createNoticeBtn">공지사항 작성</button>
+                    <span class="left-text">공지사항은 한 번에 최대 5개까지만 노출 가능합니다.</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="내용으로 검색">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notice-table">
+                    <table id="noticeTable" class="table table-hover table-striped bg-white">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">공지번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">내용</th>
+                            <th scope="col">작성일</th>
+                            <th scope="col">노출여부</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>서버 점검 안내</td>
+                            <td>2024년 7월 15일 오전 2시부터 4시까지 서버 점검이 진행됩니다. 이 시간 동안 서비스 이용이 불가합니다.</td>
+                            <td>2024-07-09</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>새로운 필터 업데이트</td>
+                            <td>새로운 사진 필터가 추가되었습니다. 다양한 필터를 사용해보세요!</td>
+                            <td>2024-07-08</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>이용 약관 변경</td>
+                            <td>2024년 8월 1일부터 새로운 서비스 이용 약관이 적용됩니다. 자세한 내용은 공지사항을 확인해주세요.</td>
+                            <td>2024-07-05</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>여름 사진 콘테스트</td>
+                            <td>여름을 주제로 한 사진 콘테스트가 열립니다. 참여하고 멋진 상품을 받아가세요!</td>
+                            <td>2024-07-01</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>개인정보 처리방침 변경</td>
+                            <td>개인정보 처리방침이 변경되었습니다. 변경된 내용을 확인해 주세요.</td>
+                            <td>2024-06-25</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>정기 점검 안내</td>
+                            <td>매월 첫째 주 금요일 오전 3시부터 5시까지 정기 점검이 있습니다. 이용에 참고하시기 바랍니다.</td>
+                            <td>2024-06-20</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>사진 업로드 기능 개선</td>
+                            <td>사진 업로드 속도가 개선되었습니다. 이제 더 빠르게 사진을 업로드할 수 있습니다.</td>
+                            <td>2024-06-15</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>시스템 오류 안내</td>
+                            <td>일부 사용자에게 발생한 시스템 오류가 해결되었습니다. 불편을 드려 죄송합니다.</td>
+                            <td>2024-06-10</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>보안 업데이트</td>
+                            <td>보안 강화를 위한 업데이트가 적용되었습니다. 안전한 서비스 이용을 부탁드립니다.</td>
+                            <td>2024-06-05</td>
+                            <td>Y</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>팔로우 추천 시스템 개선</td>
+                            <td>새로운 팔로우 추천 시스템이 도입되었습니다. 더 많은 친구를 만나보세요!</td>
+                            <td>2024-06-01</td>
+                            <td>Y</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="createNoticeModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">공지사항 작성</h2>
+                            <span class="close" onclick="closeModal('createNoticeModal')">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="noticeTitle">제목</label>
+                                    <input type="text" class="form-control" id="noticeTitle" placeholder="제목을 입력해주세요.">
+                                </div>
+                                <div class="form-group">
+                                    <label for="noticeContent">내용</label>
+                                    <textarea class="form-control" id="noticeContent" rows="5" placeholder="내용을 입력해주세요."></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary mb-2" onclick="uploadNotice()">저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="noticeDetailModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="close" onclick="closeModal('noticeDetailModal')">&times;</span>
+                            <h2 class="modal-title">공지사항</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p id="noticeDetailContent"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" onclick="modifyNotice()">수정</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modifyNoticeModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">공지사항 수정</h2>
+                            <span class="close" onclick="closeModal('modifyNoticeModal')">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modifyTitle">제목</label>
+                                    <input type="text" class="form-control" id="modifyNoticeTitle">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modifyContent">내용</label>
+                                    <textarea class="form-control" id="modifyNoticeContent" rows="5"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="noticeVisibility">노출여부</label>
+                                    <select class="form-control" id="noticeVisibility">
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary mb-2" onclick="uploadModifiedNotice()">저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <nav class="pagination-container">
+                        <div class="pagination">
+                            <a class="pagination-newer" href="#">PREV</a>
+                            <span class="pagination-inner">
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">6</a>
+                                <a href="#">7</a>
+                                <a href="#">8</a>
+                                <a href="#">9</a>
+                                <a href="#">10</a>
+                            </span>
+                            <a class="pagination-older" href="#">NEXT</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
+<script th:src="@{/assets/libs/js/main-js.js}"></script>
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    document.getElementById('createNoticeBtn').addEventListener('click', function () {
+        openModal('createNoticeModal');
+    });
+
+    $("#noticeTable").on('click', 'tbody tr', function () {
+        var noticeId = $(this).find("td:eq(0)").text();
+        var ntitle = $(this).find("td:eq(1)").text();
+        var ncontent = $(this).find("td:eq(2)").text();
+        var writeDate = $(this).find("td:eq(3)").text();
+        var status = $(this).find("td:eq(4)").text();
+
+        var noticeDetailContent = `
+            <p><strong>공지번호:</strong> ${noticeId}</p>
+            <p><strong>제목:</strong> ${ntitle}</p>
+            <p><strong>내용:</strong> ${ncontent}</p>
+            <p><strong>작성일:</strong> ${writeDate}</p>
+            <p><strong>노출여부:</strong> ${status}</p>
+        `;
+
+        document.getElementById("noticeDetailContent").innerHTML = noticeDetailContent;
+
+        openModal('noticeDetailModal');
+    });
+
+    function uploadNotice() {
+        //서버에서 데이터 반영해 수정하는 로직 추가 예정
+
+        alert('공지사항 등록이 완료되었습니다.');
+        closeModal('createNoticeModal');
+    }
+
+    function modifyNotice() {
+        closeModal('noticeDetailModal');
+        openModal('modifyNoticeModal');
+
+        let noticeTitle = document.getElementById('noticeDetailContent').querySelector('p:nth-child(2)').innerText.replace('제목: ', '');
+        let noticeContent = document.getElementById('noticeDetailContent').querySelector('p:nth-child(3)').innerText.replace('내용: ', '');
+
+        document.getElementById('modifyNoticeTitle').value = noticeTitle;
+        document.getElementById('modifyNoticeContent').value = noticeContent;
+    }
+
+    function uploadModifiedNotice() {
+        let modifyNoticeTitle = document.getElementById('modifyNoticeTitle').value;
+        let modifyNoticeContent = document.getElementById('modifyNoticeContent').value;
+        let noticeVisibility = document.getElementById('noticeVisibility').value;
+
+        if (!modifyNoticeTitle || !modifyNoticeContent) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        // 서버에 데이터 전송하는 코드 추가 예정
+
+        alert("공지사항 수정이 완료되었습니다.");
+        closeModal('modifyNoticeModal');
+    }
+</script>
+</body>
+</html>

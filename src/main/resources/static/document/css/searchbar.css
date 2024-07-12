@@ -1,0 +1,45 @@
+/* 디자인1 */
+.search-bar {
+  width: 700px;
+  /* height: 35px; */
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #999999;
+}
+
+.search-bar {
+  font-size: 17px;
+  font-weight: 100;
+  padding: 5px;
+  text-align: center;
+}
+
+.search-bar:focus {
+  outline: 1.5px solid #999999;
+}
+
+.search-bar:focus::placeholder {
+  color: transparent;
+}
+
+.search-box {
+  position: relative;
+  width: 700px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.search-Img:hover {
+  filter: invert(62%) sepia(87%) saturate(275%) hue-rotate(344deg)
+    brightness(102%) contrast(98%);
+}
+
+.search-Img {
+  width: 20px;
+  height: 20px;
+  border: none;
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+}

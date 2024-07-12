@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/circular-std/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/libs/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}">
+    <link rel="stylesheet" th:href="@{/document/css/adminBoard.css}">
+    <title>Admin - Me Mission Log</title>
+</head>
+<body>
+<div class="dashboard-main-wrapper">
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" th:href="@{/admin/dashBoard}">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+                                <span class="status"></span><span class="ml-2">ja@naver.com</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" th:href="@{/admin/dashBoard}">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item ">
+                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/noticeBoard}"><i class="fas fa-fw fa-database"></i>Notice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/dailyTopicBoard}"><i class="fas fa-fw fa-box-open"></i>Mission</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-finance">
+            <div class="container-fluid dashboard-content">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="mb-2">오늘의 미션</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-header">
+                    <button class="btn btn-primary mb-2" id="createTopicBtn">데일리미션 등록</button>
+                    <span class="left-text"></span>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="주제로 검색">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topic-table">
+                    <table id="topicTable" class="table table-hover table-striped bg-white">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">주제</th>
+                            <th scope="col">태그</th>
+                            <th scope="col">노출일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>319</td>
+                            <td>비오는 날 하면 생각나는 것</td>
+                            <td>일상</td>
+                            <td>2024-07-10</td>
+                        </tr>
+                        <tr>
+                            <td>318</td>
+                            <td>요즘 날씨에 잘 어울리는 영화</td>
+                            <td>취미</td>
+                            <td>2024-07-09</td>
+                        </tr>
+                        <tr>
+                            <td>317</td>
+                            <td>가도가도 또 가고 싶은 나만의 소울 플레이스</td>
+                            <td>여행</td>
+                            <td>2024-07-08</td>
+                        </tr>
+                        <tr>
+                            <td>316</td>
+                            <td>여름철 원기회복에 좋은 보양식은?</td>
+                            <td>음식</td>
+                            <td>2024-07-07</td>
+                        </tr>
+                        <tr>
+                            <td>315</td>
+                            <td>장마 오기 전에 예쁜 여름 하늘 컨테스트</td>
+                            <td>일상</td>
+                            <td>2024-07-06</td>
+                        </tr>
+                        <tr>
+                            <td>314</td>
+                            <td>여름하면 생각나는 드라마</td>
+                            <td>취미</td>
+                            <td>2024-07-05</td>
+                        </tr>
+                        <tr>
+                            <td>313</td>
+                            <td>페스티벌과 관련된 미미들의 추억을 공유해주세요!</td>
+                            <td>취미</td>
+                            <td>2024-07-04</td>
+                        </tr>
+                        <tr>
+                            <td>312</td>
+                            <td>가장 최근에 갤러리에 저장된 사진 5장</td>
+                            <td>일상</td>
+                            <td>2024-07-03</td>
+                        </tr>
+                        <tr>
+                            <td>311</td>
+                            <td>이번 여름엔 어느 바다로 떠날까요?</td>
+                            <td>여행</td>
+                            <td>2024-07-02</td>
+                        </tr>
+                        <tr>
+                            <td>310</td>
+                            <td>여름하면 야장! 저는 을지로가 요새 좋더라구요~?</td>
+                            <td>음식</td>
+                            <td>2024-07-01</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div id="createTopicModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="createTopicModal">데일리미션 작성</h2>
+                            <span class="close" onclick="closeModal('createTopicModal')">&times;</span>
+                        </div>
+
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="topic">주제</label>
+                                    <input type="text" class="form-control" id="topicTitle" placeholder="주제를 입력해주세요.">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="topicTag">태그</label>
+                                    <div id="tagButtons" class="mb-3">
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '일상')">일상</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '취미')">취미</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '여행')">여행</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '음식')">음식</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="topicDate">게시일</label>
+                                    <input type="date" class="form-control" id="topicDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="topicImg" style="font-size: smaller;">배너 이미지</label>
+                                    <input type="file" class="form-control-file" id="bannerImage">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary mb-2" onclick="uploadTopic()">저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="topicDetailModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="close" onclick="closeModal('topicDetailModal')">&times;</span>
+                            <h2 id="topicDetailTitle"></h2>
+                        </div>
+                        <div class="modal-body">
+                            <p id="topicDetailContent"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" onclick="modifyTopic()">수정</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modifyTopicModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="createTopicModal"><span id="topicDetailTitle"></span>의 미션 수정</h2>
+                            <span class="close" onclick="closeModal('modifyTopicModal')">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modifyTopic">주제</label>
+                                    <input type="text" class="form-control" id="modifyTopicTitle">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modifyTopicTag">태그</label>
+                                    <div id="modifyTagButtons" class="mb-3">
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '일상')">일상</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '취미')">취미</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '여행')">여행</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '음식')">음식</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modifyTopicDate">게시일</label>
+                                    <input type="date" class="form-control" id="modifyTopicDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modifyTopicImg" style="font-size: smaller;">배너 이미지</label>
+                                    <input type="file" class="form-control-file" id="modifyBannerImage">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary mb-2" onclick="uploadModifiedTopic()">저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <nav class="pagination-container">
+                        <div class="pagination">
+                            <a class="pagination-newer" href="#">PREV</a>
+                            <span class="pagination-inner">
+                                        <a href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a>
+                                    </span>
+                            <a class="pagination-older" href="#">NEXT</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
+<script th:src="@{/assets/libs/js/main-js.js}"></script>
+<script>
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    document.getElementById('createTopicBtn').addEventListener('click', function () {
+        openModal('createTopicModal');
+    });
+
+    $("#topicTable").on('click', 'tbody tr', function () {
+        const topicId = $(this).find("td:eq(0)").text();
+        const topic = $(this).find("td:eq(1)").text();
+        const tag = $(this).find("td:eq(2)").text();
+        const date = $(this).find("td:eq(3)").text();
+        const image = $(this).find("서버에서 이미지 가져오기").text();
+
+        const [year, month, day] = date.split('-');
+        const displayDate = `${month}월 ${day}일의 미션`;
+
+        document.getElementById("topicDetailTitle").innerText = displayDate;
+
+        const topicDetailContent = `
+            <p><strong>주제 번호:</strong> ${topicId}</p>
+            <p><strong>주제:</strong> ${topic}</p>
+            <p><strong>태그:</strong> ${tag}</p>
+            <strong>배너 이미지:</strong><br>
+            <p>${image}</p>
+        `;
+
+        document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
+
+        openModal('topicDetailModal');
+    });
+
+    let selectedTags = [];
+    function selectTag(button, tag) {
+
+        if(button.classList.contains('btn-outline-primary')) {
+
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-primary');
+            selectedTags.push(tag);
+
+        } else {
+
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-outline-primary');
+
+            const index = selectedTags.indexOf(tag);
+            if(index > -1) {
+                selectedTags.splice(index, 1);
+            }
+        }
+    }
+
+    function uploadTopic() {
+        let title = document.getElementById('topicTitle').value;
+        let date = document.getElementById('topicDate').value;
+
+        if(!title || selectedTags.length === 0 || !date) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        //서버에 데이터 전송하는 코드 추가 예정
+
+        alert('오늘의 미션이 등록되었습니다.');
+        closeModal('createTopicModal');
+    }
+
+    function modifyTopic() {
+        closeModal('topicDetailModal');
+        openModal('modifyTopicModal');
+
+        const title = document.getElementById('topicDetailTitle').innerText.split(' ')[0];
+        const content = document.querySelector('#topicDetailContent p:nth-child(2)').innerText.split(': ')[1];
+        const date = document.querySelector('#topicDetailContent p:nth-child(3)').innerText.split(': ')[1];
+        const tags = document.querySelector('#topicDetailContent p:nth-child(4)').innerText.split(': ')[1].split(', ');
+
+        document.getElementById('modifyTopicTitle').value = content;
+        document.getElementById('modifyTopicDate').value = date;
+
+        selectedTags = tags;
+        document.querySelectorAll('#modifyTagButtons button').forEach(button => {
+            if (tags.includes(button.innerText)) {
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-primary');
+            } else {
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-outline-primary');
+            }
+        });
+    }
+
+    function uploadModifiedTopic() {
+        let title = document.getElementById('modifyTopicTitle').value;
+        let date = document.getElementById('modifyTopicDate').value;
+
+        if (!title || selectedTags.length === 0 || !date) {
+            alert("모든 필드를 입력해주세요.");
+            return;
+        }
+
+        // 서버에 데이터 전송하는 코드 추가 예정
+
+        alert("오늘의 미션이 수정되었습니다.");
+        closeModal('modifyTopicModal');
+    }
+</script>
+
+</body>
+</html>

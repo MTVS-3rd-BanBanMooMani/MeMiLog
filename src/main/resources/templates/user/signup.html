@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Mission Log</title>
+    <link href="../../static/document/css/signup.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <a class="logo">Me Mission Log</a>
+        <div class="menu-bar">
+            <a class="button">둘러보기</a>
+            <a class="button">오늘의 일기</a>
+            <a class="button">마이 다이어리</a>
+            <button class="sign-in-btn">Sign Up</button>
+        </div>
+    </div>
+    <div class="middle-container">
+        <div class="form-container">
+            <h1>회원가입</h1>
+            <form>
+                <div class="input-group email">
+                    <label for="email-local-part">이메일</label>
+                    <div class="email-container">
+                        <input type="text" id="email-local-part" placeholder="이메일을 입력하세요." />
+                        <button type="button" class="check-btn duplicate-check-btn" onclick="sendVerificationCode()">인증코드 받기</button>
+                    </div>
+                </div>
+                <small id="send-verification-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group email-code">
+                    <label for="email-code">인증코드</label>
+                    <div class="email-container">
+                        <input type="text" id="email-code" placeholder="인증코드를 입력하세요."/>
+                        <small id="timer" class="verification-timer"></small>
+                        <button type="button" class="check-btn duplicate-check-btn" onclick="verifyCode()">인증확인</button>
+                    </div>
+                </div>
+                <div id="verify-message" class="verification-message"></div>
+                <div class="input-group password">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" placeholder="비밀번호를 입력하세요." />
+                </div>
+                <small id="password-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group check">
+                    <label for="password-confirm">비밀번호 확인</label>
+                    <input type="password" id="password-confirm" placeholder="비밀번호를 다시 입력해주세요." />
+                </div>
+                <small id="confirm-password-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group name">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" placeholder="이름을 입력하세요." />
+                </div>
+                <small id="name-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group birthday">
+                    <label for="year">생년월일</label>
+                    <select id="year" name="year" class="birthday-select">
+                        <option value="">년</option>
+                    </select>
+                    <select id="month" name="month" class="birthday-select">
+                        <option value="">월</option>
+                    </select>
+                    <select id="day" name="day" class="birthday-select">
+                        <option value="">일</option>
+                    </select>
+                </div>
+                <small id="birthday-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group nickname">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" id="nickname" placeholder="닉네임을 입력하세요." />
+                </div>
+                <small id="nickname-message" class="verification-message" style="display: none;"></small>
+                <div class="input-group gender">
+                    <label for="gender">성별</label>
+                    <select id="gender" name="gender">
+                        <option value="men">남자</option>
+                        <option value="women">여자</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">회원가입</button>
+            </form>
+        </div>
+        <div class="duplicate-check-container">
+            <button type="button" class="verify-btn" style="display:none;" onclick="verifyCode()">인증확인</button>
+        </div>
+    </div>
+    <div class="footer">
+        <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
+    </div>
+</div>
+<script src="../../static/document/js/signup.js"></script>
+</body>
+</html>

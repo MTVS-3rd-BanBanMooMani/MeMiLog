@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+    <link th:href="@{/assets/vendor/fonts/circular-std/style.css}" rel="stylesheet">
+    <link th:href="@{/assets/libs/css/style.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}" rel="stylesheet">
+    <style>
+        .table-controls {
+            text-align: right;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-main-wrapper">
+    <div class="dashboard-header">
+        <nav class="navbar navbar-expand-lg bg-white fixed-top">
+            <a class="navbar-brand" th:href="@{/admin/dashBoard}">Me Mission Log</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto navbar-right-top">
+                    <li class="nav-item dropdown nav-user">
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <div class="nav-user-info">
+                                <h5 class="mb-0 text-white nav-user-name">John Abraham</h5>
+                                <span class="status"></span><span class="ml-2">ja@naver.com</span>
+                            </div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="d-xl-none d-lg-none" th:href="@{/admin/dashBoard}">Dashboard</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-divider">Menu</li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/noticeBoard}"><i class="fas fa-fw fa-database"></i>Notice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/dailyTopicBoard}"><i class="fas fa-fw fa-box-open"></i>Mission</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class="container-fluid dashboard-content">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Black List</h2>
+                        <p class="pageheader-text"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suspended Users Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <h5 class="card-header">활동 정지 회원</h5>
+                        <div class="card-body">
+                            <div class="table-controls">
+                                <input type="text" id="searchSuspendedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
+                                <button id="searchSuspended" class="btn btn-secondary ml-2">Search</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="suspended-users-table" class="table table-striped table-bordered first">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="checkAllSuspended"></th>
+                                        <th>이름</th>
+                                        <th>닉네임</th>
+                                        <th>나이 대</th>
+                                        <th>신고 누적 횟수</th>
+                                        <th>남은 정지 기간</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>김철수</td>
+                                        <td>철수킹</td>
+                                        <td>30대</td>
+                                        <td>5</td>
+                                        <td>10일</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>이영희</td>
+                                        <td>영희짱</td>
+                                        <td>20대</td>
+                                        <td>3</td>
+                                        <td>20일</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>박민수</td>
+                                        <td>민수짱</td>
+                                        <td>40대</td>
+                                        <td>7</td>
+                                        <td>5일</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>홍길동</td>
+                                        <td>길동이</td>
+                                        <td>30대</td>
+                                        <td>2</td>
+                                        <td>15일</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
+                                        <td>최미영</td>
+                                        <td>미영이</td>
+                                        <td>20대</td>
+                                        <td>4</td>
+                                        <td>12일</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="table-controls">
+                                    <button id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blacklist Users Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <h5 class="card-header">블랙 리스트 회원</h5>
+                        <div class="card-body">
+                            <div class="table-controls">
+                                <input type="text" id="searchBlacklistInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
+                                <button id="searchBlacklist" class="btn btn-secondary ml-2">Search</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="blacklist-users-table" class="table table-striped table-bordered first">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="checkAllBlacklist"></th>
+                                        <th>이름</th>
+                                        <th>닉네임</th>
+                                        <th>나이 대</th>
+                                        <th>영구 정지 날짜</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김영수</td>
+                                        <td>영수킹</td>
+                                        <td>40대</td>
+                                        <td>2023-06-01</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>박지민</td>
+                                        <td>지민짱</td>
+                                        <td>30대</td>
+                                        <td>2023-07-15</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>이서연</td>
+                                        <td>서연이</td>
+                                        <td>20대</td>
+                                        <td>2023-08-20</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>최준영</td>
+                                        <td>준영이</td>
+                                        <td>30대</td>
+                                        <td>2023-09-05</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>김민지</td>
+                                        <td>민지짱</td>
+                                        <td>20대</td>
+                                        <td>2023-10-12</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="table-controls">
+                                    <button id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript -->
+            <script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+            <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+            <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
+            <script th:src="@{/assets/libs/js/main-js.js}"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#checkAllSuspended').click(function() {
+                        $('.checkItemSuspended').prop('checked', this.checked);
+                    });
+
+                    $('#checkAllBlacklist').click(function() {
+                        $('.checkItemBlacklist').prop('checked', this.checked);
+                    });
+
+                    $('#moveToBlacklist').click(function() {
+                        $('#suspended-users-table tbody tr').each(function() {
+                            if ($(this).find('.checkItemSuspended').is(':checked')) {
+                                var name = $(this).find('td').eq(1).text();
+                                var nickname = $(this).find('td').eq(2).text();
+                                var ageGroup = $(this).find('td').eq(3).text();
+                                var currentDate = new Date().toISOString().split('T')[0];
+                                var newRow = `
+                                    <tr>
+                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
+                                        <td>${name}</td>
+                                        <td>${nickname}</td>
+                                        <td>${ageGroup}</td>
+                                        <td>${currentDate}</td>
+                                    </tr>
+                                `;
+                                $('#blacklist-users-table tbody').append(newRow);
+                                $(this).remove();
+                            }
+                        });
+                    });
+
+                    $('#deleteFromBlacklist').click(function() {
+                        $('#blacklist-users-table tbody tr').each(function() {
+                            if ($(this).find('.checkItemBlacklist').is(':checked')) {
+                                $(this).remove();
+                            }
+                        });
+                    });
+
+                    $('#searchSuspended').click(function() {
+                        var searchValue = $('#searchSuspendedInput').val().toLowerCase();
+                        $('#suspended-users-table tbody tr').filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1)
+                        });
+                    });
+
+                    $('#searchBlacklist').click(function() {
+                        var searchValue = $('#searchBlacklistInput').val().toLowerCase();
+                        $('#blacklist-users-table tbody tr').filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1)
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

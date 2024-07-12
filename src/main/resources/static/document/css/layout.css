@@ -1,0 +1,94 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+} */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+}
+
+/* 메뉴바 */
+.logo {
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.menu-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+}
+
+.login-btn {
+  width: 5rem;
+  border-radius: 15%;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: 0.4rem 0.7rem;
+}
+
+.menu-btn:hover,
+.login-btn:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------------ */
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 1rem auto;
+  max-width: 92%;
+  padding: 0.5rem;
+  /* background: #f4f4f4; */
+  border-radius: 8px;
+  width: 100%;
+  padding-bottom: 3rem;
+}
+
+.content {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------ */
+
+/* 푸터 */
+footer {
+  border-top: solid 1px gray;
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  margin-top: auto; /* 자동으로 최하단으로 배치 */
+}
