@@ -10,51 +10,77 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
 }
-
+*/
 body {
+  margin: 0 275px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-} */
+}
 
-header {
-  display: flex;
-  justify-content: space-between;
+.header {
+  width: 100%;
+  height: 8vh;
+  background: white;
+  justify-content: center;
   align-items: center;
-  padding: 1.5rem 2rem;
+  gap: 15vw;
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 /* 메뉴바 */
-.logo {
-  font-size: 1.5rem;
-  text-decoration: none;
+.header .logo {
+  color: #000;
+  font-size: 1.3rem;
+  font-family: Inter;
+  font-weight: 500;
+  word-wrap: break-word;
+  width: 28vw;
 }
 
-.menu-bar {
-  display: flex;
+.header .menu-bar {
+  justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 3vw;
+  display: inline-flex;
 }
 
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
+.header .menu-bar .menu-btn {
+  color: #000;
+  font-size: 1.1rem;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 30px;
+  word-wrap: break-word;
   text-decoration: none;
-  font-size: 1rem;
-  color: black;
 }
 
-.login-btn {
-  width: 5rem;
-  border-radius: 15%;
-  background-color: black;
+.header .menu-bar .login-btn {
+  padding-left: 1.5vw;
+  padding-right: 1.5vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  background: #000;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  display: flex;
   color: white;
-  cursor: pointer;
-  padding: 0.4rem 0.7rem;
+  font-size: 1.1rem;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 24px;
+  word-wrap: break-word;
 }
 
-.menu-btn:hover,
+.header .menu-bar .menu-btn:hover,
 .login-btn:hover {
   text-decoration: underline;
 }
@@ -85,10 +111,16 @@ main {
 /* ------------------------------------ */
 
 /* 푸터 */
-footer {
-  border-top: solid 1px gray;
+.footer {
+  padding: 10px;
   text-align: center;
-  padding: 1rem;
+  color: #000;
+  border-top: 1px solid #ccc;
+  margin-top: auto;
+  background-color: white;
   width: 100%;
-  margin-top: auto; /* 자동으로 최하단으로 배치 */
+  position: relative;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

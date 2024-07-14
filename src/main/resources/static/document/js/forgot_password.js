@@ -33,10 +33,7 @@ function validateForm() {
         errorMessage.classList.remove('success');
         errorMessage.style.display = 'block';
     } else {
-        errorMessage.textContent = '아이디가 이메일로 전송되었습니다.';
-        errorMessage.classList.add('success');
-        errorMessage.classList.remove('error');
-        errorMessage.style.display = 'block';
+        showModal(email);
         emailInput.disabled = true;
     }
 }
@@ -83,4 +80,32 @@ function validateVerificationCode() {
         errorMessage.style.display = 'block';
         codeInput.disabled = true;
     }
+}
+
+
+function showModal(email) {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+
+    modalTitle.innerHTML = '<b>같은 주소로 가입한 계정이 있어요!</b>';
+    modalMessage.innerHTML = `이 메일 주소(${email})는 <br> 저희 서비스에 가입되어있어요!<br>해당 계정으로 로그인 해 주세요.`;
+
+    modal.style.display = 'flex';
+}
+
+
+function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+    const inputContainers = document.querySelectorAll('.input-container');
+    inputContainers.forEach(container => {
+        container.style.marginBottom = '1.5rem';
+    });
+}
+
+
+function startLogin() {
+
+    window.location.href = '/login';
 }

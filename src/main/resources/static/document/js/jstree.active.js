@@ -51,7 +51,7 @@ $('#jstree1').jstree({
                                     'text': 'bootstrap.css', 'icon': 'none'
                                 },
                                 {
-                                    'text': 'main.css', 'icon': 'none'
+                                    'text': 'mainCommon.css', 'icon': 'none'
                                 },
                                 {
                                     'text': 'style.css', 'icon': 'none'

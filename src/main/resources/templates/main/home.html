@@ -6,18 +6,13 @@
     <title>Me Mission Log</title>
     <link th:href="@{/document/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+    <link rel="stylesheet" href="../../document/css/layout.css" />
+    <link href="../../static/document/css/home.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <a class="logo" th:href="@{/}">Me Mission Log</a>
-            <div class="menu-bar">
-                <a class="button" href="/mission">둘러보기</a>
-                <a class="button" href="/mission?today=true">오늘의 일기</a>
-                <a class="button" th:href="@{/diary/12345}">마이다이어리</a>
-                <button class="sign-in-btn" onclick="location.href='/user/login'">Sign In</button>
-            </div>
-        </div>
+        <div th:replace="~{/fragments/mainHeader :: header}"></div>
         <!-- 이 밑으로 작성 -->
         <div class="middle-container">
             <div class="search-bar-container">
@@ -117,9 +112,9 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
-        </div>
+
+        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+
     </div>
 </body>
 </html>
