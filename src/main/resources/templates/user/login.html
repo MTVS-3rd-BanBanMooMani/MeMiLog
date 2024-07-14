@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="../../static/document/css/login.css" th:href="@{/document/css/login.css}">
+    <link rel="stylesheet" th:href="@{/document/css/login.css}">
+    <link rel="stylesheet" th:href="@{/document/css/layout.css}">
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <a class="logo">Me Mission Log</a>
-        <div th:replace="~{/fragments/mainHeader :: header}"></div>
-    </div>
+    <div th:replace="~{/fragments/mainHeader :: header}"></div>
     <div class="middle-container">
         <div class="form-container">
             <h1>로그인</h1>
-            <form>
+            <form th:action="@{/user/login}" method="post">
                 <div class="input-group">
                     <input type="text" id="email" placeholder="이메일을 입력하세요." />
                 </div>
@@ -23,7 +21,7 @@
                     <input type="password" id="password" placeholder="비밀번호를 입력하세요." />
                 </div>
                 <div class="caption">
-                    <a th:href="@{/user/forgot_password}">이메일 | 비밀번호 찾기</a>
+                    <a th:href="@{/forgot}">이메일 | 비밀번호 찾기</a>
                 </div>
                 <div class="input-group">
                     <div class="btn-1">
@@ -51,6 +49,6 @@
     </div>
     <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 </div>
-<script src="../../static/document/js/login.js" th:src="@{/document/js/login.js}"></script>
+<!--<script src="../../static/document/js/login.js" th:src="@{/document/js/login.js}"></script>-->
 </body>
 </html>

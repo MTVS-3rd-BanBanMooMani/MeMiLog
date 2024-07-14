@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me Mission Log</title>
-    <link href="../../static/document/css/signup.css" th:href="@{/document/css/signup.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="../../static/document/css/layout.css" th:href="@{/document/css/layout.css}" />
+    <link th:href="@{/document/css/signup.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/document/css/layout.css}" />
 </head>
 <body>
 <div class="container">
@@ -13,7 +13,7 @@
     <div class="middle-container">
         <div class="form-container">
             <h1>회원가입</h1>
-            <form>
+            <form th:action="@{/signup}" method="post">
                 <div class="input-group email">
                     <label for="email-local-part">이메일</label>
                     <div class="email-container">
