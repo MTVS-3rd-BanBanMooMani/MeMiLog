@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me Mission Log</title>
-    <link href="../../static/document/css/mydiary.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../document/css/layout.css" />
+    <link rel="stylesheet" href="../../document/css/mydiary.css" />
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <a class="logo">Me Mission Log</a>
-        <div class="menu-bar">
-            <a class="button">둘러보기</a>
-            <a class="button">오늘의 일기</a>
-            <a class="button">마이 다이어리</a>
-            <button class="sign-in-btn">Log Out</button>
-        </div>
-    </div>
+    <div th:replace="~{/fragments/mainHeader :: header}"></div>
 
     <div class="user-container">
         <div class="user-profile">
@@ -258,9 +251,8 @@
         </div>
     </div>
 
-    <div class="footer">
-        <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
-    </div>
+    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+
 </div>
 <script>
     var barChart;
