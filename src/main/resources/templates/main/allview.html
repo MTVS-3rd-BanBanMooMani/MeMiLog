@@ -10,9 +10,18 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
     />
     <!-- 전체 레이아웃 css -->
-    <link th:href="@{/document/css/layout.css}" rel="stylesheet" />
-    <link th:href="@{/document/css/searchbar.css}" rel="stylesheet" />
-    <link th:href="@{/document/css/allview.css}" rel="stylesheet" />
+    <link
+      href="/src/main/resources/static/document/css/layout.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/src/main/resources/static/document/css/searchbar.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/src/main/resources/static/document/css/allview.css"
+      rel="stylesheet"
+    />
 
     <!-- sweetalert2 -->
     <link
@@ -32,7 +41,17 @@
     />
   </head>
   <body>
-  <div th:replace="~{/fragments/mainHeader :: header}"></div>
+    <header>
+      <a class="logo">Me Mission Log</a>
+      <div class="menu-bar">
+        <a class="menu-btn" href="../view/allview.html">둘러보기</a>
+        <a class="menu-btn" href="../view/post.html">오늘일기</a>
+        <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
+        <button class="login-btn" onclick="location.href='./login.html'">
+          로그인
+        </button>
+      </div>
+    </header>
     <main>
       <div class="content">
         <!-- 검색바 -->
@@ -41,10 +60,9 @@
             type="text"
             placeholder="찾고싶은 질문 키워드를 검색해보세요!"
             class="search-bar"
-            th:value="${word != null ? word : ''}"
           />
           <img
-            th:src="@{/document/img/search.png}"
+            src="../documentation/img/search.png"
             alt="search icon"
             class="search-Img"
           />
@@ -71,7 +89,7 @@
         <div class="modal-mission-container">
           <img
             class="modal-mission-img"
-            th:src="@{/document/img/banner.jpg}"
+            src="../documentation/img/banner.jpg"
           />
           <div>6월 20일의 미션</div>
           <div>미미들이 생각하는 여름 낭만은?</div>
@@ -90,40 +108,33 @@
         <div class="modal-photo-greed-container">
           <div class="modal-row">
             <div class="photo-div">
-              <img th:src="@{/document/img/home-post-photo.jpg}" />
+              <img src="../documentation/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img th:src="@{/document/img/home-post-photo.jpg}" />
+              <img src="../documentation/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img th:src="@{/document/img/home-post-photo.jpg}" />
+              <img src="../documentation/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img th:src="@{/document/img/home-post-photo.jpg}" />
+              <img src="../documentation/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img th:src="@{/document/img/home-post-photo.jpg}" />
+              <img src="../documentation/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
           </div>
         </div>
       </div>
       <div class="post-modal">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            align-items: center;
-          "
-        >
+        <div class="post-modal-top">
           <div>
             <img
-              th:src="@{/document/img/etc.png}"
+              src="../documentation/img/etc.png"
               height="25px"
               alt="etc이미지"
               class="etc-img"
@@ -161,19 +172,30 @@
               </p>
             </div>
 
-            <div class="modal-board-img">
+            <div class="post-modal-board-img">
               <span class="arrow arrow-left hidden">&lt;</span>
               <img
-                th:src="@{/document/img/home-post-photo.jpg}"
+                src="../documentation/img/home-post-photo.jpg"
                 alt="게시물이미지"
+                class="modal-image"
+              />
+              <img
+                src="../documentation/img/home-post-photo.jpg"
+                alt="게시물이미지"
+                class="modal-image"
+              />
+              <img
+                src="../documentation/img/home-post-photo.jpg"
+                alt="게시물이미지"
+                class="modal-image"
               />
               <span class="arrow arrow-right">&gt;</span>
             </div>
 
-            <div class="post-modal-info">
-              <div class="post-modal-profile" style="width: 90px">
+            <div class="post-modal-user-info">
+              <div class="post-modal-profile">
                 <img
-                  th:src="@{/document/img/stone.jpg}"
+                  src="../documentation/img/stone.jpg"
                   alt="프로필이미지"
                   width="35px"
                   height="35px"
@@ -181,17 +203,10 @@
                 />
                 <p>돌멩이</p>
               </div>
-              <div class="post-modal-log-details" style="width: 180px">
-                <p>작성일: 24.06.22</p>
+              <div class="post-modal-like-box">
+                <p>779</p>
                 <img
-                  th:src="@{/document/img/colored_happy.png}"
-                  alt="프로필이미지"
-                  width="25px"
-                  height="25px"
-                  style="border-radius: 50%"
-                />
-                <img
-                  th:src="@{/document/img/heart.png}"
+                  src="../documentation/img/heart.png"
                   alt="좋아요"
                   width="30px"
                   height="30px"
@@ -206,6 +221,16 @@
 
           <!-- post modal 오른쪽 -->
           <div class="post-modal-right">
+            <div class="post-modal-right-info">
+              <p>작성일: 24.06.22</p>
+              <img
+                src="../documentation/img/colored_happy.png"
+                alt="감정이미지"
+                width="25px"
+                height="25px"
+                style="border-radius: 50%"
+              />
+            </div>
             <div>
               꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
             </div>
@@ -214,9 +239,11 @@
       </div>
     </div>
 
-    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+    <footer>
+      <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
+    </footer>
 
-    <script th:src="@{/document/js/missionPost.js}"></script>
-    <script th:src="@{/document/js/allviewModal.js}"></script>
+    <script src="/src/main/resources/static/document/js/missionPost.js"></script>
+    <script src="/src/main/resources/static/document/js/allviewModal.js"></script>
   </body>
 </html>
