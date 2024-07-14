@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Me Mission Log</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link href="../../static/document/css/post.css" th:href="@{/document/css/post.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="../../static/document/css/layout.css" th:href="@{/document/css/layout.css}" />
+</head>
+<body>
+<div class="container">
+  <div th:replace="~{/fragments/mainHeader :: header}"></div>
+  <div class="middle-container">
+    <div class="left-container">
+      <div class="date-category">
+        <span class="date" th:text="${date}">06월 22일</span>
+        <span class="category" th:text="${category}">자연</span>
+      </div>
+      <div class="title" th:text="${title}">미미들이 생각하는 여름 낭만은?</div>
+      <div class="image-container">
+        <img id="main-image" class="main-image" th:src="@{/images/default.png}">
+      </div>
+      <div class="image-thumbnails-container">
+        <div class="image-thumbnails" id="plus-thumbnail">
+          <div class="thumbnail add-thumbnail" id="addBtn">
+            +
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+          </div>
+        </div>
+      </div>
+      <p class="note">* 최대 5장까지 등록 가능합니다.</p>
+    </div>
+    <div class="right-container">
+      <div class="text-area">
+        <textarea placeholder="내용을 입력하세요" th:text="${content}"></textarea>
+      </div>
+      <div class="question">어떤 기분이었나요?</div>
+      <div class="emotion-box">
+        <div class="main-box">
+          <ul class="icon-box">
+            <li id="happy" onclick="changeIconColor('happy')">
+              <img src="../../static/document/img/happy.png" alt="아이콘" class="icon1" th:src="@{/document/img/happy.png}" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
+            </li>
+            <li id="cool" onclick="changeIconColor('cool')">
+              <img src="../../static/document/img/cool.png" alt="아이콘" class="icon1" th:src="@{/document/img/cool.png}" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
+            </li>
+            <li id="surprised" onclick="changeIconColor('surprised')">
+              <img src="../../static/document/img/surprised.png" alt="아이콘" class="icon1" th:src="@{/document/img/surprised.png}" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
+            </li>
+            <li id="soso" onclick="changeIconColor('soso')">
+              <img src="../../static/document/img/soso.png" alt="아이콘" class="icon1" th:src="@{/document/img/soso.png}" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
+            </li>
+            <li id="sad" onclick="changeIconColor('sad')">
+              <img src="../../static/document/img/sad.png" alt="아이콘" class="icon1" th:src="@{/document/img/sad.png}" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="questions">
+        <div class="question">누구와 함께 했나요?</div>
+        <div class="answers">
+          <button class="answer-left answer" onclick="toggleSelection(this)">나</button>
+          <button class="answer-middle answer" onclick="toggleSelection(this)">친구</button>
+          <button class="answer-middle answer" onclick="toggleSelection(this)">가족</button>
+          <button class="answer-middle answer" onclick="toggleSelection(this)">연인</button>
+          <button class="answer-middle answer" onclick="toggleSelection(this)">동료</button>
+          <button class="answer-right answer" onclick="toggleSelection(this)">반려동물</button>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="submit-btn" th:onclick="|submitForm()|">수정 완료</button>
+      </div>
+    </div>
+  </div>
+  <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+</div>
+<script src="../../static/document/js/post.js" th:src="@{/document/js/post.js}"></script>
+</body>
+</html>

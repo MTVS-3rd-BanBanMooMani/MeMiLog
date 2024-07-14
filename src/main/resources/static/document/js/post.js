@@ -3,13 +3,17 @@ function changeIconColor(id) {
     var icons = document.querySelectorAll('.icon-box li');
     icons.forEach(function(li) {
         var iconId = li.id;
-        li.querySelector('img').setAttribute('src', `../documentation/img/${iconId}.png`);
+        var img = li.querySelector('img');
+        var originalSrc = img.getAttribute('data-original');
+        img.setAttribute('src', originalSrc);
         li.setAttribute('onclick', `changeIconColor('${iconId}')`);
     });
 
     // 선택된 아이콘만 색상 변경
     var selectedLi = document.getElementById(id);
-    selectedLi.querySelector('img').setAttribute('src', `../documentation/img/colored_${id}.png`);
+    var selectedImg = selectedLi.querySelector('img');
+    var coloredSrc = selectedImg.getAttribute('data-colored');
+    selectedImg.setAttribute('src', coloredSrc);
     selectedLi.setAttribute('onclick', `resetIconColor('${id}')`);
 }
 
