@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me Mission Log</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="../../document/css/layout.css" />
     <link href="../../static/document/css/home.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <a class="logo">Me Mission Log</a>
-            <div class="menu-bar">
-                <a class="button" href="allview.html">둘러보기</a>
-                <a class="button" href="post.html">오늘의 일기</a>
-                <a class="button" href="mydiary.html">마이 다이어리</a>
-                <button class="sign-in-btn" onclick="location.href='login.html'">Sign In</button>
-            </div>
-        </div>
+        <div th:replace="~{/fragments/mainHeader :: header}"></div>
+
         <!-- 이 밑으로 작성 -->
         <div class="middle-container">
             <div class="search-bar-container">
@@ -115,9 +109,9 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
-        </div>
+
+        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+
     </div>
 </body>
 </html>
