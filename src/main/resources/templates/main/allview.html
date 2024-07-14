@@ -10,9 +10,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
     />
     <!-- 전체 레이아웃 css -->
-    <link href="../../static/document/css/layout.css" rel="stylesheet" />
-    <link href="../../static/document/css/searchbar.css" rel="stylesheet" />
-    <link href="../../static/document/css/allview.css" rel="stylesheet" />
+    <link th:href="@{/document/css/layout.css}" rel="stylesheet" />
+    <link th:href="@{/document/css/searchbar.css}" rel="stylesheet" />
+    <link th:href="@{/document/css/allview.css}" rel="stylesheet" />
 
     <!-- sweetalert2 -->
     <link
@@ -33,12 +33,12 @@
   </head>
   <body>
     <header>
-      <a class="logo">Me Mission Log</a>
+      <a class="logo" th:href="@{/}">Me Mission Log</a>
       <div class="menu-bar">
-        <a class="menu-btn" href="../view/allview.html">둘러보기</a>
-        <a class="menu-btn" href="../view/post.html">오늘일기</a>
-        <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
-        <button class="login-btn" onclick="location.href='../../../../../../../../lecture/05_spring-webmvc/01_lecture-source/MeMiLog/src/main/resources/templates/user/login.html'">
+        <a class="menu-btn" th:href="@{/mission}">둘러보기</a>
+        <a class="menu-btn" th:href="@{/mission?today=true}">오늘일기</a>
+        <a class="menu-btn" th:href="@{/diary/12345}">마이다이어리</a>
+        <button class="login-btn" onclick="location.href='/user/login'">
           로그인
         </button>
       </div>
@@ -51,9 +51,10 @@
             type="text"
             placeholder="찾고싶은 질문 키워드를 검색해보세요!"
             class="search-bar"
+            th:value="${word != null ? word : ''}"
           />
           <img
-            src="../../static/document/img/search.png"
+            th:src="@{/document/img/search.png}"
             alt="search icon"
             class="search-Img"
           />
@@ -80,7 +81,7 @@
         <div class="modal-mission-container">
           <img
             class="modal-mission-img"
-            src="../../static/document/img/banner.jpg"
+            th:src="@{/document/img/banner.jpg}"
           />
           <div>6월 20일의 미션</div>
           <div>미미들이 생각하는 여름 낭만은?</div>
@@ -99,23 +100,23 @@
         <div class="modal-photo-greed-container">
           <div class="modal-row">
             <div class="photo-div">
-              <img src="../../static/document/img/home-post-photo.jpg" />
+              <img th:src="@{/document/img/home-post-photo.jpg}" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../../static/document/img/home-post-photo.jpg" />
+              <img th:src="@{/document/img/home-post-photo.jpg}" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../../static/document/img/home-post-photo.jpg" />
+              <img th:src="@{/document/img/home-post-photo.jpg}" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../../static/document/img/home-post-photo.jpg" />
+              <img th:src="@{/document/img/home-post-photo.jpg}" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../../static/document/img/home-post-photo.jpg" />
+              <img th:src="@{/document/img/home-post-photo.jpg}" />
               <p>잠실2동 불주먹</p>
             </div>
           </div>
@@ -132,7 +133,7 @@
         >
           <div>
             <img
-              src="../../static/document/img/etc.png"
+              th:src="@{/document/img/etc.png}"
               height="25px"
               alt="etc이미지"
               class="etc-img"
@@ -173,7 +174,7 @@
             <div class="modal-board-img">
               <span class="arrow arrow-left hidden">&lt;</span>
               <img
-                src="../../static/document/img/home-post-photo.jpg"
+                th:src="@{/document/img/home-post-photo.jpg}"
                 alt="게시물이미지"
               />
               <span class="arrow arrow-right">&gt;</span>
@@ -182,7 +183,7 @@
             <div class="post-modal-info">
               <div class="post-modal-profile" style="width: 90px">
                 <img
-                  src="../../static/document/img/stone.jpg"
+                  th:src="@{/document/img/stone.jpg}"
                   alt="프로필이미지"
                   width="35px"
                   height="35px"
@@ -193,14 +194,14 @@
               <div class="post-modal-log-details" style="width: 180px">
                 <p>작성일: 24.06.22</p>
                 <img
-                  src="../../static/document/img/colored_happy.png"
+                  th:src="@{/document/img/colored_happy.png}"
                   alt="프로필이미지"
                   width="25px"
                   height="25px"
                   style="border-radius: 50%"
                 />
                 <img
-                  src="../../static/document/img/heart.png"
+                  th:src="@{/document/img/heart.png}"
                   alt="좋아요"
                   width="30px"
                   height="30px"
@@ -227,7 +228,7 @@
       <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
     </footer>
 
-    <script src="../../static/document/js/missionPost.js"></script>
-    <script src="../../static/document/js/allviewModal.js"></script>
+    <script th:src="@{/document/js/missionPost.js}"></script>
+    <script th:src="@{/document/js/allviewModal.js}"></script>
   </body>
 </html>

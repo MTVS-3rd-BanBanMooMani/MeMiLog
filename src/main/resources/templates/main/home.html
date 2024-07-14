@@ -4,73 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me Mission Log</title>
+    <link th:href="@{/document/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link href="../../static/document/css/home.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <a class="logo">Me Mission Log</a>
+            <a class="logo" th:href="@{/}">Me Mission Log</a>
             <div class="menu-bar">
-                <a class="button" href="allview.html">둘러보기</a>
-                <a class="button" href="post.html">오늘의 일기</a>
-                <a class="button" href="mydiary.html">마이 다이어리</a>
-                <button class="sign-in-btn" onclick="location.href='login.html'">Sign In</button>
+                <a class="button" href="/mission">둘러보기</a>
+                <a class="button" href="/mission?today=true">오늘의 일기</a>
+                <a class="button" th:href="@{/diary/12345}">마이다이어리</a>
+                <button class="sign-in-btn" onclick="location.href='/user/login'">Sign In</button>
             </div>
         </div>
         <!-- 이 밑으로 작성 -->
         <div class="middle-container">
             <div class="search-bar-container">
-                <form action="./allview.html">
-                    <input type="text">
-                    <button type="submit"><img src="../../static/document/img/material-symbols-light.png"></button>
+                <form action="/mission" method="get">
+                    <input type="text" name="word">
+                    <button type="submit">
+                        <img th:src="@{/document/img/material-symbols-light.png}">
+                    </button>
                 </form>
             </div>
             <div class="mission-container">
-                <img class="mission-img" src="../../static/document/img/banner.jpg" />
+                <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
                 <div>6월 20일의 미션</div>
                 <div>미미들이 생각하는 여름 낭만은?</div>
-                <button>나도 남기러 가기</button>
+                <button onclick="location.href='/post/new'">나도 남기러 가기</button>
             </div>
             <div class="today-container">
                 <div class="today-label">
                     <p>000,000 명의 미미들의 오늘📷</p>
                 </div>
                 <div class="today-photo-container">
-                    <img src="../../static/document/img/home-left-arrow.png.png">
+                    <img th:src="@{/document/img/home-left-arrow.png.png}">
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
-                    <img src="../../static/document/img/home-right-arrow.png.png">
+                    <img th:src="@{/document/img/home-right-arrow.png.png}">
                 </div>
             </div>
             <div class="random-container">
@@ -78,40 +80,40 @@
                     <p>미미로그 아카이브🍰</p>
                 </div>
                 <div class="random-photo-container">
-                    <img src="../../static/document/img/home-left-arrow.png.png">
+                    <img th:src="@{/document/img/home-left-arrow.png.png}">
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
                     <div class="photo-div">
-                        <img src="../../static/document/img/home-post-photo.jpg">
+                        <img th:src="@{/document/img/home-post-photo.jpg}">
                         <p>잠실2동 불주먹</p>
                     </div>
-                    <img src="../../static/document/img/home-right-arrow.png.png">
+                    <img th:src="@{/document/img/home-right-arrow.png.png}">
                 </div>
             </div>
         </div>

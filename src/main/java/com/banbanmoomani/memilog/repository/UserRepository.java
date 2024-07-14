@@ -1,4 +1,4 @@
 package com.banbanmoomani.memilog.repository;
 
-public class MainRepository {
+public class UserRepository {
 }
