@@ -13,9 +13,9 @@
 
     <div class="user-container">
         <div class="user-profile">
-            <img src="../../static/document/img/profile.jpeg" alt="Profile Picture">
-            <p>돌멩이님</p>
-            <img src="../../static/document/img/settings.png" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
+            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture">
+            <p th:text="${username}">돌멩이님</p>
+            <img th:src="@{/document/img/settings.png}" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
         </div>
 
         <div id="userModal" class="modal">
@@ -24,13 +24,13 @@
                 <h2>회원 정보</h2>
                 <div class="modal-body">
                     <div class="modal-left">
-                        <p><strong>아이디:</strong> blip0819@gmail.com</p>
-                        <p><strong>닉네임:</strong> 돌멩이님</p>
-                        <p><strong>가입일:</strong> 2023-01-01</p>
+                        <p><strong>아이디:</strong> <span th:text="${email}">blip0819@gmail.com</span></p>
+                        <p><strong>닉네임:</strong> <span th:text="${username}">돌멩이님</span></p>
+                        <p><strong>가입일:</strong> <span th:text="${joinDate}">2023-01-01</span></p>
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img src="../../static/document/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture" class="profile-pic">
                         </div>
                     </div>
                 </div>
@@ -50,11 +50,11 @@
                         <form id="editForm">
                             <div class="form-group">
                                 <label for="email">아이디:</label>
-                                <input type="text" id="email" name="email" value="blip0819@gmail.com"><br>
+                                <input type="text" id="email" name="email" th:value="${email}"><br>
                             </div>
                             <div class="form-group">
                                 <label for="nickname">닉네임:</label>
-                                <input type="text" id="nickname" name="nickname" value="돌멩이님"><br>
+                                <input type="text" id="nickname" name="nickname" th:value="${username}"><br>
                             </div>
                             <div class="form-group">
                                 <label for="password">비밀번호:</label>
@@ -62,13 +62,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="password2">비밀번호 확인:</label>
-                                <input type="password" id="password2" name="password"><br>
+                                <input type="password" id="password2" name="password2"><br>
                             </div>
                         </form>
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img src="../../static/document/img/profile.jpeg" alt="Profile Picture" class="profile-pic">
+                            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture" class="profile-pic">
                             <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
@@ -79,7 +79,6 @@
                 </div>
             </div>
         </div>
-
 
         <div id="profilePicModal" class="modal">
             <div class="modal-content">
@@ -132,120 +131,21 @@
         </div>
 
         <div id="post-card-container" class="tabcontent" style="display: flex;">
-            <div class="post-card">
-                <img src="../../static/document/img/9A63EB15-3A92-4CB7-B950-0BF4A7EEE559.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/B71A7735-D579-4FDF-988B-9FF0AADB9261.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/0FB9A022-E77F-4365-AAFB-8824430ED386.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/5127F18A-E0DE-4D50-91EF-DBFAF5B0C4A1_1_105_c.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/A4F9DE11-C424-4B6F-808A-6A4129B17A90_1_201_a.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/2C706C0C-5837-44BB-99A4-70D79FC0035D.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/C424C20D-4ACE-46F5-A6E5-3DC9664D4858.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/37842708-F42D-425A-AB70-473F617E9B45_1_102_o.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/5C86A530-E7BA-4993-A475-AECBFEDBB514_1_201_a.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/E5CC5654-8AA3-4441-9633-03E543229E02_1_102_o.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/6BB8453D-5992-4530-8318-A3C7360702D7_1_105_c.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/ED439F5C-BC4C-415D-8FF4-5047095DF249.jpeg" alt="Post Image">
-            </div>
-            <div class="post-card">
-                <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" alt="Post Image">
+            <div th:each="postImage : ${postImages}" class="post-card">
+                <img th:src="@{|/document/img/${postImage}|}" alt="Post Image">
             </div>
         </div>
 
         <div id="calendar-container" class="tabcontent">
             <div class="date-selector">
                 <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li>10</li>
-                    <li>11</li>
-                    <li>12</li>
-                    <li>13</li>
-                    <li>14</li>
-                    <li>15</li>
-                    <li>16</li>
-                    <li>17</li>
-                    <li>18</li>
-                    <li>19</li>
-                    <li>20</li>
-                    <li>21</li>
-                    <li>22</li>
-                    <li>23</li>
-                    <li>24</li>
-                    <li>25</li>
-                    <li>26</li>
-                    <li>27</li>
-                    <li>28</li>
-                    <li>29</li>
-                    <li>30</li>
-                    <li>31</li>
+                    <li th:each="day : ${#numbers.sequence(1,30)}" th:text="${day}"></li>
                 </ul>
             </div>
 
             <div class="calendar-contents">
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px, height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px, height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
-                </div>
-                <div class="calendar-card">
-                    <img src="../../static/document/img/0FCF1AB4-9129-4A52-9624-2F6F5928234C.jpeg" width=150px height=180px>
+                <div th:each="calendarImage : ${calendarImages}" class="calendar-card">
+                    <img th:src="@{|/document/img/${calendarImage}|}" width="150px" height="180px">
                 </div>
             </div>
         </div>
@@ -290,21 +190,11 @@
     }
 
     function openModal(modalId) {
-        var modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = "block";
-        } else {
-            console.error(`Modal with ID '${modalId}' not found.`);
-        }
+        document.getElementById(modalId).style.display = "block";
     }
 
     function closeModal(modalId) {
-        var modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = "none";
-        } else {
-            console.error(`Modal with ID '${modalId}' not found.`);
-        }
+        document.getElementById(modalId).style.display = "none";
     }
 
     function updateProfilePic(event) {
@@ -328,7 +218,7 @@
     }
 
     function deleteProfilePic() {
-        document.querySelector('.profile-pic').src = '../../static/document/img/default_profile.png';
+        document.querySelector('.profile-pic').src = '../../document/img/default_profile.png';
         alert("프로필 사진이 삭제되었습니다.");
         closeModal('profilePicModal');
     }
@@ -366,11 +256,11 @@
         var ctx = barChartCanvas.getContext("2d");
 
         var labels = [
-            { img: '../../static/document/img/colored_happy.png', text: '😃' },
-            { img: '../../static/document/img/colored_cool.png', text: '😎' },
-            { img: '../../static/document/img/colored_surprised.png', text: '😮' },
-            { img: '../../static/document/img/colored_soso.png', text: '😐' },
-            { img: '../../static/document/img/colored_sad.png', text: '🥲' }
+            { img: '../../document/img/colored_happy.png', text: '😃' },
+            { img: '../../document/img/colored_cool.png', text: '😎' },
+            { img: '../../document/img/colored_surprised.png', text: '😮' },
+            { img: '../../document/img/colored_soso.png', text: '😐' },
+            { img: '../../document/img/colored_sad.png', text: '🥲' }
         ];
 
         var images = [];
@@ -461,11 +351,11 @@
 
     function getEmojiImage(emoji) {
         switch (emoji) {
-            case "😀": return '../../static/document/img/colored_happy.png';
-            case "😎": return '../../static/document/img/colored_cool.png';
-            case "😮": return '../../static/document/img/colored_surprised.png';
-            case "😐": return '../../static/document/img/colored_soso.png';
-            case "😢": return '../../static/document/img/colored_sad.png';
+            case "😀": return '../../document/img/colored_happy.png';
+            case "😎": return '../../document/img/colored_cool.png';
+            case "😮": return '../../document/img/colored_surprised.png';
+            case "😐": return '../../document/img/colored_soso.png';
+            case "😢": return '../../document/img/colored_sad.png';
             default: return '';
         }
     }
