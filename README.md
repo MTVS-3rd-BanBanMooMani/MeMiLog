@@ -1,5 +1,7 @@
 # Me Mission Log
-![Me Mission Log - Logo](https://github.com/user-attachments/assets/97ac2926-4c36-4613-aa26-bae16bcedb78)
+<p align="center"><img src="image_src">
+   ![Me Mission Log - Logo](https://github.com/user-attachments/assets/97ac2926-4c36-4613-aa26-bae16bcedb78)
+</p>
 
 ## 서비스 특징
 
