@@ -1,5 +1,7 @@
 package com.banbanmoomani.memilog.controller;
 
+import com.banbanmoomani.memilog.DTO.AdminDTO;
+import com.banbanmoomani.memilog.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,18 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/dashBoard")
-    public void dashBoard() {
+    private final AdminService adminService;
 
-        // 활동 정지 회원 리스트 조회
-
-        // 블랙 리스트 회원 리스트 조회
-
-        // DTO 반환
+    public AdminController() {
+        adminService = new AdminService();
     }
 
+    @GetMapping("/dashBoard")
+    public void dashBoard() {}
+
     @GetMapping("/userBlackList")
-    public void userBlackList() {}
+    public void userBlackList() {
+
+        AdminDTO.getBlackListDTO getBlackListDTO = adminService.getBlackListDTO();
+    }
 
     @GetMapping("/reportTotal")
     public void reportTotal() {}
