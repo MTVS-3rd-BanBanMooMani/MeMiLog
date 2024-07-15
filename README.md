@@ -1,5 +1,5 @@
 # Me Mission Log
-<p align="center"><img src="image_src">
+<p align="center">
    <img src="https://github.com/user-attachments/assets/97ac2926-4c36-4613-aa26-bae16bcedb78">
 </p>
 
