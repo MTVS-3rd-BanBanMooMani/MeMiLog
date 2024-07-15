@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="application.properties"/>
     <typeAliases>
         <typeAlias type="com.banbanmoomani.memilog" alias="mapper"/>
     </typeAliases>
@@ -10,14 +11,15 @@
         <environment id="dev">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://223.130.152.102:3306/memilog_DB"/>
-                <property name="username" value="devuser"/>
-                <property name="password" value="1234"/>
+                <property name="driver" value="${SPRING_DATASOURCE_DRIVER}"/>
+                <property name="url" value="${SPRING_DATASOURCE_URL}"/>
+                <property name="username" value="${SPRING_DATASOURCE_USERNAME}"/>
+                <property name="password" value="${SPRING_DATASOURCE_PASSWORD}"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
         <mapper resource="mapper/black-list-mapper.xml"/>
+        <mapper resource="mapper/user-mapper.xml"/>
     </mappers>
 </configuration>
