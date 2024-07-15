@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.banbanmoomani.memilog" alias="memilog"/>
+        <typeAlias type="com.banbanmoomani.memilog" alias="mapper"/>
     </typeAliases>
     <environments default="dev">
         <environment id="dev">
@@ -18,6 +18,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="memilog/black-list-mapper.xml"/>
+        <mapper resource="mapper/black-list-mapper.xml"/>
     </mappers>
 </configuration>
