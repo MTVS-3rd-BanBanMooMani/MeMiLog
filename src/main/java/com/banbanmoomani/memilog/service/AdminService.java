@@ -25,7 +25,7 @@ public class AdminService {
             throw new RuntimeException(e);
         }
 
-        AdminDTO.getBlackListDTO getBlackListDTO = adminDAO.getBlackList();
+        AdminDTO.getBlackListDTO getBlackListDTO = adminDAO.getBlackList(sqlSession);
 
         sqlSession.close();
 
