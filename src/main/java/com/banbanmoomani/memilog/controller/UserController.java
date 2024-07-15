@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
+
     @GetMapping("/user/login")
     public String login() {
         return "user/login";

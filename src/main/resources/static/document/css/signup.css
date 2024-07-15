@@ -8,21 +8,18 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
     width: 100%;
+    height: 120%;
 }
-
 
 .middle-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1;
-    position: relative;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
 }
+
 .verification-timer {
     font-size: 15px;
     display: none;
@@ -65,7 +62,6 @@ body, html {
     font-family: Inter;
     font-weight: 700;
     margin-bottom: 4rem;
-    margin-left: 60px;
 }
 
 .form-container form {
@@ -145,8 +141,6 @@ body, html {
 }
 
 .duplicate-check-container {
-    margin-left: 20px;
-    margin-bottom: 430px;
     position: absolute;
     left: 75%;
 }
@@ -219,7 +213,7 @@ body, html {
     font-family: Inter;
     font-weight: 500;
     cursor: pointer;
-    margin: 40px 0 40px 100px;
+    margin: 40px auto 40px auto;
     width: 100%;
     max-width: 500px;
 }
