@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
+
     @GetMapping("/user/login")
     public String login() {
         return "user/login";
@@ -22,7 +23,13 @@ public class UserController {
 
     @PostMapping("/signup")
     public String signup(UserDTO userDTO) {
+        // service : 해당 이메일 중복인지 확인 후 DAO의 insertUser 호출
 
+        // DAO : MyBatis의 insertUser 호출
+
+        // service에서 false 반환시 alert 띄우기
+
+        // true 반환시 index page로 이동
         return "main/home";
     }
 
