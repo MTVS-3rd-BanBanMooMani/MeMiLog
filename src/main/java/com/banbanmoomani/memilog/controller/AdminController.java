@@ -32,10 +32,6 @@ public class AdminController {
         model.addAttribute("banListDTO", banListDTO);
         model.addAttribute("blackListDTO", blackListDTO);
 
-        for (BanListDTO banListDTO1 : banListDTO) {
-            System.out.println(banListDTO1.getNickName());
-        }
-
         return "admin/userBlackList";
     }
 
