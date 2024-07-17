@@ -1,8 +1,11 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.BlackListMapper;
-import com.banbanmoomani.memilog.DTO.AdminDTO;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdminService {
@@ -13,7 +16,11 @@ public class AdminService {
         this.blackListMapper = blackListMapper;
     }
 
-    public AdminDTO.getBlackListDTO getBlackListDTO() {
-        return blackListMapper.getBlackListDTO();
+    public List<BanListDTO> getBanListDTO() {
+        return null;
+    }
+
+    public List<BlackListDTO> getBlackListDTO() {
+        return null;
     }
 }
