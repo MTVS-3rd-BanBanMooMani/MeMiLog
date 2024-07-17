@@ -1,34 +1,26 @@
 package com.banbanmoomani.memilog.service;
 
-import com.banbanmoomani.memilog.DAO.AdminDAO;
-import com.banbanmoomani.memilog.DTO.AdminDTO;
-import org.apache.ibatis.session.SqlSession;
+import com.banbanmoomani.memilog.DAO.BlackListMapper;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.List;
 
-import static com.banbanmoomani.memilog.config.Template.getSqlSession;
-
+@Service
 public class AdminService {
 
-    private final AdminDAO adminDAO;
+    private final BlackListMapper blackListMapper;
 
-    public AdminService() {
-        adminDAO = new AdminDAO();
+    public AdminService(BlackListMapper blackListMapper) {
+        this.blackListMapper = blackListMapper;
     }
 
-    public AdminDTO.getBlackListDTO getBlackListDTO() {
+    public List<BanListDTO> getBanListDTO() {
+        return null;
+    }
 
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = getSqlSession();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        AdminDTO.getBlackListDTO getBlackListDTO = adminDAO.getBlackList(sqlSession);
-
-        sqlSession.close();
-
+    public List<BlackListDTO> getBlackListDTO() {
         return null;
     }
 }
