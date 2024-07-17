@@ -13,8 +13,8 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    public AdminController() {
-        adminService = new AdminService();
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @GetMapping("/dashBoard")
