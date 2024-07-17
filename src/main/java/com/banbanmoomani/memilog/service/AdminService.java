@@ -17,6 +17,13 @@ public class AdminService {
     }
 
     public List<BanListDTO> getBanListDTO() {
+
+        // STOP DTO
+
+        // 각 STOP DTO 로 USER DTO 찾기
+
+        // USER DTO BanListDTO 전환
+
         return null;
     }
 
