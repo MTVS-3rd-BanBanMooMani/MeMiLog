@@ -17,7 +17,6 @@ public class AdminService {
     }
 
     public List<BanListDTO> getBanListDTO() {
-
         return blackListMapper.getBanList();
     }
 
