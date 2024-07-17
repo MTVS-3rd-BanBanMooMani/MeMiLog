@@ -4,6 +4,7 @@ import com.banbanmoomani.memilog.DTO.UserDTO;
 import com.banbanmoomani.memilog.DTO.admin.StopDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

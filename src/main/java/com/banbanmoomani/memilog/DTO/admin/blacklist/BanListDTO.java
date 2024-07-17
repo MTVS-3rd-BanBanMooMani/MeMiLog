@@ -1,9 +1,8 @@
 package com.banbanmoomani.memilog.DTO.admin.blacklist;
 
-import com.banbanmoomani.memilog.DTO.UserDTO;
-
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class BanListDTO {
@@ -17,12 +16,12 @@ public class BanListDTO {
     public BanListDTO() {
     }
 
-    public BanListDTO(int user_id, String nickName, String age, int caution_weights, String remain_susp_period) {
+    public BanListDTO(int user_id, String nickName, Date age, int caution_weights, Date remain_susp_period) {
         this.user_id = user_id;
         this.nickName = nickName;
-        this.age = age;
+        this.age = getAge(age);
         this.caution_weights = caution_weights;
-        this.remain_susp_period = remain_susp_period;
+        this.remain_susp_period = getRemainSuspPeriod(remain_susp_period);
     }
 
     public int getUser_id() {
@@ -46,31 +45,27 @@ public class BanListDTO {
     }
 
     protected String getAge(Date birthday) {
-
-        StringBuilder sb = new StringBuilder();
-
-        LocalDate birthdate = LocalDate.parse(birthday.toString());
+        if (birthday == null) {
+            return "N/A";
+        }
+        LocalDate birthdate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
 
         int age = Period.between(birthdate, now).getYears();
         age = (age / 10) * 10;
 
-        sb.append(age).append("대");
-
-        return sb.toString();
+        return age + "대";
     }
 
     protected String getRemainSuspPeriod(Date suspPeriod) {
-
-        StringBuilder sb = new StringBuilder();
-
-        LocalDate suspDate = LocalDate.parse(suspPeriod.toString());
+        if (suspPeriod == null) {
+            return "N/A";
+        }
+        LocalDate suspDate = suspPeriod.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
 
-        int remain = Period.between(suspDate, now).getDays();
+        int remain = Period.between(now, suspDate).getDays();
 
-        sb.append(remain).append("일");
-
-        return sb.toString();
+        return remain + "일";
     }
 }
