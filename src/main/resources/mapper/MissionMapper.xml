@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.MissionMapper">
+    <resultMap id="missionResultMap" type="com.banbanmoomani.memilog.DTO.MissionDTO">
+        <id property="id" column="mission_id" />
+        <result property="title" column="mission_content" />
+        <result property="date" column="mission_date" />
+        <result property="mainThema" column="pri_thema_id" />
+        <result property="subThema" column="sub_thema_id" />
+    </resultMap>
+
+    <!-- 미션 전체 조회 SQL문 -->
+    <select id="findAllMission" resultMap="missionResultMap">
+        SELECT
+            *
+        FROM
+            MISSION
+    </select>
+
+    <select id="findTemaMission" resultMap="missionResultMap">
+        SELECT
+            *
+        FROM
+            MISSION
+        WHERE
+            PRI_THEMA_ID = 1
+    </select>
+
+</mapper>
