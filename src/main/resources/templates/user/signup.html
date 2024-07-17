@@ -17,7 +17,7 @@
                 <div class="input-group email">
                     <label for="email-local-part">이메일</label>
                     <div class="email-container">
-                        <input type="text" id="email-local-part" placeholder="이메일을 입력하세요." />
+                        <input name="email" type="text" id="email-local-part" placeholder="이메일을 입력하세요." />
                         <button type="button" class="check-btn duplicate-check-btn" onclick="sendVerificationCode()">인증코드 받기</button>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div id="verify-message" class="verification-message"></div>
                 <div class="input-group password">
                     <label for="password">비밀번호</label>
-                    <input type="password" id="password" placeholder="비밀번호를 입력하세요." />
+                    <input name="password" type="password" id="password" placeholder="비밀번호를 입력하세요." />
                 </div>
                 <small id="password-message" class="verification-message" style="display: none;"></small>
                 <div class="input-group check">
@@ -41,11 +41,6 @@
                     <input type="password" id="password-confirm" placeholder="비밀번호를 다시 입력해주세요." />
                 </div>
                 <small id="confirm-password-message" class="verification-message" style="display: none;"></small>
-                <div class="input-group name">
-                    <label for="name">이름</label>
-                    <input type="text" id="name" placeholder="이름을 입력하세요." />
-                </div>
-                <small id="name-message" class="verification-message" style="display: none;"></small>
                 <div class="input-group birthday">
                     <label for="year">생년월일</label>
                     <select id="year" name="year" class="birthday-select">
@@ -61,14 +56,14 @@
                 <small id="birthday-message" class="verification-message" style="display: none;"></small>
                 <div class="input-group nickname">
                     <label for="nickname">닉네임</label>
-                    <input type="text" id="nickname" placeholder="닉네임을 입력하세요." />
+                    <input name="nickname" type="text" id="nickname" placeholder="닉네임을 입력하세요." />
                 </div>
                 <small id="nickname-message" class="verification-message" style="display: none;"></small>
                 <div class="input-group gender">
                     <label for="gender">성별</label>
                     <select id="gender" name="gender">
-                        <option value="men">남자</option>
-                        <option value="women">여자</option>
+                        <option value="male">남자</option>
+                        <option value="female">여자</option>
                     </select>
                 </div>
                 <button type="submit" class="submit-btn">회원가입</button>
@@ -80,6 +75,10 @@
     </div>
     <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 </div>
-<script src="../../static/document/js/signup.js" th:src="@{/document/js/signup.js}"></script>
+<script>
+    var failMessage=`[[${failMessage}]]`
+    if(failMessage) alert(failMessage);
+</script>
+<script th:src="@{/document/js/signup.js}"></script>
 </body>
 </html>
