@@ -4,6 +4,17 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.BlackListMapper">
     <resultMap id="banListResultMap" type="com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO">
-
+        <id property="user_id" column="user_id"/>
+        <result property="nickName" column="nickName"/>
+        <result property="caution_weights" column="caution_weights"/>
+        <result property="remain_susp_period" column="stop_end_date" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="age" column="birthday" javaType="java.util.Date" jdbcType="DATE"/>
     </resultMap>
+
+    <select id="getBanList" resultMap="banListResultMap">
+        SELECT u.user_id, u.nickName, u.birthday, u.caution_weights, s.stop_end_date
+        FROM USER u
+        JOIN STOP s ON u.user_id = s.user_id
+        WHERE s.perm_YN = 'N'
+    </select>
 </mapper>

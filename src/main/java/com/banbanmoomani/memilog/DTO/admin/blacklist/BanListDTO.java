@@ -17,12 +17,12 @@ public class BanListDTO {
     public BanListDTO() {
     }
 
-    public BanListDTO(UserDTO userDTO) {
-        this.user_id = userDTO.getUser_id();
-        this.nickName = userDTO.getNickName();
-        this.age = getAge(userDTO.getBirthday());
-        this.caution_weights = userDTO.getCaution_weights();
-        this.remain_susp_period = getRemainSuspPeriod(userDTO.getSusp_period());
+    public BanListDTO(int user_id, String nickName, String age, int caution_weights, String remain_susp_period) {
+        this.user_id = user_id;
+        this.nickName = nickName;
+        this.age = age;
+        this.caution_weights = caution_weights;
+        this.remain_susp_period = remain_susp_period;
     }
 
     public int getUser_id() {
