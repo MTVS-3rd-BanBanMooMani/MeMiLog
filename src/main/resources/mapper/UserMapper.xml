@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.UserMapper">
+    <resultMap id="userResultMap" type="com.banbanmoomani.memilog.DTO.UserDTO">
+        <id property="user_id" column="user_id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="birthday" column="birthday"/>
+        <result property="nickName" column="nickname"/>
+        <result property="gender" column="gender"/>
+        <result property="caution_weights" column="caution_weights"/>
+        <result property="temporary_YN" column="temporary_YN"/>
+        <result property="today_access_YN" column="today_access_YN"/>
+        <result property="signup_date" column="signup_date"/>
+        <result property="susp_period" column="susp_period"/>
+    </resultMap>
+    <select id="findUserByEmail" resultMap="userResultMap">
+        SELECT
+            user_id,
+            email,
+            password,
+            birthday,
+            nickname,
+            gender,
+            caution_weights,
+            temporary_YN,
+            today_access_YN,
+            signup_date,
+            susp_period
+        FROM
+            USER
+        WHERE
+            email = #{email}
+    </select>
+    <select id="findAllUser" resultMap="userResultMap">
+        SELECT
+            user_id,
+            email,
+            password,
+            birthday,
+            nickname,
+            gender,
+            caution_weights,
+            temporary_YN,
+            today_access_YN,
+            signup_date,
+            susp_period
+        FROM
+            USER
+    </select>
+    <insert id="insertUser" parameterType="com.banbanmoomani.memilog.DTO.UserDTO"
+            useGeneratedKeys="true" keyProperty="user_id">
+        INSERT INTO USER
+        (
+            email,
+            password,
+            birthday,
+            nickname,
+            gender,
+            caution_weights,
+            temporary_YN,
+            today_access_YN,
+            signup_date,
+            susp_period
+        )
+        VALUE
+        (
+            #{email},
+            #{password},
+            #{birthday},
+            #{nickName},
+            #{gender},
+            #{caution_weights},
+            'N',
+            'Y',
+            #{signup_date},
+            #{susp_period, jdbcType=DATE}
+        )
+    </insert>
+    <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.ModifyRequestDTO">
+        UPDATE USER
+        SET
+            nickname = #{nickname}
+            password = #{password},
+        WHERE
+            email = #{email}
+    </update>
+    <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.UserDTO">
+        DELETE FROM USER
+        WHERE email = #{email}
+    </delete>
+</mapper>

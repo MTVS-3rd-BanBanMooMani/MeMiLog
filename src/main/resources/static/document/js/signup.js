@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendCodeButton = document.querySelector('.check-btn.duplicate-check-btn');
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('password-confirm');
-    const nameInput = document.getElementById('name');
     const nicknameInput = document.getElementById('nickname');
     const yearSelect = document.getElementById('year');
     const monthSelect = document.getElementById('month');
@@ -14,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
     passwordInput.addEventListener('input', validatePassword);
     confirmPasswordInput.addEventListener('input', validatePassword);
     confirmPasswordInput.addEventListener('input', validateConfirmPassword);
-    nameInput.addEventListener('input', validateName);
     nicknameInput.addEventListener('input', validateNickname);
     yearSelect.addEventListener('change', validateBirthday);
     monthSelect.addEventListener('change', validateBirthday);
@@ -50,7 +48,7 @@ function sendVerificationCode() {
     timerElement.style.display = 'block';
     messageElement.style.marginRight = '150px';
     document.querySelector('.input-group.email').style.marginBottom = '0';
-    document.getElementById('email-local-part').disabled = true;
+    document.getElementById('email-local-part').readOnly = true;
     sendCodeButton.disabled = true;
     startTimer(300);
 }
@@ -93,23 +91,6 @@ function validateConfirmPassword() {
         messageElement.textContent = '';
         messageElement.style.display = 'none';
         confirmPasswordGroup.style.marginBottom = '15px';
-    }
-}
-
-function validateName() {
-    const name = document.getElementById('name').value.trim();
-    const messageElement = document.getElementById('name-message');
-    const nameRegex = /^[가-힣]{2,10}$/;
-
-    if (!nameRegex.test(name)) {
-        messageElement.textContent = '이름은 2~10글자의 한글만 입력 가능합니다.';
-        messageElement.style.color = 'red';
-        messageElement.style.display = 'block';
-        document.querySelector('.input-group.name').style.marginBottom = '0';
-    } else {
-        messageElement.textContent = '';
-        messageElement.style.display = 'none';
-        document.querySelector('.input-group.name').style.marginBottom = '15px';
     }
 }
 
@@ -195,10 +176,10 @@ function verifyCode() {
         clearInterval(timerInterval);
         message.textContent = '인증코드가 확인되었습니다.';
         message.className = 'verification-message success';
+        message.style.marginRight = '150px';
+        document.querySelector('.input-group.email-code').style.marginBottom = '0';
 
-        document.getElementById('email-local-part').disabled = true;
-        document.getElementById('email-domain-select').disabled = true;
-        document.getElementById('email-domain-input').disabled = true;
+        document.getElementById('email-local-part').readOnly = true;
         document.getElementById('email-code').disabled = true;
     } else {
         message.textContent = '인증코드가 일치하지 않습니다.';
