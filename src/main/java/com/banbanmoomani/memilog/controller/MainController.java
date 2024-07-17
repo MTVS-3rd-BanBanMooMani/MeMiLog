@@ -17,13 +17,4 @@ public class MainController {
     @GetMapping("/mydiary")
     public void mydiary() {}
 
-    @GetMapping("/post/create")
-    public String postcreate(Model model) {
-        return "main/postcreate";
-    }
-
-    @GetMapping("/post/update")
-    public String postupdate(Model model) {
-        return "main/postupdate";
-    }
 }
