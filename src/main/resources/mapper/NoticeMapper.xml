@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.NoticeMapper">
+    <resultMap id="noticeResultMap" type="com.banbanmoomani.memilog.DTO.NoticeDTO">
+        <id property="notice_id" column="notice_id"/>
+        <result property="notice_title" column="notice_title"/>
+        <result property="notice_content" column="notice_content"/>
+        <result property="notice_file_url" column="notice_file_url"/>
+        <result property="visible_YN" column="visible_YN"/>
+        <result property="written_date" column="written_date"/>
+        <result property="admin_id" column="admin_id"/>
+    </resultMap>
+    <select id="findAllNotice" resultMap="noticeResultMap">
+        SELECT
+               notice_id
+              ,notice_title
+              ,notice_content
+              ,notice_file_url
+              ,admin_id
+              ,visible_YN
+              ,written_date
+          FROM NOTICE
+    </select>
+</mapper>
