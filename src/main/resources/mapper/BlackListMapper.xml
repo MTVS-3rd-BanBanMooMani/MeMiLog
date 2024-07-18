@@ -22,16 +22,25 @@
 
     <!-- perm_YN = 'N'인 STOP과 USER를 JOIN하여 BanListDTO 리스트를 가져오는 쿼리 -->
     <select id="getBanList" resultMap="banListResultMap">
-        SELECT u.user_id, u.nickName, u.birthday, u.caution_weights, s.stop_end_date
+        SELECT
+              u.user_id
+            , u.nickName
+            , u.birthday
+            , u.caution_weights
+            , s.stop_end_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
         WHERE s.perm_YN = 'N'
     </select>
 
+    <!-- Corrected getBlackList query -->
     <select id="getBlackList" resultMap="blackListResultMap">
-        SELECT u.user_id, u.nickName, u.birthday, s.stop_start_date
+        SELECT
+            u.user_id
+            , u.nickName
+            , u.birthday
+            , DATE_FORMAT(s.stop_start_date, '%Y-%m-%d') as stop_start_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
-        WHERE s.perm_YN = 'Y'
     </select>
 </mapper>

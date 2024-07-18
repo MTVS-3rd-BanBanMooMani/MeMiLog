@@ -11,15 +11,17 @@ public class BlackListDTO {
     private String nickName;
     private String age;
     private Date stop_start_date;
+    private Date birthday;
 
     public BlackListDTO() {
     }
 
-    public BlackListDTO(int user_id, String nickName, String age, Date stop_start_date) {
+    public BlackListDTO(int user_id, String nickName, String age, Date stop_start_date, Date birthday) {
         this.user_id = user_id;
         this.nickName = nickName;
         this.age = age;
         this.stop_start_date = stop_start_date;
+        this.birthday = birthday;
     }
 
     public int getUser_id() {
@@ -38,6 +40,10 @@ public class BlackListDTO {
         return stop_start_date;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
@@ -52,6 +58,10 @@ public class BlackListDTO {
 
     public void setStop_start_date(Date stop_start_date) {
         this.stop_start_date = stop_start_date;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     private String calculateAge(Date birthday) {
