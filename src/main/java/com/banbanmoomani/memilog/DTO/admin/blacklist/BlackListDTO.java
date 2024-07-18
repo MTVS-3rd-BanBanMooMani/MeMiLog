@@ -10,16 +10,16 @@ public class BlackListDTO {
     private int user_id;
     private String nickName;
     private String age;
-    private Date permanent_date;
+    private Date stop_start_date;
 
     public BlackListDTO() {
     }
 
-    public BlackListDTO(int user_id, String nickName, String age, Date permanent_date) {
+    public BlackListDTO(int user_id, String nickName, String age, Date stop_start_date) {
         this.user_id = user_id;
         this.nickName = nickName;
         this.age = age;
-        this.permanent_date = permanent_date;
+        this.stop_start_date = stop_start_date;
     }
 
     public int getUser_id() {
@@ -34,8 +34,8 @@ public class BlackListDTO {
         return age;
     }
 
-    public Date getPermanent_date() {
-        return permanent_date;
+    public Date getStop_start_date() {
+        return stop_start_date;
     }
 
     public void setUser_id(int user_id) {
@@ -50,8 +50,8 @@ public class BlackListDTO {
         this.age = age;
     }
 
-    public void setPermanent_date(Date permanent_date) {
-        this.permanent_date = permanent_date;
+    public void setStop_start_date(Date stop_start_date) {
+        this.stop_start_date = stop_start_date;
     }
 
     private String calculateAge(Date birthday) {

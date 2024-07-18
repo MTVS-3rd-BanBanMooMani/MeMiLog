@@ -13,11 +13,25 @@
         <result property="stop_end_date" column="stop_end_date" javaType="java.util.Date" jdbcType="DATE"/>
     </resultMap>
 
+    <resultMap id="blackListResultMap" type="com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO">
+        <id property="user_id" column="user_id"/>
+        <result property="nickName" column="nickName"/>
+        <result property="birthday" column="birthday" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="stop_start_date" column="stop_start_date" javaType="java.util.Date" jdbcType="DATE"/>
+    </resultMap>
+
     <!-- perm_YN = 'N'인 STOP과 USER를 JOIN하여 BanListDTO 리스트를 가져오는 쿼리 -->
     <select id="getBanList" resultMap="banListResultMap">
         SELECT u.user_id, u.nickName, u.birthday, u.caution_weights, s.stop_end_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
         WHERE s.perm_YN = 'N'
+    </select>
+
+    <select id="getBlackList" resultMap="blackListResultMap">
+        SELECT u.user_id, u.nickName, u.birthday, s.stop_start_date
+        FROM USER u
+        JOIN STOP s ON u.user_id = s.user_id
+        WHERE s.perm_YN = 'Y'
     </select>
 </mapper>
