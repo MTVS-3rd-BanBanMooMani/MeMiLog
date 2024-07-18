@@ -11,15 +11,11 @@
         <result property="likeCount" column="like_count"/>
         <result property="missionId" column="mission_id"/>
         <result property="writtenDatetime" column="written_datetime"/>
-        <result property="together" column="companion_type"/>
-        <result property="emotionId" column="emotion_id"/>
-        <result property="userId" column="user_id"/>
-        <result property="companionId" column="companion_id"/>
-
+        <result property="nickname" column="nickname"/>
         <result property="missionContent" column="mission_content"/>
         <result property="missionDate" column="mission_date"/>
-        <result property="mainThemaName" column="main_thema_name"/>
-        <result property="subThemaName" column="sub_thema_name"/>
+        <result property="mainThemeName" column="main_theme_name"/>
+        <result property="subThemeName" column="sub_theme_name"/>
         <result property="emotionName" column="emotion_name"/>
         <result property="companionType" column="companion_type"/>
     </resultMap>
@@ -32,16 +28,13 @@
         p.like_count,
         p.mission_id,
         p.written_datetime,
-        c.companion_type AS together,
-        p.emotion_id,
-        p.user_id,
-        p.companion_id,
-        m.mission_content AS mission_content,
-        DATE_FORMAT(m.mission_date, '%m월 %d일') AS mission_date,
-        mt.theme_name AS main_thema_name,
-        st.theme_name AS sub_thema_name,
-        e.emotion_name AS emotion_name,
-        c.companion_type AS companion_type
+        u.nickname,
+        m.mission_content AS missionContent,
+        DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
+        mt.theme_name AS mainThemeName,
+        st.theme_name AS subThemeName,
+        e.emotion_name AS emotionName,
+        c.companion_type AS companionType
         FROM
         POST p
         LEFT JOIN
@@ -54,6 +47,8 @@
         EMOTION e ON p.emotion_id = e.emotion_id
         LEFT JOIN
         COMPANION c ON p.companion_id = c.companion_id
+        LEFT JOIN
+        USER u ON p.user_id = u.user_id
     </select>
 
     <insert id="createPost" parameterType="com.banbanmoomani.memilog.DTO.PostDTO"
@@ -65,10 +60,9 @@
         like_count,
         mission_id,
         written_datetime,
-        together,
-        emotion_id,
-        user_id,
-        companion_id
+        companion_type,
+        emotion_name,
+        nickname
         )
         VALUES
         (
@@ -77,10 +71,9 @@
         #{likeCount},
         #{missionId},
         NOW(),
-        #{together},
-        #{emotionId},
-        #{userId},
-        #{companionId}
+        #{companionType},
+        #{emotionName},
+        #{nickname}
         )
     </insert>
 </mapper>

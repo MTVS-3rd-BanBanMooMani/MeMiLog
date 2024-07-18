@@ -35,7 +35,7 @@ public class PostController {
             postDTO.setTitle(postDTO.getMissionContent());
         }
 
-        postDTO.setTogether(postDTO.getCompanionType());
+        postDTO.setCompanionType(postDTO.getCompanionType());
 
         postService.createPost(postDTO);
 

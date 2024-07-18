@@ -19,20 +19,20 @@ public class PostDTO {
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String together, int emotionId, int userId, int companionId, String missionContent, String mainThemaName, String subThemaName) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String mainThemeName, String subThemeName, String emotionName, String companionType) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.likeCount = likeCount;
         this.missionId = missionId;
         this.writtenDatetime = writtenDatetime;
-        this.together = together;
-        this.emotionId = emotionId;
-        this.userId = userId;
-        this.companionId = companionId;
+        this.nickname = nickname;
         this.missionContent = missionContent;
-        this.mainThemaName = mainThemaName;
-        this.subThemaName = subThemaName;
+        this.missionDate = missionDate;
+        this.mainThemeName = mainThemeName;
+        this.subThemeName = subThemeName;
+        this.emotionName = emotionName;
+        this.companionType = companionType;
     }
 
     public int getPostId() {
@@ -83,36 +83,12 @@ public class PostDTO {
         this.writtenDatetime = writtenDatetime;
     }
 
-    public String getTogether() {
-        return together;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setTogether(String together) {
-        this.together = together;
-    }
-
-    public int getEmotionId() {
-        return emotionId;
-    }
-
-    public void setEmotionId(int emotionId) {
-        this.emotionId = emotionId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCompanionId() {
-        return companionId;
-    }
-
-    public void setCompanionId(int companionId) {
-        this.companionId = companionId;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getMissionContent() {
@@ -123,20 +99,44 @@ public class PostDTO {
         this.missionContent = missionContent;
     }
 
-    public String getMainThemaName() {
-        return mainThemaName;
+    public String getMissionDate() {
+        return missionDate;
     }
 
-    public void setMainThemaName(String mainThemaName) {
-        this.mainThemaName = mainThemaName;
+    public void setMissionDate(String missionDate) {
+        this.missionDate = missionDate;
     }
 
-    public String getSubThemaName() {
-        return subThemaName;
+    public String getMainThemeName() {
+        return mainThemeName;
     }
 
-    public void setSubThemaName(String subThemaName) {
-        this.subThemaName = subThemaName;
+    public void setMainThemeName(String mainThemeName) {
+        this.mainThemeName = mainThemeName;
+    }
+
+    public String getSubThemeName() {
+        return subThemeName;
+    }
+
+    public void setSubThemeName(String subThemeName) {
+        this.subThemeName = subThemeName;
+    }
+
+    public String getEmotionName() {
+        return emotionName;
+    }
+
+    public void setEmotionName(String emotionName) {
+        this.emotionName = emotionName;
+    }
+
+    public String getCompanionType() {
+        return companionType;
+    }
+
+    public void setCompanionType(String companionType) {
+        this.companionType = companionType;
     }
 
     @Override
@@ -148,13 +148,13 @@ public class PostDTO {
                 ", likeCount=" + likeCount +
                 ", missionId=" + missionId +
                 ", writtenDatetime=" + writtenDatetime +
-                ", together='" + together + '\'' +
-                ", emotionId=" + emotionId +
-                ", userId=" + userId +
-                ", companionId=" + companionId +
+                ", nickname='" + nickname + '\'' +
                 ", missionContent='" + missionContent + '\'' +
-                ", mainThemaName='" + mainThemaName + '\'' +
-                ", subThemaName='" + subThemaName + '\'' +
+                ", missionDate='" + missionDate + '\'' +
+                ", mainThemeName='" + mainThemeName + '\'' +
+                ", subThemeName='" + subThemeName + '\'' +
+                ", emotionName='" + emotionName + '\'' +
+                ", companionType='" + companionType + '\'' +
                 '}';
     }
 }
