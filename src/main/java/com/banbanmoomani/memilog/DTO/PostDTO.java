@@ -12,14 +12,14 @@ public class PostDTO {
     private String nickname;
     private String missionContent;
     private String missionDate;
-    private String mainThemeName;
+    private String priThemeName;
     private String subThemeName;
     private String emotionName;
     private String companionType;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String mainThemeName, String subThemeName, String emotionName, String companionType) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String priThemeName, String subThemeName, String emotionName, String companionType) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -29,7 +29,7 @@ public class PostDTO {
         this.nickname = nickname;
         this.missionContent = missionContent;
         this.missionDate = missionDate;
-        this.mainThemeName = mainThemeName;
+        this.priThemeName = priThemeName;
         this.subThemeName = subThemeName;
         this.emotionName = emotionName;
         this.companionType = companionType;
@@ -107,12 +107,12 @@ public class PostDTO {
         this.missionDate = missionDate;
     }
 
-    public String getMainThemeName() {
-        return mainThemeName;
+    public String getPriThemeName() {
+        return priThemeName;
     }
 
-    public void setMainThemeName(String mainThemeName) {
-        this.mainThemeName = mainThemeName;
+    public void setPriThemeName(String mainThemeName) {
+        this.priThemeName = mainThemeName;
     }
 
     public String getSubThemeName() {
@@ -151,7 +151,7 @@ public class PostDTO {
                 ", nickname='" + nickname + '\'' +
                 ", missionContent='" + missionContent + '\'' +
                 ", missionDate='" + missionDate + '\'' +
-                ", mainThemeName='" + mainThemeName + '\'' +
+                ", priThemeName='" + priThemeName + '\'' +
                 ", subThemeName='" + subThemeName + '\'' +
                 ", emotionName='" + emotionName + '\'' +
                 ", companionType='" + companionType + '\'' +

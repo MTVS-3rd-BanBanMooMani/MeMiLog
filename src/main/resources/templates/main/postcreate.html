@@ -16,8 +16,8 @@
             <div class="left-container">
                 <div class="date-category">
                     <span class="date" th:text="${posts[0].missionDate}">06월 22일</span>
-                    <span class="category" th:text="${posts[0].mainThemaName}">자연</span>
-                    <span class="category" th:text="${posts[0].subThemaName}"></span>
+                    <span class="category" th:text="${posts[0].mainThemeName}">자연</span>
+                    <span class="category" th:text="${posts[0].subThemeName}"></span>
                 </div>
                 <div class="title" th:text="${posts[0].missionContent}">미미들이 생각하는 여름 낭만은?</div>
                 <input type="hidden" name="title" th:value="${posts[0].missionContent}">
@@ -41,7 +41,6 @@
                 </div>
                 <div class="question">어떤 기분이었나요?</div>
                 <div class="emotion-box">
-                    <input type="hidden" id="selectedEmotion" name="emotionId" value="">
                     <div class="main-box">
                         <ul class="icon-box">
                             <li id="happy" onclick="changeIconColor('happy', 1)">
@@ -78,7 +77,6 @@
                         <button class="answer-right answer" type="button" data-id="6" data-type="반려동물" onclick="selectCompanion(this)" th:text="'반려동물' + (posts[0].companionType == '반려동물' ? ' (선택됨)' : '')">반려동물</button>
                     </div>
                 </div>
-                <input type="hidden" id="companionId" name="companionId" value="">
                 <input type="hidden" id="companionType" name="companionType" value="">
                 <div class="buttons">
                     <button class="submit-btn" type="submit" name="submit">작성 완료</button>

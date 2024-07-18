@@ -29,9 +29,10 @@
         p.mission_id,
         p.written_datetime,
         u.nickname,
+        m.mission_id AS missionId,
         m.mission_content AS missionContent,
         DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
-        mt.theme_name AS mainThemeName,
+        mt.theme_name AS priThemeName,
         st.theme_name AS subThemeName,
         e.emotion_name AS emotionName,
         c.companion_type AS companionType
