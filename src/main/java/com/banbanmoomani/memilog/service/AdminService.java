@@ -21,6 +21,6 @@ public class AdminService {
     }
 
     public List<BlackListDTO> getBlackListDTO() {
-        return null;
+        return blackListMapper.getBlackList();
     }
 }
