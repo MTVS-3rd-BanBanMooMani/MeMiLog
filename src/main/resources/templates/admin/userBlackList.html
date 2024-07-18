@@ -102,7 +102,7 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllSuspended"></th>
-                                        <th>이름</th>
+                                        <th>번호</th>
                                         <th>닉네임</th>
                                         <th>나이 대</th>
                                         <th>신고 누적 횟수</th>
@@ -110,45 +110,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr th:each="banUser : ${banListDTO}">
                                         <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
-                                        <td>김철수</td>
-                                        <td>철수킹</td>
-                                        <td>30대</td>
-                                        <td>5</td>
-                                        <td>10일</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
-                                        <td>이영희</td>
-                                        <td>영희짱</td>
-                                        <td>20대</td>
-                                        <td>3</td>
-                                        <td>20일</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
-                                        <td>박민수</td>
-                                        <td>민수짱</td>
-                                        <td>40대</td>
-                                        <td>7</td>
-                                        <td>5일</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
-                                        <td>홍길동</td>
-                                        <td>길동이</td>
-                                        <td>30대</td>
-                                        <td>2</td>
-                                        <td>15일</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemSuspended small-checkbox"></td>
-                                        <td>최미영</td>
-                                        <td>미영이</td>
-                                        <td>20대</td>
-                                        <td>4</td>
-                                        <td>12일</td>
+                                        <td th:text="${banUser.user_id}"></td>
+                                        <td th:text="${banUser.nickName}"></td>
+                                        <td th:text="${banUser.age}"></td>
+                                        <td th:text="${banUser.caution_weights}"></td>
+                                        <td th:text="${banUser.remain_susp_period}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -160,6 +128,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- Blacklist Users Table -->
             <div class="row">
@@ -183,40 +152,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>김영수</td>
-                                        <td>영수킹</td>
-                                        <td>40대</td>
-                                        <td>2023-06-01</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>박지민</td>
-                                        <td>지민짱</td>
-                                        <td>30대</td>
-                                        <td>2023-07-15</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>이서연</td>
-                                        <td>서연이</td>
-                                        <td>20대</td>
-                                        <td>2023-08-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>최준영</td>
-                                        <td>준영이</td>
-                                        <td>30대</td>
-                                        <td>2023-09-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>김민지</td>
-                                        <td>민지짱</td>
-                                        <td>20대</td>
-                                        <td>2023-10-12</td>
+                                    <tr th:each="blackUser : ${blackListDTO}">
+                                        <td><input type="checkbox" class="checkItemBlackList small-checkbox"></td>
+                                        <td th:text="${blackUser.user_id}"></td>
+                                        <td th:text="${blackUser.nickName}"></td>
+                                        <td th:text="${blackUser.age}"></td>
+                                        <td th:text="${blackUser.permanentDay}"></td>
                                     </tr>
                                     </tbody>
                                 </table>

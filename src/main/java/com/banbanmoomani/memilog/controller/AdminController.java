@@ -1,12 +1,14 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.AdminDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
+import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.NoticeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -18,19 +20,30 @@ public class AdminController {
     private final AdminService adminService;
     private final NoticeService noticeService;
 
-    public AdminController(NoticeService noticeService) {
+    public AdminController(AdminService adminService, NoticeService noticeService) {
+        this.adminService = adminService;
         this.noticeService = noticeService;
-        adminService = new AdminService();
     }
 
     @GetMapping("/dashBoard")
     public void dashBoard() {}
 
     @GetMapping("/userBlackList")
-    public void userBlackList(Model model) {
+    public String userBlackList(Model model) {
 
-        AdminDTO.getBlackListDTO getBlackListDTO = adminService.getBlackListDTO();
-        model.addAttribute("blackListDTO", getBlackListDTO);
+        List<BanListDTO> banListDTO = adminService.getBanListDTO();
+        List<BlackListDTO> blackListDTO = adminService.getBlackListDTO();
+
+        model.addAttribute("banListDTO", banListDTO);
+        model.addAttribute("blackListDTO", blackListDTO);
+
+        return "admin/userBlackList";
+    }
+
+    @PostMapping("/userBlackList/black")
+    public String blackUser(BanListDTO banListDTO) {
+
+        return "redirect:/admin/userBlackList";
     }
 
     @GetMapping("/reportTotal")
