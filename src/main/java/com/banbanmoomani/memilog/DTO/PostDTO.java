@@ -10,10 +10,11 @@ public class PostDTO {
     private String emotionName;
     private String nickname;
     private String themeName;
+    private String srcUrl;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, String writtenDatetime, String companionType, String emotionName, String nickname, String themeName) {
+    public PostDTO(int postId, String title, String content, int likeCount, String writtenDatetime, String companionType, String emotionName, String nickname, String themeName, String srcUrl) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -23,6 +24,7 @@ public class PostDTO {
         this.emotionName = emotionName;
         this.nickname = nickname;
         this.themeName = themeName;
+        this.srcUrl = srcUrl;
     }
 
     public int getPostId() {
@@ -65,11 +67,11 @@ public class PostDTO {
         this.writtenDatetime = writtenDatetime;
     }
 
-    public String setcompanionType() {
+    public String getCompanionType() {
         return companionType;
     }
 
-    public void setCompanionName(String companionType) {
+    public void setCompanionType(String companionType) {
         this.companionType = companionType;
     }
 
@@ -97,6 +99,14 @@ public class PostDTO {
         this.themeName = themeName;
     }
 
+    public String getSrcUrl() {
+        return srcUrl;
+    }
+
+    public void setSrcUrl(String srcUrl) {
+        this.srcUrl = srcUrl;
+    }
+
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -109,6 +119,7 @@ public class PostDTO {
                 ", emotionName='" + emotionName + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", themeName='" + themeName + '\'' +
+                ", srcUrl='" + srcUrl + '\'' +
                 '}';
     }
 }

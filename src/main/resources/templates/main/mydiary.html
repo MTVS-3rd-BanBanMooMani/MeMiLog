@@ -124,8 +124,8 @@
         </div>
 
         <div id="post-card-container" class="tabcontent" style="display: flex;">
-            <div th:each="postImage : ${postImages}" class="post-card">
-                <img th:src="@{|/document/img/${postImage}|}" alt="Post Image">
+            <div th:each="post : ${postList}" class="post-card">
+                <img th:src="@{|${postList[0].srcUrl}|}" alt="Post Image">
             </div>
         </div>
 

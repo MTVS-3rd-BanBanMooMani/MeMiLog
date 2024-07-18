@@ -1,6 +1,5 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.IntegratedDTO;
 import com.banbanmoomani.memilog.DTO.PostDTO;
 import com.banbanmoomani.memilog.DTO.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
