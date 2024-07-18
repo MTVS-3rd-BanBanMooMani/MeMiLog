@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.BlackListMapper;
+import com.banbanmoomani.memilog.DAO.ReportBoardMapper;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
@@ -14,9 +15,11 @@ import java.util.List;
 public class AdminService {
 
     private final BlackListMapper blackListMapper;
+    private final ReportBoardMapper reportBoardMapper;
 
-    public AdminService(BlackListMapper blackListMapper) {
+    public AdminService(BlackListMapper blackListMapper, ReportBoardMapper reportBoardMapper) {
         this.blackListMapper = blackListMapper;
+        this.reportBoardMapper = reportBoardMapper;
     }
 
     public List<BanListDTO> getBanListDTO() {
@@ -38,7 +41,7 @@ public class AdminService {
     }
 
     public List<unProcessedPostListDTO> getUnProcessedPostList() {
-        return null;
+        return reportBoardMapper.getUnProcessedPostList();
     }
 
     public List<processedPostListDTO> getProcessedPostList() {
