@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
+import com.banbanmoomani.memilog.DTO.IntegratedDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +23,6 @@ public class MissionService {
     public List<MissionDTO> findTemaMission() {
         return missionMapper.findTemaMission();
     }
+
+    public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
 }
