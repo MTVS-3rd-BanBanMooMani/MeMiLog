@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.banbanmoomani.memilog.DAO.MydiaryMapper">
+<mapper namespace="com.banbanmoomani.memilog.DAO.IntegratedMapper">
     <resultMap id="integratedResultMap" type="com.banbanmoomani.memilog.DTO.IntegratedDTO">
         <id property="userId" column="user_id"/>
         <!-- User related fields -->
@@ -89,7 +89,7 @@
                 LEFT JOIN
             MISSION m ON p.mission_id = m.mission_id
                 LEFT JOIN
-            ATTATCHMENT a ON p.post_id = a.post_id
+            ATTACHMENT a ON p.post_id = a.post_id
                 LEFT JOIN
             COMPANION c ON p.companion_id = c.companion_id
                 LEFT JOIN
