@@ -1,9 +1,8 @@
-package com.banbanmoomani.memilog.service;
+package com.banbanmoomani.memilog.service.user;
 
 import com.banbanmoomani.memilog.DAO.UserMapper;
-import com.banbanmoomani.memilog.DTO.LoginRequestDTO;
-import com.banbanmoomani.memilog.DTO.SignUpRequestDTO;
-import com.banbanmoomani.memilog.DTO.UserDTO;
+import com.banbanmoomani.memilog.DTO.user.SignUpRequestDTO;
+import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +49,7 @@ public class UserService {
         return userMapper.findUserById(user_id);
     }
 
-    public UserDTO findByEmail(LoginRequestDTO loginRequestDTO) {
-        return userMapper.findUserByEmail(loginRequestDTO.getEmail());
+    public UserDTO findByEmail(String email) {
+        return userMapper.findUserByEmail(email);
     }
 }

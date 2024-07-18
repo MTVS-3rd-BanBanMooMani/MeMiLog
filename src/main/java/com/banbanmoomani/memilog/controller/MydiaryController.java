@@ -1,8 +1,7 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.IntegratedDTO;
 import com.banbanmoomani.memilog.DTO.PostDTO;
-import com.banbanmoomani.memilog.DTO.UserDTO;
+import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

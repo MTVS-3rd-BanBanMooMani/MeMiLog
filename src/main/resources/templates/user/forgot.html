@@ -19,8 +19,8 @@
             <div id="email-content" class="tab-content active">
                 <form id="email-form" class="email-form">
                     <div class="input-container">
-                        <label for="email">아이디</label>
-                        <input type="text" id="email" placeholder="이메일을 입력하세요." />
+                        <label for="email">이메일</label>
+                        <input name="id_email" type="text" id="email" placeholder="이메일을 입력하세요." />
                         <div id="error-message" class="message"></div>
                     </div>
                     <div class="submit-btn-container">
@@ -31,9 +31,9 @@
             <div id="password-content" class="tab-content">
                 <form id="password-form" class="password-form">
                     <div class="input-container">
-                        <label for="email-verification">아이디</label>
+                        <label for="email-verification">이메일</label>
                         <div class="input-wrapper">
-                            <input type="text" id="email-verification" placeholder="이메일 주소를 입력해주세요." />
+                            <input name="email" type="text" id="email-verification" placeholder="이메일 주소를 입력해주세요." />
                             <button type="button" class="check-btn" onclick="requestVerification()">인증요청</button>
                         </div>
                         <div id="error-message-email-verification" class="message"></div>
@@ -41,7 +41,7 @@
                     <div class="input-container">
                         <label for="verification-code">인증 코드</label>
                         <div class="input-wrapper">
-                            <input type="text" id="verification-code" placeholder="인증 코드 6자를 입력하세요." />
+                            <input name="verify_code" type="text" id="verification-code" placeholder="인증 코드 6자를 입력하세요." />
                             <button type="button" class="check-btn" onclick="validateVerificationCode()">확인</button>
                         </div>
                         <div id="error-message-verification-code" class="message"></div>
