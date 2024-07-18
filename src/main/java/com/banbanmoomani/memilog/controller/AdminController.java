@@ -2,6 +2,8 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,7 +72,16 @@ public class AdminController {
     }
 
     @GetMapping("/reportTotal")
-    public void reportTotal() {}
+    public String reportTotal(Model model) {
+
+        List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
+        List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
+
+        model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
+        model.addAttribute("processedPostListDTO", processedPostList);
+
+        return "admin/reportTotal";
+    }
 
     @GetMapping("/point")
     public void point() {}

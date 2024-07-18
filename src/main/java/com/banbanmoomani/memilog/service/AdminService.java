@@ -3,6 +3,8 @@ package com.banbanmoomani.memilog.service;
 import com.banbanmoomani.memilog.DAO.BlackListMapper;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,5 +35,13 @@ public class AdminService {
     @Transactional
     public void releaseUser(List<String> userIdList) {
         blackListMapper.releaseUser(userIdList);
+    }
+
+    public List<unProcessedPostListDTO> getUnProcessedPostList() {
+        return null;
+    }
+
+    public List<processedPostListDTO> getProcessedPostList() {
+        return null;
     }
 }
