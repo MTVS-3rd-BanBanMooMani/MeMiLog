@@ -86,10 +86,21 @@ public class BanListDTO {
         this.remain_susp_period = calculateRemainSuspPeriod(stop_end_date);
     }
 
+    @Override
+    public String toString() {
+        return "BanListDTO{" +
+                "user_id=" + user_id +
+                ", nickName='" + nickName + '\'' +
+                ", age='" + age + '\'' +
+                ", caution_weights=" + caution_weights +
+                ", remain_susp_period='" + remain_susp_period + '\'' +
+                '}';
+    }
+
     private String calculateAge(Date birthday) {
         LocalDate birthDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Period agePeriod = Period.between(birthDate, LocalDate.now());
-        return agePeriod.getYears() + "대";
+        return ((agePeriod.getYears() / 10) * 10) + "대";
     }
 
     private String calculateRemainSuspPeriod(Date stopEndDate) {
