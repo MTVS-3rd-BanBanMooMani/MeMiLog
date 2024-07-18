@@ -4,7 +4,9 @@ import com.banbanmoomani.memilog.DTO.PostDTO;
 import com.banbanmoomani.memilog.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,8 +29,16 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPost(PostDTO post) {
-        postService.createPost(post);
+    public String createPost(@ModelAttribute PostDTO postDTO) {
+
+        if (postDTO.getTitle() == null || postDTO.getTitle().isEmpty()) {
+            postDTO.setTitle(postDTO.getMissionContent());
+        }
+
+        postDTO.setTogether(postDTO.getCompanionType());
+
+        postService.createPost(postDTO);
+
         return "redirect:/post/all";
     }
 

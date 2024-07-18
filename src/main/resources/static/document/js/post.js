@@ -1,20 +1,19 @@
-function changeIconColor(id) {
-    // 모든 아이콘을 초기 상태로 되돌리기
-    var icons = document.querySelectorAll('.icon-box li');
-    icons.forEach(function(li) {
-        var iconId = li.id;
-        var img = li.querySelector('img');
-        var originalSrc = img.getAttribute('data-original');
-        img.setAttribute('src', originalSrc);
-        li.setAttribute('onclick', `changeIconColor('${iconId}')`);
+function changeIconColor(icon, id) {
+    document.getElementById('selectedEmotion').value = id;
+    var icons = document.querySelectorAll('.icon1');
+    icons.forEach(function(item) {
+        item.src = item.getAttribute('data-original');
     });
-
-    // 선택된 아이콘만 색상 변경
-    var selectedLi = document.getElementById(id);
-    var selectedImg = selectedLi.querySelector('img');
-    var coloredSrc = selectedImg.getAttribute('data-colored');
-    selectedImg.setAttribute('src', coloredSrc);
-    selectedLi.setAttribute('onclick', `resetIconColor('${id}')`);
+    document.getElementById(icon).querySelector('.icon1').src = document.getElementById(icon).querySelector('.icon1').getAttribute('data-colored');
+}
+function selectCompanion(button) {
+    document.getElementById('companionId').value = button.getAttribute('data-id');
+    document.getElementById('companionType').value = button.getAttribute('data-type');
+    var buttons = document.querySelectorAll('.answer');
+    buttons.forEach(function(item) {
+        item.classList.remove('selected');
+    });
+    button.classList.add('selected');
 }
 
 function toggleSelection(element) {

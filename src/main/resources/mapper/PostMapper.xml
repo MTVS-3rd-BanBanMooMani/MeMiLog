@@ -11,14 +11,17 @@
         <result property="likeCount" column="like_count"/>
         <result property="missionId" column="mission_id"/>
         <result property="writtenDatetime" column="written_datetime"/>
-        <result property="together" column="together"/>
+        <result property="together" column="companion_type"/>
         <result property="emotionId" column="emotion_id"/>
         <result property="userId" column="user_id"/>
         <result property="companionId" column="companion_id"/>
 
         <result property="missionContent" column="mission_content"/>
+        <result property="missionDate" column="mission_date"/>
         <result property="mainThemaName" column="main_thema_name"/>
         <result property="subThemaName" column="sub_thema_name"/>
+        <result property="emotionName" column="emotion_name"/>
+        <result property="companionType" column="companion_type"/>
     </resultMap>
 
     <select id="findAllPost" resultMap="postResultMap">
@@ -29,13 +32,16 @@
         p.like_count,
         p.mission_id,
         p.written_datetime,
-        p.together,
+        c.companion_type AS together,
         p.emotion_id,
         p.user_id,
         p.companion_id,
         m.mission_content AS mission_content,
+        DATE_FORMAT(m.mission_date, '%m월 %d일') AS mission_date,
         mt.theme_name AS main_thema_name,
-        st.theme_name AS sub_thema_name
+        st.theme_name AS sub_thema_name,
+        e.emotion_name AS emotion_name,
+        c.companion_type AS companion_type
         FROM
         POST p
         LEFT JOIN
@@ -44,10 +50,14 @@
         THEME mt ON m.pri_theme_id = mt.theme_id
         LEFT JOIN
         THEME st ON m.sub_theme_id = st.theme_id
+        LEFT JOIN
+        EMOTION e ON p.emotion_id = e.emotion_id
+        LEFT JOIN
+        COMPANION c ON p.companion_id = c.companion_id
     </select>
 
-    <insert id="insertPost" parameterType="com.banbanmoomani.memilog.DTO.PostDTO"
-            useGeneratedKeys="true" keyProperty="post_id">
+    <insert id="createPost" parameterType="com.banbanmoomani.memilog.DTO.PostDTO"
+            useGeneratedKeys="true" keyProperty="postId">
         INSERT INTO POST
         (
         title,
@@ -66,7 +76,7 @@
         #{content},
         #{likeCount},
         #{missionId},
-        #{writtenDatetime},
+        NOW(),
         #{together},
         #{emotionId},
         #{userId},

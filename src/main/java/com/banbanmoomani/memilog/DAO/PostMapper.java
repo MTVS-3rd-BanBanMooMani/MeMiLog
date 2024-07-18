@@ -10,4 +10,5 @@ public interface PostMapper {
     List<PostDTO> findAllPost();
 
     void createPost(PostDTO post);
+
 }
