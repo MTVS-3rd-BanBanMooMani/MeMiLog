@@ -114,7 +114,10 @@
         </div>
 
         <div th:replace="~{/fragments/mainFooter :: footer}"></div>
-
     </div>
+<script>
+    var successMessage=`[[${successMessage}]]`
+    if (successMessage) alert(successMessage)
+</script>
 </body>
 </html>

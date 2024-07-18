@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.PostMapper">
+
+    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
+        <id property="postId" column="post_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="missionId" column="mission_id"/>
+        <result property="writtenDatetime" column="written_datetime"/>
+        <result property="together" column="together"/>
+        <result property="emotionId" column="emotion_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="companionId" column="companion_id"/>
+
+        <result property="missionContent" column="mission_content"/>
+        <result property="mainThemaName" column="main_thema_name"/>
+        <result property="subThemaName" column="sub_thema_name"/>
+    </resultMap>
+
+    <select id="findAllPost" resultMap="postResultMap">
+        SELECT
+        p.post_id,
+        p.title,
+        p.content,
+        p.like_count,
+        p.mission_id,
+        p.written_datetime,
+        p.together,
+        p.emotion_id,
+        p.user_id,
+        p.companion_id,
+        m.mission_content AS mission_content,
+        mt.theme_name AS main_thema_name,
+        st.theme_name AS sub_thema_name
+        FROM
+        POST p
+        LEFT JOIN
+        MISSION m ON p.mission_id = m.mission_id
+        LEFT JOIN
+        THEME mt ON m.pri_theme_id = mt.theme_id
+        LEFT JOIN
+        THEME st ON m.sub_theme_id = st.theme_id
+    </select>
+
+    <insert id="insertPost" parameterType="com.banbanmoomani.memilog.DTO.PostDTO"
+            useGeneratedKeys="true" keyProperty="post_id">
+        INSERT INTO POST
+        (
+        title,
+        content,
+        like_count,
+        mission_id,
+        written_datetime,
+        together,
+        emotion_id,
+        user_id,
+        companion_id
+        )
+        VALUES
+        (
+        #{title},
+        #{content},
+        #{likeCount},
+        #{missionId},
+        #{writtenDatetime},
+        #{together},
+        #{emotionId},
+        #{userId},
+        #{companionId}
+        )
+    </insert>
+</mapper>
