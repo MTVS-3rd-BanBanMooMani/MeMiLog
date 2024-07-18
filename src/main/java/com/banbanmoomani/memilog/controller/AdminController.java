@@ -53,6 +53,22 @@ public class AdminController {
         return "redirect:/admin/userBlackList";
     }
 
+    @PostMapping("/userBlackList/release")
+    public String releaseUser(@RequestParam("userIdList") List<String> userIdList) {
+
+        if (userIdList == null || userIdList.isEmpty()) {
+            System.out.println("userIdList is null or empty");
+        } else {
+            for (String userId : userIdList) {
+                System.out.println(userId);
+            }
+
+            adminService.releaseUser(userIdList);
+        }
+
+        return "redirect:/admin/userBlackList";
+    }
+
     @GetMapping("/reportTotal")
     public void reportTotal() {}
 

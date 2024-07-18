@@ -29,4 +29,9 @@ public class AdminService {
     public void blackUser(List<String> userIdList) {
         blackListMapper.blackUser(userIdList);
     }
+
+    @Transactional
+    public void releaseUser(List<String> userIdList) {
+        blackListMapper.releaseUser(userIdList);
+    }
 }
