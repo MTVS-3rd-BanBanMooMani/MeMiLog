@@ -122,7 +122,7 @@
                                 </table>
                                 <div class="table-controls">
                                     <form id="blacklistForm" method="post" action="/admin/userBlackList/black">
-                                        <input type="hidden" id="userIds" name="userIds"/>
+                                        <input type="hidden" id="userIdList" name="userIdList"/>
                                         <button type="button" id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
                                     </form>
                                 </div>
@@ -131,7 +131,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!-- Blacklist Users Table -->
             <div class="row">
@@ -187,7 +186,7 @@
                     });
 
                     if (selectedUserIds.length > 0) {
-                        document.getElementById('userIds').value = selectedUserIds.join(',');
+                        document.getElementById('userIdList').value = selectedUserIds.join(',');
                         document.getElementById('blacklistForm').submit();
                     } else {
                         alert('Please select at least one user.');

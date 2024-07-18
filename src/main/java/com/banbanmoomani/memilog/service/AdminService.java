@@ -4,6 +4,7 @@ import com.banbanmoomani.memilog.DAO.BlackListMapper;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,5 +23,10 @@ public class AdminService {
 
     public List<BlackListDTO> getBlackListDTO() {
         return blackListMapper.getBlackList();
+    }
+
+    @Transactional
+    public void blackUser(List<String> userIdList) {
+        blackListMapper.blackUser(userIdList);
     }
 }

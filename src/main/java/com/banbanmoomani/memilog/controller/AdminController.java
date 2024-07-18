@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,7 +38,17 @@ public class AdminController {
     }
 
     @PostMapping("/userBlackList/black")
-    public String blackUser(BanListDTO banListDTO) {
+    public String blackUser(@RequestParam("userIdList") List<String> userIdList) {
+
+        if (userIdList == null || userIdList.isEmpty()) {
+            System.out.println("userIdList is null or empty");
+        } else {
+            for (String userId : userIdList) {
+                System.out.println(userId);
+            }
+
+            adminService.blackUser(userIdList);
+        }
 
         return "redirect:/admin/userBlackList";
     }
