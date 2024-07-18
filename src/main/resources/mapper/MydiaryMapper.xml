@@ -5,8 +5,7 @@
 
 <mapper namespace="com.banbanmoomani.memilog.DAO.MydiaryMapper">
     <resultMap id="postMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
-        <id property="postId" column="user_id"/>
-        <result property="postId" column="post_id"/>
+        <id property="postId" column="post_id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="likeCount" column="like_count"/>
@@ -14,7 +13,8 @@
         <result property="companionName" column="companion_name"/>
         <result property="emotionName" column="emotion_name"/>
         <result property="userName" column="user_name"/>
-        <result property="themeName" column="theme_name"/>
+        <result property="priThemeId" column="pri_theme_id"/>
+        <result property="subThemeId" column="sub_theme_id"/>
     </resultMap>
 
 
@@ -26,10 +26,12 @@
             , p.like_count
             , p.written_datetime
             , p.together
-            , e.emotion_name
-            , u.nickname
-            , c.companion_type
-            , t.theme_name
+            , e.emotion_name as emotionName
+            , u.nickname as nickname
+            , c.companion_type as conpanionType
+            , t.pri_theme_id as priThemeId
+            , t.sub_theme_id as subThemeId
+            , a.src_url as srcUrl
         FROM
             POST p
                 LEFT JOIN
@@ -44,7 +46,8 @@
             EMOTION e ON p.emotion_id = e.emotion_id
                 LEFT JOIN
             THEME t ON (m.pri_theme_id = t.theme_id OR m.sub_theme_id = t.theme_id)
-        WHERE u.user_id = 1;
+        WHERE u.user_id = 1
+        AND a.type = 'post';
     </select>
 
     <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.UserDTO">
