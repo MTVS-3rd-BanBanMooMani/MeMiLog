@@ -55,16 +55,9 @@
         </foreach>
     </update>
 
-    <!-- Release User: DELETE STOP record and UPDATE USER temporary_YN -->
+    <!-- Release User: DELETE STOP record -->
     <update id="releaseUser">
         DELETE FROM STOP
-        WHERE user_id IN
-        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
-            #{userId}
-        </foreach>;
-
-        UPDATE USER
-        SET temporary_YN = 'N'
         WHERE user_id IN
         <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
             #{userId}

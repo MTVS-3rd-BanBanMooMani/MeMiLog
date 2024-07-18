@@ -164,7 +164,10 @@
                                     </tbody>
                                 </table>
                                 <div class="table-controls">
-                                    <button id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                    <form id="releaseUserForm" method="post" action="/admin/userBlackList/release">
+                                        <input type="hidden" id="releaseUserIdList" name="userIdList"/>
+                                        <button type="button" id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -193,18 +196,33 @@
                     }
                 });
 
+                document.getElementById('deleteFromBlacklist').addEventListener('click', function () {
+                    let selectedUserIds = [];
+                    document.querySelectorAll('.checkItemBlackList:checked').forEach(function (checkbox) {
+                        let userId = checkbox.closest('tr').querySelector('td:nth-child(2)').innerText;
+                        selectedUserIds.push(userId);
+                    });
+
+                    if (selectedUserIds.length > 0) {
+                        document.getElementById('releaseUserIdList').value = selectedUserIds.join(',');
+                        document.getElementById('releaseUserForm').submit();
+                    } else {
+                        alert('Please select at least one user.');
+                    }
+                });
+
                 $(document).ready(function() {
                     $('#checkAllSuspended').click(function() {
                         $('.checkItemSuspended').prop('checked', this.checked);
                     });
 
                     $('#checkAllBlacklist').click(function() {
-                        $('.checkItemBlacklist').prop('checked', this.checked);
+                        $('.checkItemBlackList').prop('checked', this.checked);
                     });
 
                     $('#deleteFromBlacklist').click(function() {
                         $('#blacklist-users-table tbody tr').each(function() {
-                            if ($(this).find('.checkItemBlacklist').is(':checked')) {
+                            if ($(this).find('.checkItemBlackList').is(':checked')) {
                                 $(this).remove();
                             }
                         });
