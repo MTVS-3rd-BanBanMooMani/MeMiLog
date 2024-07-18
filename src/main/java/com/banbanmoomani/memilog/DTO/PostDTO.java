@@ -1,7 +1,5 @@
 package com.banbanmoomani.memilog.DTO;
-
 import java.util.Date;
-
 public class PostDTO {
     private int postId;
     private String title;
@@ -12,18 +10,14 @@ public class PostDTO {
     private String nickname;
     private String missionContent;
     private String missionDate;
-    private String mainThemeName;
+    private String priThemeName;
     private String subThemeName;
     private String emotionName;
-    private String nickname;
-    private String themeName;
-    private String srcUrl;
     private String companionType;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String mainThemeName, String subThemeName, String emotionName, String companionType) {
-    public PostDTO(int postId, String title, String content, int likeCount, String writtenDatetime, String companionType, String emotionName, String nickname, String themeName, String srcUrl) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String priThemeName, String subThemeName, String emotionName, String companionType) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -33,86 +27,92 @@ public class PostDTO {
         this.nickname = nickname;
         this.missionContent = missionContent;
         this.missionDate = missionDate;
-        this.mainThemeName = mainThemeName;
+        this.priThemeName = priThemeName;
         this.subThemeName = subThemeName;
         this.emotionName = emotionName;
         this.companionType = companionType;
-        this.themeName = themeName;
-        this.srcUrl = srcUrl;
     }
-
     public int getPostId() {
         return postId;
     }
-
     public void setPostId(int postId) {
         this.postId = postId;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
-
     public int getLikeCount() {
         return likeCount;
     }
-
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
-    public String getWrittenDatetime() {
+    public int getMissionId() {
+        return missionId;
+    }
+    public void setMissionId(int missionId) {
+        this.missionId = missionId;
+    }
+    public Date getWrittenDatetime() {
         return writtenDatetime;
     }
-
-    public void setWrittenDatetime(String writtenDatetime) {
+    public void setWrittenDatetime(Date writtenDatetime) {
         this.writtenDatetime = writtenDatetime;
     }
-
-    public String setcompanionType() {
-        return companionType;
-    }
-
-    public void setCompanionName(String companionType) {
-        this.companionType = companionType;
-    }
-
-    public String getEmotionName() {
-        return emotionName;
-    }
-
-    public void setEmotionName(String emotionName) {
-        this.emotionName = emotionName;
-    }
-
     public String getNickname() {
         return nickname;
     }
-
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
-    public String getThemeName() {
-        return themeName;
+    public String getMissionContent() {
+        return missionContent;
+    }
+    public void setMissionContent(String missionContent) {
+        this.missionContent = missionContent;
+    }
+    public String getMissionDate() {
+        return missionDate;
+    }
+    public void setMissionDate(String missionDate) {
+        this.missionDate = missionDate;
     }
 
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
+    public String getPriThemeName() {
+        return priThemeName;
     }
 
+    public void setPriThemeName(String mainThemeName) {
+        this.priThemeName = mainThemeName;
+    }
+
+    public String getSubThemeName() {
+        return subThemeName;
+    }
+    public void setSubThemeName(String subThemeName) {
+        this.subThemeName = subThemeName;
+    }
+    public String getEmotionName() {
+        return emotionName;
+    }
+    public void setEmotionName(String emotionName) {
+        this.emotionName = emotionName;
+    }
+    public String getCompanionType() {
+        return companionType;
+    }
+    public void setCompanionType(String companionType) {
+        this.companionType = companionType;
+    }
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -120,11 +120,15 @@ public class PostDTO {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", likeCount=" + likeCount +
-                ", writtenDatetime='" + writtenDatetime + '\'' +
-                ", companionType='" + companionType + '\'' +
-                ", emotionName='" + emotionName + '\'' +
+                ", missionId=" + missionId +
+                ", writtenDatetime=" + writtenDatetime +
                 ", nickname='" + nickname + '\'' +
-                ", themeName='" + themeName + '\'' +
+                ", missionContent='" + missionContent + '\'' +
+                ", missionDate='" + missionDate + '\'' +
+                ", priThemeName='" + priThemeName + '\'' +
+                ", subThemeName='" + subThemeName + '\'' +
+                ", emotionName='" + emotionName + '\'' +
+                ", companionType='" + companionType + '\'' +
                 '}';
     }
 }
