@@ -16,19 +16,17 @@
         <result property="signup_date" column="signup_date"/>
         <result property="susp_period" column="susp_period"/>
     </resultMap>
-    <select id="findUserByEmail" resultMap="userResultMap">
+    <select id="findUserById" parameterType="int" resultMap="userResultMap">
         SELECT
-            user_id,
-            email,
-            password,
-            birthday,
-            nickname,
-            gender,
-            caution_weights,
-            temporary_YN,
-            today_access_YN,
-            signup_date,
-            susp_period
+        *
+        FROM
+        USER
+        WHERE
+        email = #{user_id}
+    </select>
+    <select id="findUserByEmail" parameterType="String" resultMap="userResultMap">
+        SELECT
+            *
         FROM
             USER
         WHERE
@@ -36,17 +34,7 @@
     </select>
     <select id="findAllUser" resultMap="userResultMap">
         SELECT
-            user_id,
-            email,
-            password,
-            birthday,
-            nickname,
-            gender,
-            caution_weights,
-            temporary_YN,
-            today_access_YN,
-            signup_date,
-            susp_period
+            *
         FROM
             USER
     </select>

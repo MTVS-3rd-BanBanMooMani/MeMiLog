@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.UserMapper;
+import com.banbanmoomani.memilog.DTO.LoginRequestDTO;
 import com.banbanmoomani.memilog.DTO.SignUpRequestDTO;
 import com.banbanmoomani.memilog.DTO.UserDTO;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,13 @@ public class UserService {
         userDTO.setCaution_weights(0);
         userDTO.setSignup_date(new java.sql.Date(System.currentTimeMillis())); // 가입일 설정
         userMapper.insertUser(userDTO);
+    }
+
+    public UserDTO findUserById(int user_id) {
+        return userMapper.findUserById(user_id);
+    }
+
+    public UserDTO findByEmail(LoginRequestDTO loginRequestDTO) {
+        return userMapper.findUserByEmail(loginRequestDTO.getEmail());
     }
 }
