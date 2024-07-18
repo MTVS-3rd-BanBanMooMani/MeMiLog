@@ -18,5 +18,6 @@
         SELECT u.user_id, u.nickName, u.birthday, u.caution_weights, s.stop_end_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
+        WHERE s.perm_YN = 'N'
     </select>
 </mapper>
