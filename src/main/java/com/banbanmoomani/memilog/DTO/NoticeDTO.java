@@ -11,7 +11,7 @@ public class NoticeDTO {
     private Date written_date;
     private int admin_id;
 
-    public NoticeDTO(int notice_id, String notice_title, String notice_content, String notice_file_url, String visible_YN, Date written_date, int admin_id) {
+    public NoticeDTO(int notice_id, String notice_title, String notice_content, String notice_file_url, String visible_YN/*, Date written_date*//*, int admin_id*/) {
         this.notice_id = notice_id;
         this.notice_title = notice_title;
         this.notice_content = notice_content;
