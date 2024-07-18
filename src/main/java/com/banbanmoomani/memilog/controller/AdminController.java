@@ -69,6 +69,19 @@ public class AdminController {
         return "redirect:/admin/userBlackList";
     }
 
+    @PostMapping("/userBlackList/search/banUser")
+    public String searchUser(Model model) {
+
+        List<BanListDTO> banListDTO = adminService.serchBanListDTO();
+        List<BlackListDTO> blackListDTO = adminService.searchBlackListDTO();
+
+        model.addAttribute("banListDTO", banListDTO);
+        model.addAttribute("blackListDTO", blackListDTO);
+
+
+        return "admin/userBlackList";
+    }
+
     @GetMapping("/reportTotal")
     public void reportTotal() {}
 
