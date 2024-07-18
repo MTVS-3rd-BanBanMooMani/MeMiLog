@@ -3,6 +3,7 @@ package com.banbanmoomani.memilog.DTO.admin.blacklist;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class BlackListDTO {
@@ -10,6 +11,7 @@ public class BlackListDTO {
     private int user_id;
     private String nickName;
     private String age;
+    private String permanentDay;
     private Date stop_start_date;
     private Date birthday;
 
@@ -20,6 +22,7 @@ public class BlackListDTO {
         this.user_id = user_id;
         this.nickName = nickName;
         this.age = calculateAge(birthday);
+        this.permanentDay = calculatePermanentDay(stop_start_date);
         this.stop_start_date = stop_start_date;
         this.birthday = birthday;
     }
@@ -34,6 +37,10 @@ public class BlackListDTO {
 
     public String getAge() {
         return age;
+    }
+
+    public String getPermanentDay() {
+        return permanentDay;
     }
 
     public Date getStop_start_date() {
@@ -58,6 +65,7 @@ public class BlackListDTO {
 
     public void setStop_start_date(Date stop_start_date) {
         this.stop_start_date = stop_start_date;
+        this.permanentDay = calculatePermanentDay(stop_start_date);
     }
 
     public void setBirthday(Date birthday) {
@@ -67,7 +75,13 @@ public class BlackListDTO {
 
     private String calculateAge(Date birthday) {
         LocalDate birthDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Period agePeriod = Period.between(birthDate, LocalDate.now());
-        return ((agePeriod.getYears() / 10) * 10) + "대";
+        int ageYears = Period.between(birthDate, LocalDate.now()).getYears();
+        return ((ageYears / 10) * 10) + "대";
+    }
+
+    private String calculatePermanentDay(Date stop_start_date) {
+        LocalDate startDate = stop_start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        return startDate.format(formatter);
     }
 }
