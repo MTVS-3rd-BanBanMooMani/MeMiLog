@@ -42,5 +42,6 @@
             , DATE_FORMAT(s.stop_start_date, '%Y-%m-%d') as stop_start_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
+<!--        WHERE s.perm_YN = 'Y'-->
     </select>
 </mapper>

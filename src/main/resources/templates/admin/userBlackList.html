@@ -121,7 +121,10 @@
                                     </tbody>
                                 </table>
                                 <div class="table-controls">
-                                    <button id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                    <form id="blacklistForm" method="post" action="/admin/userBlackList/black">
+                                        <input type="hidden" id="userIds" name="userIds"/>
+                                        <button type="button" id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -176,6 +179,21 @@
             <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
             <script th:src="@{/assets/libs/js/main-js.js}"></script>
             <script>
+                document.getElementById('moveToBlacklist').addEventListener('click', function () {
+                    let selectedUserIds = [];
+                    document.querySelectorAll('.checkItemSuspended:checked').forEach(function (checkbox) {
+                        let userId = checkbox.closest('tr').querySelector('td:nth-child(2)').innerText;
+                        selectedUserIds.push(userId);
+                    });
+
+                    if (selectedUserIds.length > 0) {
+                        document.getElementById('userIds').value = selectedUserIds.join(',');
+                        document.getElementById('blacklistForm').submit();
+                    } else {
+                        alert('Please select at least one user.');
+                    }
+                });
+
                 $(document).ready(function() {
                     $('#checkAllSuspended').click(function() {
                         $('.checkItemSuspended').prop('checked', this.checked);
@@ -183,28 +201,6 @@
 
                     $('#checkAllBlacklist').click(function() {
                         $('.checkItemBlacklist').prop('checked', this.checked);
-                    });
-
-                    $('#moveToBlacklist').click(function() {
-                        $('#suspended-users-table tbody tr').each(function() {
-                            if ($(this).find('.checkItemSuspended').is(':checked')) {
-                                var name = $(this).find('td').eq(1).text();
-                                var nickname = $(this).find('td').eq(2).text();
-                                var ageGroup = $(this).find('td').eq(3).text();
-                                var currentDate = new Date().toISOString().split('T')[0];
-                                var newRow = `
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>${name}</td>
-                                        <td>${nickname}</td>
-                                        <td>${ageGroup}</td>
-                                        <td>${currentDate}</td>
-                                    </tr>
-                                `;
-                                $('#blacklist-users-table tbody').append(newRow);
-                                $(this).remove();
-                            }
-                        });
                     });
 
                     $('#deleteFromBlacklist').click(function() {
