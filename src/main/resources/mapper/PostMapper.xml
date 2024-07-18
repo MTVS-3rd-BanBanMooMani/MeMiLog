@@ -14,7 +14,7 @@
         <result property="nickname" column="nickname"/>
         <result property="missionContent" column="mission_content"/>
         <result property="missionDate" column="mission_date"/>
-        <result property="mainThemeName" column="main_theme_name"/>
+        <result property="priThemeName" column="main_theme_name"/>
         <result property="subThemeName" column="sub_theme_name"/>
         <result property="emotionName" column="emotion_name"/>
         <result property="companionType" column="companion_type"/>

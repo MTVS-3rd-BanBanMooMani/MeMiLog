@@ -16,12 +16,10 @@
             <div class="left-container">
                 <div class="date-category">
                     <span class="date" th:text="${posts[0].missionDate}">06월 22일</span>
-                    <span class="category" th:text="${posts[0].mainThemeName}">자연</span>
+                    <span class="category" th:text="${posts[0].priThemeName}">자연</span>
                     <span class="category" th:text="${posts[0].subThemeName}"></span>
                 </div>
                 <div class="title" th:text="${posts[0].missionContent}">미미들이 생각하는 여름 낭만은?</div>
-                <input type="hidden" name="title" th:value="${posts[0].missionContent}">
-                <input type="hidden" name="missionId" th:value="${posts[0].missionId}">
                 <div class="image-container">
                     <img id="main-image" class="main-image" th:src="@{/images/default.png}">
                 </div>
@@ -41,25 +39,26 @@
                 </div>
                 <div class="question">어떤 기분이었나요?</div>
                 <div class="emotion-box">
+                    <input type="hidden" id="selectedEmotion" name="emotion" value="">
                     <div class="main-box">
                         <ul class="icon-box">
-                            <li id="happy" onclick="changeIconColor('happy', 1)">
+                            <li id="happy" onclick="changeIconColor('happy')">
                                 <img src="/document/img/happy.png" alt="happy" class="icon1" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
                                 <span th:text="${posts[0].emotionName == 'happy' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="cool" onclick="changeIconColor('cool', 2)">
+                            <li id="cool" onclick="changeIconColor('cool')">
                                 <img src="/document/img/cool.png" alt="cool" class="icon1" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
                                 <span th:text="${posts[0].emotionName == 'cool' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="surprised" onclick="changeIconColor('surprised', 3)">
+                            <li id="surprised" onclick="changeIconColor('surprised')">
                                 <img src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
                                 <span th:text="${posts[0].emotionName == 'surprised' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="soso" onclick="changeIconColor('soso', 4)">
+                            <li id="soso" onclick="changeIconColor('soso')">
                                 <img src="/document/img/soso.png" alt="soso" class="icon1" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
                                 <span th:text="${posts[0].emotionName == 'soso' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="sad" onclick="changeIconColor('sad', 5)">
+                            <li id="sad" onclick="changeIconColor('sad')">
                                 <img src="/document/img/sad.png" alt="sad" class="icon1" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
                                 <span th:text="${posts[0].emotionName == 'sad' ? '선택됨' : ''}"></span>
                             </li>
@@ -77,6 +76,7 @@
                         <button class="answer-right answer" type="button" data-id="6" data-type="반려동물" onclick="selectCompanion(this)" th:text="'반려동물' + (posts[0].companionType == '반려동물' ? ' (선택됨)' : '')">반려동물</button>
                     </div>
                 </div>
+                <input type="hidden" id="companionId" name="companionId" value="">
                 <input type="hidden" id="companionType" name="companionType" value="">
                 <div class="buttons">
                     <button class="submit-btn" type="submit" name="submit">작성 완료</button>
