@@ -11,15 +11,15 @@
     />
     <!-- 전체 레이아웃 css -->
     <link
-      href="/src/main/resources/static/document/css/layout.css"
+      href="../../document/css/layout.css"
       rel="stylesheet"
     />
     <link
-      href="/src/main/resources/static/document/css/searchbar.css"
+      href="../../document/css/searchbar.css"
       rel="stylesheet"
     />
     <link
-      href="/src/main/resources/static/document/css/allview.css"
+      href="../../document/css/allview.css"
       rel="stylesheet"
     />
 
@@ -41,18 +41,8 @@
     />
   </head>
   <body>
-    <header>
-      <a class="logo">Me Mission Log</a>
-      <div class="menu-bar">
-        <a class="menu-btn" href="../view/allview.html">둘러보기</a>
-        <a class="menu-btn" href="../view/post.html">오늘일기</a>
-        <a class="menu-btn" href="../view/mydiary.html">마이다이어리</a>
-        <button class="login-btn" onclick="location.href='./login.html'">
-          로그인
-        </button>
-      </div>
-    </header>
-    <main>
+  <div th:replace="~{/fragments/mainHeader :: header}"></div>
+  <main>
       <div class="content">
         <!-- 검색바 -->
         <div class="search-box">
@@ -62,7 +52,7 @@
             class="search-bar"
           />
           <img
-            src="../documentation/img/search.png"
+            src="../../document/img/search.png"
             alt="search icon"
             class="search-Img"
           />
@@ -89,7 +79,7 @@
         <div class="modal-mission-container">
           <img
             class="modal-mission-img"
-            src="../documentation/img/banner.jpg"
+            src="../../document/img/banner.jpg"
           />
           <div>6월 20일의 미션</div>
           <div>미미들이 생각하는 여름 낭만은?</div>
@@ -108,23 +98,23 @@
         <div class="modal-photo-greed-container">
           <div class="modal-row">
             <div class="photo-div">
-              <img src="../documentation/img/home-post-photo.jpg" />
+              <img src="../../document/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../documentation/img/home-post-photo.jpg" />
+              <img src="../../document/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../documentation/img/home-post-photo.jpg" />
+              <img src="../../document/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../documentation/img/home-post-photo.jpg" />
+              <img src="../../document/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
             <div class="photo-div">
-              <img src="../documentation/img/home-post-photo.jpg" />
+              <img src="../../document/img/home-post-photo.jpg" />
               <p>잠실2동 불주먹</p>
             </div>
           </div>
@@ -134,7 +124,7 @@
         <div class="post-modal-top">
           <div>
             <img
-              src="../documentation/img/etc.png"
+              src="../../document/img/etc.png"
               height="25px"
               alt="etc이미지"
               class="etc-img"
@@ -175,17 +165,17 @@
             <div class="post-modal-board-img">
               <span class="arrow arrow-left hidden">&lt;</span>
               <img
-                src="../documentation/img/home-post-photo.jpg"
+                src="../../document/img/home-post-photo.jpg"
                 alt="게시물이미지"
                 class="modal-image"
               />
               <img
-                src="../documentation/img/home-post-photo.jpg"
+                src="../../document/img/home-post-photo.jpg"
                 alt="게시물이미지"
                 class="modal-image"
               />
               <img
-                src="../documentation/img/home-post-photo.jpg"
+                src="../../document/img/home-post-photo.jpg"
                 alt="게시물이미지"
                 class="modal-image"
               />
@@ -195,7 +185,7 @@
             <div class="post-modal-user-info">
               <div class="post-modal-profile">
                 <img
-                  src="../documentation/img/stone.jpg"
+                  src="../../document/img/stone.jpg"
                   alt="프로필이미지"
                   width="35px"
                   height="35px"
@@ -206,7 +196,7 @@
               <div class="post-modal-like-box">
                 <p>779</p>
                 <img
-                  src="../documentation/img/heart.png"
+                  src="../../document/img/heart.png"
                   alt="좋아요"
                   width="30px"
                   height="30px"
@@ -224,7 +214,7 @@
             <div class="post-modal-right-info">
               <p>작성일: 24.06.22</p>
               <img
-                src="../documentation/img/colored_happy.png"
+                src="../../document/img/colored_happy.png"
                 alt="감정이미지"
                 width="25px"
                 height="25px"
@@ -239,11 +229,9 @@
       </div>
     </div>
 
-    <footer>
-      <p>CopyRight © Me Mission Log. All Rights Reserved.</p>
-    </footer>
+  <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 
-    <script src="/src/main/resources/static/document/js/missionPost.js"></script>
-    <script src="/src/main/resources/static/document/js/allviewModal.js"></script>
+  <script src="../../document/js/missionPost.js"></script>
+    <script src="../../document/js/allviewModal.js"></script>
   </body>
 </html>
