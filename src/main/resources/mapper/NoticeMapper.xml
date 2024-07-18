@@ -23,4 +23,28 @@
               ,written_date
           FROM NOTICE
     </select>
+    <insert id="createNotice" parameterType="com.banbanmoomani.memilog.DTO.NoticeDTO"
+            useGeneratedKeys="true" keyProperty="notice_id">
+        INSERT
+        INTO NOTICE
+        (
+          notice_title
+        , notice_content
+        , notice_file_url
+        , admin_id
+        , visible_YN
+        , written_date
+        , notice_id
+        )
+        VALUES
+        (
+          #{notice_title}
+        , #{notice_content}
+        , #{notice_file_url}
+        , #{admin_id}
+        , #{visible_YN}
+        , #{written_date}
+        , #{notice_id}
+        )
+    </insert>
 </mapper>

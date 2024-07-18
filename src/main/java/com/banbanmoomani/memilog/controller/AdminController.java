@@ -3,13 +3,12 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.NoticeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,6 +55,12 @@ public class AdminController {
     public void noticeBoard(Model model) {
         List<NoticeDTO> noticeList = noticeService.findAllNotice();
         model.addAttribute("noticeList", noticeList);
+    }
+
+    @PostMapping("/noticeBoard")
+    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
+        noticeService.createNotice(noticeRequestDTO);
+        return "redirect:/admin/noticeBoard";
     }
 
     @GetMapping("/dailyTopicBoard")

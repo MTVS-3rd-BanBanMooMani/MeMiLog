@@ -269,10 +269,32 @@
     });
 
     function uploadNotice() {
-        //서버에서 데이터 반영해 수정하는 로직 추가 예정
+        // 입력된 제목과 내용을 가져옵니다.
+        var noticeTitle = document.getElementById('noticeTitle').value;
+        var noticeContent = document.getElementById('noticeContent').value;
 
-        alert('공지사항 등록이 완료되었습니다.');
-        closeModal('createNoticeModal');
+        // 서버로 보낼 데이터를 구성합니다.
+        var noticeData = {
+            title: noticeTitle,
+            content: noticeContent
+        };
+
+        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        $.ajax({
+            type: 'POST',
+            url: '/admin/noticeBoard',
+            contentType: 'application/json',
+            data: JSON.stringify(noticeData),
+            success: function(response) {
+                alert('공지사항 등록이 완료되었습니다.');
+                closeModal('createNoticeModal');
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            },
+            error: function(error) {
+                alert('공지사항 등록에 실패했습니다.');
+                console.error(error);
+            }
+        });
     }
 
     function modifyNotice() {
