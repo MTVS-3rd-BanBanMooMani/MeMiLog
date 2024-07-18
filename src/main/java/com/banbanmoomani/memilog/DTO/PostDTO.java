@@ -1,28 +1,38 @@
 package com.banbanmoomani.memilog.DTO;
 
+import java.util.Date;
+
 public class PostDTO {
     private int postId;
     private String title;
     private String content;
     private int likeCount;
-    private String writtenDatetime;
-    private String companionType;
-    private String emotionName;
+    private int missionId;
+    private Date writtenDatetime;
     private String nickname;
-    private String themeName;
+    private String missionContent;
+    private String missionDate;
+    private String mainThemeName;
+    private String subThemeName;
+    private String emotionName;
+    private String companionType;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, String writtenDatetime, String companionType, String emotionName, String nickname, String themeName) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String mainThemeName, String subThemeName, String emotionName, String companionType) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.likeCount = likeCount;
+        this.missionId = missionId;
         this.writtenDatetime = writtenDatetime;
-        this.companionType = companionType;
-        this.emotionName = emotionName;
         this.nickname = nickname;
-        this.themeName = themeName;
+        this.missionContent = missionContent;
+        this.missionDate = missionDate;
+        this.mainThemeName = mainThemeName;
+        this.subThemeName = subThemeName;
+        this.emotionName = emotionName;
+        this.companionType = companionType;
     }
 
     public int getPostId() {
@@ -57,28 +67,20 @@ public class PostDTO {
         this.likeCount = likeCount;
     }
 
-    public String getWrittenDatetime() {
+    public int getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(int missionId) {
+        this.missionId = missionId;
+    }
+
+    public Date getWrittenDatetime() {
         return writtenDatetime;
     }
 
-    public void setWrittenDatetime(String writtenDatetime) {
+    public void setWrittenDatetime(Date writtenDatetime) {
         this.writtenDatetime = writtenDatetime;
-    }
-
-    public String setcompanionType() {
-        return companionType;
-    }
-
-    public void setCompanionName(String companionType) {
-        this.companionType = companionType;
-    }
-
-    public String getEmotionName() {
-        return emotionName;
-    }
-
-    public void setEmotionName(String emotionName) {
-        this.emotionName = emotionName;
     }
 
     public String getNickname() {
@@ -89,12 +91,52 @@ public class PostDTO {
         this.nickname = nickname;
     }
 
-    public String getThemeName() {
-        return themeName;
+    public String getMissionContent() {
+        return missionContent;
     }
 
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
+    public void setMissionContent(String missionContent) {
+        this.missionContent = missionContent;
+    }
+
+    public String getMissionDate() {
+        return missionDate;
+    }
+
+    public void setMissionDate(String missionDate) {
+        this.missionDate = missionDate;
+    }
+
+    public String getMainThemeName() {
+        return mainThemeName;
+    }
+
+    public void setMainThemeName(String mainThemeName) {
+        this.mainThemeName = mainThemeName;
+    }
+
+    public String getSubThemeName() {
+        return subThemeName;
+    }
+
+    public void setSubThemeName(String subThemeName) {
+        this.subThemeName = subThemeName;
+    }
+
+    public String getEmotionName() {
+        return emotionName;
+    }
+
+    public void setEmotionName(String emotionName) {
+        this.emotionName = emotionName;
+    }
+
+    public String getCompanionType() {
+        return companionType;
+    }
+
+    public void setCompanionType(String companionType) {
+        this.companionType = companionType;
     }
 
     @Override
@@ -104,11 +146,15 @@ public class PostDTO {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", likeCount=" + likeCount +
-                ", writtenDatetime='" + writtenDatetime + '\'' +
-                ", companionType='" + companionType + '\'' +
-                ", emotionName='" + emotionName + '\'' +
+                ", missionId=" + missionId +
+                ", writtenDatetime=" + writtenDatetime +
                 ", nickname='" + nickname + '\'' +
-                ", themeName='" + themeName + '\'' +
+                ", missionContent='" + missionContent + '\'' +
+                ", missionDate='" + missionDate + '\'' +
+                ", mainThemeName='" + mainThemeName + '\'' +
+                ", subThemeName='" + subThemeName + '\'' +
+                ", emotionName='" + emotionName + '\'' +
+                ", companionType='" + companionType + '\'' +
                 '}';
     }
 }
