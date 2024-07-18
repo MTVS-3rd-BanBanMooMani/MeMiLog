@@ -1,20 +1,26 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.MydiaryMapper;
 import com.banbanmoomani.memilog.DTO.IntegratedDTO;
-import com.banbanmoomani.memilog.DAO.IntegratedMapper;
+import com.banbanmoomani.memilog.DTO.PostDTO;
+import com.banbanmoomani.memilog.DTO.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MydiaryService {
-    private final IntegratedMapper integratedMapper;
+    private final MydiaryMapper mydiaryMapper;
 
-    public MydiaryService(IntegratedMapper integratedMapper) {
-        this.integratedMapper = integratedMapper;
+    public MydiaryService(MydiaryMapper mydiaryMapper) {
+        this.mydiaryMapper = mydiaryMapper;
     }
 
-    public List<IntegratedDTO> findAllContents() {
-        return integratedMapper.findAllContents();
+    public List<PostDTO> findAllPosts() {
+        return mydiaryMapper.findAllPosts();
+    }
+
+    public UserDTO findUserById() {
+        return mydiaryMapper.findUserById();
     }
 }

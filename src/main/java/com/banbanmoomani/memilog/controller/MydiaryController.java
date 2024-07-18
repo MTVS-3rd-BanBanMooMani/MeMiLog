@@ -1,6 +1,8 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.IntegratedDTO;
+import com.banbanmoomani.memilog.DTO.PostDTO;
+import com.banbanmoomani.memilog.DTO.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,12 @@ public class MydiaryController {
 
     @GetMapping("/mydiary")
     public String mydiary(Model model) {
-//        model.addAttribute();
-        List<IntegratedDTO> contentsList =  mydiaryService.findAllContents();
-        System.out.println(contentsList);
+        List<PostDTO> postList =  mydiaryService.findAllPosts();
+        System.out.println(postList);
+        UserDTO user = mydiaryService.findUserById();
+        System.out.println(user);
+        model.addAttribute("postList", postList);
+        model.addAttribute("user", user);
         return "main/mydiary";
     }
 
