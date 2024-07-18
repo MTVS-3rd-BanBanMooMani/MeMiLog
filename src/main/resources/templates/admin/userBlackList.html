@@ -152,40 +152,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>김영수</td>
-                                        <td>영수킹</td>
-                                        <td>40대</td>
-                                        <td>2023-06-01</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>박지민</td>
-                                        <td>지민짱</td>
-                                        <td>30대</td>
-                                        <td>2023-07-15</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>이서연</td>
-                                        <td>서연이</td>
-                                        <td>20대</td>
-                                        <td>2023-08-20</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>최준영</td>
-                                        <td>준영이</td>
-                                        <td>30대</td>
-                                        <td>2023-09-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>김민지</td>
-                                        <td>민지짱</td>
-                                        <td>20대</td>
-                                        <td>2023-10-12</td>
+                                    <tr th:each="blackUser : ${blackListDTO}">
+                                        <td><input type="checkbox" class="checkItemBlackList small-checkbox"></td>
+                                        <td th:text="${blackUser.user_id}"></td>
+                                        <td th:text="${blackUser.nickName}"></td>
+                                        <td th:text="${blackUser.age}"></td>
+                                        <td th:text="${blackUser.permanentDay}"></td>
                                     </tr>
                                     </tbody>
                                 </table>

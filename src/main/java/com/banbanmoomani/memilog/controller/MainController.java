@@ -13,8 +13,4 @@ public class MainController {
     public String home() {
         return "main/home";
     }
-
-    @GetMapping("/mydiary")
-    public void mydiary() {}
-
 }

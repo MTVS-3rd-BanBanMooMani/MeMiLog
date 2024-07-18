@@ -9,22 +9,19 @@ public class PostDTO {
     private int likeCount;
     private int missionId;
     private Date writtenDatetime;
-    private String together;
-    private int emotionId;
-    private int userId;
-    private int companionId;
+    private String nickname;
     private String missionContent;
     private String missionDate;
-    private String mainThemaName;
-    private String subThemaName;
+    private String mainThemeName;
+    private String subThemeName;
     private String emotionName;
     private String companionType;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String content, int likeCount, int missionId, Date writtenDatetime, String together, int emotionId, int userId, int companionId, String missionContent, String missionDate, String mainThemaName, String subThemaName, String emotionName, String companionType) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String together, int emotionId, int userId, int companionId, String missionContent, String mainThemaName, String subThemaName) {
         this.postId = postId;
-        this.title = missionContent;
+        this.title = title;
         this.content = content;
         this.likeCount = likeCount;
         this.missionId = missionId;
@@ -34,14 +31,9 @@ public class PostDTO {
         this.userId = userId;
         this.companionId = companionId;
         this.missionContent = missionContent;
-        this.missionDate = missionDate;
         this.mainThemaName = mainThemaName;
         this.subThemaName = subThemaName;
-        this.emotionName = emotionName;
-        this.companionType = companionType;
     }
-
-    // Getter and Setter methods
 
     public int getPostId() {
         return postId;
@@ -129,15 +121,6 @@ public class PostDTO {
 
     public void setMissionContent(String missionContent) {
         this.missionContent = missionContent;
-        this.title = missionContent; // title을 missionContent로 설정
-    }
-
-    public String getMissionDate() {
-        return missionDate;
-    }
-
-    public void setMissionDate(String missionDate) {
-        this.missionDate = missionDate;
     }
 
     public String getMainThemaName() {
@@ -156,22 +139,6 @@ public class PostDTO {
         this.subThemaName = subThemaName;
     }
 
-    public String getEmotionName() {
-        return emotionName;
-    }
-
-    public void setEmotionName(String emotionName) {
-        this.emotionName = emotionName;
-    }
-
-    public String getCompanionType() {
-        return companionType;
-    }
-
-    public void setCompanionType(String companionType) {
-        this.companionType = companionType;
-    }
-
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -186,11 +153,8 @@ public class PostDTO {
                 ", userId=" + userId +
                 ", companionId=" + companionId +
                 ", missionContent='" + missionContent + '\'' +
-                ", missionDate='" + missionDate + '\'' +
                 ", mainThemaName='" + mainThemaName + '\'' +
                 ", subThemaName='" + subThemaName + '\'' +
-                ", emotionName='" + emotionName + '\'' +
-                ", companionType='" + companionType + '\'' +
                 '}';
     }
 }

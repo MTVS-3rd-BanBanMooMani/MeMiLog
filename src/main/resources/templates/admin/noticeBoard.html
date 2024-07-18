@@ -105,75 +105,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>서버 점검 안내</td>
-                            <td>2024년 7월 15일 오전 2시부터 4시까지 서버 점검이 진행됩니다. 이 시간 동안 서비스 이용이 불가합니다.</td>
-                            <td>2024-07-09</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>새로운 필터 업데이트</td>
-                            <td>새로운 사진 필터가 추가되었습니다. 다양한 필터를 사용해보세요!</td>
-                            <td>2024-07-08</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>이용 약관 변경</td>
-                            <td>2024년 8월 1일부터 새로운 서비스 이용 약관이 적용됩니다. 자세한 내용은 공지사항을 확인해주세요.</td>
-                            <td>2024-07-05</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>여름 사진 콘테스트</td>
-                            <td>여름을 주제로 한 사진 콘테스트가 열립니다. 참여하고 멋진 상품을 받아가세요!</td>
-                            <td>2024-07-01</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>개인정보 처리방침 변경</td>
-                            <td>개인정보 처리방침이 변경되었습니다. 변경된 내용을 확인해 주세요.</td>
-                            <td>2024-06-25</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>정기 점검 안내</td>
-                            <td>매월 첫째 주 금요일 오전 3시부터 5시까지 정기 점검이 있습니다. 이용에 참고하시기 바랍니다.</td>
-                            <td>2024-06-20</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>사진 업로드 기능 개선</td>
-                            <td>사진 업로드 속도가 개선되었습니다. 이제 더 빠르게 사진을 업로드할 수 있습니다.</td>
-                            <td>2024-06-15</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>시스템 오류 안내</td>
-                            <td>일부 사용자에게 발생한 시스템 오류가 해결되었습니다. 불편을 드려 죄송합니다.</td>
-                            <td>2024-06-10</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>보안 업데이트</td>
-                            <td>보안 강화를 위한 업데이트가 적용되었습니다. 안전한 서비스 이용을 부탁드립니다.</td>
-                            <td>2024-06-05</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>팔로우 추천 시스템 개선</td>
-                            <td>새로운 팔로우 추천 시스템이 도입되었습니다. 더 많은 친구를 만나보세요!</td>
-                            <td>2024-06-01</td>
-                            <td>Y</td>
+                        <tr th:each="notice : ${noticeList}">
+                            <td th:text="${notice.notice_id}"></td>
+                            <td th:text="${notice.notice_title}"></td>
+                            <td th:text="${notice.notice_content}"></td>
+                            <td th:text="${notice.written_date}"></td>
+                            <td th:text="${notice.visible_YN}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -332,10 +269,32 @@
     });
 
     function uploadNotice() {
-        //서버에서 데이터 반영해 수정하는 로직 추가 예정
+        // 입력된 제목과 내용을 가져옵니다.
+        var noticeTitle = document.getElementById('noticeTitle').value;
+        var noticeContent = document.getElementById('noticeContent').value;
 
-        alert('공지사항 등록이 완료되었습니다.');
-        closeModal('createNoticeModal');
+        // 서버로 보낼 데이터를 구성합니다.
+        var noticeData = {
+            title: noticeTitle,
+            content: noticeContent
+        };
+
+        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        $.ajax({
+            type: 'POST',
+            url: '/admin/noticeBoard',
+            contentType: 'application/json',
+            data: JSON.stringify(noticeData),
+            success: function(response) {
+                alert('공지사항 등록이 완료되었습니다.');
+                closeModal('createNoticeModal');
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            },
+            error: function(error) {
+                alert('공지사항 등록에 실패했습니다.');
+                console.error(error);
+            }
+        });
     }
 
     function modifyNotice() {

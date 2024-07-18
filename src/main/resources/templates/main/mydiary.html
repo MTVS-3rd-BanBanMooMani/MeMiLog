@@ -13,8 +13,8 @@
 
     <div class="user-container">
         <div class="user-profile">
-            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture">
-            <p th:text="${username}">돌멩이님</p>
+            <img th:src="${user.srcUrl}" alt="Profile Picture">
+            <p th:text="${user.nickName}"/>
             <img th:src="@{/document/img/settings.png}" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
         </div>
 
@@ -24,13 +24,13 @@
                 <h2>회원 정보</h2>
                 <div class="modal-body">
                     <div class="modal-left">
-                        <p><strong>아이디:</strong> <span th:text="${email}">blip0819@gmail.com</span></p>
-                        <p><strong>닉네임:</strong> <span th:text="${username}">돌멩이님</span></p>
-                        <p><strong>가입일:</strong> <span th:text="${joinDate}">2023-01-01</span></p>
+                        <p><strong>아이디:</strong> <span th:text="${user.email}"/></p>
+                        <p><strong>닉네임:</strong> <span th:text="${user.nickName}"/></p>
+                        <p><strong>가입일:</strong> <span th:text="${user.signup_date}"/></p>
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture" class="profile-pic">
+                            <img th:src="${user.srcUrl}" alt="Profile Picture" class="profile-pic">
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,6 @@
                 </div>
             </div>
         </div>
-
         <div id="editModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('editModal')">&times;</span>
@@ -50,11 +49,11 @@
                         <form id="editForm">
                             <div class="form-group">
                                 <label for="email">아이디:</label>
-                                <input type="text" id="email" name="email" th:value="${email}"><br>
+                                <input type="text" id="email" name="email" th:value="${user.email}"><br>
                             </div>
                             <div class="form-group">
                                 <label for="nickname">닉네임:</label>
-                                <input type="text" id="nickname" name="nickname" th:value="${username}"><br>
+                                <input type="text" id="nickname" name="nickName" th:value="${user.nickName}"><br>
                             </div>
                             <div class="form-group">
                                 <label for="password">비밀번호:</label>
@@ -68,7 +67,7 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="@{/document/img/profile.jpeg}" alt="Profile Picture" class="profile-pic">
+                            <img th:src="${user.srcUrl}" alt="Profile Picture" class="profile-pic">
                             <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
@@ -93,7 +92,6 @@
                 </form>
             </div>
         </div>
-
         <div id="deleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('deleteModal')">&times;</span>
@@ -101,7 +99,6 @@
                 <p>탈퇴 후 계정 복구가 불가합니다.<br>정말 탈퇴를 진행하시겠습니까?<br>탈퇴를 원하시면 비밀번호를 입력해주세요.</p><br>
                 <form id="deleteForm">
                     <input type="password" id="deletePassword" name="deletePassword" placeholder="비밀번호 확인"><br>
-
                     <div class="form-footer">
                         <button type="submit">탈퇴</button>
                         <button type="button" onclick="closeModal('deleteModal')">취소</button>
@@ -109,21 +106,17 @@
                 </form>
             </div>
         </div>
-
         <div id="chart-container" class="chart-container">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-
             <div class="total-mood">
                 <canvas id="bar-chart-horizontal"></canvas>
             </div>
-
             <div class="user-mood-chart">
                 <canvas id="line-chart" style="width: 500px;"></canvas>
                 <div class="legend-container" id="legend"></div>
             </div>
         </div>
     </div>
-
     <div class="posts">
         <div class="mydiary-menu-bar">
             <button class="tablinks" onclick="openPage(event, 'post-card-container')">모아보기</button>
@@ -139,7 +132,7 @@
         <div id="calendar-container" class="tabcontent">
             <div class="date-selector">
                 <ul>
-                    <li th:each="day : ${#numbers.sequence(1,30)}" th:text="${day}"></li>
+                    <li th:each="day : ${#numbers.sequence(1,31)}" th:text="${day}"></li>
                 </ul>
             </div>
 
@@ -150,9 +143,7 @@
             </div>
         </div>
     </div>
-
     <div th:replace="~{/fragments/mainFooter :: footer}"></div>
-
 </div>
 <script>
     var barChart;
@@ -163,7 +154,6 @@
             firstTabLink.click();
         }
     });
-
     function openPage(evt, pageName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -176,7 +166,6 @@
         }
         document.getElementById(pageName).style.display = "flex";
         evt.currentTarget.className += " active";
-
         if (pageName === 'post-card-container') {
             document.querySelector('.total-mood').style.display = 'block';
             document.querySelector('.user-mood-chart').style.display = 'none';
@@ -199,16 +188,16 @@
 
     function updateProfilePic(event) {
         event.preventDefault();
+        const profilePicForm = document.getElementById('profilePicForm');
+        const formData = new FormData(profilePicForm);
         var fileInput = document.getElementById('profilePic');
-        var file = fileInput.files[0];
+        var file = fileInput.files;
         var reader = new FileReader();
-
         reader.onload = function(e){
             document.querySelector(".profile-pic").src = e.target.result;
             closeModal('profilePicModal');
             alert("회원 정보 수정이 완료되었습니다.");
         }
-
         if(file){
             reader.readAsDataURL(file);
         } else {
@@ -222,7 +211,6 @@
         alert("프로필 사진이 삭제되었습니다.");
         closeModal('profilePicModal');
     }
-
     window.onclick = function(event) {
         var modals = document.getElementsByClassName('modal');
         for (var i = 0; i < modals.length; i++) {
@@ -231,25 +219,21 @@
             }
         }
     }
-
     document.getElementById('editForm').onsubmit = function(event) {
         event.preventDefault();
         alert("정보가 수정되었습니다.");
         closeModal('editModal');
     }
-
     document.getElementById('deleteForm').onsubmit = function(event) {
         event.preventDefault();
         alert("회원 탈퇴가 완료되었습니다.");
         closeModal('deleteModal');
         closeModal('userModal');
     }
-
     function displayBarChart() {
         if (barChart) {
             barChart.destroy();
         }
-
         var barChartCanvas = document.getElementById("bar-chart-horizontal");
         barChartCanvas.height = 240;
         barChartCanvas.width = 400;
@@ -265,7 +249,6 @@
 
         var images = [];
         var imagesLoaded = 0;
-
         labels.forEach((label, index) => {
             var image = new Image();
             image.src = label.img;
@@ -277,7 +260,6 @@
             };
             images.push(image);
         });
-
         function drawChart() {
             barChart = new Chart(ctx, {
                 type: 'bar',
@@ -359,14 +341,11 @@
             default: return '';
         }
     }
-
     function displayLineChart() {
         if (window.lineChart) {
             window.lineChart.destroy();
         }
-
         var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
-
         window.lineChart = new Chart(lineChartCanvas, {
             type: 'line',
             data: {
@@ -428,7 +407,6 @@
                 afterRender: function(chart) {
                     var legendContainer = document.getElementById('legend');
                     legendContainer.innerHTML = '';
-
                     chart.data.datasets.forEach(function(dataset, i) {
                         var legendItem = document.createElement('div');
                         legendItem.classList.add('legend-item');
@@ -437,15 +415,12 @@
                             meta.hidden = meta.hidden === null ? !chart.data.datasets[i].hidden : null;
                             chart.update();
                         };
-
                         var colorBox = document.createElement('span');
                         colorBox.classList.add('color-box');
                         colorBox.style.borderColor = dataset.borderColor;
-
                         var img = document.createElement('img');
                         img.src = getEmojiImage(dataset.label);
                         img.classList.add('legend-image');
-
                         legendItem.appendChild(colorBox);
                         legendItem.appendChild(img);
                         legendContainer.appendChild(legendItem);
@@ -454,11 +429,9 @@
             }]
         });
     }
-
     window.onload = function() {
         displayLineChart();
     };
-
 </script>
 </body>
 </html>

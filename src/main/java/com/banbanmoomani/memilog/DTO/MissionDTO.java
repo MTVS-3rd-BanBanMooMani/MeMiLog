@@ -1,73 +1,70 @@
 package com.banbanmoomani.memilog.DTO;
 
-import java.util.Date;
-
 public class MissionDTO {
-    private int id; // 미션 번호
-    private String title; // 미션 내용(제목)
-    private Date date; // 미션 등록 일자
-    private int mainThema; // 주 테마
-    private int subThema; // 부가 테마
+    private int missionId;
+    private String missionContent;
+    private String missionDate;
+    private int priThemeId;
+    private int subThemeId;
 
-    public MissionDTO() {}
+    public MissionDTO(){}
 
-    public MissionDTO(int id, String title, Date date, int mainThema, int subThema) {
-        this.id = id;
-        this.title = title;
-        this.date = date;
-        this.mainThema = mainThema;
-        this.subThema = subThema;
+    public MissionDTO(int missionId, String missionContent, String missionDate, int priThemeId, int subThemeId) {
+        this.missionId = missionId;
+        this.missionContent = missionContent;
+        this.missionDate = missionDate;
+        this.priThemeId = priThemeId;
+        this.subThemeId = subThemeId;
     }
 
-    public int getId() {
-        return id;
+    public int getMissionId() {
+        return missionId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMissionId(int missionId) {
+        this.missionId = missionId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getMissionContent() {
+        return missionContent;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMissionContent(String missionContent) {
+        this.missionContent = missionContent;
     }
 
-    public Date getDate() {
-        return date;
+    public String getMissionDate() {
+        return missionDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setMissionDate(String missionDate) {
+        this.missionDate = missionDate;
     }
 
-    public int getMainThema() {
-        return mainThema;
+    public int getPriThemeId() {
+        return priThemeId;
     }
 
-    public void setMainThema(int mainThema) {
-        this.mainThema = mainThema;
+    public void setPriThemeId(int priThemeId) {
+        this.priThemeId = priThemeId;
     }
 
-    public int getSubThema() {
-        return subThema;
+    public int getSubThemeId() {
+        return subThemeId;
     }
 
-    public void setSubThema(int subThema) {
-        this.subThema = subThema;
+    public void setSubThemeId(int subThemeId) {
+        this.subThemeId = subThemeId;
     }
 
     @Override
     public String toString() {
         return "MissionDTO{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                ", mainThema=" + mainThema +
-                ", subThema=" + subThema +
+                "missionId=" + missionId +
+                ", missionContent='" + missionContent + '\'' +
+                ", missionDate='" + missionDate + '\'' +
+                ", priThemeId=" + priThemeId +
+                ", subThemeId=" + subThemeId +
                 '}';
     }
-
 }
