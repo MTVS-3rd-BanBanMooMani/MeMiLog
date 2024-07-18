@@ -30,7 +30,7 @@
             , s.stop_end_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
-        WHERE s.perm_YN = 'N'
+<!--        WHERE s.perm_YN = 'N'-->
     </select>
 
     <!-- Corrected getBlackList query -->

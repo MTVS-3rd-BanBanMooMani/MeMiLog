@@ -6,6 +6,7 @@ import com.banbanmoomani.memilog.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -33,6 +34,12 @@ public class AdminController {
         model.addAttribute("blackListDTO", blackListDTO);
 
         return "admin/userBlackList";
+    }
+
+    @PostMapping("/userBlackList/black")
+    public String blackUser(BanListDTO banListDTO) {
+
+        return "redirect:/admin/userBlackList";
     }
 
     @GetMapping("/reportTotal")

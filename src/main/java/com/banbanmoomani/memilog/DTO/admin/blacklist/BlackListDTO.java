@@ -16,10 +16,10 @@ public class BlackListDTO {
     public BlackListDTO() {
     }
 
-    public BlackListDTO(int user_id, String nickName, String age, Date stop_start_date, Date birthday) {
+    public BlackListDTO(int user_id, String nickName, Date birthday, Date stop_start_date) {
         this.user_id = user_id;
         this.nickName = nickName;
-        this.age = age;
+        this.age = calculateAge(birthday);
         this.stop_start_date = stop_start_date;
         this.birthday = birthday;
     }
@@ -62,11 +62,12 @@ public class BlackListDTO {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+        this.age = calculateAge(birthday);
     }
 
     private String calculateAge(Date birthday) {
         LocalDate birthDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Period agePeriod = Period.between(birthDate, LocalDate.now());
-        return agePeriod.getYears() + "대";
+        return ((agePeriod.getYears() / 10) * 10) + "대";
     }
 }
