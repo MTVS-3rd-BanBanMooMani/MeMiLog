@@ -1,16 +1,16 @@
 package com.banbanmoomani.memilog.controller;
 
+import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
+import com.banbanmoomani.memilog.service.NoticeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +19,11 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final NoticeService noticeService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, NoticeService noticeService) {
         this.adminService = adminService;
+        this.noticeService = noticeService;
     }
 
     @GetMapping("/dashBoard")
@@ -87,7 +89,16 @@ public class AdminController {
     public void point() {}
 
     @GetMapping("/noticeBoard")
-    public void noticeBoard() {}
+    public void noticeBoard(Model model) {
+        List<NoticeDTO> noticeList = noticeService.findAllNotice();
+        model.addAttribute("noticeList", noticeList);
+    }
+
+    @PostMapping("/noticeBoard")
+    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
+        noticeService.createNotice(noticeRequestDTO);
+        return "redirect:/admin/noticeBoard";
+    }
 
     @GetMapping("/dailyTopicBoard")
     public void dailyTopicBoard() {}

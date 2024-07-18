@@ -10,9 +10,9 @@
 <div th:fragment="header" class="header">
     <a class="logo">Me Mission Log</a>
     <div class="menu-bar">
-        <a class="menu-btn" th:href="@{/main/allview}">둘러보기</a>
-        <a class="menu-btn" th:href="@{/main/post}">오늘일기</a>
-        <a class="menu-btn" th:href="@{/main/mydiary}">마이다이어리</a>
+        <a class="menu-btn" th:href="@{/allview}">둘러보기</a>
+        <a class="menu-btn" th:href="@{/post}">오늘일기</a>
+        <a class="menu-btn" th:href="@{/mydiary}">마이다이어리</a>
         <button class="login-btn" th:onclick="|location.href='@{/user/login}'|">로그인</button>
     </div>
 </div>

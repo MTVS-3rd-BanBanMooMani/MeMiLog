@@ -14,6 +14,7 @@ public class UserDTO {
     private String today_access_YN;
     private java.sql.Date signup_date;
     private java.sql.Date susp_period;
+    private String srcUrl;
 
     @Override
     public String toString() {
@@ -29,12 +30,13 @@ public class UserDTO {
                 ", today_access_YN='" + today_access_YN + '\'' +
                 ", signup_date=" + signup_date +
                 ", susp_period=" + susp_period +
+                ", srcUrl='" + srcUrl + '\'' +
                 '}';
     }
 
     public UserDTO() {}
 
-    public UserDTO(int user_id, String email, String password, Date birthday, String nickName, String gender, int caution_weights, String temporary_YN, String today_access_YN, Date signup_date, Date susp_period) {
+    public UserDTO(int user_id, String email, String password, Date birthday, String nickName, String gender, int caution_weights, String temporary_YN, String today_access_YN, Date signup_date, Date susp_period, String srcUrl) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
@@ -46,6 +48,7 @@ public class UserDTO {
         this.today_access_YN = today_access_YN;
         this.signup_date = signup_date;
         this.susp_period = susp_period;
+        this.srcUrl = srcUrl;
     }
 
     public int getUser_id() {
@@ -134,5 +137,13 @@ public class UserDTO {
 
     public void setSusp_period(Date susp_period) {
         this.susp_period = susp_period;
+    }
+
+    public String getSrcUrl() {
+        return srcUrl;
+    }
+
+    public void setSrcUrl(String srcUrl) {
+        this.srcUrl = srcUrl;
     }
 }

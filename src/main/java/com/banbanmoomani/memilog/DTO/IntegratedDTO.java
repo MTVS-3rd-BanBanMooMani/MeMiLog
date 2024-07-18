@@ -8,7 +8,7 @@ public class IntegratedDTO {
     private String email;
     private String password;
     private Date birthday;
-    private String nickName;
+    private String nickname;
     private Date signupDate;
 
     // Theme related fields
@@ -77,12 +77,12 @@ public class IntegratedDTO {
         this.birthday = birthday;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickName) {
+        this.nickname = nickName;
     }
 
     public Date getSignupDate() {
@@ -268,7 +268,7 @@ public class IntegratedDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", birthday=" + birthday +
-                ", nickName='" + nickName + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", signupDate=" + signupDate +
                 ", themeId=" + themeId +
                 ", themeName='" + themeName + '\'' +
