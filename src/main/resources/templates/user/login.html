@@ -15,40 +15,31 @@
             <h1>로그인</h1>
             <form th:action="@{/user/login}" method="post">
                 <div class="input-group">
-                    <input type="text" id="email" placeholder="이메일을 입력하세요." />
+                    <input name="email" type="text" id="email" placeholder="이메일을 입력하세요." />
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" placeholder="비밀번호를 입력하세요." />
+                    <input name="password" type="password" id="password" placeholder="비밀번호를 입력하세요." />
                 </div>
                 <div class="caption">
-                    <a th:href="@{/forgot}">이메일 | 비밀번호 찾기</a>
+                    <a th:href="@{/user/forgot}">이메일 | 비밀번호 찾기</a>
                 </div>
                 <div class="input-group">
                     <div class="btn-1">
                         <button type="submit" id="btn1">로그인</button>
                     </div>
                     <div class="btn-2">
-                        <button type="button" id="btn2" th:onclick="|window.location.href='@{/signup}'|">회원가입</button>
+                        <button type="button" id="btn2" th:onclick="|window.location.href='@{/user/signup}'|">회원가입</button>
                     </div>
-                </div>
-                <div class="caption-b">
-                    <div class="line">
-                        <b>간편 로그인/회원가입</b>
-                    </div>
-                </div>
-                <div class="caption-c">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-                        <path d="M25.5098 20.4544V30.1362H39.239C38.6361 33.2499 36.827 35.8863 34.1136 37.659L42.3929 43.9545C47.2167 39.591 49.9997 33.1819 49.9997 25.5683C49.9997 23.7956 49.8374 22.0909 49.5358 20.4547L25.5098 20.4544Z" fill="#4285F4"/>
-                        <path d="M11.2133 29.7583L9.34597 31.159L2.73633 36.2044C6.93395 44.3634 15.5373 49.9998 25.5095 49.9998C32.3972 49.9998 38.1717 47.7726 42.3926 43.9545L34.1134 37.659C31.8406 39.159 28.9417 40.0682 25.5095 40.0682C18.8768 40.0682 13.2415 35.6818 11.2237 29.7727L11.2133 29.7583Z" fill="#34A853"/>
-                        <path d="M2.73638 13.7951C0.997124 17.1586 0 20.9541 0 24.9995C0 29.0449 0.997124 32.8404 2.73638 36.2039C2.73638 36.2265 11.2246 29.7493 11.2246 29.7493C10.7144 28.2493 10.4128 26.6585 10.4128 24.9992C10.4128 23.3399 10.7144 21.7491 11.2246 20.2491L2.73638 13.7951Z" fill="#FBBC05"/>
-                        <path d="M25.51 9.95452C29.2671 9.95452 32.6066 11.2272 35.2736 13.6818L42.5788 6.5228C38.1492 2.47742 32.3979 0 25.51 0C15.5378 0 6.93395 5.61362 2.73633 13.7954L11.2242 20.25C13.2418 14.3408 18.8773 9.95452 25.51 9.95452Z" fill="#EA4335"/>
-                    </svg>
                 </div>
             </form>
         </div>
     </div>
     <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 </div>
+<script>
+    var failMessage=`[[${failMessage}]]`;
+    if(failMessage) alert(failMessage);
+</script>
 <!--<script src="../../static/document/js/login.js" th:src="@{/document/js/login.js}"></script>-->
 </body>
 </html>

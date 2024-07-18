@@ -1,28 +1,42 @@
 package com.banbanmoomani.memilog.DTO;
 
+import java.util.Date;
+
 public class PostDTO {
     private int postId;
     private String title;
     private String content;
     private int likeCount;
-    private String writtenDatetime;
-    private String companionType;
+    private int missionId;
+    private Date writtenDatetime;
+    private String nickname;
+    private String missionContent;
+    private String missionDate;
+    private String mainThemeName;
+    private String subThemeName;
     private String emotionName;
     private String nickname;
     private String themeName;
     private String srcUrl;
+    private String companionType;
 
     public PostDTO() {}
 
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String mainThemeName, String subThemeName, String emotionName, String companionType) {
     public PostDTO(int postId, String title, String content, int likeCount, String writtenDatetime, String companionType, String emotionName, String nickname, String themeName, String srcUrl) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.likeCount = likeCount;
+        this.missionId = missionId;
         this.writtenDatetime = writtenDatetime;
-        this.companionType = companionType;
-        this.emotionName = emotionName;
         this.nickname = nickname;
+        this.missionContent = missionContent;
+        this.missionDate = missionDate;
+        this.mainThemeName = mainThemeName;
+        this.subThemeName = subThemeName;
+        this.emotionName = emotionName;
+        this.companionType = companionType;
         this.themeName = themeName;
         this.srcUrl = srcUrl;
     }
@@ -67,11 +81,11 @@ public class PostDTO {
         this.writtenDatetime = writtenDatetime;
     }
 
-    public String getCompanionType() {
+    public String setcompanionType() {
         return companionType;
     }
 
-    public void setCompanionType(String companionType) {
+    public void setCompanionName(String companionType) {
         this.companionType = companionType;
     }
 
@@ -99,14 +113,6 @@ public class PostDTO {
         this.themeName = themeName;
     }
 
-    public String getSrcUrl() {
-        return srcUrl;
-    }
-
-    public void setSrcUrl(String srcUrl) {
-        this.srcUrl = srcUrl;
-    }
-
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -119,7 +125,6 @@ public class PostDTO {
                 ", emotionName='" + emotionName + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", themeName='" + themeName + '\'' +
-                ", srcUrl='" + srcUrl + '\'' +
                 '}';
     }
 }
