@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.ReportBoardMapper">
+
+    <resultMap id="unProcessedPostListResultMap" type="com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO">
+        <id property="report_id" column="report_id"/>
+        <result property="reported_user_nickName" column="reported_user_nickName"/>
+        <result property="content" column="content"/>
+        <result property="reporter_user_id" column="reporter_user_id"/>
+        <result property="rpt_category" column="rpt_category"/>
+        <result property="report_datetime" column="report_datetime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUnProcessedPostList" resultMap="unProcessedPostListResultMap">
+        SELECT
+        a.report_id
+        , b.nickName as reported_user_nickName
+        , a.content
+        , c.nickName as reporter_user_nickName
+        , d.category_name as rpt_category
+        , a.report_datetime
+        FROM REPORT a
+        LEFT JOIN USER b ON a.reported_user_id = b.user_id
+        LEFT JOIN USER c ON a.reporter_user_id = c.user_id
+        LEFT JOIN RPT_CATEGORY d ON a.rpt_category_id = d.rpt_category_id
+        WHERE a.report_datetime IS NULL
+    </select>
+</mapper>
