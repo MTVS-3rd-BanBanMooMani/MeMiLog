@@ -21,7 +21,7 @@ public class MydiaryController {
     @GetMapping("/mydiary")
     public String mydiary(Model model) {
         List<PostDTO> postList =  mydiaryService.findAllPosts();
-        System.out.println(postList);
+        postList.forEach(System.out::println);
         UserDTO user = mydiaryService.findUserById();
         System.out.println(user);
         model.addAttribute("postList", postList);
