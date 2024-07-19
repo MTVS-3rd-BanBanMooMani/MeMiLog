@@ -1,4 +1,4 @@
-package com.banbanmoomani.memilog.DTO;
+package com.banbanmoomani.memilog.DTO.user;
 
 public class ModifyRequestDTO {
     private String email;
