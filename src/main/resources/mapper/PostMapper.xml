@@ -10,26 +10,25 @@
         <result property="content" column="content"/>
         <result property="likeCount" column="like_count"/>
         <result property="missionId" column="mission_id"/>
-        <result property="writtenDatetime" column="written_datetime"/>
+        <result property="writtenDatetime" column="writtenDatetime"/>
         <result property="nickname" column="nickname"/>
-        <result property="missionContent" column="mission_content"/>
-        <result property="missionDate" column="mission_date"/>
-        <result property="priThemeName" column="main_theme_name"/>
-        <result property="subThemeName" column="sub_theme_name"/>
-        <result property="emotionName" column="emotion_name"/>
-        <result property="companionType" column="companion_type"/>
+        <result property="missionContent" column="missionContent"/>
+        <result property="missionDate" column="missionDate"/>
+        <result property="priThemeName" column="priThemeName"/>
+        <result property="subThemeName" column="subThemeName"/>
+        <result property="emotionName" column="emotionName"/>
+        <result property="companionType" column="companionType"/>
     </resultMap>
 
     <select id="findAllPost" resultMap="postResultMap">
         SELECT
         p.post_id,
-        p.title,
+        m.mission_content AS title,
         p.content,
         p.like_count,
         p.mission_id,
         p.written_datetime,
         u.nickname,
-        m.mission_id AS missionId,
         m.mission_content AS missionContent,
         DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
         mt.theme_name AS priThemeName,
@@ -61,20 +60,20 @@
         like_count,
         mission_id,
         written_datetime,
-        companion_type,
-        emotion_name,
-        nickname
+        companion_id,
+        emotion_id,
+        user_id
         )
         VALUES
         (
-        #{title},
+        (SELECT mission_content FROM MISSION WHERE mission_id = #{missionId}),
         #{content},
         #{likeCount},
         #{missionId},
         NOW(),
-        #{companionType},
-        #{emotionName},
-        #{nickname}
+        (SELECT companion_id FROM COMPANION WHERE companion_type = #{companionType}),
+        (SELECT emotion_id FROM EMOTION WHERE emotion_name = #{emotionName}),
+        (SELECT user_id FROM USER WHERE nickname = #{nickname})
         )
     </insert>
 </mapper>
