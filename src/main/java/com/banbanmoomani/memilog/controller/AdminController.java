@@ -78,6 +78,7 @@ public class AdminController {
 
         List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
         List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
+        // TODO: 신고 사유 정보
 
         model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
         model.addAttribute("processedPostListDTO", processedPostList);

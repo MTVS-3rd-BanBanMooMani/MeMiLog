@@ -4,39 +4,45 @@ import java.util.Date;
 
 public class unProcessedPostListDTO {
 
-    private int report_id;
+    private int post_id;
     private String reported_user_nickName;
-    private String content;
-    private int reporter_user_id;
+    private String post_content;
+    private String report_content;
+    private int report_count;
     private String rpt_category;
     private Date report_datetime;
 
     public unProcessedPostListDTO() {
     }
 
-    public unProcessedPostListDTO(int report_id, String reported_user_nickName, String content, int reporter_user_id, String rpt_category, Date report_datetime) {
-        this.report_id = report_id;
+    public unProcessedPostListDTO(int post_id, String reported_user_nickName, String post_content, String report_content, int report_count, String rpt_category, Date report_datetime) {
+        this.post_id = post_id;
         this.reported_user_nickName = reported_user_nickName;
-        this.content = content;
-        this.reporter_user_id = reporter_user_id;
+        this.post_content = post_content;
+        this.report_content = report_content;
+        this.report_count = report_count;
         this.rpt_category = rpt_category;
         this.report_datetime = report_datetime;
     }
 
-    public int getReport_id() {
-        return report_id;
+    public int getPost_id() {
+        return post_id;
     }
 
     public String getReported_user_nickName() {
         return reported_user_nickName;
     }
 
-    public String getContent() {
-        return content;
+    public String getPost_content() {
+        return post_content;
     }
 
-    public int getReporter_user_id() {
-        return reporter_user_id;
+    public String getReport_content() {
+        return report_content;
+    }
+
+    public int getReport_count() {
+        return report_count;
     }
 
     public String getRpt_category() {
@@ -47,20 +53,24 @@ public class unProcessedPostListDTO {
         return report_datetime;
     }
 
-    public void setReport_id(int report_id) {
-        this.report_id = report_id;
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
     }
 
     public void setReported_user_nickName(String reported_user_nickName) {
         this.reported_user_nickName = reported_user_nickName;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPost_content(String post_content) {
+        this.post_content = post_content;
     }
 
-    public void setReporter_user_id(int reporter_user_id) {
-        this.reporter_user_id = reporter_user_id;
+    public void setReport_content(String report_content) {
+        this.report_content = report_content;
+    }
+
+    public void setReport_count(int report_count) {
+        this.report_count = report_count;
     }
 
     public void setRpt_category(String rpt_category) {
