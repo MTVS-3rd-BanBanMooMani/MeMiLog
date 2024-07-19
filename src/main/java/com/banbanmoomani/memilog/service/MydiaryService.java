@@ -1,7 +1,7 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MydiaryMapper;
-import com.banbanmoomani.memilog.DTO.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import org.springframework.stereotype.Service;
 

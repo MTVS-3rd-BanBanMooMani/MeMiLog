@@ -76,8 +76,9 @@
                         <button class="answer-right answer" type="button" data-id="6" data-type="반려동물" onclick="selectCompanion(this)" th:text="'반려동물' + (posts[0].companionType == '반려동물' ? ' (선택됨)' : '')">반려동물</button>
                     </div>
                 </div>
-                <input type="hidden" id="companionId" name="companionId" value="">
                 <input type="hidden" id="companionType" name="companionType" value="">
+                <input type="hidden" id="companionId" name="companionId" value="">
+                <input type="hidden" name="title" th:value="${posts[0].missionContent}">
                 <div class="buttons">
                     <button class="submit-btn" type="submit" name="submit">작성 완료</button>
                     <button class="back-btn" type="button" onclick="window.location.href='/back'">돌아가기</button>

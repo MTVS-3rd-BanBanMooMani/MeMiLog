@@ -4,20 +4,20 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.PostMapper">
 
-    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
+    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.post.PostDTO">
         <id property="postId" column="post_id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="likeCount" column="like_count"/>
         <result property="missionId" column="mission_id"/>
         <result property="writtenDatetime" column="writtenDatetime"/>
-        <result property="nickname" column="nickname"/>
+        <result property="user_id" column="user_id"/>
         <result property="missionContent" column="missionContent"/>
         <result property="missionDate" column="missionDate"/>
         <result property="priThemeName" column="priThemeName"/>
         <result property="subThemeName" column="subThemeName"/>
-        <result property="emotionName" column="emotionName"/>
-        <result property="companionType" column="companionType"/>
+        <result property="emotionId" column="emotionId"/>
+        <result property="companionId" column="companionId"/>
     </resultMap>
 
     <select id="findAllPost" resultMap="postResultMap">
@@ -51,29 +51,29 @@
         USER u ON p.user_id = u.user_id
     </select>
 
-    <insert id="createPost" parameterType="com.banbanmoomani.memilog.DTO.PostDTO"
+    <insert id="createPost" parameterType="com.banbanmoomani.memilog.DTO.post.PostDTO"
             useGeneratedKeys="true" keyProperty="postId">
         INSERT INTO POST
         (
-        title,
-        content,
-        like_count,
-        mission_id,
-        written_datetime,
-        companion_id,
-        emotion_id,
-        user_id
+            title,
+            content,
+            like_count,
+            mission_id,
+            written_datetime,
+            companion_id,
+            emotion_id,
+            user_id
         )
         VALUES
         (
-        (SELECT mission_content FROM MISSION WHERE mission_id = #{missionId}),
-        #{content},
-        #{likeCount},
-        #{missionId},
-        NOW(),
-        (SELECT companion_id FROM COMPANION WHERE companion_type = #{companionType}),
-        (SELECT emotion_id FROM EMOTION WHERE emotion_name = #{emotionName}),
-        (SELECT user_id FROM USER WHERE nickname = #{nickname})
+            #{title},
+            #{content},
+            #{likeCount},
+            #{missionId},
+            NOW(),
+            (SELECT companion_id FROM COMPANION WHERE companion_type = #{companionType}),
+            (SELECT emotion_id FROM EMOTION WHERE emotion_name = #{emotionName}),
+            #{user_id}
         )
     </insert>
 </mapper>

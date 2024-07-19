@@ -1,6 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
-import com.banbanmoomani.memilog.DTO.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
