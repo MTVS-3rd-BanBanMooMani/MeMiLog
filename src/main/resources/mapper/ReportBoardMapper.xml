@@ -25,6 +25,5 @@
         LEFT JOIN USER b ON a.reported_user_id = b.user_id
         LEFT JOIN USER c ON a.reporter_user_id = c.user_id
         LEFT JOIN RPT_CATEGORY d ON a.rpt_category_id = d.rpt_category_id
-        WHERE a.report_datetime IS NULL
     </select>
 </mapper>
