@@ -1,7 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
-import com.banbanmoomani.memilog.DTO.ModifyRequestDTO;
-import com.banbanmoomani.memilog.DTO.UserDTO;
+import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

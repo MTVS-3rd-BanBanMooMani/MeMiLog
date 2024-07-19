@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.UserMapper">
-    <resultMap id="userResultMap" type="com.banbanmoomani.memilog.DTO.UserDTO">
+    <resultMap id="userResultMap" type="com.banbanmoomani.memilog.DTO.user.UserDTO">
         <id property="user_id" column="user_id"/>
         <result property="email" column="email"/>
         <result property="password" column="password"/>
@@ -38,7 +38,7 @@
         FROM
             USER
     </select>
-    <insert id="insertUser" parameterType="com.banbanmoomani.memilog.DTO.UserDTO"
+    <insert id="insertUser" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO"
             useGeneratedKeys="true" keyProperty="user_id">
         INSERT INTO USER
         (
@@ -67,7 +67,7 @@
             #{susp_period, jdbcType=DATE}
         )
     </insert>
-    <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.ModifyRequestDTO">
+    <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.ModifyRequestDTO">
         UPDATE USER
         SET
             nickname = #{nickname}
@@ -75,7 +75,7 @@
         WHERE
             email = #{email}
     </update>
-    <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.UserDTO">
+    <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         DELETE FROM USER
         WHERE email = #{email}
     </delete>

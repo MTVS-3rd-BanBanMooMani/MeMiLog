@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const yearSelect = document.getElementById('year');
     const monthSelect = document.getElementById('month');
     const daySelect = document.getElementById('day');
+    const submitBtn = document.getElementById('submit-btn')
 
     console.log(emailInput, verificationMessage, sendCodeButton);
     passwordInput.addEventListener('input', validatePassword);
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
     populateMonthOptions();
     yearSelect.addEventListener('change', populateDayOptions);
     monthSelect.addEventListener('change', populateDayOptions);
+    submitBtn.disabled = true;
 });
 
 let timerInterval;
@@ -40,17 +42,23 @@ function sendVerificationCode() {
         return;
     }
 
-    const messageElement = document.getElementById('send-verification-message');
-    const timerElement = document.getElementById('timer');
-    messageElement.textContent = '인증코드를 보냈습니다.';
-    messageElement.style.color = 'blue';
-    messageElement.style.display = 'block';
-    timerElement.style.display = 'block';
-    messageElement.style.marginRight = '150px';
-    document.querySelector('.input-group.email').style.marginBottom = '0';
-    document.getElementById('email-local-part').readOnly = true;
-    sendCodeButton.disabled = true;
-    startTimer(300);
+    fetch("/user/verify?email="+emailInput)
+    .then(res => res.text()).then(data => {
+        const messageElement = document.getElementById('send-verification-message');
+        const timerElement = document.getElementById('timer');
+        messageElement.textContent = '인증코드를 보냈습니다.';
+        messageElement.style.color = 'blue';
+        messageElement.style.display = 'block';
+        timerElement.style.display = 'block';
+        messageElement.style.marginRight = '150px';
+        document.querySelector('.input-group.email').style.marginBottom = '0';
+        document.getElementById('email-local-part').readOnly = true;
+        sendCodeButton.disabled = true;
+        startTimer(300);
+    })
+    .catch((error) => {
+        console.log("서버 내부 오류 : ", error)
+    })
 }
 
 function validateEmail(email) {
@@ -168,26 +176,44 @@ function validateBirthday() {
 }
 
 function verifyCode() {
+    const inputEmail = document.getElementById('email-local-part').value;
     const inputCode = document.getElementById('email-code').value;
     const message = document.getElementById('verify-message');
-    const correctCode = '123456'; // 예시용 인증코드
+    const submitBtn = document.getElementById('submit-btn')
 
-    if (inputCode === correctCode) {
-        clearInterval(timerInterval);
-        message.textContent = '인증코드가 확인되었습니다.';
-        message.className = 'verification-message success';
-        message.style.marginRight = '150px';
-        document.querySelector('.input-group.email-code').style.marginBottom = '0';
+    fetch("/user/verify", {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            email: inputEmail,
+            verify_code: inputCode
+        })
+    })
+    .then(res => {
+        if(res.ok) {
+            clearInterval(timerInterval);
+            message.textContent = '인증코드가 확인되었습니다.';
+            message.className = 'verification-message success';
+            message.style.marginRight = '150px';
+            document.querySelector('.input-group.email-code').style.marginBottom = '0';
 
-        document.getElementById('email-local-part').readOnly = true;
-        document.getElementById('email-code').disabled = true;
-    } else {
+            document.getElementById('email-local-part').readOnly = true;
+            document.getElementById('email-code').disabled = true;
+            submitBtn.disabled = false;
+        } else {
+            throw new Error('Verification Failed')
+        }
+    })
+    .catch((error) => {
+        console.log("인증 코드 오류 : ", error)
         message.textContent = '인증코드가 일치하지 않습니다.';
         message.className = 'verification-message error';
         message.style.marginRight = '150px';
         document.querySelector('.input-group.email-code').style.marginBottom = '0';
-
-    }
+        submitBtn.disabled = true;
+    })
     message.style.display = 'block';
 }
 
@@ -211,3 +237,4 @@ function startTimer(duration) {
         }
     }, 1000);
 }
+

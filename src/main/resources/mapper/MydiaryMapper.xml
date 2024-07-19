@@ -51,7 +51,7 @@
           AND a.type = 'post';
     </select>
 
-    <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.UserDTO">
+    <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         SELECT
                 u.user_id
               , u.email
