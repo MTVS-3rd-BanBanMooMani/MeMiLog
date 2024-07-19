@@ -5,25 +5,32 @@
 <mapper namespace="com.banbanmoomani.memilog.DAO.ReportBoardMapper">
 
     <resultMap id="unProcessedPostListResultMap" type="com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO">
-        <id property="report_id" column="report_id"/>
+        <id property="post_id" column="post_id"/>
         <result property="reported_user_nickName" column="reported_user_nickName"/>
-        <result property="content" column="content"/>
-        <result property="reporter_user_id" column="reporter_user_id"/>
+        <result property="post_content" column="post_content"/>
+        <result property="report_content" column="report_content"/>
+        <result property="report_count" column="report_count"/>
         <result property="rpt_category" column="rpt_category"/>
         <result property="report_datetime" column="report_datetime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <select id="getUnProcessedPostList" resultMap="unProcessedPostListResultMap">
         SELECT
-        a.report_id
-        , b.nickName as reported_user_nickName
-        , a.content
-        , c.nickName as reporter_user_nickName
-        , d.category_name as rpt_category
-        , a.report_datetime
+            a.post_id,
+            b.nickName AS reported_user_nickName,
+            p.content AS post_content,
+            a.content AS report_content,
+            (SELECT COUNT(*) FROM REPORT WHERE post_id = a.post_id) AS report_count,
+            d.category_name AS rpt_category,
+            a.report_datetime
         FROM REPORT a
         LEFT JOIN USER b ON a.reported_user_id = b.user_id
-        LEFT JOIN USER c ON a.reporter_user_id = c.user_id
+        LEFT JOIN POST p ON a.post_id = p.post_id
         LEFT JOIN RPT_CATEGORY d ON a.rpt_category_id = d.rpt_category_id
+        WHERE a.report_datetime = (
+        SELECT MAX(report_datetime)
+        FROM REPORT
+        WHERE post_id = a.post_id
+        )
     </select>
 </mapper>
