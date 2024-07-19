@@ -1,6 +1,5 @@
 package com.banbanmoomani.memilog.DAO;
 
-import com.banbanmoomani.memilog.DTO.IntegratedDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import org.apache.ibatis.annotations.Mapper;
 
