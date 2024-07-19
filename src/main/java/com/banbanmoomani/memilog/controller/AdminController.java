@@ -83,6 +83,10 @@ public class AdminController {
         model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
         model.addAttribute("processedPostListDTO", processedPostList);
 
+        for (unProcessedPostListDTO unProcessedPostListDTO : unProcessedPostList) {
+            System.out.println(unProcessedPostListDTO);
+        }
+
         return "admin/reportTotal";
     }
 

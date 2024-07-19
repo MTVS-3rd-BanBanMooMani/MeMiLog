@@ -80,4 +80,17 @@ public class unProcessedPostListDTO {
     public void setReport_datetime(Date report_datetime) {
         this.report_datetime = report_datetime;
     }
+
+    @Override
+    public String toString() {
+        return "unProcessedPostListDTO{" +
+                "post_id=" + post_id +
+                ", reported_user_nickName='" + reported_user_nickName + '\'' +
+                ", post_content='" + post_content + '\'' +
+                ", report_content='" + report_content + '\'' +
+                ", report_count=" + report_count +
+                ", rpt_category='" + rpt_category + '\'' +
+                ", report_datetime=" + report_datetime +
+                '}';
+    }
 }

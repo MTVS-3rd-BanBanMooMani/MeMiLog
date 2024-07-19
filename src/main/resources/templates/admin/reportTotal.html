@@ -113,22 +113,24 @@
                                     <tr>
                                         <th><input type="checkbox" id="checkAllUnprocessed"></th>
                                         <th scope="col">신고번호</th>
-                                        <th scope="col">신고자</th>
-                                        <th scope="col">내용</th>
+                                        <th scope="col">닉네임</th>
+                                        <th scope="col">Post 내용</th>
+                                        <th scope="col">신고 내용</th>
                                         <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
                                         <th scope="col">신고일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="upProcessedPost : ${unProcessedPostListDTO}" class="fixed-height-row">
+                                    <tr th:each="unprocessedPost : ${unProcessedPostListDTO}" class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row" th:text="${upProcessedPost.report_id}"></th>
-                                        <td th:text="${upProcessedPost.reported_user_nickName}"></td>
-                                        <td th:text="${upProcessedPost.content}"></td>
-                                        <td th:text="${upProcessedPost.reporter_user_id}"></td>
-                                        <td th:text="${upProcessedPost.rpt_category}"></td>
-                                        <td th:text="${#dates.format(upProcessedPost.report_datetime, 'yyyy-MM-dd')}"></td>
+                                        <th scope="row" th:text="${unprocessedPost.post_id}"></th>
+                                        <td th:text="${unprocessedPost.reported_user_nickName}"></td>
+                                        <td th:text="${unprocessedPost.post_content}"></td>
+                                        <td th:text="${unprocessedPost.report_content}"></td>
+                                        <td th:text="${unprocessedPost.report_count}"></td>
+                                        <td th:text="${unprocessedPost.rpt_category}"></td>
+                                        <td th:text="${#dates.format(unprocessedPost.report_datetime, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -172,13 +174,13 @@
                                     <tbody>
                                     <tr th:each="processedPost : ${processedPostListDTO}" class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row" th:text="${processedPost.report_id}"></th>
+                                        <th scope="row" th:text="${processedPost.post_id}"></th>
                                         <td th:text="${processedPost.reported_user_nickName}"></td>
-                                        <td th:text="${processedPost.content}"></td>
-                                        <td th:text="${processedPost.reporter_user_id}"></td>
+                                        <td th:text="${processedPost.post_content}"></td>
+                                        <td th:text="${processedPost.report_content}"></td>
+                                        <td th:text="${processedPost.report_count}"></td>
                                         <td th:text="${processedPost.rpt_category}"></td>
-                                        <td th:text="${#dates.format(processedPost.report_datetime, 'yyyy-MM-dd')}"></td>
-                                        <td th:text="${#dates.format(processedPost.processed_datetime, 'yyyy-MM-dd')}"></td>
+                                        <td th:text="${#dates.format(processedPost.report_process_datetime, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
