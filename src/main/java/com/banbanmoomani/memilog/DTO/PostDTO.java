@@ -14,10 +14,11 @@ public class PostDTO {
     private String subThemeName;
     private String emotionName;
     private String companionType;
+    private String srcUrl;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String priThemeName, String subThemeName, String emotionName, String companionType) {
+    public PostDTO(int postId, String title, String content, int likeCount, int missionId, Date writtenDatetime, String nickname, String missionContent, String missionDate, String priThemeName, String subThemeName, String emotionName, String companionType, String srcUrl) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -31,58 +32,77 @@ public class PostDTO {
         this.subThemeName = subThemeName;
         this.emotionName = emotionName;
         this.companionType = companionType;
+        this.srcUrl = srcUrl;
     }
+
     public int getPostId() {
         return postId;
     }
+
     public void setPostId(int postId) {
         this.postId = postId;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getContent() {
         return content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
+
     public int getLikeCount() {
         return likeCount;
     }
+
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
     public int getMissionId() {
         return missionId;
     }
+
     public void setMissionId(int missionId) {
         this.missionId = missionId;
     }
+
     public Date getWrittenDatetime() {
         return writtenDatetime;
     }
+
     public void setWrittenDatetime(Date writtenDatetime) {
         this.writtenDatetime = writtenDatetime;
     }
+
     public String getNickname() {
         return nickname;
     }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public String getMissionContent() {
         return missionContent;
     }
+
     public void setMissionContent(String missionContent) {
         this.missionContent = missionContent;
     }
+
     public String getMissionDate() {
         return missionDate;
     }
+
     public void setMissionDate(String missionDate) {
         this.missionDate = missionDate;
     }
@@ -91,28 +111,42 @@ public class PostDTO {
         return priThemeName;
     }
 
-    public void setPriThemeName(String mainThemeName) {
-        this.priThemeName = mainThemeName;
+    public void setPriThemeName(String priThemeName) {
+        this.priThemeName = priThemeName;
     }
 
     public String getSubThemeName() {
         return subThemeName;
     }
+
     public void setSubThemeName(String subThemeName) {
         this.subThemeName = subThemeName;
     }
+
     public String getEmotionName() {
         return emotionName;
     }
+
     public void setEmotionName(String emotionName) {
         this.emotionName = emotionName;
     }
+
     public String getCompanionType() {
         return companionType;
     }
+
     public void setCompanionType(String companionType) {
         this.companionType = companionType;
     }
+
+    public String getSrcUrl() {
+        return srcUrl;
+    }
+
+    public void setSrcUrl(String srcUrl) {
+        this.srcUrl = srcUrl;
+    }
+
     @Override
     public String toString() {
         return "PostDTO{" +
@@ -129,6 +163,7 @@ public class PostDTO {
                 ", subThemeName='" + subThemeName + '\'' +
                 ", emotionName='" + emotionName + '\'' +
                 ", companionType='" + companionType + '\'' +
+                ", srcUrl='" + srcUrl + '\'' +
                 '}';
     }
 }

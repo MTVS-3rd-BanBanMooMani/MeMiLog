@@ -4,50 +4,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.banbanmoomani.memilog.DAO.MydiaryMapper">
-    <resultMap id="postMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
+    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
         <id property="postId" column="post_id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="likeCount" column="like_count"/>
+        <result property="missionId" column="mission_id"/>
         <result property="writtenDatetime" column="written_datetime"/>
-        <result property="companionName" column="companion_name"/>
-        <result property="emotionName" column="emotion_name"/>
-        <result property="userName" column="user_name"/>
-        <result property="priThemeId" column="pri_theme_id"/>
-        <result property="subThemeId" column="sub_theme_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="missionContent" column="mission_content"/>
+        <result property="missionDate" column="missionDate"/>
+        <result property="priThemeName" column="priThemeName"/>
+        <result property="subThemeName" column="subThemeName"/>
+        <result property="emotionName" column="emotionName"/>
+        <result property="companionType" column="companionType"/>
+        <result property="srcUrl" column="srcUrl"/>
     </resultMap>
 
-
-    <select id="findAllPosts" resultMap="postMap">
+    <select id="findAllPosts" resultMap="postResultMap">
         SELECT
               p.post_id
             , p.title
             , p.content
             , p.like_count
+            , p.mission_id
             , p.written_datetime
-            , p.together
-            , e.emotion_name as emotionName
-            , u.nickname as nickname
-            , c.companion_type as conpanionType
-            , t.pri_theme_id as priThemeId
-            , t.sub_theme_id as subThemeId
-            , a.src_url as srcUrl
+            , u.nickname
+            , m.mission_content AS missionContent
+            , DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate
+            , mt.theme_name AS priThemeName
+            , st.theme_name AS subThemeName
+            , e.emotion_name AS emotionName
+            , c.companion_type AS companionType
+            , a.src_url AS srcUrl
         FROM
             POST p
-                LEFT JOIN
-            USER u ON p.user_id = u.user_id
-                LEFT JOIN
-            MISSION m ON p.mission_id = m.mission_id
-                LEFT JOIN
-            ATTACHMENT a ON p.post_id = a.post_id
-                LEFT JOIN
-            COMPANION c ON p.companion_id = c.companion_id
-                LEFT JOIN
-            EMOTION e ON p.emotion_id = e.emotion_id
-                LEFT JOIN
-            THEME t ON (m.pri_theme_id = t.theme_id OR m.sub_theme_id = t.theme_id)
-        WHERE u.user_id = 1
-        AND a.type = 'post';
+                LEFT JOIN MISSION m ON p.mission_id = m.mission_id
+                LEFT JOIN THEME mt ON m.pri_theme_id = mt.theme_id
+                LEFT JOIN THEME st ON m.sub_theme_id = st.theme_id
+                LEFT JOIN EMOTION e ON p.emotion_id = e.emotion_id
+                LEFT JOIN COMPANION c ON p.companion_id = c.companion_id
+                LEFT JOIN USER u ON p.user_id = u.user_id
+                LEFT JOIN ATTACHMENT a ON p.post_id = a.post_id
+        WHERE
+            u.user_id = 1
+          AND a.type = 'post';
     </select>
 
     <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.UserDTO">
