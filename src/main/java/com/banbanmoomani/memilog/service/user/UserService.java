@@ -52,4 +52,8 @@ public class UserService {
     public UserDTO findByEmail(String email) {
         return userMapper.findUserByEmail(email);
     }
+
+    public void updateUser(UserDTO userDTO) {
+        userMapper.updateUserByEmail(userDTO);
+    }
 }
