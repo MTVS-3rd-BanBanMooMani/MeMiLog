@@ -53,7 +53,13 @@ public class UserService {
         return userMapper.findUserByEmail(email);
     }
 
+    @Transactional
     public void updateUser(UserDTO userDTO) {
         userMapper.updateUserByEmail(userDTO);
+    }
+
+    @Transactional
+    public void deleteUser(UserDTO userDTO) {
+        userMapper.deleteUserByEmail(userDTO);
     }
 }
