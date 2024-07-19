@@ -1,12 +1,11 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.user.ForgotRequestDTO;
-import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
-import com.banbanmoomani.memilog.DTO.user.SignUpRequestDTO;
-import com.banbanmoomani.memilog.DTO.user.UserDTO;
+import com.banbanmoomani.memilog.DTO.user.*;
 import com.banbanmoomani.memilog.service.user.RegisterMailService;
 import com.banbanmoomani.memilog.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -46,7 +45,7 @@ public class UserController {
     public String signup() { return "user/signup"; }
 
     @PostMapping("/signup")
-    public String signup(SignUpRequestDTO signUpRequestDTO, RedirectAttributes rttr) {
+    public String signup(SignUpRequestDTO signUpRequestDTO, RedirectAttributes rttr, HttpSession httpSession) {
         // 중복 확인
         boolean duplicateCheck = userService.duplicateCheck(signUpRequestDTO);
         if(duplicateCheck) {
@@ -55,7 +54,7 @@ public class UserController {
             return "redirect:/signup";
         }
 
-
+        httpSession.removeAttribute(signUpRequestDTO.getEmail());
         userService.insertUser(signUpRequestDTO);
         rttr.addFlashAttribute("successMessage", "회원가입 되셨습니다. "+signUpRequestDTO.getNickname()+"환영합니다");
         return "redirect:/";
@@ -66,40 +65,50 @@ public class UserController {
         return "user/forgot";
     }
 
-    @PostMapping("/forgot")
-    public String forgotIdOrPwd(ForgotRequestDTO forgotRequestDTO, RedirectAttributes rttr,
-                                HttpSession httpSession) {
-        if(forgotRequestDTO.getId_email().equals(null)) {
-            // pwd 찾기를 원하는 경우
-            UserDTO userInfo = userService.findByEmail(forgotRequestDTO.getEmail());
-            String verify_code = (String) httpSession.getAttribute(forgotRequestDTO.getEmail());
-            if(userInfo == null || !verify_code.equals(forgotRequestDTO.getVerify_code())) {
-                // 잘못된 정보를 입력했을 떄
-                // 해당 이메일로 된 계정이 존재하는지, 인증코드가 맞는지
-                rttr.addFlashAttribute("해당 이메일 계정의 비밀번호는 " + userInfo.getPassword() + "입니다.");
-                return "redirect:/user/forgot";
-            }
-            rttr.addFlashAttribute("잘못된 정보를 입력하셨습니다 다시 입력해주세요!");
-            return "redirect:/";
-        } else {
-            // id찾기를 원하는 경우
-            UserDTO userInfo = userService.findByEmail(forgotRequestDTO.getId_email());
-            if(userInfo == null) {
-                // 잘못된 정보를 입력했을 떄
-                rttr.addFlashAttribute("해당 이메일로 된 계정이 존재하지 않습니다.");
-                return "redirect:/user/forgot";
-            }
-            rttr.addFlashAttribute("해당 이메일로 된 계정이 존재합니다.");
-            return "redirect:/user/forgot";
+    @PostMapping("/forgotID")
+    public ResponseEntity forgotID(@RequestBody String email) {
+        UserDTO userInfo = userService.findByEmail(email.replaceAll("\"", ""));
+        if(userInfo != null) {
+            System.out.println("성공");
+            return new ResponseEntity(userInfo, HttpStatus.OK);
         }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/verify")
+    @PostMapping("/forgotPWD")
+    public String forgotPwd(@ModelAttribute ForgotPWDRequestDTO forgotPWDRequestDTO,
+                            RedirectAttributes rttr,
+                            HttpSession httpSession) {
+        System.out.println(forgotPWDRequestDTO);
+
+        if(httpSession.getAttribute(forgotPWDRequestDTO.getEmail()).equals(forgotPWDRequestDTO.getVerifyCode())) {
+            UserDTO userDTO = userService.findByEmail(forgotPWDRequestDTO.getEmail());
+            rttr.addFlashAttribute("successMessage", "회원님의 비밀번호는 "+userDTO.getPassword()+"입니다. 빠른 시일 내에 비밀번호를 변경해주세요.");
+            return "redirect:/";
+        }
+        rttr.addFlashAttribute("failMessage", "잘못된 정보를 입력하셨습니다.");
+        httpSession.removeAttribute(forgotPWDRequestDTO.getEmail());
+        return "redirect:/user/forgot";
+    }
+
+    @GetMapping(value = "/verify")
     @ResponseBody
     public String verifyCode(@RequestParam(name = "email") String email, HttpSession httpSession) throws Exception{
         String code = registerMailService.sendSimpleMessage(email);
         System.out.println("사용자에게 발송한 인증 코드 ==> " + code);
         httpSession.setAttribute(email, code);
+
         return code;
+    }
+
+    @PostMapping(value = "/verify", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity verifyCode(@RequestBody VerifyRequestDTO verifyRequestDTO,
+                             HttpSession httpSession) throws Exception {
+        String server_verify_code = (String) httpSession.getAttribute(verifyRequestDTO.getEmail());
+        if(server_verify_code != null && server_verify_code.equals(verifyRequestDTO.getVerify_code())) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }
