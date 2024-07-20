@@ -26,6 +26,10 @@
         <result property="report_process_datetime" column="report_process_datetime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="RPTCategoryListResultMap" type="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO">
+        <result property="category_name" column="category_name"/>
+    </resultMap>
+
     <!-- Select query for unProcessedPostListDTO -->
     <select id="getUnProcessedPostList" resultMap="unProcessedPostListResultMap">
         SELECT
@@ -68,5 +72,11 @@
         WHERE post_id = a.post_id
         )
         AND p.hidden_YN = 1
+    </select>
+
+    <select id="getRPTCategoryDTOList" resultMap="RPTCategoryListResultMap">
+        SELECT DISTINCT
+            category_name
+        FROM RPT_CATEGORY
     </select>
 </mapper>
