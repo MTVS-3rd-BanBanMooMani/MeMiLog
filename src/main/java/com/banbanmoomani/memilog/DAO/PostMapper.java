@@ -14,4 +14,5 @@ public interface PostMapper {
 
     PostDTO findPostById(int postId);
 
+    List<PostDTO> findAllPostOnMissionByDate();
 }

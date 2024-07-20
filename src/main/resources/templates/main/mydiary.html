@@ -13,8 +13,8 @@
 
     <div class="user-container">
         <div class="user-profile">
-            <img th:src="${user.srcUrl}" alt="Profile Picture">
-            <p th:text="${user.nickName}"/>
+            <img th:src="${user.src_url}" alt="Profile Picture">
+            <p th:text="${user.nickname}"/>
             <img th:src="@{/document/img/settings.png}" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
         </div>
 
@@ -25,12 +25,12 @@
                 <div class="modal-body">
                     <div class="modal-left">
                         <p><strong>아이디:</strong> <span th:text="${user.email}"/></p>
-                        <p><strong>닉네임:</strong> <span th:text="${user.nickName}"/></p>
+                        <p><strong>닉네임:</strong> <span th:text="${user.nickname}"/></p>
                         <p><strong>가입일:</strong> <span th:text="${user.signup_date}"/></p>
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="${user.srcUrl}" alt="Profile Picture" class="profile-pic">
+                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic">
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="nickname">닉네임:</label>
-                                <input type="text" id="nickname" name="nickName" th:value="${user.nickName}"><br>
+                                <input type="text" id="nickname" name="nickName" th:value="${user.nickname}"><br>
                             </div>
                             <div class="form-group">
                                 <label for="password">비밀번호:</label>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="${user.srcUrl}" alt="Profile Picture" class="profile-pic">
+                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic">
                             <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
@@ -124,22 +124,23 @@
         </div>
 
         <div id="post-card-container" class="tabcontent" style="display: flex;">
-            <div th:each="post : ${postList}" class="post-card">
-                <img th:src="@{|${postList[0].srcUrl}|}" alt="Post Image">
+            <div th:each="post : ${posts}" class="post-card">
+                <img th:src="@{|${posts[0].src_url}|}" alt="Post Image">
             </div>
         </div>
 
         <div id="calendar-container" class="tabcontent">
             <div class="date-selector">
                 <ul>
-                    <li th:each="day : ${#numbers.sequence(1,31)}" th:text="${day}"></li>
+                    <li th:each="day : ${#numbers.sequence(1,31)}"
+                        th:text="${day}"
+                        th:onclick="'sendDate(' +${day}+ ')'">
+                    </li>
                 </ul>
             </div>
 
             <div class="calendar-contents">
-                <div th:each="calendarImage : ${calendarImages}" class="calendar-card">
-                    <img th:src="@{|/document/img/${calendarImage}|}" width="150px" height="180px">
-                </div>
+
             </div>
         </div>
     </div>
@@ -148,12 +149,24 @@
 <script>
     var barChart;
     var lineChart;
+
     document.addEventListener("DOMContentLoaded", function () {
         const firstTabLink = document.querySelector(".tablinks");
+        const calendarContainer = document.getElementById("calendar-container");
+        const dateSelector = document.querySelector(".date-selector ul");
+
         if (firstTabLink) {
             firstTabLink.click();
         }
+
+        dateSelector.addEventListener("click", function(event) {
+            if (event.target.tagName === "LI") {
+                const selectedDate = event.target.textContent;
+                fetchPostsForDate(selectedDate);
+            }
+        });
     });
+
     function openPage(evt, pageName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -191,7 +204,7 @@
         const profilePicForm = document.getElementById('profilePicForm');
         const formData = new FormData(profilePicForm);
         var fileInput = document.getElementById('profilePic');
-        var file = fileInput.files;
+        var file = fileInput.files[0];
         var reader = new FileReader();
         reader.onload = function(e){
             document.querySelector(".profile-pic").src = e.target.result;
@@ -211,6 +224,7 @@
         alert("프로필 사진이 삭제되었습니다.");
         closeModal('profilePicModal');
     }
+
     window.onclick = function(event) {
         var modals = document.getElementsByClassName('modal');
         for (var i = 0; i < modals.length; i++) {
@@ -219,17 +233,51 @@
             }
         }
     }
+
     document.getElementById('editForm').onsubmit = function(event) {
         event.preventDefault();
         alert("정보가 수정되었습니다.");
         closeModal('editModal');
     }
+
     document.getElementById('deleteForm').onsubmit = function(event) {
         event.preventDefault();
         alert("회원 탈퇴가 완료되었습니다.");
         closeModal('deleteModal');
         closeModal('userModal');
     }
+
+    function fetchPostsForDate(date) {
+        fetch("/selectedDate", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({ selectedDate: date })
+        })
+            .then(response => response.json())
+            .then(data => {
+                displayPosts(data);
+            })
+            .catch(error => console.error("Error fetching posts: " , error));
+    }
+
+    function displayPosts(posts) {
+        const calendarContents = document.querySelector(".calendar-contents");
+        calendarContents.innerHTML = "";
+
+        posts.forEach(post => {
+            const postElement = document.createElement("div");
+            postElement.className = "calendar-card";
+            const postImage = document.createElement("img");
+            postImage.src = `${posts[0].src_url}`;
+            postImage.width = 150;
+            postImage.height = 180;
+            postElement.appendChild(postImage);
+            calendarContents.appendChild(postElement);
+        });
+    }
+
     function displayBarChart() {
         if (barChart) {
             barChart.destroy();
@@ -260,6 +308,7 @@
             };
             images.push(image);
         });
+
         function drawChart() {
             barChart = new Chart(ctx, {
                 type: 'bar',
@@ -341,10 +390,12 @@
             default: return '';
         }
     }
+
     function displayLineChart() {
         if (window.lineChart) {
             window.lineChart.destroy();
         }
+
         var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
         window.lineChart = new Chart(lineChartCanvas, {
             type: 'line',
@@ -429,6 +480,7 @@
             }]
         });
     }
+
     window.onload = function() {
         displayLineChart();
     };
