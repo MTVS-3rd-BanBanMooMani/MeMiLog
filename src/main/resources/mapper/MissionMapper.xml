@@ -7,8 +7,8 @@
         <id property="missionId" column="mission_id" />
         <result property="missionContent" column="mission_content" />
         <result property="missionDate" column="mission_date" />
-        <result property="priThemaId" column="pri_thema_id" />
-        <result property="subThemaId" column="sub_thema_id" />
+        <result property="priThemeId" column="pri_theme_id" />
+        <result property="subThemeId" column="sub_theme_id" />
     </resultMap>
 
     <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.post.PostDTO">
@@ -21,7 +21,7 @@
         <result property="nickname" column="nickname" />
         <result property="missionContent" column="mission_content" />
         <result property="missionDate" column="mission_date" />
-        <result property="priThemeName" column="main_theme_name" />
+        <result property="priThemeName" column="pri_theme_name" />
         <result property="subThemeName" column="sub_theme_name" />
         <result property="emotionName" column="emotion_name" />
         <result property="companionType" column="companion_type" />
@@ -43,6 +43,39 @@
             MISSION
         WHERE
             PRI_THEMA_ID = 1
+    </select>
+    <select id="findTodayMission" resultMap="missionResultMap">
+        SELECT
+            m.mission_id,
+            m.mission_content,
+            m.mission_date,
+            m.pri_theme_id,
+            m.sub_theme_id
+        FROM
+            MISSION m
+        WHERE
+            DATE_FORMAT(m.mission_date, '%Y-%m-%d') = #{today}
+    </select>
+    <select id="findPriThemeName" parameterType="int" resultType="string">
+        SELECT
+            theme_name
+        FROM
+            THEME
+        WHERE
+            theme_id = #{priThemeId}
+    </select>
+    <select id="findSubThemeName" parameterType="int" resultType="string">
+        SELECT
+            theme_name
+        FROM
+            THEME
+        WHERE
+            theme_id = #{subThemeId}
+    </select>
+    <select id="findMissionById" parameterType="int" resultMap="missionResultMap">
+        SELECT *
+        FROM MISSION
+        WHERE mission_id = #{missionId}
     </select>
 
     <!-- 선택한 날짜(미션)에 작성된 글 조회 SQL문 -->
