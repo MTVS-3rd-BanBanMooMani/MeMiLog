@@ -5,19 +5,15 @@
 <mapper namespace="com.banbanmoomani.memilog.DAO.PostMapper">
 
     <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.post.PostDTO">
-        <id property="postId" column="post_id"/>
+        <id property="post_id" column="post_id"/>
         <result property="content" column="content"/>
-        <result property="likeCount" column="like_count"/>
-        <result property="missionContent" column="mission_content"/>
-        <result property="writtenDatetime" column="written_datetime"/>
-        <result property="userId" column="user_id"/>
-        <result property="missionDate" column="mission_date"/>
-        <result property="priThemeName" column="pri_theme_name"/>
-        <result property="subThemeName" column="sub_theme_name"/>
-        <result property="emotionName" column="emotion_name"/>
-        <result property="companionType" column="companion_type"/>
-        <result property="reportCount" column="report_count"/>
-        <result property="hiddenYN" column="hidden_YN"/>
+        <result property="like_count" column="like_count"/>
+        <result property="written_datetime" column="written_datetime"/>
+        <result property="emotion_id" column="emotion_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="companion_id" column="companion_id"/>
+        <result property="report_count" column="report_count"/>
+        <result property="hidden_YN" column="hidden_YN"/>
     </resultMap>
 
     <select id="findAllPost" resultMap="postResultMap">
