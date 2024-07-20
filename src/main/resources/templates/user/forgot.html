@@ -17,10 +17,10 @@
                 <div id="password-tab">비밀번호 찾기</div>
             </div>
             <div id="email-content" class="tab-content active">
-                <form id="email-form" class="email-form">
+                <form id="email-form">
                     <div class="input-container">
-                        <label for="email">아이디</label>
-                        <input type="text" id="email" placeholder="이메일을 입력하세요." />
+                        <label for="email">이메일</label>
+                        <input name="email" type="text" id="email" placeholder="이메일을 입력하세요." />
                         <div id="error-message" class="message"></div>
                     </div>
                     <div class="submit-btn-container">
@@ -29,11 +29,11 @@
                 </form>
             </div>
             <div id="password-content" class="tab-content">
-                <form id="password-form" class="password-form">
+                <form th:action="@{/user/forgotPWD}" method="post" id="password-form" class="password-form">
                     <div class="input-container">
-                        <label for="email-verification">아이디</label>
+                        <label for="email-verification">이메일</label>
                         <div class="input-wrapper">
-                            <input type="text" id="email-verification" placeholder="이메일 주소를 입력해주세요." />
+                            <input name="email" type="text" id="email-verification" placeholder="이메일 주소를 입력해주세요." />
                             <button type="button" class="check-btn" onclick="requestVerification()">인증요청</button>
                         </div>
                         <div id="error-message-email-verification" class="message"></div>
@@ -41,13 +41,13 @@
                     <div class="input-container">
                         <label for="verification-code">인증 코드</label>
                         <div class="input-wrapper">
-                            <input type="text" id="verification-code" placeholder="인증 코드 6자를 입력하세요." />
+                            <input name="verifyCode" type="text" id="verification-code" placeholder="인증 코드 6자를 입력하세요." />
                             <button type="button" class="check-btn" onclick="validateVerificationCode()">확인</button>
                         </div>
                         <div id="error-message-verification-code" class="message"></div>
                     </div>
                     <div class="submit-btn-container1">
-                        <button type="button">비밀번호 찾기</button>
+                        <button id="submit-btn" type="submit">비밀번호 찾기</button>
                     </div>
                 </form>
             </div>
@@ -63,6 +63,10 @@
         <button id="modal-btn" class="modal-btn" onclick="startLogin()">로그인 시작하기</button>
     </div>
 </div>
-<script src="../../static/document/js/forgot_password.js" th:src="@{/document/js/forgot_password.js}"></script>
+<script th:src="@{/document/js/forgot_password.js}"></script>
+<script>
+    var failMessage = `[[${failMessage}]]`
+    if(failMessage) alert(failMessage)
+</script>
 </body>
 </html>

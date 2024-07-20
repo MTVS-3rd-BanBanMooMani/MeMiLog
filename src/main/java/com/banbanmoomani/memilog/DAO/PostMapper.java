@@ -11,4 +11,5 @@ public interface PostMapper {
 
     void createPost(PostDTO post);
 
+    List<PostDTO> findAllPostOnMissionByDate();
 }

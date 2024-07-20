@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.MissionMapper">
+    <resultMap id="missionResultMap" type="com.banbanmoomani.memilog.DTO.MissionDTO">
+        <id property="missionId" column="mission_id" />
+        <result property="missionContent" column="mission_content" />
+        <result property="missionDate" column="mission_date" />
+        <result property="priThemaId" column="pri_thema_id" />
+        <result property="subThemaId" column="sub_thema_id" />
+    </resultMap>
+
+    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
+        <id property="postId" column="post_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="likeCount" column="like_count" />
+        <result property="missionId" column="mission_id" />
+        <result property="writtenDateTime" column="written_datetime" />
+        <result property="nickname" column="nickname" />
+        <result property="missionContent" column="mission_content" />
+        <result property="missionDate" column="mission_date" />
+        <result property="priThemeName" column="main_theme_name" />
+        <result property="subThemeName" column="sub_theme_name" />
+        <result property="emotionName" column="emotion_name" />
+        <result property="companionType" column="companion_type" />
+    </resultMap>
+
+    <!-- 미션 전체 조회 SQL문 -->
+    <select id="findAllMission" resultMap="missionResultMap">
+        SELECT
+            *
+        FROM
+            MISSION
+    </select>
+
+    <!-- 미션 테마 카테고리 조회 SQL문 -->
+    <select id="findTemaMission" resultMap="missionResultMap">
+        SELECT
+            *
+        FROM
+            MISSION
+        WHERE
+            PRI_THEMA_ID = 1
+    </select>
+
+    <!-- 선택한 날짜(미션)에 작성된 글 조회 SQL문 -->
+
+</mapper>
