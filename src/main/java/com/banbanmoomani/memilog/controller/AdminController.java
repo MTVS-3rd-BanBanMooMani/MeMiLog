@@ -3,6 +3,7 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
@@ -78,10 +79,13 @@ public class AdminController {
 
         List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
         List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
-        // TODO: 신고 사유 정보
 
         model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
         model.addAttribute("processedPostListDTO", processedPostList);
+
+        List<RPTCategoryDTO> rptCategoryDTOList = adminService.getRPTCategoryDTOList();
+
+        model.addAttribute("rptCategoryDTOList", rptCategoryDTOList);
 
         for (processedPostListDTO processedPostListDTO : processedPostList) {
             System.out.println(processedPostListDTO);

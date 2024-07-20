@@ -4,6 +4,7 @@ import com.banbanmoomani.memilog.DAO.BlackListMapper;
 import com.banbanmoomani.memilog.DAO.ReportBoardMapper;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,10 @@ public class AdminService {
     }
 
     public List<processedPostListDTO> getProcessedPostList() {
+        return null;
+    }
+
+    public List<RPTCategoryDTO> getRPTCategoryDTOList() {
         return null;
     }
 }
