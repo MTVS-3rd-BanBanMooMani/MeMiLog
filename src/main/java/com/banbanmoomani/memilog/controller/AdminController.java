@@ -6,9 +6,11 @@ import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.NoticeService;
+import com.banbanmoomani.memilog.service.RPTCategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,13 @@ public class AdminController {
     private final AdminService adminService;
     private final NoticeService noticeService;
     private final MissionService missionService;
+    private final RPTCategoryService rptCategoryService;
 
-    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService) {
+    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService) {
         this.adminService = adminService;
         this.noticeService = noticeService;
         this.missionService = missionService;
+        this.rptCategoryService = rptCategoryService;
     }
 
     @GetMapping("/dashBoard")
@@ -56,8 +60,9 @@ public class AdminController {
     }
 
     @GetMapping("/point")
-    public void point() {
-//        model.addAttribute("rpt_categorise", rpt_categorise);
+    public void point(Model model) {
+        List<RPTCategoryDTO> rpt_categorise = rptCategoryService.findAllCategorise();
+        model.addAttribute("rpt_categorise", rpt_categorise);
     }
 
     @GetMapping("/noticeBoard")

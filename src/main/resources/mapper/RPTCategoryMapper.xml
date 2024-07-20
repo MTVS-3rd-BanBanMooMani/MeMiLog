@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.RPTCategoryMapper">
-    <resultMap id="rPTCategoryResultMap" type="com.banbanmoomani.memilog.DTO.NoticeDTO">
+    <resultMap id="rptCategoryResultMap" type="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO">
         <id property="rpt_category_id" column="rpt_category_id"/>
         <result property="category_name" column="category_name"/>
         <result property="rpt_weight" column="rpt_weight"/>
         <result property="stop_day" column="stop_day"/>
     </resultMap>
-    <select id="findAllRPTCategory" resultMap="rPTCategoryResultMap">
+    <select id="findAllRPTCategory" resultMap="rptCategoryResultMap">
         SELECT
                rpt_category_id
              , category_name
