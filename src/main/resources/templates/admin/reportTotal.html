@@ -57,13 +57,13 @@
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider">Menu</li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                            <a class="nav-link" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
+                            <a class="nav-link active" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
@@ -98,11 +98,7 @@
                             <div class="table-controls">
                                 <select id="filterUnprocessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
                                     <option value="">신고 사유</option>
-                                    <option value="스팸">스팸</option>
-                                    <option value="광고">광고</option>
-                                    <option value="욕설">욕설</option>
-                                    <option value="정치">정치</option>
-                                    <option value="비속어">비속어</option>
+                                    <option th:each="category : ${rptCategoryDTOList}" th:value="${category.category_name}" th:text="${category.category_name}"></option>
                                 </select>
                                 <input type="text" id="searchUnprocessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchUnprocessed" class="btn btn-secondary ml-2">Search</button>
@@ -112,65 +108,33 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllUnprocessed"></th>
-                                        <th scope="col">신고번호</th>
+                                        <th scope="col">Post 번호</th>
                                         <th scope="col">닉네임</th>
-                                        <th scope="col">내용</th>
+                                        <th scope="col">Post 내용</th>
+                                        <th scope="col">신고 내용</th>
                                         <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
                                         <th scope="col">신고일</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>스팸 메세지 그만 보게 해주세요.</td>
-                                        <td>70</td>
-                                        <td>스팸</td>
-                                        <td>2024-05-03</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">6</th>
-                                        <td>Barry</td>
-                                        <td>광고성 메세지입니다.</td>
-                                        <td>85</td>
-                                        <td>광고</td>
-                                        <td>2024-05-04</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">9</th>
-                                        <td>Jane</td>
-                                        <td>욕설을 사용했습니다.</td>
-                                        <td>112</td>
-                                        <td>욕설</td>
-                                        <td>2024-05-05</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">12</th>
-                                        <td>Chris</td>
-                                        <td>정치적 발언을 했습니다.</td>
-                                        <td>34</td>
-                                        <td>정치</td>
-                                        <td>2024-05-06</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox"></td>
-                                        <th scope="row">15</th>
-                                        <td>Mike</td>
-                                        <td>비속어를 사용했습니다.</td>
-                                        <td>45</td>
-                                        <td>비속어</td>
-                                        <td>2024-05-07</td>
+                                    <tr th:each="unprocessedPost : ${unProcessedPostListDTO}" class="fixed-height-row">
+                                        <td><input type="checkbox" class="checkItemUnprocessed small-checkbox" th:value="${unprocessedPost.post_id}"></td>
+                                        <th scope="row" th:text="${unprocessedPost.post_id}"></th>
+                                        <td th:text="${unprocessedPost.reported_user_nickName}"></td>
+                                        <td th:text="${unprocessedPost.post_content}"></td>
+                                        <td th:text="${unprocessedPost.report_content}"></td>
+                                        <td th:text="${unprocessedPost.report_count}"></td>
+                                        <td th:text="${unprocessedPost.rpt_category}"></td>
+                                        <td th:text="${#dates.format(unprocessedPost.report_datetime, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="table-controls">
-                                <button id="processSelected" class="btn btn-primary mt-3">선택 항목 처리</button>
+                                <form id="processReportForm" method="post" action="/admin/reportTotal/process">
+                                    <button type="button" id="processSelected" class="btn btn-primary mt-3">선택 항목 처리</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -182,11 +146,7 @@
                             <div class="table-controls">
                                 <select id="filterProcessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
                                     <option value="">신고 사유</option>
-                                    <option value="스팸">스팸</option>
-                                    <option value="광고">광고</option>
-                                    <option value="욕설">욕설</option>
-                                    <option value="정치">정치</option>
-                                    <option value="비속어">비속어</option>
+                                    <option th:each="category : ${rptCategoryDTOList}" th:value="${category.category_name}" th:text="${category.category_name}"></option>
                                 </select>
                                 <input type="text" id="searchProcessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchProcessed" class="btn btn-secondary ml-2">Search</button>
@@ -196,115 +156,25 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllProcessed"></th>
-                                        <th scope="col">신고번호</th>
+                                        <th scope="col">Post 번호</th>
                                         <th scope="col">닉네임</th>
-                                        <th scope="col">내용</th>
+                                        <th scope="col">Post 내용</th>
+                                        <th scope="col">Report 내용</th>
                                         <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
-                                        <th scope="col">신고일</th>
                                         <th scope="col">처리 날짜</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="fixed-height-row">
+                                    <tr th:each="processedPost : ${processedPostListDTO}" class="fixed-height-row">
                                         <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>21</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>45</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">4</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>73</td>
-                                        <td>욕설</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">5</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>78</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">7</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>32</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">8</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>42</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">10</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>24</td>
-                                        <td>욕설</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">11</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>44</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">13</th>
-                                        <td>Mark</td>
-                                        <td>신고합니다.</td>
-                                        <td>18</td>
-                                        <td>비속어</td>
-                                        <td>2024-08-12</td>
-                                        <td>2024-08-13</td>
-                                    </tr>
-                                    <tr class="fixed-height-row">
-                                        <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                                        <th scope="row">14</th>
-                                        <td>Jacob</td>
-                                        <td>도배글 올라오는데 삭제 좀 해주세요 피드에 이사람만 떠요</td>
-                                        <td>99</td>
-                                        <td>도배</td>
-                                        <td>2024-12-03</td>
-                                        <td>2024-12-04</td>
+                                        <th scope="row" th:text="${processedPost.post_id}"></th>
+                                        <td th:text="${processedPost.reported_user_nickName}"></td>
+                                        <td th:text="${processedPost.post_content}"></td>
+                                        <td th:text="${processedPost.report_content}"></td>
+                                        <td th:text="${processedPost.report_count}"></td>
+                                        <td th:text="${processedPost.rpt_category}"></td>
+                                        <td th:text="${#dates.format(processedPost.report_process_datetime, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -369,74 +239,76 @@
 
         // 선택 항목 처리
         $('#processSelected').click(function() {
+            var selectedPosts = [];
             $('#unprocessedPosts tbody tr').each(function() {
                 if ($(this).find('.checkItemUnprocessed').is(':checked')) {
-                    var 신고번호 = $(this).find('th').eq(0).text();
-                    var 닉네임 = $(this).find('td').eq(1).text();
-                    var 내용 = $(this).find('td').eq(2).text();
-                    var 신고누적점수 = $(this).find('td').eq(3).text();
-                    var 신고사유 = $(this).find('td').eq(4).text();
-                    var 신고일 = $(this).find('td').eq(5).text();
-                    var 처리날짜 = new Date().toISOString().split('T')[0];
-                    var newRow = `
-                        <tr class="fixed-height-row">
-                            <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                            <th scope="row">${신고번호}</th>
-                            <td>${닉네임}</td>
-                            <td>${내용}</td>
-                            <td>${신고누적점수}</td>
-                            <td>${신고사유}</td>
-                            <td>${신고일}</td>
-                            <td>${처리날짜}</td>
-                        </tr>
-                    `;
-                    $('#processedPosts tbody').append(newRow);
-                    $(this).remove();
+                    selectedPosts.push($(this).find('.checkItemUnprocessed').val());
                 }
             });
+
+            if (selectedPosts.length > 0) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'postIdList',
+                    value: selectedPosts.join(',')
+                }).appendTo('#processReportForm');
+                $('#processReportForm').submit();
+            } else {
+                alert('처리할 항목을 선택해주세요.');
+            }
         });
 
         // 처리 안 된 게시물 행 클릭 시 모달 띄우기
-        $('#unprocessedPosts tbody').on('click', 'tr', function() {
+        $('#unprocessedPosts tbody').on('click', 'tr', function(event) {
+            if ($(event.target).is('input:checkbox')) {
+                return; // 체크박스를 클릭한 경우, 함수 실행을 중지
+            }
+
             var data = {
-                신고번호: $(this).find('th').eq(0).text(),
-                닉네임: $(this).find('td').eq(1).text(),
-                내용: $(this).find('td').eq(2).text(),
-                신고누적점수: $(this).find('td').eq(3).text(),
-                신고사유: $(this).find('td').eq(4).text(),
-                신고일: $(this).find('td').eq(5).text(),
+                postNumber: $(this).find('th').eq(0).text(),
+                nickname: $(this).find('td').eq(1).text(),
+                postContent: $(this).find('td').eq(2).text(),
+                reportContent: $(this).find('td').eq(3).text(),
+                reportCount: $(this).find('td').eq(4).text(),
+                reportReason: $(this).find('td').eq(5).text(),
+                reportDate: $(this).find('td').eq(6).text(),
             };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data.신고번호}</p>
-                <p><strong>닉네임:</strong> ${data.닉네임}</p>
-                <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
-                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
-                <p><strong>신고일:</strong> ${data.신고일}</p>
+                <p><strong>Post 번호:</strong> ${data.postNumber}</p>
+                <p><strong>닉네임:</strong> ${data.nickname}</p>
+                <p><strong>Post 내용:</strong> ${data.postContent}</p>
+                <p><strong>Report 내용:</strong> ${data.reportContent}</p>
+                <p><strong>신고누적점수:</strong> ${data.reportCount}</p>
+                <p><strong>신고 사유:</strong> ${data.reportReason}</p>
+                <p><strong>신고일:</strong> ${data.reportDate}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
         });
 
         // 처리된 게시물 행 클릭 시 모달 띄우기
-        $('#processedPosts tbody').on('click', 'tr', function() {
+        $('#processedPosts tbody').on('click', 'tr', function(event) {
+            if ($(event.target).is('input:checkbox')) {
+                return; // 체크박스를 클릭한 경우, 함수 실행을 중지
+            }
+
             var data = {
-                신고번호: $(this).find('th').eq(0).text(),
-                닉네임: $(this).find('td').eq(1).text(),
-                내용: $(this).find('td').eq(2).text(),
-                신고누적점수: $(this).find('td').eq(3).text(),
-                신고사유: $(this).find('td').eq(4).text(),
-                신고일: $(this).find('td').eq(5).text(),
-                처리날짜: $(this).find('td').eq(6).text(),
+                postNumber: $(this).find('th').eq(0).text(),
+                nickname: $(this).find('td').eq(1).text(),
+                postContent: $(this).find('td').eq(2).text(),
+                reportContent: $(this).find('td').eq(3).text(),
+                reportCount: $(this).find('td').eq(4).text(),
+                reportReason: $(this).find('td').eq(5).text(),
+                reportDate: $(this).find('td').eq(6).text(),
             };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data.신고번호}</p>
-                <p><strong>닉네임:</strong> ${data.닉네임}</p>
-                <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
-                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
-                <p><strong>신고일:</strong> ${data.신고일}</p>
-                <p><strong>처리 날짜:</strong> ${data.처리날짜}</p>
+                <p><strong>Post 번호:</strong> ${data.postNumber}</p>
+                <p><strong>닉네임:</strong> ${data.nickname}</p>
+                <p><strong>Post 내용:</strong> ${data.postContent}</p>
+                <p><strong>Report 내용:</strong> ${data.reportContent}</p>
+                <p><strong>신고누적점수:</strong> ${data.reportCount}</p>
+                <p><strong>신고 사유:</strong> ${data.reportReason}</p>
+                <p><strong>처리일:</strong> ${data.reportDate}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
@@ -449,7 +321,7 @@
                 if (selectedReason === "") {
                     $(this).show();
                 } else {
-                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                    $(this).toggle($(this).find('td').eq(5).text().toLowerCase().indexOf(selectedReason) > -1);
                 }
             });
         });
@@ -460,7 +332,7 @@
                 if (selectedReason === "") {
                     $(this).show();
                 } else {
-                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                    $(this).toggle($(this).find('td').eq(5).text().toLowerCase().indexOf(selectedReason) > -1);
                 }
             });
         });
@@ -487,5 +359,4 @@
     </div>
 </div>
 </body>
-
 </html>
