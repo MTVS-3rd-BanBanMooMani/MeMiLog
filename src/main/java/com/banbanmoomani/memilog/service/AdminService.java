@@ -46,10 +46,10 @@ public class AdminService {
     }
 
     public List<processedPostListDTO> getProcessedPostList() {
-        return null;
+        return reportBoardMapper.getProcessedPostList();
     }
 
     public List<RPTCategoryDTO> getRPTCategoryDTOList() {
-        return null;
+        return reportBoardMapper.getRPTCategoryDTOList();
     }
 }
