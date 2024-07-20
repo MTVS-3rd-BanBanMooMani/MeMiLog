@@ -7,7 +7,7 @@
         <id property="emotionId" column="emotion_id"/>
         <result property="emotionName" column="emotion_name"/>
     </resultMap>
-    <select id="findEmotionById" parameterType="int" resultMap="emotionResultMap">
+    <select id="findEmotionById" parameterType="_int" resultMap="emotionResultMap">
         SELECT emotion_id, emotion_name
         FROM EMOTION
         WHERE emotion_id = #{id}

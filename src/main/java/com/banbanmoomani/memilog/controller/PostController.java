@@ -52,14 +52,18 @@ public class PostController {
 
         String priThemeName = missionService.findPriThemeName(mission.getPriThemeId());
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
-        System.out.println(mission);
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
+        List<CompanionDTO> companions = comPanionService.findAllCompanions();
+        System.out.println(mission);
+
 
         model.addAttribute("today", mission.getMissionDate());
         model.addAttribute("mission", mission);
         model.addAttribute("priThemeName", priThemeName);
         model.addAttribute("subThemeName", subThemeName);
-        model.addAttribute("emotion", emotions);
+        model.addAttribute("emotions", emotions);
+        model.addAttribute("companions", companions);
+
         return "main/postcreate";
     }
 
@@ -75,6 +79,12 @@ public class PostController {
             return "redirect:/user/login";
         }
         createRequestDTO.setUser_id((int) user_id);
+        EmotionDTO emotion = emotionService.findEmotionById(createRequestDTO.getEmotion_id());
+        System.out.println(emotion);
+        CompanionDTO companion = comPanionService.findCompanionById(createRequestDTO.getCompanion_id());
+        System.out.println(companion);
+        createRequestDTO.setEmotion_id(emotion.getEmotionId());
+        createRequestDTO.setCompanion_id(companion.getCompanion_id());
         postService.createPost(createRequestDTO);
 
         return "redirect:/post/all";

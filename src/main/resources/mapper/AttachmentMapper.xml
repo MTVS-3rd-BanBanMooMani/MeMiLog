@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.AttachmentMapper">
+
+    <insert id="insertAttachment" parameterType="com.banbanmoomani.memilog.DTO.AttachmentDTO"
+            useGeneratedKeys="true" keyProperty="pictureId">
+        INSERT INTO ATTACHMENT
+        (
+            src_url,
+            type,
+            post_id,
+            user_id,
+            picture_order,
+            notice_id
+        )
+        VALUES
+        (
+            #{srcUrl},
+            #{type},
+            #{postId},
+            #{userId},
+            #{pictureOrder},
+            #{noticeId}
+        )
+    </insert>
+
+</mapper>

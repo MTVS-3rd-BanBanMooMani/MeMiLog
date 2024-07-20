@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.DTO.post;
 
 public class CreateRequestDTO {
+    private int postId;
     private String mission_content;
     private String content;
     private int emotion_id;
@@ -9,12 +10,21 @@ public class CreateRequestDTO {
 
     public CreateRequestDTO() {}
 
-    public CreateRequestDTO(String mission_content, String content, int emotion_id, int companion_id, int user_id) {
+    public CreateRequestDTO(int postId, String mission_content, String content, int emotion_id, int companion_id, int user_id) {
+        this.postId = postId;
         this.mission_content = mission_content;
         this.content = content;
         this.emotion_id = emotion_id;
         this.companion_id = companion_id;
         this.user_id = user_id;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public String getMission_content() {
@@ -60,7 +70,8 @@ public class CreateRequestDTO {
     @Override
     public String toString() {
         return "CreateRequestDTO{" +
-                "mission_content='" + mission_content + '\'' +
+                "postId=" + postId +
+                ", mission_content='" + mission_content + '\'' +
                 ", content='" + content + '\'' +
                 ", emotion_id=" + emotion_id +
                 ", companion_id=" + companion_id +
