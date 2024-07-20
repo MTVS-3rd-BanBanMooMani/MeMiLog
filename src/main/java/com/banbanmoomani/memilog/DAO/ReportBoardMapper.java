@@ -1,6 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
-import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +14,7 @@ public interface ReportBoardMapper {
 
     List<processedPostListDTO> getProcessedPostList();
 
-    List<RPTCategoryDTO> getRPTCategoryDTOList();
+    List<RPTCategoryListDTO> getRPTCategoryDTOList();
 
     void processReport(@Param("postIdList") List<String> postIdList);
 }

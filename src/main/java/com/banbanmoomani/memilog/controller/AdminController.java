@@ -3,7 +3,7 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
-import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
@@ -84,7 +84,7 @@ public class AdminController {
         model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
         model.addAttribute("processedPostListDTO", processedPostList);
 
-        List<RPTCategoryDTO> rptCategoryDTOList = adminService.getRPTCategoryDTOList();
+        List<RPTCategoryListDTO> rptCategoryDTOList = adminService.getRPTCategoryDTOList();
 
         model.addAttribute("rptCategoryDTOList", rptCategoryDTOList);
 
