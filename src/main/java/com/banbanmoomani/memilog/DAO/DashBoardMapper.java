@@ -17,4 +17,6 @@ public interface DashBoardMapper {
     List<AgeGroupMemberDTO> findAgeGroupMembers();
 
     List<ReportedPostDTO> findTodayReportedPosts();
+
+    int getTodayReportCount();
 }

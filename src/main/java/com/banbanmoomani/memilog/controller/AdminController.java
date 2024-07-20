@@ -56,6 +56,7 @@ public class AdminController {
         model.addAttribute("ageGroupMembers", ageGroupMembers);
 
         // 당일 신고된 포스트 수
+        int todayReportCount = adminService.getTodayReportCount();
         List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
         model.addAttribute("reportedPosts", reportedPosts);
 
