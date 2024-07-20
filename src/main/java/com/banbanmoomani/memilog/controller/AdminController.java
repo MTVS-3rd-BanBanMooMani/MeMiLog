@@ -5,6 +5,9 @@ import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.service.AdminService;
@@ -34,8 +37,7 @@ public class AdminController {
     }
 
     @GetMapping("/dashBoard")
-    public void dashBoard() {
-    }
+    public void dashBoard() {}
 
     @GetMapping("/userBlackList")
     public String userBlackList(Model model) {
@@ -50,13 +52,68 @@ public class AdminController {
     }
 
     @PostMapping("/userBlackList/black")
-    public String blackUser(BanListDTO banListDTO) {
+    public String blackUser(@RequestParam("userIdList") List<String> userIdList) {
+
+        if (userIdList == null || userIdList.isEmpty()) {
+            System.out.println("userIdList is null or empty");
+        } else {
+            for (String userId : userIdList) {
+                System.out.println(userId);
+            }
+
+            adminService.blackUser(userIdList);
+        }
+
+        return "redirect:/admin/userBlackList";
+    }
+
+    @PostMapping("/userBlackList/release")
+    public String releaseUser(@RequestParam("userIdList") List<String> userIdList) {
+
+        if (userIdList == null || userIdList.isEmpty()) {
+            System.out.println("userIdList is null or empty");
+            return "redirect:/admin/userBlackList";
+        }
+
+        for (String userId : userIdList) {
+            System.out.println(userId);
+        }
+
+        adminService.releaseUser(userIdList);
 
         return "redirect:/admin/userBlackList";
     }
 
     @GetMapping("/reportTotal")
-    public void reportTotal() {
+    public String reportTotal(Model model) {
+
+        List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
+        List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
+
+        model.addAttribute("unProcessedPostListDTO", unProcessedPostList);
+        model.addAttribute("processedPostListDTO", processedPostList);
+
+        List<RPTCategoryListDTO> rptCategoryDTOList = adminService.getRPTCategoryDTOList();
+
+        model.addAttribute("rptCategoryDTOList", rptCategoryDTOList);
+
+        return "admin/reportTotal";
+    }
+
+    @PostMapping("/reportTotal/process")
+    public String processReport(@RequestParam("postIdList") List<String> postIdList) {
+        if (postIdList == null || postIdList.isEmpty()) {
+            System.out.println("postIdList is null or empty");
+            return "redirect:/admin/userBlackList";
+        }
+
+        for (String postId : postIdList) {
+            System.out.println(postId);
+        }
+
+        adminService.processReport(postIdList);
+
+        return "redirect:/admin/userBlackList";
     }
 
     @GetMapping("/point")
