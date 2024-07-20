@@ -21,7 +21,6 @@ public class PostService {
     }
     @Transactional
     public void createPost(CreateRequestDTO createRequestDTO) {
-        PostDTO postDTO = new PostDTO();
-        postMapper.createPost(post);
+        postMapper.createPost(createRequestDTO);
     }
 }

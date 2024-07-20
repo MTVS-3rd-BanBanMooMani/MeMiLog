@@ -2,44 +2,38 @@ package com.banbanmoomani.memilog.DTO.post;
 import java.sql.Timestamp;
 
 public class PostDTO {
-    private int postId;
-    private String title;
+    private int post_id;
     private String content;
     private int like_count;
     private int mission_id;
-    private Timestamp writtenDatetime;
+    private Timestamp written_datetime;
     private int emotion_id;
     private int user_id;
     private int companion_id;
+    private int report_count;
+    private boolean hidden_YN;
 
     public PostDTO() {}
 
-    public PostDTO(int postId, String title, String content, int like_count, int mission_id, Timestamp writtenDatetime, int emotion_id, int user_id, int companion_id) {
-        this.postId = postId;
-        this.title = title;
+    public PostDTO(int post_id, String content, int like_count, int mission_id, Timestamp written_datetime, int emotion_id, int user_id, int companion_id, int report_count, boolean hidden_YN) {
+        this.post_id = post_id;
         this.content = content;
         this.like_count = like_count;
         this.mission_id = mission_id;
-        this.writtenDatetime = writtenDatetime;
+        this.written_datetime = written_datetime;
         this.emotion_id = emotion_id;
         this.user_id = user_id;
         this.companion_id = companion_id;
+        this.report_count = report_count;
+        this.hidden_YN = hidden_YN;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getPost_id() {
+        return post_id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
     }
 
     public String getContent() {
@@ -66,12 +60,12 @@ public class PostDTO {
         this.mission_id = mission_id;
     }
 
-    public Timestamp getWrittenDatetime() {
-        return writtenDatetime;
+    public Timestamp getWritten_datetime() {
+        return written_datetime;
     }
 
-    public void setWrittenDatetime(Timestamp writtenDatetime) {
-        this.writtenDatetime = writtenDatetime;
+    public void setWritten_datetime(Timestamp written_datetime) {
+        this.written_datetime = written_datetime;
     }
 
     public int getEmotion_id() {
@@ -98,18 +92,19 @@ public class PostDTO {
         this.companion_id = companion_id;
     }
 
-    @Override
-    public String toString() {
-        return "PostDTO{" +
-                "postId=" + postId +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", like_count=" + like_count +
-                ", mission_id=" + mission_id +
-                ", writtenDatetime=" + writtenDatetime +
-                ", emotion_id=" + emotion_id +
-                ", user_id=" + user_id +
-                ", companion_id=" + companion_id +
-                '}';
+    public int getReport_count() {
+        return report_count;
+    }
+
+    public void setReport_count(int report_count) {
+        this.report_count = report_count;
+    }
+
+    public boolean isHidden_YN() {
+        return hidden_YN;
+    }
+
+    public void setHidden_YN(boolean hidden_YN) {
+        this.hidden_YN = hidden_YN;
     }
 }
