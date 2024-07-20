@@ -1,6 +1,5 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.IntegratedDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.service.MissionService;
 import org.springframework.stereotype.Controller;
