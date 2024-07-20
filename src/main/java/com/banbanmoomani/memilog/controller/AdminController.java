@@ -87,10 +87,6 @@ public class AdminController {
 
         model.addAttribute("rptCategoryDTOList", rptCategoryDTOList);
 
-        for (processedPostListDTO processedPostListDTO : processedPostList) {
-            System.out.println(processedPostListDTO);
-        }
-
         return "admin/reportTotal";
     }
 

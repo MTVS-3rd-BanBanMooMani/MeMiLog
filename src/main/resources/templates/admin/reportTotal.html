@@ -98,11 +98,7 @@
                             <div class="table-controls">
                                 <select id="filterUnprocessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
                                     <option value="">신고 사유</option>
-                                    <option value="스팸">스팸</option>
-                                    <option value="광고">광고</option>
-                                    <option value="욕설">욕설</option>
-                                    <option value="정치">정치</option>
-                                    <option value="비속어">비속어</option>
+                                    <option th:each="category : ${rptCategoryDTOList}" th:value="${category.category_name}" th:text="${category.category_name}"></option>
                                 </select>
                                 <input type="text" id="searchUnprocessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchUnprocessed" class="btn btn-secondary ml-2">Search</button>
@@ -112,7 +108,7 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllUnprocessed"></th>
-                                        <th scope="col">신고번호</th>
+                                        <th scope="col">Post 번호</th>
                                         <th scope="col">닉네임</th>
                                         <th scope="col">Post 내용</th>
                                         <th scope="col">신고 내용</th>
@@ -148,11 +144,7 @@
                             <div class="table-controls">
                                 <select id="filterProcessedReason" class="form-control d-inline-block ml-2" style="width: 200px;">
                                     <option value="">신고 사유</option>
-                                    <option value="스팸">스팸</option>
-                                    <option value="광고">광고</option>
-                                    <option value="욕설">욕설</option>
-                                    <option value="정치">정치</option>
-                                    <option value="비속어">비속어</option>
+                                    <option th:each="category : ${rptCategoryDTOList}" th:value="${category.category_name}" th:text="${category.category_name}"></option>
                                 </select>
                                 <input type="text" id="searchProcessedInput" class="form-control d-inline-block" placeholder="검색" style="width: 200px;">
                                 <button id="searchProcessed" class="btn btn-secondary ml-2">Search</button>
@@ -162,12 +154,12 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" id="checkAllProcessed"></th>
-                                        <th scope="col">신고번호</th>
+                                        <th scope="col">Post 번호</th>
                                         <th scope="col">닉네임</th>
-                                        <th scope="col">내용</th>
+                                        <th scope="col">Post 내용</th>
+                                        <th scope="col">Report 내용</th>
                                         <th scope="col">신고 누적 점수</th>
                                         <th scope="col">신고 사유</th>
-                                        <th scope="col">신고일</th>
                                         <th scope="col">처리 날짜</th>
                                     </tr>
                                     </thead>
@@ -247,23 +239,23 @@
         $('#processSelected').click(function() {
             $('#unprocessedPosts tbody tr').each(function() {
                 if ($(this).find('.checkItemUnprocessed').is(':checked')) {
-                    var 신고번호 = $(this).find('th').eq(0).text();
-                    var 닉네임 = $(this).find('td').eq(1).text();
-                    var 내용 = $(this).find('td').eq(2).text();
-                    var 신고누적점수 = $(this).find('td').eq(3).text();
-                    var 신고사유 = $(this).find('td').eq(4).text();
-                    var 신고일 = $(this).find('td').eq(5).text();
-                    var 처리날짜 = new Date().toISOString().split('T')[0];
+                    var postNumber = $(this).find('th').eq(0).text();
+                    var nickname = $(this).find('td').eq(1).text();
+                    var content = $(this).find('td').eq(2).text();
+                    var reportCount = $(this).find('td').eq(3).text();
+                    var reportReason = $(this).find('td').eq(4).text();
+                    var reportDate = $(this).find('td').eq(5).text();
+                    var processedDate = new Date().toISOString().split('T')[0];
                     var newRow = `
                         <tr class="fixed-height-row">
                             <td><input type="checkbox" class="checkItemProcessed small-checkbox"></td>
-                            <th scope="row">${신고번호}</th>
-                            <td>${닉네임}</td>
-                            <td>${내용}</td>
-                            <td>${신고누적점수}</td>
-                            <td>${신고사유}</td>
-                            <td>${신고일}</td>
-                            <td>${처리날짜}</td>
+                            <th scope="row">${postNumber}</th>
+                            <td>${nickname}</td>
+                            <td>${content}</td>
+                            <td>${reportCount}</td>
+                            <td>${reportReason}</td>
+                            <td>${reportDate}</td>
+                            <td>${processedDate}</td>
                         </tr>
                     `;
                     $('#processedPosts tbody').append(newRow);
@@ -275,20 +267,22 @@
         // 처리 안 된 게시물 행 클릭 시 모달 띄우기
         $('#unprocessedPosts tbody').on('click', 'tr', function() {
             var data = {
-                신고번호: $(this).find('th').eq(0).text(),
-                닉네임: $(this).find('td').eq(1).text(),
-                내용: $(this).find('td').eq(2).text(),
-                신고누적점수: $(this).find('td').eq(3).text(),
-                신고사유: $(this).find('td').eq(4).text(),
-                신고일: $(this).find('td').eq(5).text(),
+                postNumber: $(this).find('th').eq(0).text(),
+                nickname: $(this).find('td').eq(1).text(),
+                postContent: $(this).find('td').eq(2).text(),
+                reportContent: $(this).find('td').eq(3).text(),
+                reportCount: $(this).find('td').eq(4).text(),
+                reportReason: $(this).find('td').eq(5).text(),
+                reportDate: $(this).find('td').eq(6).text(),
             };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data.신고번호}</p>
-                <p><strong>닉네임:</strong> ${data.닉네임}</p>
-                <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
-                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
-                <p><strong>신고일:</strong> ${data.신고일}</p>
+                <p><strong>Post 번호:</strong> ${data.postNumber}</p>
+                <p><strong>닉네임:</strong> ${data.nickname}</p>
+                <p><strong>Post 내용:</strong> ${data.postContent}</p>
+                <p><strong>Report 내용:</strong> ${data.reportContent}</p>
+                <p><strong>신고누적점수:</strong> ${data.reportCount}</p>
+                <p><strong>신고 사유:</strong> ${data.reportReason}</p>
+                <p><strong>신고일:</strong> ${data.reportDate}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
@@ -297,22 +291,22 @@
         // 처리된 게시물 행 클릭 시 모달 띄우기
         $('#processedPosts tbody').on('click', 'tr', function() {
             var data = {
-                신고번호: $(this).find('th').eq(0).text(),
-                닉네임: $(this).find('td').eq(1).text(),
-                내용: $(this).find('td').eq(2).text(),
-                신고누적점수: $(this).find('td').eq(3).text(),
-                신고사유: $(this).find('td').eq(4).text(),
-                신고일: $(this).find('td').eq(5).text(),
-                처리날짜: $(this).find('td').eq(6).text(),
+                postNumber: $(this).find('th').eq(0).text(),
+                nickname: $(this).find('td').eq(1).text(),
+                postContent: $(this).find('td').eq(2).text(),
+                reportContent: $(this).find('td').eq(3).text(),
+                reportCount: $(this).find('td').eq(4).text(),
+                reportReason: $(this).find('td').eq(5).text(),
+                reportDate: $(this).find('td').eq(6).text(),
             };
             var modalContent = `
-                <p><strong>신고번호:</strong> ${data.신고번호}</p>
-                <p><strong>닉네임:</strong> ${data.닉네임}</p>
-                <p><strong>내용:</strong> ${data.내용}</p>
-                <p><strong>신고누적점수:</strong> ${data.신고누적점수}</p>
-                <p><strong>신고 사유:</strong> ${data.신고사유}</p>
-                <p><strong>신고일:</strong> ${data.신고일}</p>
-                <p><strong>처리 날짜:</strong> ${data.처리날짜}</p>
+                <p><strong>Post 번호:</strong> ${data.postNumber}</p>
+                <p><strong>닉네임:</strong> ${data.nickname}</p>
+                <p><strong>Post 내용:</strong> ${data.postContent}</p>
+                <p><strong>Report 내용:</strong> ${data.reportContent}</p>
+                <p><strong>신고누적점수:</strong> ${data.reportCount}</p>
+                <p><strong>신고 사유:</strong> ${data.reportReason}</p>
+                <p><strong>처리일:</strong> ${data.reportDate}</p>
             `;
             $('#modalBody').html(modalContent);
             $('#detailModal').modal('show');
@@ -325,7 +319,7 @@
                 if (selectedReason === "") {
                     $(this).show();
                 } else {
-                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                    $(this).toggle($(this).find('td').eq(5).text().toLowerCase().indexOf(selectedReason) > -1);
                 }
             });
         });
@@ -336,7 +330,7 @@
                 if (selectedReason === "") {
                     $(this).show();
                 } else {
-                    $(this).toggle($(this).find('td').eq(4).text().toLowerCase().indexOf(selectedReason) > -1);
+                    $(this).toggle($(this).find('td').eq(5).text().toLowerCase().indexOf(selectedReason) > -1);
                 }
             });
         });
@@ -363,5 +357,4 @@
     </div>
 </div>
 </body>
-
 </html>

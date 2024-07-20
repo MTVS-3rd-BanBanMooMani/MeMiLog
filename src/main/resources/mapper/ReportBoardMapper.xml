@@ -61,7 +61,7 @@
         a.content AS report_content,
         p.report_count AS report_count,
         d.category_name AS rpt_category,
-        DATE_FORMAT(a.report_datetime, '%Y-%m-%d') AS report_datetime
+        DATE_FORMAT(a.report_datetime, '%Y-%m-%d') AS report_process_datetime
         FROM REPORT a
         JOIN USER b ON a.reported_user_id = b.user_id
         JOIN POST p ON a.post_id = p.post_id
