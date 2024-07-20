@@ -46,7 +46,7 @@
     </select>
 
     <!-- 선택한 날짜(미션)에 작성된 글 조회 SQL문 -->
-    <select id="missionDetailByDate" resultMap="postMap">
+    <select id="missionDetailByDate" resultMap="postResultMap">
         SELECT
         p.post_id,
         p.title,
@@ -77,5 +77,26 @@
         LEFT JOIN
         USER u ON p.user_id = u.user_id
     </select>
+
+    <insert id="createMission" useGeneratedKeys="true"
+            parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="mission_id">
+        INSERT
+        INTO MISSION
+        (
+              mission_id
+            , mission_content
+            , mission_date
+            , pri_theme_id
+            , sub_theme_id
+        )
+        VALUES
+        (
+              #{missionId}
+            , #{missionContent}
+            , #{missionDate}
+            , #{priThemaId}
+            , #{priThemaId}
+        )
+    </insert>
 
 </mapper>

@@ -104,65 +104,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>319</td>
-                            <td>비오는 날 하면 생각나는 것</td>
-                            <td>일상</td>
-                            <td>2024-07-10</td>
-                        </tr>
-                        <tr>
-                            <td>318</td>
-                            <td>요즘 날씨에 잘 어울리는 영화</td>
-                            <td>취미</td>
-                            <td>2024-07-09</td>
-                        </tr>
-                        <tr>
-                            <td>317</td>
-                            <td>가도가도 또 가고 싶은 나만의 소울 플레이스</td>
-                            <td>여행</td>
-                            <td>2024-07-08</td>
-                        </tr>
-                        <tr>
-                            <td>316</td>
-                            <td>여름철 원기회복에 좋은 보양식은?</td>
-                            <td>음식</td>
-                            <td>2024-07-07</td>
-                        </tr>
-                        <tr>
-                            <td>315</td>
-                            <td>장마 오기 전에 예쁜 여름 하늘 컨테스트</td>
-                            <td>일상</td>
-                            <td>2024-07-06</td>
-                        </tr>
-                        <tr>
-                            <td>314</td>
-                            <td>여름하면 생각나는 드라마</td>
-                            <td>취미</td>
-                            <td>2024-07-05</td>
-                        </tr>
-                        <tr>
-                            <td>313</td>
-                            <td>페스티벌과 관련된 미미들의 추억을 공유해주세요!</td>
-                            <td>취미</td>
-                            <td>2024-07-04</td>
-                        </tr>
-                        <tr>
-                            <td>312</td>
-                            <td>가장 최근에 갤러리에 저장된 사진 5장</td>
-                            <td>일상</td>
-                            <td>2024-07-03</td>
-                        </tr>
-                        <tr>
-                            <td>311</td>
-                            <td>이번 여름엔 어느 바다로 떠날까요?</td>
-                            <td>여행</td>
-                            <td>2024-07-02</td>
-                        </tr>
-                        <tr>
-                            <td>310</td>
-                            <td>여름하면 야장! 저는 을지로가 요새 좋더라구요~?</td>
-                            <td>음식</td>
-                            <td>2024-07-01</td>
+                        <tr th:each="mission : ${missionList}">
+                            <td th:text="${mission.missionId}"></td>
+                            <td th:text="${mission.missionContent}"></td>
+                            <td th:text="${mission.priThemeId}"></td>
+                            <td th:text="${mission.missionDate}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -384,10 +330,31 @@
             return;
         }
 
-        //서버에 데이터 전송하는 코드 추가 예정
+        // 서버로 보낼 데이터를 구성합니다.
+        var missionData = {
+            missionContent: title,
+            missionDate: date,
+            priThemeId :selectedTags[0],
+            subThemeId :selectedTags[1]
+        };
 
-        alert('오늘의 미션이 등록되었습니다.');
-        closeModal('createTopicModal');
+
+        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        $.ajax({
+            type: 'POST',
+            url: '/admin/dailyTopicBoard',
+            contentType: 'application/json',
+            data: JSON.stringify(missionData),
+            success: function(response) {
+                alert('오늘의 미션이 등록되었습니다.');
+                closeModal('createTopicModal');
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            },
+            error: function(error) {
+                alert('미션 등록에 실패했습니다.');
+                console.error(error);
+            }
+        });
     }
 
     function modifyTopic() {
