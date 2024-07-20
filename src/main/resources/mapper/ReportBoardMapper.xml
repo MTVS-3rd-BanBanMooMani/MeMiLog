@@ -33,9 +33,9 @@
         b.nickName AS reported_user_nickName,
         p.content AS post_content,
         a.content AS report_content,
-        (SELECT COUNT(*) FROM REPORT WHERE post_id = a.post_id) AS report_count,
+        p.report_count AS report_count,
         d.category_name AS rpt_category,
-        a.report_datetime
+        DATE_FORMAT(a.report_datetime, '%Y-%m-%d') AS report_datetime
         FROM REPORT a
         JOIN USER b ON a.reported_user_id = b.user_id
         JOIN POST p ON a.post_id = p.post_id
@@ -45,6 +45,7 @@
         FROM REPORT
         WHERE post_id = a.post_id
         )
+        AND p.hidden_YN = 0
     </select>
 
     <!-- Select query for processedPostListDTO -->
@@ -54,13 +55,18 @@
         b.nickName AS reported_user_nickName,
         p.content AS post_content,
         a.content AS report_content,
-        (SELECT COUNT(*) FROM REPORT WHERE post_id = a.post_id) AS report_count,
+        p.report_count AS report_count,
         d.category_name AS rpt_category,
-        a.report_datetime as report_process_datetime
+        DATE_FORMAT(a.report_datetime, '%Y-%m-%d') AS report_datetime
         FROM REPORT a
-        LEFT JOIN USER b ON a.reported_user_id = b.user_id
-        LEFT JOIN POST p ON a.post_id = p.post_id
-        LEFT JOIN RPT_CATEGORY d ON a.rpt_category_id = d.rpt_category_id
-        WHERE a.report_datetime IS NOT NULL
+        JOIN USER b ON a.reported_user_id = b.user_id
+        JOIN POST p ON a.post_id = p.post_id
+        JOIN RPT_CATEGORY d ON a.rpt_category_id = d.rpt_category_id
+        WHERE a.report_datetime = (
+        SELECT MAX(report_datetime)
+        FROM REPORT
+        WHERE post_id = a.post_id
+        )
+        AND p.hidden_YN = 1
     </select>
 </mapper>

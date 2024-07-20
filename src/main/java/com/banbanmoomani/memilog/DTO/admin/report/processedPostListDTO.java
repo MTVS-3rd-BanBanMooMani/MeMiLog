@@ -80,4 +80,17 @@ public class processedPostListDTO {
     public void setReport_process_datetime(Date report_process_datetime) {
         this.report_process_datetime = report_process_datetime;
     }
+
+    @Override
+    public String toString() {
+        return "processedPostListDTO{" +
+                "post_id=" + post_id +
+                ", reported_user_nickName='" + reported_user_nickName + '\'' +
+                ", post_content='" + post_content + '\'' +
+                ", report_content='" + report_content + '\'' +
+                ", report_count=" + report_count +
+                ", rpt_category='" + rpt_category + '\'' +
+                ", report_process_datetime=" + report_process_datetime +
+                '}';
+    }
 }
