@@ -5,6 +5,7 @@ import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
+import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
@@ -37,7 +38,30 @@ public class AdminController {
     }
 
     @GetMapping("/dashBoard")
-    public void dashBoard() {}
+    public String dashBoard(Model model) {
+        // 최근 10일 간의 전체 회원 수 추이
+        List<MemberTrendDTO> memberTrends = adminService.getMemberTrends();
+        model.addAttribute("memberTrends", memberTrends);
+
+        // 최근 10일 간의 당일 접속자 수 추이
+        List<VisitorTrendDTO> visitorTrends = adminService.getVisitorTrends();
+        model.addAttribute("visitorTrends", visitorTrends);
+
+        // 최근 10일 간의 당일 등록된 포스트 수 추이
+        List<PostTrendDTO> postTrends = adminService.getPostTrends();
+        model.addAttribute("postTrends", postTrends);
+
+        // 연령대 별 총 회원 수 추이
+        List<AgeGroupMemberDTO> ageGroupMembers = adminService.getAgeGroupMembers();
+        model.addAttribute("ageGroupMembers", ageGroupMembers);
+
+        // 당일 신고된 포스트 수
+        List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
+        model.addAttribute("reportedPosts", reportedPosts);
+
+        return "admin/dashboard";
+    }
+
 
     @GetMapping("/userBlackList")
     public String userBlackList(Model model) {
