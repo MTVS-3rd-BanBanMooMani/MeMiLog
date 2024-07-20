@@ -4,39 +4,54 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.banbanmoomani.memilog.DAO.MydiaryMapper">
-    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
-        <id property="postId" column="post_id"/>
-        <result property="title" column="title"/>
+    <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO">
+        <id property="post_id" column="post_id"/>
+        <result property="mission_content" column="mission_content"/>
         <result property="content" column="content"/>
-        <result property="likeCount" column="like_count"/>
-        <result property="missionId" column="mission_id"/>
-        <result property="writtenDatetime" column="written_datetime"/>
+        <result property="like_count" column="like_count"/>
+        <result property="mission_id" column="mission_id"/>
+        <result property="written_datetime" column="written_datetime"/>
         <result property="nickname" column="nickname"/>
-        <result property="missionContent" column="mission_content"/>
-        <result property="missionDate" column="missionDate"/>
-        <result property="priThemeName" column="priThemeName"/>
-        <result property="subThemeName" column="subThemeName"/>
-        <result property="emotionName" column="emotionName"/>
-        <result property="companionType" column="companionType"/>
-        <result property="srcUrl" column="srcUrl"/>
+        <result property="mission_date" column="mission_date"/>
+        <result property="pri_theme_name" column="pri_theme_name"/>
+        <result property="sub_theme_name" column="sub_theme_name"/>
+        <result property="emotion_name" column="emotion_name"/>
+        <result property="companion_type" column="companion_type"/>
+        <result property="src_url" column="src_url"/>
     </resultMap>
 
-    <select id="findAllPosts" resultMap="postResultMap">
+    <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO">
+        SELECT
+            u.user_id
+             , u.email
+             , u.password
+             , u.birthday
+             , u.nickname
+             , u.gender
+             , u.signup_date
+             , a.src_url as src_url
+        FROM USER u
+                 LEFT JOIN
+             ATTACHMENT a ON u.user_id = a.user_id
+        WHERE u.user_id = 1
+          AND a.type = 'profile';
+    </select>
+
+    <select id="findPosts" parameterType="String" resultMap="postResultMap">
         SELECT
               p.post_id
-            , p.title
+            , m.mission_content
             , p.content
             , p.like_count
             , p.mission_id
             , p.written_datetime
             , u.nickname
-            , m.mission_content AS missionContent
-            , DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate
-            , mt.theme_name AS priThemeName
-            , st.theme_name AS subThemeName
-            , e.emotion_name AS emotionName
-            , c.companion_type AS companionType
-            , a.src_url AS srcUrl
+            , DATE_FORMAT(m.mission_date, '%m월 %e일') AS missionDate
+            , mt.theme_name AS pri_theme_name
+            , st.theme_name AS sub_theme_name
+            , e.emotion_name AS emotion_name
+            , c.companion_type AS companion_type
+            , a.src_url AS src_url
         FROM
             POST p
                 LEFT JOIN MISSION m ON p.mission_id = m.mission_id
@@ -48,25 +63,10 @@
                 LEFT JOIN ATTACHMENT a ON p.post_id = a.post_id
         WHERE
             u.user_id = 1
-          AND a.type = 'post';
+          AND a.type = 'post'
+        <if test="selectedDate != null and selectedDate != ''">
+        AND DATE_FORMAT( m.mission_date, '%e' ) = #{selectedDate}
+        </if>
     </select>
-
-    <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.user.UserDTO">
-        SELECT
-                u.user_id
-              , u.email
-              , u.password
-              , u.birthday
-              , u.nickname
-              , u.gender
-              , u.signup_date
-              , a.src_url as srcUrl
-        FROM USER u
-             LEFT JOIN
-             ATTACHMENT a ON u.user_id = a.user_id
-        WHERE u.user_id = 1
-        AND a.type = 'profile';
-    </select>
-
 
 </mapper>

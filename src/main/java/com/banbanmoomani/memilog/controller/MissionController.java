@@ -1,7 +1,9 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.PostDTO;
 import com.banbanmoomani.memilog.service.MissionService;
+import com.banbanmoomani.memilog.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,11 @@ import java.util.List;
 public class MissionController {
 
     private final MissionService missionService;
+    private final PostService postService;
 
-    public MissionController(MissionService missionService) {
+    public MissionController(MissionService missionService, PostService postService) {
         this.missionService = missionService;
+        this.postService = postService;
     }
 
     // 모든 mission 보기 & 검색 결과 mission 보기
@@ -60,13 +64,4 @@ public class MissionController {
         return "main/test2";
     }
 
-    // 오늘 mission에 해당하는 post 보기
-//    @GetMapping("")
-//    public String missionDetail(Model model) {
-//
-//        List<MissionDTO> missionDetailList = missionService.missionDetailByDate();
-//        model.addAttribute("missionDetailList", missionDetailList);
-//
-//        return "main/test";
-//    }
 }

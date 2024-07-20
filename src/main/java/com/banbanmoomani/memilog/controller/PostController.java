@@ -41,4 +41,14 @@ public class PostController {
         model.addAttribute("posts", postService.findAllPosts());
         return "main/allview";
     }
+
+    // 오늘 mission에 해당하는 post 보기
+//    @GetMapping("/by-mission")
+//    public String findAllPostOnMissionByDate(Model model) {
+//
+//        List<PostDTO> posts = postService.findAllPostOnMissionByDate();
+//        posts.forEach(System.out::println);
+//
+//        return "main/test";
+//    }
 }

@@ -18,11 +18,15 @@ public class PostService {
     public List<PostDTO> findAllPosts() {
         return postMapper.findAllPost();
     }
+
     @Transactional
     public void createPost(PostDTO post) {
-        if (post.getTitle() == null || post.getTitle().isEmpty()) {
-            post.setTitle(post.getMissionContent());
-        }
         postMapper.createPost(post);
+    }
+
+
+    public List<PostDTO> findAllPostOnMissionByDate() {
+
+        return postMapper.findAllPostOnMissionByDate();
     }
 }
