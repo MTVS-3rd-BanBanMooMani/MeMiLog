@@ -1,7 +1,8 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.PostMapper;
-import com.banbanmoomani.memilog.DTO.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
+import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +21,8 @@ public class PostService {
     }
 
     @Transactional
-    public void createPost(PostDTO post) {
-        postMapper.createPost(post);
+    public void createPost(CreateRequestDTO createRequestDTO) {
+        postMapper.createPost(createRequestDTO);
     }
 
 
