@@ -52,4 +52,9 @@ public class AdminService {
     public List<RPTCategoryDTO> getRPTCategoryDTOList() {
         return reportBoardMapper.getRPTCategoryDTOList();
     }
+
+    @Transactional
+    public void processReport(List<String> postIdList) {
+        reportBoardMapper.processReport(postIdList);
+    }
 }

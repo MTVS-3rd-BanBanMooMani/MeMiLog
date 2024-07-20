@@ -63,13 +63,14 @@ public class AdminController {
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
-        } else {
-            for (String userId : userIdList) {
-                System.out.println(userId);
-            }
-
-            adminService.releaseUser(userIdList);
+            return "redirect:/admin/userBlackList";
         }
+
+        for (String userId : userIdList) {
+            System.out.println(userId);
+        }
+
+        adminService.releaseUser(userIdList);
 
         return "redirect:/admin/userBlackList";
     }
@@ -88,6 +89,22 @@ public class AdminController {
         model.addAttribute("rptCategoryDTOList", rptCategoryDTOList);
 
         return "admin/reportTotal";
+    }
+
+    @PostMapping("/reportTotal/process")
+    public String processReport(@RequestParam("postIdList") List<String> postIdList) {
+        if (postIdList == null || postIdList.isEmpty()) {
+            System.out.println("postIdList is null or empty");
+            return "redirect:/admin/userBlackList";
+        }
+
+        for (String postId : postIdList) {
+            System.out.println(postId);
+        }
+
+        adminService.processReport(postIdList);
+
+        return "redirect:/admin/userBlackList";
     }
 
     @GetMapping("/point")
