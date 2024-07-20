@@ -57,6 +57,7 @@ public class AdminController {
 
     @GetMapping("/point")
     public void point() {
+//        model.addAttribute("rpt_categorise", rpt_categorise);
     }
 
     @GetMapping("/noticeBoard")
