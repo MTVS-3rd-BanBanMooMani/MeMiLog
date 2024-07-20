@@ -4,6 +4,7 @@ import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.MissionService;
@@ -77,8 +78,8 @@ public class AdminController {
     }
 
     @PostMapping("/dailyTopicBoard")
-    public String createMission(@RequestBody MissionDTO missionDTO) {
-        missionService.createMission(missionDTO);
+    public String createMission(@RequestBody DailyMissionRequestDTO dailyMissionRequestDTO) {
+        missionService.createMission(dailyMissionRequestDTO);
         return "redirect:/admin/dailyTopicBoard";
     }
 

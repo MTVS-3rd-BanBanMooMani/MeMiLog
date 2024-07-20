@@ -7,8 +7,8 @@
         <id property="missionId" column="mission_id" />
         <result property="missionContent" column="mission_content" />
         <result property="missionDate" column="mission_date" />
-        <result property="priThemaId" column="pri_thema_id" />
-        <result property="subThemaId" column="sub_thema_id" />
+        <result property="priThemeId" column="pri_thema_id" />
+        <result property="subThemeId" column="sub_thema_id" />
     </resultMap>
 
     <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
@@ -79,7 +79,7 @@
     </select>
 
     <insert id="createMission" useGeneratedKeys="true"
-            parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="mission_id">
+            parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">
         INSERT
         INTO MISSION
         (
@@ -94,8 +94,8 @@
               #{missionId}
             , #{missionContent}
             , #{missionDate}
-            , #{priThemaId}
-            , #{priThemaId}
+            , #{priThemeId}
+            , #{priThemeId}
         )
     </insert>
 
