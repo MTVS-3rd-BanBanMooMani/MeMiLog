@@ -12,4 +12,6 @@ public interface MissionMapper {
     List<MissionDTO> findTemaMission();
 
 //    List<MissionDTO> missionDetailByDate();
+
+    void createMission(MissionDTO missionDTO);
 }

@@ -7,8 +7,8 @@
         <id property="missionId" column="mission_id" />
         <result property="missionContent" column="mission_content" />
         <result property="missionDate" column="mission_date" />
-        <result property="priThemaId" column="pri_thema_id" />
-        <result property="subThemaId" column="sub_thema_id" />
+        <result property="priThemeId" column="pri_thema_id" />
+        <result property="subThemeId" column="sub_thema_id" />
     </resultMap>
 
     <resultMap id="postResultMap" type="com.banbanmoomani.memilog.DTO.PostDTO">
@@ -46,5 +46,26 @@
     </select>
 
     <!-- 선택한 날짜(미션)에 작성된 글 조회 SQL문 -->
+
+    <insert id="createMission" useGeneratedKeys="true"
+            parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">
+        INSERT
+        INTO MISSION
+        (
+              mission_id
+            , mission_content
+            , mission_date
+            , pri_theme_id
+            , sub_theme_id
+        )
+        VALUES
+        (
+              #{missionId}
+            , #{missionContent}
+            , #{missionDate}
+            , #{priThemeId}
+            , #{priThemeId}
+        )
+    </insert>
 
 </mapper>
