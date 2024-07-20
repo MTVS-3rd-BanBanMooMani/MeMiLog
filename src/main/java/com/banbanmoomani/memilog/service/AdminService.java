@@ -81,4 +81,8 @@ public class AdminService {
     public List<ReportedPostDTO> getTodayReportedPosts() {
         return dashBoardMapper.findTodayReportedPosts();
     }
+
+    public int getTodayReportCount() {
+        return dashBoardMapper.getTodayReportCount();
+    }
 }

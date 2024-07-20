@@ -22,14 +22,27 @@
     </select>
 
     <select id="findAgeGroupMembers" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.AgeGroupMemberDTO">
-        SELECT age_group, member_count
-        FROM age_group_members
+
+    </select>
+
+    <select id="getTodayReportCount" resultType="_int">
+        SELECT COUNT(*) as count
+        FROM REPORT r
+        WHERE DATE(r.report_datetime) = CURDATE()
     </select>
 
     <select id="findTodayReportedPosts" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.ReportedPostDTO">
-        SELECT report_id, reporter, reported_user, report_score
-        FROM reported_posts
-        WHERE report_date = CURDATE()
+        SELECT
+        p.post_id AS postId,
+        ru.nickName AS reportedUserNickName,
+        pu.nickName AS reporterUserNickName,
+        p.report_count AS reportCount
+        FROM REPORT r
+        JOIN USER ru ON r.reported_user_id = ru.user_id
+        JOIN USER pu ON r.reporter_user_id = pu.user_id
+        JOIN POST p ON r.post_id = p.post_id
+        WHERE DATE(r.report_datetime) = CURDATE()
+        GROUP BY p.post_id, ru.nickName, pu.nickName
         LIMIT 5
     </select>
 </mapper>
