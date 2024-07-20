@@ -31,12 +31,6 @@ public class PostController {
     @PostMapping("/create")
     public String createPost(@ModelAttribute PostDTO postDTO) {
 
-        if (postDTO.getTitle() == null || postDTO.getTitle().isEmpty()) {
-            postDTO.setTitle(postDTO.getMissionContent());
-        }
-
-        postDTO.setCompanionType(postDTO.getCompanionType());
-
         postService.createPost(postDTO);
 
         return "redirect:/post/all";

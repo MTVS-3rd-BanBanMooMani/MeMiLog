@@ -20,6 +20,9 @@ public class PostService {
     }
     @Transactional
     public void createPost(PostDTO post) {
+        if (post.getTitle() == null || post.getTitle().isEmpty()) {
+            post.setTitle(post.getMissionContent());
+        }
         postMapper.createPost(post);
     }
 }
