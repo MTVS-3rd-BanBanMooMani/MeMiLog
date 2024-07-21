@@ -85,4 +85,8 @@ public class AdminService {
     public AdminDTO findAdminByEmail(String email) {
         return adminMapper.findAdminByEmail(email);
     }
+
+    public AdminDTO findAdminById(int adminId) {
+        return adminMapper.findAdminById(adminId);
+    }
 }

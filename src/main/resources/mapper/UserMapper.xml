@@ -22,6 +22,7 @@
         FROM
         USER
         WHERE
+<!--        TODO: email -> user_id 수정 -->
         email = #{user_id}
     </select>
     <select id="findUserByEmail" parameterType="String" resultMap="userResultMap">

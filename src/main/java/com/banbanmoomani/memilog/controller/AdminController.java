@@ -69,6 +69,7 @@ public class AdminController {
         if(admin_id == null) {
             return "redirect:/admin/login";
         }
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
 
         // 최근 10일 간의 전체 회원 수 추이
         List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
