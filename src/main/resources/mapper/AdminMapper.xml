@@ -14,7 +14,7 @@
     <!-- Select query to find admin by email -->
     <select id="findAdminByEmail" parameterType="String" resultMap="adminResultMap">
         SELECT admin_id, email, password, admin_name
-        FROM Admin
+        FROM ADMIN
         WHERE email = #{email}
     </select>
 </mapper>
