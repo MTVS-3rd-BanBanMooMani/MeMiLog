@@ -180,8 +180,8 @@ public class AdminController {
         return "redirect:/admin/point";
     }
     @PostMapping("/deleteRPTCategory")
-    public String deleteRPTCategory(@RequestParam int rpt_category_id) {
-        rptCategoryService.deleteRPTCategory(rpt_category_id);
+    public String deleteRPTCategory(@RequestBody RPTCategoryDeleteRequestDTO request) {
+        rptCategoryService.deleteRPTCategory(request.getRptList());
         return "redirect:/admin/point";
     }
 

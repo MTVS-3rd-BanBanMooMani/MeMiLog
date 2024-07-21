@@ -22,8 +22,8 @@ public class RPTCategoryService {
     public void createRPTCategory(RPTCategoryRequestDTO rptCategoryRequestDTO) {
         rptCategoryMapper.createRPTCategory(rptCategoryRequestDTO);
     }
-    public void deleteRPTCategory(int rpt_category_id) {
-        rptCategoryMapper.deleteRPTCategory(rpt_category_id);
+    public void deleteRPTCategory(List<Integer> rptList) {
+        rptList.forEach(rptCategoryMapper::deleteRPTCategory);
     }
 
 }
