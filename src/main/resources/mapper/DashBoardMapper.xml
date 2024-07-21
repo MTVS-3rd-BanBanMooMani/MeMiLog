@@ -3,14 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.DashBoardMapper">
-    <select id="findLast10DaysMemberTrends" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.MeMiLogInfoDTO">
+    <select id="getMeMiLogInfo" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.MeMiLogInfoDTO">
         SELECT
-              date
-            , userTotalCount
-            , userCount
-            , postCount
+        `date`,
+        user_total_count as userTotalCount,
+        user_count as userCount,
+        post_count as postCount
         FROM MeMiLogInfo
-        WHERE date >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
+        WHERE `date` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
+        ORDER BY `date` ASC
     </select>
 
     <select id="findAgeGroupMembers" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.AgeGroupMemberDTO">
@@ -58,7 +59,7 @@
         JOIN USER pu ON r.reporter_user_id = pu.user_id
         JOIN POST p ON r.post_id = p.post_id
         WHERE DATE(r.report_datetime) = CURDATE()
-        GROUP BY p.post_id, ru.nickName, pu.nickName
-        LIMIT 5
+        ORDER BY r.report_datetime DESC
+        LIMIT 5;
     </select>
 </mapper>
