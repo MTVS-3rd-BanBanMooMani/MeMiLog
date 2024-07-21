@@ -140,7 +140,7 @@
                             </tr>
                             </thead>
                             <tbody id="banReasonTableBody">
-                            <tr th:each="rpt_category : ${rpt_categorise}">
+                            <tr th:each="rpt_category : ${rpt_categorise}" th:id="${rpt_category.rpt_category_id}">
                                 <td><input type="checkbox" class="selectReason"></td>
                                 <td th:text="${rpt_category.category_name}"></td>
                                 <td><input type="number" class="form-control score" th:value="${rpt_category.rpt_weight}"></td>
@@ -269,50 +269,36 @@
 
     function deleteSelectedReasons() {
         var checkboxes = document.querySelectorAll('.selectReason:checked');
+        var rptList = [];
+
         checkboxes.forEach(function(checkbox) {
             var row = checkbox.closest('tr');
-            var reason = row.cells[1].innerText;
-            row.remove();
-            console.log('Deleted Reason:', reason);
+            var rptCategoryId = row.id;
+            rptList.push(parseInt(rptCategoryId, 10));
         });
-        alert('Selected reasons have been deleted.');
+
+        if (rptList.length > 0) {
+            var data = {
+                rptList: rptList
+            };
+
+            // AJAX request
+            fetch('/admin/deleteRPTCategory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .catch(error => {
+                    location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                });
+        } else {
+            alert('No reasons selected for deletion.');
+        }
     }
 
-    // document.getElementById('addReasonForm').addEventListener('submit', function(event) {
-    //     event.preventDefault();
-    //
-    //     var reason = document.getElementById('reason').value;
-    //     var score = document.getElementById('score').value;
-    //     var days = document.getElementById('days').value;
-    //
-    //     $.ajax({
-    //         url: '/add/point',
-    //         method: 'POST',
-    //         contentType: 'application/json',
-    //         data: JSON.stringify({ categoryName: reason, rptWeight: score, stopDay: days }),
-    //         success: function(response) {
-    //             var newRow = `
-    //                 <tr>
-    //                     <td><input type="checkbox" class="selectReason"></td>
-    //                     <td>${reason}</td>
-    //                     <td><input type="number" class="form-control score" value="${score}"></td>
-    //                     <td><input type="number" class="form-control days" value="${days}"></td>
-    //                     <td>
-    //                         <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-    //                     </td>
-    //                 </tr>
-    //             `;
-    //
-    //             document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
-    //             $('#addReasonModal').modal('hide');
-    //             document.getElementById('addReasonForm').reset();
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error('Error adding reason:', error);
-    //             alert('An error occurred while adding the reason. Please try again.');
-    //         }
-    //     });
-    // });
     document.getElementById('addReasonForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
