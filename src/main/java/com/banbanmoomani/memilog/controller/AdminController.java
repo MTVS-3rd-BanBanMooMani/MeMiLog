@@ -52,7 +52,7 @@ public class AdminController {
         AdminDTO adminInfo = adminService.findAdminByEmail(loginRequestDTO.getEmail());
         if(adminInfo != null && adminInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
-            httpSession.setAttribute("user_id", adminInfo.getAdmin_id());
+            httpSession.setAttribute("admin_id", adminInfo.getAdmin_id());
             return "redirect:/admin/dashBoard";
         } else {
             return "redirect:/admin/login";
