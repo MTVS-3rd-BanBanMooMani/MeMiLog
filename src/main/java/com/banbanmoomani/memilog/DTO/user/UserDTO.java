@@ -7,7 +7,7 @@ public class UserDTO {
     private String email;
     private String password;
     private java.sql.Date birthday;
-    private String nickName;
+    private String nickname;
     private String gender;
     private int caution_weights;
     private String temporary_YN;
@@ -22,7 +22,7 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", birthday=" + birthday +
-                ", nickName='" + nickName + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", gender='" + gender + '\'' +
                 ", caution_weights=" + caution_weights +
                 ", temporary_YN='" + temporary_YN + '\'' +
@@ -34,12 +34,12 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public UserDTO(int user_id, String email, String password, Date birthday, String nickName, String gender, int caution_weights, String temporary_YN, String today_access_YN, Date signup_date, Date susp_period) {
+    public UserDTO(int user_id, String email, String password, Date birthday, String nickname, String gender, int caution_weights, String temporary_YN, String today_access_YN, Date signup_date, Date susp_period) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
         this.birthday = birthday;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.gender = gender;
         this.caution_weights = caution_weights;
         this.temporary_YN = temporary_YN;
@@ -80,12 +80,12 @@ public class UserDTO {
         this.birthday = birthday;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickName) {
+        this.nickname = nickName;
     }
 
     public String getGender() {

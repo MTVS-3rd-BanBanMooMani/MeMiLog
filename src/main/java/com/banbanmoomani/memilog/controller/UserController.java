@@ -33,7 +33,7 @@ public class UserController {
         if(userInfo != null && userInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("user_id", userInfo.getUser_id());
-            rttr.addFlashAttribute("successMessage", userInfo.getNickName() + "님, 환영합니다.");
+            rttr.addFlashAttribute("successMessage", userInfo.getNickname() + "님, 환영합니다.");
             return "redirect:/";
         } else {
             rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
