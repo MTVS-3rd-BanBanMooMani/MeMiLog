@@ -13,7 +13,7 @@ public class EmotionService {
     public EmotionService(EmotionMapper emotionMapper) {
         this.emotionMapper = emotionMapper;
     }
-    public EmotionDTO findEmotionByName(int id) {
+    public EmotionDTO findEmotionById(int id) {
         return emotionMapper.findEmotionById(id);
     }
     public List<EmotionDTO> findAllEmotions() {

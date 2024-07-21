@@ -30,7 +30,7 @@
             , s.stop_end_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
-<!--        WHERE s.perm_YN = 'N'-->
+        WHERE s.perm_YN = 'N'
     </select>
 
     <!-- Corrected getBlackList query -->
@@ -42,5 +42,25 @@
             , DATE_FORMAT(s.stop_start_date, '%Y-%m-%d') as stop_start_date
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
+        WHERE s.perm_YN = 'Y'
     </select>
+
+    <!--  Ban User -->
+    <update id="blackUser">
+        UPDATE STOP
+        SET perm_YN = 'Y'
+        WHERE user_id IN
+        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
+
+    <!-- Release User: DELETE STOP record -->
+    <update id="releaseUser">
+        DELETE FROM STOP
+        WHERE user_id IN
+        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
 </mapper>
