@@ -17,4 +17,13 @@
         FROM ADMIN
         WHERE email = #{email}
     </select>
+
+    <select id="findAdminById" parameterType="int" resultMap="adminResultMap">
+        SELECT
+        *
+        FROM
+        ADMIN
+        WHERE
+        admin_id = #{admin_id}
+    </select>
 </mapper>

@@ -47,23 +47,37 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String adminLogin(LoginRequestDTO loginRequestDTO, HttpSession httpSession) {
+    public String adminLogin(LoginRequestDTO loginRequestDTO, RedirectAttributes rttr,
+                             HttpSession httpSession) {
 
         AdminDTO adminInfo = adminService.findAdminByEmail(loginRequestDTO.getEmail());
         if(adminInfo != null && adminInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("admin_id", adminInfo.getAdmin_id());
+            rttr.addFlashAttribute("successMessage", adminInfo.getAdmin_name() + "님, 환영합니다.");
             return "redirect:/admin/dashBoard";
         } else {
+            rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
             return "redirect:/admin/login";
         }
     }
 
     @GetMapping("/dashBoard")
-    public String dashBoard(Model model) {
+    public String dashBoard(Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         // 최근 10일 간의 전체 회원 수 추이
         List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
+        int meMiLogCount = meMiLogInfoDTOList.size();
+        MeMiLogInfoDiff meMiLogInfoDiff = adminService.calculateMeMiLogInfoDiff(meMiLogInfoDTOList.get(meMiLogCount - 1), meMiLogInfoDTOList.get(meMiLogCount - 2));
+        model.addAttribute("meMiLogInfoDiff", meMiLogInfoDiff);
         model.addAttribute("meMiLogInfoDTOList", meMiLogInfoDTOList);
 
         if (!meMiLogInfoDTOList.isEmpty()) {
@@ -95,7 +109,15 @@ public class AdminController {
 
 
     @GetMapping("/userBlackList")
-    public String userBlackList(Model model) {
+    public String userBlackList(Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         List<BanListDTO> banListDTO = adminService.getBanListDTO();
         List<BlackListDTO> blackListDTO = adminService.getBlackListDTO();
@@ -107,7 +129,12 @@ public class AdminController {
     }
 
     @PostMapping("/userBlackList/black")
-    public String blackUser(@RequestParam("userIdList") List<String> userIdList) {
+    public String blackUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -123,7 +150,12 @@ public class AdminController {
     }
 
     @PostMapping("/userBlackList/release")
-    public String releaseUser(@RequestParam("userIdList") List<String> userIdList) {
+    public String releaseUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -140,7 +172,15 @@ public class AdminController {
     }
 
     @GetMapping("/reportTotal")
-    public String reportTotal(Model model) {
+    public String reportTotal(Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
         List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
@@ -156,7 +196,13 @@ public class AdminController {
     }
 
     @PostMapping("/reportTotal/process")
-    public String processReport(@RequestParam("postIdList") List<String> postIdList) {
+    public String processReport(@RequestParam("postIdList") List<String> postIdList, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+        if(admin_id == null) {
+            return "redirect:/admin/login";
+        }
+
         if (postIdList == null || postIdList.isEmpty()) {
             System.out.println("postIdList is null or empty");
             return "redirect:/admin/userBlackList";
@@ -201,4 +247,9 @@ public class AdminController {
         return "redirect:/admin/dailyTopicBoard";
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/admin/login";
+    }
 }

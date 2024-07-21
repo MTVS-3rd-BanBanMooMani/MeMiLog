@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
 public interface AdminMapper {
 
     AdminDTO findAdminByEmail(@Param("email") String email);
+
+    AdminDTO findAdminById(@Param("admin_id") int admin_id);
 }
