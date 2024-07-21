@@ -68,6 +68,25 @@
             #{user_id}
         )
     </insert>
+    <update id="updatePost" parameterType="com.banbanmoomani.memilog.DTO.post.CreateRequestDTO">
+        UPDATE
+            POST
+        SET
+            content = #{content},
+            mission_id = (SELECT mission_id FROM MISSION WHERE mission_content = #{mission_content}),
+            emotion_id = #{emotion_id},
+            companion_id = #{companion_id}
+        WHERE
+            post_id = #{postId} AND user_id = #{user_id}
+    </update>
+    <delete id="deletePostById" parameterType="_int">
+        DELETE
+        FROM
+            POST
+        WHERE
+            post_id = #{postId}
+    </delete>
+
 
     <select id="findAllPostOnMissionByDate" resultMap="postResultMap">
         SELECT
@@ -100,4 +119,5 @@
         WHERE
             DAY(m.mission_date) = 1
     </select>
+
 </mapper>
