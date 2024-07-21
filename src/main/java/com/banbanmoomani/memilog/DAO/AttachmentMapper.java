@@ -6,5 +6,4 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AttachmentMapper {
     void createAttachment(AttachmentDTO attachmentDTO);
-    void updateProfilePic(AttachmentDTO attachment);
 }

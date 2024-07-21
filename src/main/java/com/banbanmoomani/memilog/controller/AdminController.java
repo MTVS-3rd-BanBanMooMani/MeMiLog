@@ -149,22 +149,6 @@ public class AdminController {
         return "redirect:/admin/userBlackList";
     }
 
-    @PostMapping("/reportTotal/process")
-    public String processReport(@RequestParam("postIdList") List<String> postIdList) {
-        if (postIdList == null || postIdList.isEmpty()) {
-            System.out.println("postIdList is null or empty");
-            return "redirect:/admin/userBlackList";
-        }
-
-        for (String postId : postIdList) {
-            System.out.println(postId);
-        }
-
-        adminService.processReport(postIdList);
-
-        return "redirect:/admin/userBlackList";
-    }
-
     @GetMapping("/point")
     public void point(Model model) {
         List<RPTCategoryDTO> rpt_categorise = rptCategoryService.findAllCategorise();
