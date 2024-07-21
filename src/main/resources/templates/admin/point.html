@@ -149,33 +149,6 @@
                                     <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>정치</td>
-                                <td><input type="number" class="form-control score" value="5"></td>
-                                <td><input type="number" class="form-control days" value="7"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>광고</td>
-                                <td><input type="number" class="form-control score" value="3"></td>
-                                <td><input type="number" class="form-control days" value="5"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>욕설</td>
-                                <td><input type="number" class="form-control score" value="4"></td>
-                                <td><input type="number" class="form-control days" value="10"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -305,28 +278,93 @@
         alert('Selected reasons have been deleted.');
     }
 
+    // document.getElementById('addReasonForm').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+    //
+    //     var reason = document.getElementById('reason').value;
+    //     var score = document.getElementById('score').value;
+    //     var days = document.getElementById('days').value;
+    //
+    //     $.ajax({
+    //         url: '/add/point',
+    //         method: 'POST',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify({ categoryName: reason, rptWeight: score, stopDay: days }),
+    //         success: function(response) {
+    //             var newRow = `
+    //                 <tr>
+    //                     <td><input type="checkbox" class="selectReason"></td>
+    //                     <td>${reason}</td>
+    //                     <td><input type="number" class="form-control score" value="${score}"></td>
+    //                     <td><input type="number" class="form-control days" value="${days}"></td>
+    //                     <td>
+    //                         <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+    //                     </td>
+    //                 </tr>
+    //             `;
+    //
+    //             document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
+    //             $('#addReasonModal').modal('hide');
+    //             document.getElementById('addReasonForm').reset();
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('Error adding reason:', error);
+    //             alert('An error occurred while adding the reason. Please try again.');
+    //         }
+    //     });
+    // });
     document.getElementById('addReasonForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
         var reason = document.getElementById('reason').value;
-        var score = document.getElementById('score').value;
-        var days = document.getElementById('days').value;
+        var score = parseInt(document.getElementById('score').value, 10);
+        var days = parseInt(document.getElementById('days').value, 10);
 
-        var newRow = `
-                <tr>
-                    <td><input type="checkbox" class="selectReason"></td>
-                    <td>${reason}</td>
-                    <td><input type="number" class="form-control score" value="${score}"></td>
-                    <td><input type="number" class="form-control days" value="${days}"></td>
-                    <td>
-                        <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                    </td>
-                </tr>
-            `;
+        // Prepare data for the AJAX request
+        var data = {
+            categoryName: reason,
+            rptWeight: score,
+            stopDay: days
+        };
 
-        document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
-        $('#addReasonModal').modal('hide');
-        document.getElementById('addReasonForm').reset();
+        // AJAX request
+        fetch('/admin/point', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                // Add the new row to the table if the request was successful
+                if (result.success) {
+                //     var newRow = `
+                //     <tr>
+                //         <td><input type="checkbox" class="selectReason"></td>
+                //         <td>${reason}</td>
+                //         <td><input type="number" class="form-control score" value="${score}"></td>
+                //         <td><input type="number" class="form-control days" value="${days}"></td>
+                //         <td>
+                //             <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                //         </td>
+                //     </tr>
+                // `;
+                //     document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
+                    $('#addReasonModal').modal('hide');
+                    document.getElementById('addReasonForm').reset();
+                } else {
+                    alert('Failed to add reason.');
+                }
+            })
+            .catch(error => {
+
+                $('#addReasonModal').modal('hide');
+                document.getElementById('addReasonForm').reset();
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                // console.error('Error:', error);
+                // alert('An error occurred while adding the reason.');
+            });
     });
 </script>
 </body>

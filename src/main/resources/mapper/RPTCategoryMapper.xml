@@ -17,7 +17,7 @@
              , stop_day
         FROM RPT_CATEGORY
     </select>
-    <insert id="createRPTCategory" keyProperty="rpt_category_id" useGeneratedKeys="true"
+    <insert id="createRPTCategory" useGeneratedKeys="true"
             parameterType="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryRequestDTO">
         INSERT
           INTO RPT_CATEGORY

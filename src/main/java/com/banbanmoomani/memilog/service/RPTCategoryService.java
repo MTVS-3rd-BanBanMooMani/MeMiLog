@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.RPTCategoryMapper;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public class RPTCategoryService {
 
     public List<RPTCategoryDTO> findAllCategorise() {
         return rptCategoryMapper.findAllRPTCategory();
+    }
+
+    public void createRPTCategory(RPTCategoryRequestDTO rptCategoryRequestDTO) {
+        rptCategoryMapper.createRPTCategory(rptCategoryRequestDTO);
     }
 
 
