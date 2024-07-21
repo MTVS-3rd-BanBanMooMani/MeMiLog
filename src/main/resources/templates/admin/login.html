@@ -31,7 +31,7 @@
 <div class="splash-container">
     <div class="card">
         <div class="card-header text-center">
-            <a>
+            <a th:href="@{/admin/dashBoard}">
                 <img class="logo-img" th:src="@{/assets/images/logo.png}" alt="logo">
             </a>
             <span class="splash-description">Please enter your user information.</span>
@@ -51,6 +51,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
             </form>
+            <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
+            <div th:if="${failMessage}" class="alert alert-danger mt-3" th:text="${failMessage}"></div>
         </div>
     </div>
 </div>

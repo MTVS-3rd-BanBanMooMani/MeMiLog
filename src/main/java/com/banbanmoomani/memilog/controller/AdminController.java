@@ -47,14 +47,17 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String adminLogin(LoginRequestDTO loginRequestDTO, HttpSession httpSession) {
+    public String adminLogin(LoginRequestDTO loginRequestDTO, RedirectAttributes rttr,
+                             HttpSession httpSession) {
 
         AdminDTO adminInfo = adminService.findAdminByEmail(loginRequestDTO.getEmail());
         if(adminInfo != null && adminInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("admin_id", adminInfo.getAdmin_id());
+            rttr.addFlashAttribute("successMessage", adminInfo.getAdmin_name() + "님, 환영합니다.");
             return "redirect:/admin/dashBoard";
         } else {
+            rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
             return "redirect:/admin/login";
         }
     }
