@@ -61,6 +61,7 @@ public class AdminController {
         List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
         model.addAttribute("reportedPosts", reportedPosts);
 
+        System.out.println(todayReportCount);
         for (ReportedPostDTO reportedPostDTO : reportedPosts) {
             System.out.println(reportedPostDTO);
         }
