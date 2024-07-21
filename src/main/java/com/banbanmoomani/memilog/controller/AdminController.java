@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
@@ -11,13 +12,16 @@ import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.NoticeService;
 import com.banbanmoomani.memilog.service.RPTCategoryService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,6 +39,21 @@ public class AdminController {
         this.noticeService = noticeService;
         this.missionService = missionService;
         this.rptCategoryService = rptCategoryService;
+    }
+
+    @PostMapping("/login")
+    public String adminLogin(LoginRequestDTO loginRequestDTO, RedirectAttributes rttr, HttpSession httpSession) {
+
+        AdminDTO adminInfo = adminService.findAdminByEmail(loginRequestDTO.getEmail());
+        if(adminInfo != null && adminInfo.getPassword().equals(loginRequestDTO.getPassword())) {
+            // session에 user_id 추가
+            httpSession.setAttribute("user_id", adminInfo.getAdmin_id());
+            rttr.addFlashAttribute("successMessage", adminInfo.getAdmin_name() + "님, 환영합니다.");
+            return "redirect:/admin/dashBoard";
+        } else {
+            rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
+            return "redirect:/admin/login";
+        }
     }
 
     @GetMapping("/dashBoard")
