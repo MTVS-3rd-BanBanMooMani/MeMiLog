@@ -2,6 +2,14 @@ spring:
   application:
     name: MeMiLog
 
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: classpath:memilog-292b5416c430.json
+    project-id: memilog
+    bucket: memilog
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
