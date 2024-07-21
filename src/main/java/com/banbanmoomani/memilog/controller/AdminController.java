@@ -42,10 +42,11 @@ public class AdminController {
 
         // 최근 10일 간의 전체 회원 수 추이
         List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
-        model.addAttribute("adminDashBoardDTOList", meMiLogInfoDTOList);
+        model.addAttribute("meMiLogInfoDTOList", meMiLogInfoDTOList);
 
-        for (MeMiLogInfoDTO meMiLogInfoDTO : meMiLogInfoDTOList) {
-            System.out.println(meMiLogInfoDTO);
+        if (!meMiLogInfoDTOList.isEmpty()) {
+            MeMiLogInfoDTO latestMeMiLogInfo = meMiLogInfoDTOList.get(meMiLogInfoDTOList.size() - 1);
+            model.addAttribute("latestMeMiLogInfo", latestMeMiLogInfo);
         }
 
         // 연령대 별 총 회원 수 추이
@@ -59,6 +60,7 @@ public class AdminController {
         // 당일 신고된 포스트 수
         int todayReportCount = adminService.getTodayReportCount();
         List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
+        model.addAttribute("todayReportCount", todayReportCount);
         model.addAttribute("reportedPosts", reportedPosts);
 
         System.out.println(todayReportCount);
