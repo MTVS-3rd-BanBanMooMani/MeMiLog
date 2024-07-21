@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
@@ -11,13 +12,16 @@ import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.NoticeService;
 import com.banbanmoomani.memilog.service.RPTCategoryService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,6 +39,24 @@ public class AdminController {
         this.noticeService = noticeService;
         this.missionService = missionService;
         this.rptCategoryService = rptCategoryService;
+    }
+
+    @GetMapping("/login")
+    public void login() {
+
+    }
+
+    @PostMapping("/login")
+    public String adminLogin(LoginRequestDTO loginRequestDTO, HttpSession httpSession) {
+
+        AdminDTO adminInfo = adminService.findAdminByEmail(loginRequestDTO.getEmail());
+        if(adminInfo != null && adminInfo.getPassword().equals(loginRequestDTO.getPassword())) {
+            // session에 user_id 추가
+            httpSession.setAttribute("admin_id", adminInfo.getAdmin_id());
+            return "redirect:/admin/dashBoard";
+        } else {
+            return "redirect:/admin/login";
+        }
     }
 
     @GetMapping("/dashBoard")

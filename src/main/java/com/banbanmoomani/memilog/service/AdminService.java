@@ -1,8 +1,10 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.AdminMapper;
 import com.banbanmoomani.memilog.DAO.BlackListMapper;
 import com.banbanmoomani.memilog.DAO.DashBoardMapper;
 import com.banbanmoomani.memilog.DAO.ReportBoardMapper;
+import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
@@ -17,11 +19,13 @@ import java.util.List;
 @Service
 public class AdminService {
 
+    private final AdminMapper adminMapper;
     private final BlackListMapper blackListMapper;
     private final ReportBoardMapper reportBoardMapper;
     private final DashBoardMapper dashBoardMapper;
 
-    public AdminService(BlackListMapper blackListMapper, ReportBoardMapper reportBoardMapper, DashBoardMapper dashBoardMapper) {
+    public AdminService(AdminMapper adminMapper, BlackListMapper blackListMapper, ReportBoardMapper reportBoardMapper, DashBoardMapper dashBoardMapper) {
+        this.adminMapper = adminMapper;
         this.blackListMapper = blackListMapper;
         this.reportBoardMapper = reportBoardMapper;
         this.dashBoardMapper = dashBoardMapper;
@@ -76,5 +80,9 @@ public class AdminService {
 
     public int getTodayReportCount() {
         return dashBoardMapper.getTodayReportCount();
+    }
+
+    public AdminDTO findAdminByEmail(String email) {
+        return adminMapper.findAdminByEmail(email);
     }
 }
