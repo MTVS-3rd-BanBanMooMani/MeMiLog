@@ -18,8 +18,10 @@ $(function() {
     // 각 변수의 값을 콘솔에 출력
     console.log('userTotalCounts:', userTotalCounts);
     console.log('userCounts:', userCounts);
+    console.log('postCounts:', postCounts);
 
-    $("#sparkline-revenue0").sparkline([2, 2.3, 3.4, 4.3, 4.0, 5, 5.9, 6.7, 7.0, 8.9, 8.6, 9], {
+    // 전체 회원 수 추이
+    $("#sparkline-revenue0").sparkline(userTotalCounts, {
         type: 'line',
         width: '99.5%',
         height: '100',
@@ -31,10 +33,11 @@ $(function() {
         maxSpotColor: undefined,
         highlightSpotColor: undefined,
         highlightLineColor: undefined,
-        resize:true
+        resize: true
     });
 
-    $("#sparkline-revenue").sparkline([5, 5, 7, 7, 9, 5, 3, 5, 2, 4, 6, 7], {
+    // 당일 접속자 수
+    $("#sparkline-revenue").sparkline(userCounts, {
         type: 'line',
         width: '99.5%',
         height: '100',
@@ -46,11 +49,11 @@ $(function() {
         maxSpotColor: undefined,
         highlightSpotColor: undefined,
         highlightLineColor: undefined,
-        resize:true
+        resize: true
     });
 
-
-    $("#sparkline-revenue2").sparkline([3, 7, 6, 4, 5, 4, 3, 5, 5, 2, 3, 1], {
+    // 당일 등록된 포스트 수
+    $("#sparkline-revenue2").sparkline(postCounts, {
         type: 'line',
         width: '99.5%',
         height: '100',
@@ -62,7 +65,7 @@ $(function() {
         maxSpotColor: undefined,
         highlightSpotColor: undefined,
         highlightLineColor: undefined,
-        resize:true
+        resize: true
     });
 
 

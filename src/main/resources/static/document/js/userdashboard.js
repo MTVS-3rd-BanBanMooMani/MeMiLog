@@ -18,21 +18,15 @@ new Chartist.Bar('#ct-chart1', {
     }
 });
 
+// 연령대별 총 회원 수 추이
+var ageGroupLabels = ageGroupMembers.map(group => group.ageGroup);
+var ageGroupData = ageGroupMembers.map(group => group.memberCount);
 new Chartist.Bar('#ct-chart2', {
-    labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
-    series: [
-        [800000, 1200000, 1400000, 1300000, 700000, 300000],
-
-    ]
+    labels: ageGroupLabels,
+    series: [ageGroupData]
 }, {
-    stackBars: true,
-    axisY: {
-        labelInterpolationFnc: function(value) {
-            return (value / 1000) + 'k';
-        }
-    }
 }).on('draw', function(data) {
-    if(data.type === 'bar') {
+    if (data.type === 'bar') {
         data.element.attr({
             style: 'stroke-width: 30px'
         });
