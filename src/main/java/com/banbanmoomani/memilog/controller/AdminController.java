@@ -69,6 +69,7 @@ public class AdminController {
         if(admin_id == null) {
             return "redirect:/admin/login";
         }
+
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
 
@@ -111,6 +112,9 @@ public class AdminController {
         if(admin_id == null) {
             return "redirect:/admin/login";
         }
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         List<BanListDTO> banListDTO = adminService.getBanListDTO();
         List<BlackListDTO> blackListDTO = adminService.getBlackListDTO();
@@ -171,6 +175,9 @@ public class AdminController {
         if(admin_id == null) {
             return "redirect:/admin/login";
         }
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         List<unProcessedPostListDTO> unProcessedPostList = adminService.getUnProcessedPostList();
         List<processedPostListDTO> processedPostList = adminService.getProcessedPostList();
