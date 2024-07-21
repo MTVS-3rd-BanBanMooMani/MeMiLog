@@ -39,26 +39,31 @@ public class AdminController {
 
     @GetMapping("/dashBoard")
     public String dashBoard(Model model) {
+
         // 최근 10일 간의 전체 회원 수 추이
-        List<MemberTrendDTO> memberTrends = adminService.getMemberTrends();
-        model.addAttribute("memberTrends", memberTrends);
+        List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
+        model.addAttribute("adminDashBoardDTOList", meMiLogInfoDTOList);
 
-        // 최근 10일 간의 당일 접속자 수 추이
-        List<VisitorTrendDTO> visitorTrends = adminService.getVisitorTrends();
-        model.addAttribute("visitorTrends", visitorTrends);
-
-        // 최근 10일 간의 당일 등록된 포스트 수 추이
-        List<PostTrendDTO> postTrends = adminService.getPostTrends();
-        model.addAttribute("postTrends", postTrends);
+        for (MeMiLogInfoDTO meMiLogInfoDTO : meMiLogInfoDTOList) {
+            System.out.println(meMiLogInfoDTO);
+        }
 
         // 연령대 별 총 회원 수 추이
         List<AgeGroupMemberDTO> ageGroupMembers = adminService.getAgeGroupMembers();
         model.addAttribute("ageGroupMembers", ageGroupMembers);
 
+        for(AgeGroupMemberDTO ageGroupMemberDTO : ageGroupMembers) {
+            System.out.println(ageGroupMemberDTO);
+        }
+
         // 당일 신고된 포스트 수
         int todayReportCount = adminService.getTodayReportCount();
         List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
         model.addAttribute("reportedPosts", reportedPosts);
+
+        for (ReportedPostDTO reportedPostDTO : reportedPosts) {
+            System.out.println(reportedPostDTO);
+        }
 
         return "admin/dashboard";
     }

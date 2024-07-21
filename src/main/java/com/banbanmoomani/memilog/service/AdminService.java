@@ -62,16 +62,8 @@ public class AdminService {
         reportBoardMapper.processReport(postIdList);
     }
 
-    public List<MemberTrendDTO> getMemberTrends() {
-        return dashBoardMapper.findLast10DaysMemberTrends();
-    }
-
-    public List<VisitorTrendDTO> getVisitorTrends() {
-        return dashBoardMapper.findLast10DaysVisitorTrends();
-    }
-
-    public List<PostTrendDTO> getPostTrends() {
-        return dashBoardMapper.findLast10DaysPostTrends();
+    public List<MeMiLogInfoDTO> getMeMiLogInfo() {
+        return dashBoardMapper.getMeMiLogInfo();
     }
 
     public List<AgeGroupMemberDTO> getAgeGroupMembers() {

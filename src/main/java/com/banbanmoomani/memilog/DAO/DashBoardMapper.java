@@ -8,11 +8,7 @@ import java.util.List;
 @Mapper
 public interface DashBoardMapper {
 
-    List<MemberTrendDTO> findLast10DaysMemberTrends();
-
-    List<VisitorTrendDTO> findLast10DaysVisitorTrends();
-
-    List<PostTrendDTO> findLast10DaysPostTrends();
+    List<MeMiLogInfoDTO> getMeMiLogInfo();
 
     List<AgeGroupMemberDTO> findAgeGroupMembers();
 

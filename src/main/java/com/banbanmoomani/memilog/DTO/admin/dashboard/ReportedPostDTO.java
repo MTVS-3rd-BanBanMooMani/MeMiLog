@@ -49,4 +49,14 @@ public class ReportedPostDTO {
     public void setReportCount(int reportCount) {
         this.reportCount = reportCount;
     }
+
+    @Override
+    public String toString() {
+        return "ReportedPostDTO{" +
+                "postId=" + postId +
+                ", reporterUserNickName='" + reporterUserNickName + '\'' +
+                ", reportedUserNickName='" + reportedUserNickName + '\'' +
+                ", reportCount=" + reportCount +
+                '}';
+    }
 }

@@ -3,21 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.DashBoardMapper">
-    <select id="findLast10DaysMemberTrends" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.MemberTrendDTO">
-        SELECT date, member_count
-        FROM member_trends
-        WHERE date >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
-    </select>
-
-    <select id="findLast10DaysVisitorTrends" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.VisitorTrendDTO">
-        SELECT date, visitor_count
-        FROM visitor_trends
-        WHERE date >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
-    </select>
-
-    <select id="findLast10DaysPostTrends" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.PostTrendDTO">
-        SELECT date, post_count
-        FROM post_trends
+    <select id="findLast10DaysMemberTrends" resultType="com.banbanmoomani.memilog.DTO.admin.dashboard.MeMiLogInfoDTO">
+        SELECT
+              date
+            , userTotalCount
+            , userCount
+            , postCount
+        FROM MeMiLogInfo
         WHERE date >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
     </select>
 
