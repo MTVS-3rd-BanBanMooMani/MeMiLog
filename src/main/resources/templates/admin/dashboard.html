@@ -117,8 +117,11 @@
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.userTotalCount}"></h1>
                                 </div>
-                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getUser_total_diff()} +'%'"></span>
+                                <div th:class="${meMiLogInfoDiff.getUser_total_diff() >= 0} ? 'metric-label d-inline-block float-right text-success font-weight-bold' : 'metric-label d-inline-block float-right text-secondary font-weight-bold'">
+                                    <span th:classappend="${meMiLogInfoDiff.getUser_total_diff() >= 0} ? 'icon-circle-small icon-box-xs text-success bg-success-light' : 'icon-circle-small icon-box-xs text-danger bg-danger-light'">
+                                        <i th:classappend="${meMiLogInfoDiff.getUser_total_diff() >= 0} ? 'fa fa-fw fa-arrow-up' : 'fa fa-fw fa-arrow-down'"></i>
+                                    </span>
+                                    <span class="ml-1" th:text="${meMiLogInfoDiff.getUser_total_diff()} + '%'"></span>
                                 </div>
                             </div>
                             <div class="card-body bg-light p-t-40 p-b-30">
@@ -133,8 +136,11 @@
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.userCount}"></h1>
                                 </div>
-                                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getUser_diff()()} +'%'"></span>
+                                <div th:class="${meMiLogInfoDiff.getUser_diff() >= 0} ? 'metric-label d-inline-block float-right text-success font-weight-bold' : 'metric-label d-inline-block float-right text-secondary font-weight-bold'">
+                                    <span th:classappend="${meMiLogInfoDiff.getUser_diff() >= 0} ? 'icon-circle-small icon-box-xs text-success bg-success-light' : 'icon-circle-small icon-box-xs text-danger bg-danger-light'">
+                                        <i th:classappend="${meMiLogInfoDiff.getUser_diff() >= 0} ? 'fa fa-fw fa-arrow-up' : 'fa fa-fw fa-arrow-down'"></i>
+                                    </span>
+                                    <span class="ml-2" th:text="${meMiLogInfoDiff.getUser_diff()} + '%'"></span>
                                 </div>
                             </div>
                             <div class="card-body bg-light p-t-40 p-b-30">
@@ -149,8 +155,11 @@
                                 <div class="metric-value d-inline-block">
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.postCount}"></h1>
                                 </div>
-                                <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getPost_diff()} +'%'"></span>
+                                <div th:class="${meMiLogInfoDiff.getPost_diff() >= 0} ? 'metric-label d-inline-block float-right text-success font-weight-bold' : 'metric-label d-inline-block float-right text-secondary font-weight-bold'">
+                                    <span th:class="${meMiLogInfoDiff.getPost_diff() >= 0} ? 'icon-circle-small icon-box-xs text-success bg-success-light' : 'icon-circle-small icon-box-xs text-danger bg-danger-light'">
+                                        <i th:class="${meMiLogInfoDiff.getPost_diff() >= 0} ? 'fa fa-fw fa-arrow-up' : 'fa fa-fw fa-arrow-down'"></i>
+                                    </span>
+                                    <span class="ml-3" th:text="${meMiLogInfoDiff.getPost_diff()} + '%'"></span>
                                 </div>
                             </div>
                             <div class="card-body text-center bg-light p-t-40 p-b-30">
