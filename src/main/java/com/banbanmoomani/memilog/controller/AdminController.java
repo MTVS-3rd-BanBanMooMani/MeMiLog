@@ -75,6 +75,9 @@ public class AdminController {
 
         // 최근 10일 간의 전체 회원 수 추이
         List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
+        int meMiLogCount = meMiLogInfoDTOList.size();
+        MeMiLogInfoDiff meMiLogInfoDiff = adminService.calculateMeMiLogInfoDiff(meMiLogInfoDTOList.get(meMiLogCount - 1), meMiLogInfoDTOList.get(meMiLogCount - 2));
+        model.addAttribute("meMiLogInfoDiff", meMiLogInfoDiff);
         model.addAttribute("meMiLogInfoDTOList", meMiLogInfoDTOList);
 
         if (!meMiLogInfoDTOList.isEmpty()) {

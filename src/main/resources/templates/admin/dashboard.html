@@ -118,7 +118,7 @@
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.userTotalCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">4%</span>
+                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getUser_total_diff()} +'%'"></span>
                                 </div>
                             </div>
                             <div class="card-body bg-light p-t-40 p-b-30">
@@ -134,7 +134,7 @@
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.userCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">25%</span>
+                                    <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getUser_diff()()} +'%'"></span>
                                 </div>
                             </div>
                             <div class="card-body bg-light p-t-40 p-b-30">
@@ -150,7 +150,7 @@
                                     <h1 class="mb-1" th:text="${latestMeMiLogInfo.postCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
-                                    <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">15%</span>
+                                    <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1" th:text="${meMiLogInfoDiff.getPost_diff()} +'%'"></span>
                                 </div>
                             </div>
                             <div class="card-body text-center bg-light p-t-40 p-b-30">

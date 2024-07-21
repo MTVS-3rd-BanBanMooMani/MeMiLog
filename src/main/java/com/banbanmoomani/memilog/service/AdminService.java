@@ -89,4 +89,22 @@ public class AdminService {
     public AdminDTO findAdminById(int adminId) {
         return adminMapper.findAdminById(adminId);
     }
+
+    public MeMiLogInfoDiff calculateMeMiLogInfoDiff(MeMiLogInfoDTO todayMeMiLogInfoDTO, MeMiLogInfoDTO yesterdayMeMiLogInfoDTO) {
+
+        // Ensure there is no division by zero
+        int userTotalDiffPercent = yesterdayMeMiLogInfoDTO.getUserTotalCount() != 0
+                ? (int)(((double)(todayMeMiLogInfoDTO.getUserTotalCount() - yesterdayMeMiLogInfoDTO.getUserTotalCount()) / yesterdayMeMiLogInfoDTO.getUserTotalCount()) * 100)
+                : 0;
+
+        int userDiffPercent = yesterdayMeMiLogInfoDTO.getUserCount() != 0
+                ? (int)(((double)(todayMeMiLogInfoDTO.getUserCount() - yesterdayMeMiLogInfoDTO.getUserCount()) / yesterdayMeMiLogInfoDTO.getUserCount()) * 100)
+                : 0;
+
+        int postDiffPercent = yesterdayMeMiLogInfoDTO.getPostCount() != 0
+                ? (int)(((double)(todayMeMiLogInfoDTO.getPostCount() - yesterdayMeMiLogInfoDTO.getPostCount()) / yesterdayMeMiLogInfoDTO.getPostCount()) * 100)
+                : 0;
+
+        return new MeMiLogInfoDiff(userTotalDiffPercent, userDiffPercent, postDiffPercent);
+    }
 }
