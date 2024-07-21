@@ -41,7 +41,6 @@
                 </div>
             </div>
         </div>
-
         <div id="editModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('editModal')">&times;</span>
@@ -85,9 +84,8 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal('profilePicModal')">&times;</span>
                 <h2>프로필 사진 변경</h2>
-                <form id="profilePicForm" method="post" action="/editProfilePic" enctype="multipart/form-data">
+                <form id="profilePicForm" onsubmit="return updateProfilePic(event)">
                     <input type="file" id="profilePic" name="profilePic"><br><br>
-                    <input type="hidden" name="type" value="profile">
                     <div class="form-footer">
                         <button type="submit">업로드</button>
                         <button type="button" onclick="deleteProfilePic()">삭제</button>
@@ -95,7 +93,6 @@
                 </form>
             </div>
         </div>
-
         <div id="deleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('deleteModal')">&times;</span>
@@ -110,7 +107,6 @@
                 </form>
             </div>
         </div>
-
         <div id="chart-container" class="chart-container">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
             <div class="total-mood">
@@ -206,30 +202,25 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    document.getElementById('profilePicForm').onsubmit = function (event) {
+    function updateProfilePic(event) {
         event.preventDefault();
-
         const profilePicForm = document.getElementById('profilePicForm');
         const formData = new FormData(profilePicForm);
-
-        $.ajax({
-            url: '/uploadProfilePic',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                document.querySelector(".profile-pic").src = response.src_url;
-                closeModal('profilePicModal');
-                alert("프로필 사진이 성공적으로 변경되었습니다.");
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: " + error);
-                alert("프로필 사진 변경에 실패했습니다.");
-            }
-        });
+        var fileInput = document.getElementById('profilePic');
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".profile-pic").src = e.target.result;
+            closeModal('profilePicModal');
+            alert("회원 정보 수정이 완료되었습니다.");
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            alert("파일을 선택해주세요.")
+        }
+        return false;
     }
-
 
     function deleteProfilePic() {
         document.querySelector('.profile-pic').src = '../../document/img/default_profile.png';
