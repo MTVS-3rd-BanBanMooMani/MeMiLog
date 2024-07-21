@@ -33,4 +33,10 @@
             ,#{stopDay}
         )
     </insert>
+
+    <delete id="deleteRPTCategory" parameterType="int">
+        DELETE
+          FROM RPT_CATEGORY
+         WHERE rpt_category_id = #{rpt_category_id}
+    </delete>
 </mapper>

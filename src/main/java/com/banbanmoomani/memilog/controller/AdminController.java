@@ -179,6 +179,11 @@ public class AdminController {
         rptCategoryService.createRPTCategory(rptCategoryRequestDTO);
         return "redirect:/admin/point";
     }
+    @PostMapping("/deleteRPTCategory")
+    public String deleteRPTCategory(@RequestParam int rpt_category_id) {
+        rptCategoryService.deleteRPTCategory(rpt_category_id);
+        return "redirect:/admin/point";
+    }
 
     @GetMapping("/noticeBoard")
     public void noticeBoard(Model model) {
