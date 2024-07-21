@@ -11,6 +11,14 @@ $(function() {
     // Revenue Cards
     // ==============================================================
 
+    var userTotalCounts = meMiLogInfoDTOList.map(info => info.userTotalCount);
+    var userCounts = meMiLogInfoDTOList.map(info => info.userCount);
+    var postCounts = meMiLogInfoDTOList.map(info => info.postCount);
+
+    // 각 변수의 값을 콘솔에 출력
+    console.log('userTotalCounts:', userTotalCounts);
+    console.log('userCounts:', userCounts);
+
     $("#sparkline-revenue0").sparkline([2, 2.3, 3.4, 4.3, 4.0, 5, 5.9, 6.7, 7.0, 8.9, 8.6, 9], {
         type: 'line',
         width: '99.5%',
@@ -425,8 +433,4 @@ $(function() {
             });
         }
     });
-
-
-
-
 });

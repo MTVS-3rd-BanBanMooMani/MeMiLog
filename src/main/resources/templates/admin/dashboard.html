@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto navbar-right-top">
                     <li class="nav-item dropdown nav-user">
-                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../resources/static/assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                             <div class="nav-user-info">
                                 <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
@@ -256,8 +256,6 @@
 <script th:src="@{/assets/vendor/charts/charts-bundle/chartjs.js}"></script>
 <!-- sparkline js -->
 <script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
-<!-- dashboard finance js -->
-<script th:src="@{/assets/libs/js/dashboard-finance.js}"></script>
 <!-- main js -->
 <script th:src="@{/assets/libs/js/main-js.js}"></script>
 <!-- gauge js -->
@@ -278,6 +276,15 @@
         });
     });
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var meMiLogInfoDTOList = /*[[${meMiLogInfoDTOList}]]*/ [];
+    var ageGroupMembers = /*[[${ageGroupMembers}]]*/ [];
+    var reportedPosts = /*[[${reportedPosts}]]*/ [];
+    /*]]>*/
+</script>
+<!-- dashboard finance js -->
+<script th:src="@{/assets/libs/js/dashboard-finance.js}"></script>
 <script th:src="@{/document/js/userdashboard.js}"></script>
 </body>
 </html>
