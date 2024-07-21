@@ -5,6 +5,7 @@ import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
+import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
@@ -37,7 +38,39 @@ public class AdminController {
     }
 
     @GetMapping("/dashBoard")
-    public void dashBoard() {}
+    public String dashBoard(Model model) {
+
+        // 최근 10일 간의 전체 회원 수 추이
+        List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
+        model.addAttribute("meMiLogInfoDTOList", meMiLogInfoDTOList);
+
+        if (!meMiLogInfoDTOList.isEmpty()) {
+            MeMiLogInfoDTO latestMeMiLogInfo = meMiLogInfoDTOList.get(meMiLogInfoDTOList.size() - 1);
+            model.addAttribute("latestMeMiLogInfo", latestMeMiLogInfo);
+        }
+
+        // 연령대 별 총 회원 수 추이
+        List<AgeGroupMemberDTO> ageGroupMembers = adminService.getAgeGroupMembers();
+        model.addAttribute("ageGroupMembers", ageGroupMembers);
+
+        for(AgeGroupMemberDTO ageGroupMemberDTO : ageGroupMembers) {
+            System.out.println(ageGroupMemberDTO);
+        }
+
+        // 당일 신고된 포스트 수
+        int todayReportCount = adminService.getTodayReportCount();
+        List<ReportedPostDTO> reportedPosts = adminService.getTodayReportedPosts();
+        model.addAttribute("todayReportCount", todayReportCount);
+        model.addAttribute("reportedPosts", reportedPosts);
+
+        System.out.println(todayReportCount);
+        for (ReportedPostDTO reportedPostDTO : reportedPosts) {
+            System.out.println(reportedPostDTO);
+        }
+
+        return "admin/dashboard";
+    }
+
 
     @GetMapping("/userBlackList")
     public String userBlackList(Model model) {

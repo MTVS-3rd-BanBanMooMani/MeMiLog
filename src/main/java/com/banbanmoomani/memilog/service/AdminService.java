@@ -1,9 +1,11 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.BlackListMapper;
+import com.banbanmoomani.memilog.DAO.DashBoardMapper;
 import com.banbanmoomani.memilog.DAO.ReportBoardMapper;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
+import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
@@ -17,10 +19,12 @@ public class AdminService {
 
     private final BlackListMapper blackListMapper;
     private final ReportBoardMapper reportBoardMapper;
+    private final DashBoardMapper dashBoardMapper;
 
-    public AdminService(BlackListMapper blackListMapper, ReportBoardMapper reportBoardMapper) {
+    public AdminService(BlackListMapper blackListMapper, ReportBoardMapper reportBoardMapper, DashBoardMapper dashBoardMapper) {
         this.blackListMapper = blackListMapper;
         this.reportBoardMapper = reportBoardMapper;
+        this.dashBoardMapper = dashBoardMapper;
     }
 
     public List<BanListDTO> getBanListDTO() {
@@ -56,5 +60,21 @@ public class AdminService {
     @Transactional
     public void processReport(List<String> postIdList) {
         reportBoardMapper.processReport(postIdList);
+    }
+
+    public List<MeMiLogInfoDTO> getMeMiLogInfo() {
+        return dashBoardMapper.getMeMiLogInfo();
+    }
+
+    public List<AgeGroupMemberDTO> getAgeGroupMembers() {
+        return dashBoardMapper.findAgeGroupMembers();
+    }
+
+    public List<ReportedPostDTO> getTodayReportedPosts() {
+        return dashBoardMapper.findTodayReportedPosts();
+    }
+
+    public int getTodayReportCount() {
+        return dashBoardMapper.getTodayReportCount();
     }
 }

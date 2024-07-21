@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto navbar-right-top">
                     <li class="nav-item dropdown nav-user">
-                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../resources/static/assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                             <div class="nav-user-info">
                                 <h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
@@ -115,7 +115,7 @@
                             <h5 class="card-header">전체 회원 수 추이</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">35,902</h1>
+                                    <h1 class="mb-1" th:text="${latestMeMiLogInfo.userTotalCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">4%</span>
@@ -124,17 +124,14 @@
                             <div class="card-body bg-light p-t-40 p-b-30">
                                 <div id="sparkline-revenue0"></div>
                             </div>
-                            <div class="card-footer text-center bg-white">
-                                <a href="#" class="card-link">View Details</a>
-                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">오늘 접속자 수</h5>
+                            <h5 class="card-header">당일 접속자 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">6776</h1>
+                                    <h1 class="mb-1" th:text="${latestMeMiLogInfo.userCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">25%</span>
@@ -143,17 +140,14 @@
                             <div class="card-body bg-light p-t-40 p-b-30">
                                 <div id="sparkline-revenue"></div>
                             </div>
-                            <div class="card-footer text-center bg-white">
-                                <a href="#" class="card-link">View Details</a>
-                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">오늘 등록된 포스트 수</h5>
+                            <h5 class="card-header">당일 등록된 포스트 수</h5>
                             <div class="card-body">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">3752</h1>
+                                    <h1 class="mb-1" th:text="${latestMeMiLogInfo.postCount}"></h1>
                                 </div>
                                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
                                     <span class="icon-circle-small icon-box-xs text-danger bg-danger-light"><i class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">15%</span>
@@ -161,9 +155,6 @@
                             </div>
                             <div class="card-body text-center bg-light p-t-40 p-b-30">
                                 <div id="sparkline-revenue2"></div>
-                            </div>
-                            <div class="card-footer text-center bg-white">
-                                <a href="#" class="card-link">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -177,10 +168,10 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">오늘 신고된 포스트 수</h5>
+                            <h5 class="card-header">당일 신고된 포스트</h5>
                             <div class="card-body" style="padding: 1.25rem 1.25rem 0 1.25rem;">
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-3">9,000</h1>
+                                    <h1 class="mb-3" th:text="${todayReportCount}"></h1>
                                 </div>
                                 <table class="table table-hover">
                                     <thead>
@@ -192,35 +183,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>@mdo</td>
-                                        <td>15</td>
+                                    <tr th:each="reportedPost : ${reportedPosts}">
+                                        <td th:text="${reportedPost.postId}"/>
+                                        <td th:text="${reportedPost.reporterUserNickName}"/>
+                                        <td th:text="${reportedPost.reportedUserNickName}"/>
+                                        <td th:text="${reportedPost.reportCount}"/>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>@fat</td>
-                                        <td>10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>8</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>7</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td>Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>6</td>
+
+                                    <!-- 남는 줄을 채우기 위한 기본 값 줄 -->
+                                    <tr th:if="${#lists.size(reportedPosts) < 5}" th:each="i : ${#numbers.sequence(#lists.size(reportedPosts) + 1, 5)}">
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -281,8 +256,6 @@
 <script th:src="@{/assets/vendor/charts/charts-bundle/chartjs.js}"></script>
 <!-- sparkline js -->
 <script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
-<!-- dashboard finance js -->
-<script th:src="@{/assets/libs/js/dashboard-finance.js}"></script>
 <!-- main js -->
 <script th:src="@{/assets/libs/js/main-js.js}"></script>
 <!-- gauge js -->
@@ -303,6 +276,15 @@
         });
     });
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var meMiLogInfoDTOList = /*[[${meMiLogInfoDTOList}]]*/ [];
+    var ageGroupMembers = /*[[${ageGroupMembers}]]*/ [];
+    var reportedPosts = /*[[${reportedPosts}]]*/ [];
+    /*]]>*/
+</script>
+<!-- dashboard finance js -->
+<script th:src="@{/assets/libs/js/dashboard-finance.js}"></script>
 <script th:src="@{/document/js/userdashboard.js}"></script>
 </body>
 </html>
