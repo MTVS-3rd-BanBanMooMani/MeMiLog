@@ -2,7 +2,6 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.FileDTO;
 import com.banbanmoomani.memilog.service.FileService;
-import com.banbanmoomani.memilog.DAO.FileMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +15,14 @@ import java.io.IOException;
 public class FileController {
 
     private final FileService fileService;
-    private final FileMapper fileMapper;
 
-    public FileController(FileService fileService, FileMapper fileMapper) {
+
+    public FileController(FileService fileService) {
         this.fileService = fileService;
-        this.fileMapper = fileMapper;
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadProfilePic(@RequestParam("profilePic") MultipartFile file, @RequestParam("type") String type, HttpSession session) {
-        System.out.println("*******Hi I'm here*********");
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 존재하지 않습니다.");
         }
