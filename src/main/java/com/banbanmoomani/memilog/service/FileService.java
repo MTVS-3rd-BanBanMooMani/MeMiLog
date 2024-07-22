@@ -33,7 +33,7 @@ public class FileService {
                 .getService();
     }
 
-    public FileDTO handleFileUpload(MultipartFile file, String type, Integer user_id) throws IOException {
+    public FileDTO updateFile(MultipartFile file, String type, Integer user_id) throws IOException {
 
         String oldFileUrl = fileMapper.getFileUrl(user_id, type);
 
@@ -80,6 +80,19 @@ public class FileService {
         Blob blob = storage.get(bucketName, fileName);
         if (blob != null) {
             blob.delete();
+        }
+    }
+
+    public void deleteFileUrl(FileDTO fileDTO) {
+        int user_id = fileDTO.getUser_id();
+        String type = fileDTO.getType();
+
+        String fileUrl = fileMapper.getFileUrl(user_id, type);
+
+        if(fileUrl != null && !fileUrl.isEmpty()) {
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            deleteFile(fileName);
+            fileMapper.deleteFileUrl(fileDTO);
         }
     }
 }

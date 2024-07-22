@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface FileMapper {
     String getFileUrl(@Param("user_id") Integer user_id, @Param("type") String type);
     void updateFile(FileDTO fileDTO);
+    void deleteFileUrl(FileDTO fileDTO);
 }
-

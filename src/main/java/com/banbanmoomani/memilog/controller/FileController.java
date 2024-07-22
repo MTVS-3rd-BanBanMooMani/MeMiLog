@@ -32,7 +32,7 @@ public class FileController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
             }
 
-            FileDTO fileDTO = fileService.handleFileUpload(file, type, user_id);
+            FileDTO fileDTO = fileService.updateFile(file, type, user_id);
 
             return ResponseEntity.ok(fileDTO);
 
@@ -41,6 +41,22 @@ public class FileController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 에러가 발생했습니다." + e.getMessage());
         }
+    }
+
+    @PostMapping("/resetPic")
+    public ResponseEntity<?> deleteProfilePic(@RequestParam("type") String type, HttpSession session) {
+        Integer user_id = (Integer) session.getAttribute("user_id");
+
+        if (user_id == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("먼저 로그인을 해주세요!");
+        }
+
+        FileDTO fileDTO = new FileDTO();
+        fileDTO.setType(type);
+        fileDTO.setUser_id(user_id);
+
+        fileService.deleteFileUrl(fileDTO);
+        return ResponseEntity.ok("프로필 사진이 삭제되었습니다.");
     }
 }
 
