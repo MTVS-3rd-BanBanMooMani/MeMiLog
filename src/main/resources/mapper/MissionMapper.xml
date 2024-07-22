@@ -134,4 +134,18 @@
         )
     </insert>
 
+
+    <select id="countMissions" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM NOTICE
+    </select>
+
+    <select id="findAllMissionPaging" resultMap="missionResultMap">
+        SELECT
+        *
+        FROM
+        MISSION
+    </select>
+
 </mapper>

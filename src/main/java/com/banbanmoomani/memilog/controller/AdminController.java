@@ -257,9 +257,14 @@ public class AdminController {
     }
 
     @GetMapping("/dailyTopicBoard")
-    public void dailyTopicBoard(Model model) {
-        List<MissionDTO> missionList = missionService.findAllMission();
-        model.addAttribute("missionList", missionList);
+    public void dailyTopicBoard(@RequestParam(defaultValue = "1") int pageNum,
+                                @RequestParam(defaultValue = "10") int pageSize,
+                                Model model) {
+
+        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize);
+        model.addAttribute("missionList", pagedResult.getData());
+        model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
+        model.addAttribute("currentPage", pageNum);
     }
 
     @PostMapping("/dailyTopicBoard")

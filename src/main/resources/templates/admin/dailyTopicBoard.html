@@ -216,20 +216,11 @@
                 <div class="pagination">
                     <nav class="pagination-container">
                         <div class="pagination">
-                            <a class="pagination-newer" href="#">PREV</a>
+                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/dailyTopicBoard(pageNum=${currentPage - 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
                             <span class="pagination-inner">
-                                        <a href="#">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">4</a>
-                                        <a href="#">5</a>
-                                        <a href="#">6</a>
-                                        <a href="#">7</a>
-                                        <a href="#">8</a>
-                                        <a href="#">9</a>
-                                        <a href="#">10</a>
-                                    </span>
-                            <a class="pagination-older" href="#">NEXT</a>
+                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/dailyTopicBoard(pageNum=${i}, pageSize=${pageSize})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
+                    </span>
+                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/dailyTopicBoard(pageNum=${currentPage + 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
                         </div>
                     </nav>
                 </div>
