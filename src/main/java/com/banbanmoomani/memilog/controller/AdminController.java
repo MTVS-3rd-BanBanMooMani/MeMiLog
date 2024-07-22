@@ -225,8 +225,15 @@ public class AdminController {
         rptCategoryService.createRPTCategory(rptCategoryRequestDTO);
         return "redirect:/admin/point";
     }
+
+    @PostMapping("/updateRPTCategory")
+    public String updateRPTCategory(@RequestBody RPTCategoryDTO rptCategoryDTO) {
+        rptCategoryService.updateRPTCategory(rptCategoryDTO);
+        return "redirect:/admin/point";
+    }
     @PostMapping("/deleteRPTCategory")
     public String deleteRPTCategory(@RequestBody RPTCategoryDeleteRequestDTO request) {
+
         rptCategoryService.deleteRPTCategory(request.getRptList());
         return "redirect:/admin/point";
     }

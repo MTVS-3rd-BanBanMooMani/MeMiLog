@@ -10,4 +10,5 @@ public interface RPTCategoryMapper {
     List<RPTCategoryDTO> findAllRPTCategory();
     void createRPTCategory(RPTCategoryRequestDTO rptCategoryRequestDTO);
     void deleteRPTCategory(int rpt_category_id);
+    void updateRPTCategory(RPTCategoryDTO rptCategoryDTO);
 }

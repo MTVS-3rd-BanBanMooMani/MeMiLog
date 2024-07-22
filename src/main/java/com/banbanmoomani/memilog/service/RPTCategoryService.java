@@ -26,4 +26,7 @@ public class RPTCategoryService {
         rptList.forEach(rptCategoryMapper::deleteRPTCategory);
     }
 
+    public void updateRPTCategory(RPTCategoryDTO rptCategoryDTO) {
+        rptCategoryMapper.updateRPTCategory(rptCategoryDTO);
+    }
 }
