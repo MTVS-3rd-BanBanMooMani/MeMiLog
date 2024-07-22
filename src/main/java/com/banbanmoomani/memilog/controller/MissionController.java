@@ -1,18 +1,17 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
-import com.banbanmoomani.memilog.DTO.PostDTO;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MissionController {
@@ -49,19 +48,46 @@ public class MissionController {
     @GetMapping(value = "/main/allMission", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<MissionDTO> findAllMission() {
-        return missionService.findAllMission();
+
+        List<MissionDTO> missions = missionService.findAllMission();
+        missions.forEach(System.out::println);
+
+        return missions;
     }
 
 
     // ==================================연습용
-    // 검색된 미션 보기
-    @GetMapping("/findmission")
-    public String findTemaAllMission(Model model) {
+    // 모든 미션 보기
+    @GetMapping("/allmission")
+    public String showAllMission(Model model) {
 
-        List<MissionDTO> temaMissionList = missionService.findTemaMission();
-        model.addAttribute("temaMissionList", temaMissionList);
+        List<MissionDTO> missions = missionService.findAllMission();
+        model.addAttribute("missions", missions);
 
-        return "main/test2";
+        missions.forEach(System.out::println);
+        return "main/themeTest";
+    }
+
+    @GetMapping("/theme")
+    public String findMissionsByTheme(@RequestParam("type") String themeTypes, Model model) {
+
+        System.out.println("themeTypes = " + themeTypes);
+
+        List<MissionDTO> missions;
+
+        if (themeTypes != null && !themeTypes.isEmpty()) {
+            List<Integer> themeIds = Arrays.stream(themeTypes.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+            missions = missionService.findMissionsByTheme(themeIds);
+        } else {
+            missions = missionService.findAllMission();
+        }
+
+        model.addAttribute("missions", missions);
+
+        missions.forEach(System.out::println);
+        return "main/themeTest";
     }
 
 }

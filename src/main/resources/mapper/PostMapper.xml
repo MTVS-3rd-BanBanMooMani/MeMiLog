@@ -108,4 +108,42 @@
         WHERE
             DAY(m.mission_date) = 1
     </select>
+
+    <select id="findPostsByCompanion" resultMap="postResultMap">
+        SELECT
+        p.post_id,
+        m.mission_content AS title,
+        p.content,
+        p.like_count,
+        p.mission_id,
+        p.written_datetime,
+        u.nickname,
+        m.mission_content AS missionContent,
+        DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
+        mt.theme_name AS priThemeName,
+        st.theme_name AS subThemeName,
+        e.emotion_name AS emotionName,
+        c.companion_type AS companionType
+        FROM
+        POST p
+        LEFT JOIN
+        MISSION m ON p.mission_id = m.mission_id
+        LEFT JOIN
+        THEME mt ON m.pri_theme_id = mt.theme_id
+        LEFT JOIN
+        THEME st ON m.sub_theme_id = st.theme_id
+        LEFT JOIN
+        EMOTION e ON p.emotion_id = e.emotion_id
+        LEFT JOIN
+        COMPANION c ON p.companion_id = c.companion_id
+        LEFT JOIN
+        USER u ON p.user_id = u.user_id
+        WHERE
+        p.companion_id IN
+        <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
+            #{companionId}
+        </foreach>
+        AND DAY(m.mission_date) = 1
+    </select>
+
 </mapper>

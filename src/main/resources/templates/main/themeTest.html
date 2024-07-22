@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <style>
+        .selected {
+            background-color: lightblue;
+            position: relative;
+        }
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // 선택된 값을 저장할 배열
+        let selectedValues = [];
+
+        function addValue(button, value) {
+            if (!selectedValues.includes(value)) {
+                selectedValues.push(value);
+                button.classList.add('selected');
+                addRemoveButton(button);
+                console.log(`Selected Values: ${selectedValues}`);
+            } else {
+                removeValue(button);
+            }
+        }
+
+        function addRemoveButton(button) {
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = 'x';
+            removeBtn.className = 'remove-btn';
+            removeBtn.onclick = function(event) {
+                event.stopPropagation();
+                removeValue(button);
+            };
+            button.appendChild(removeBtn);
+        }
+
+        function removeRemoveButton(button) {
+            const removeBtn = button.querySelector('.remove-btn');
+            if (removeBtn) {
+                button.removeChild(removeBtn);
+            }
+        }
+
+        function removeValue(button) {
+            const value = button.value;
+            const index = selectedValues.indexOf(value);
+            if (index !== -1) {
+                selectedValues.splice(index, 1);
+                button.classList.remove('selected');
+                removeRemoveButton(button);
+                console.log(`Selected Values: ${selectedValues}`);
+            }
+        }
+
+        // function submitForm() {
+        //     const form = document.getElementById('themeForm');
+        //     const queryParam = selectedValues.join(',');
+        //     form.action = `/theme?type=${queryParam}`;
+        //     form.submit();
+        // }
+
+        // window.onload = function() {
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const types = urlParams.get('type');
+        //     if (types) {
+        //         types.split(',').forEach(value => {
+        //             const button = document.querySelector(`button[value="${value}"]`);
+        //             if (button) {
+        //                 addValue(button, value);
+        //             }
+        //         });
+        //     }
+        // };
+
+        function submitForm() {
+            const themeTypeField = document.getElementById('themeType');
+            themeTypeField.value = selectedValues.join(',');
+            const form = document.getElementById('themeForm');
+            form.submit();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const themeTypes = params.get('type');
+            if(themeTypes) {
+                const typesArray = themeTypes.split(',');
+                typesArray.forEach(type => {
+                    const button = document.querySelector(`button[value="${type}"]`);
+                    if (button) {
+                        addValue(button, type);
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+<body>
+<h3>테마 카테고리 선택</h3>
+<form id="themeForm" action="/theme" method="get">
+    <input type="hidden" id="themeType" name="type">
+    <button type="button" value="1" onclick="addValue(this, this.value)">1</button>
+    <button type="button" value="2" onclick="addValue(this, this.value)">2</button>
+    <button type="button" value="3" onclick="addValue(this, this.value)">3</button>
+    <button type="button" value="4" onclick="addValue(this, this.value)">4</button>
+    <button type="button" value="5" onclick="addValue(this, this.value)">5</button>
+    <input type="button" value="조회" onclick="submitForm()" />
+</form>
+<h3>게시물 목록</h3>
+<table>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>날짜</th>
+        <th>첫번째 테마</th>
+        <th>두번째 테마</th>
+    </tr>
+    <tr th:each="m : ${missions}">
+        <th th:text="${m.missionId}"></th>
+        <th th:text="${m.missionContent}"></th>
+        <th th:text="${m.missionDate}"></th>
+        <th th:text="${m.priThemeId}"></th>
+        <th th:text="${m.subThemeId}"></th>
+    </tr>
+</table>
+</body>
+</html>

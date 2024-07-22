@@ -32,4 +32,8 @@ public class PostService {
 
         return postMapper.findAllPostOnMissionByDate();
     }
+
+    public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
+        return postMapper.findPostsByCompanion(companionIds);
+    }
 }
