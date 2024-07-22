@@ -26,8 +26,8 @@ public class MissionService {
         return missionMapper.findAllMission();
     }
 
-    public List<MissionDTO> findTemaMission() {
-        return missionMapper.findTemaMission();
+    public List<MissionDTO> findMissionsByTheme(List<Integer> themeIds) {
+        return missionMapper.findMissionsByTheme(themeIds);
     }
 
 //    public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
