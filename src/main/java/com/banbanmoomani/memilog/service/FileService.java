@@ -9,20 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class FileService {
 
     @Value("${spring.cloud.gcp.storage.bucket}")
-
     private String bucketName;
     private final Storage storage;
-
     private final FileMapper fileMapper;
 
     public FileService(FileMapper fileMapper) throws IOException {
@@ -71,9 +65,12 @@ public class FileService {
 
         storage.create(blobInfo, file.getInputStream());
 
-        String newImageUrl = "https://storage.googleapis.com/"+bucketName+"/"+fileName;
+        return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
+    }
 
-        return newImageUrl;
+    public void saveFileUrl(String srcUrl, String type, int postId, int userId, int pictureOrder) {
+        FileDTO fileDTO = new FileDTO(srcUrl, type, postId, userId, pictureOrder);
+        fileMapper.insertFile(fileDTO);
     }
 
     public void deleteFile(String fileName) {
@@ -89,11 +86,10 @@ public class FileService {
 
         String fileUrl = fileMapper.getFileUrl(user_id, type);
 
-        if(fileUrl != null && !fileUrl.isEmpty()) {
+        if (fileUrl != null && !fileUrl.isEmpty()) {
             String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
             deleteFile(fileName);
             fileMapper.deleteFileUrl(fileDTO);
         }
     }
 }
-

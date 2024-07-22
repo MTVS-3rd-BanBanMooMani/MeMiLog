@@ -11,14 +11,12 @@ public class FileDTO {
 
     public FileDTO() {}
 
-    public FileDTO(int picture_id, String src_url, String type, int post_id, int user_id, int picture_order, int notice_id) {
-        this.picture_id = picture_id;
+    public FileDTO(String src_url, String type, int post_id, int user_id, int picture_order) {
         this.src_url = src_url;
         this.type = type;
         this.post_id = post_id;
         this.user_id = user_id;
         this.picture_order = picture_order;
-        this.notice_id = notice_id;
     }
 
     public int getPicture_id() {
@@ -40,6 +38,7 @@ public class FileDTO {
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -78,7 +77,7 @@ public class FileDTO {
 
     @Override
     public String toString() {
-        return "AttachmentDTO{" +
+        return "FileDTO{" +
                 "picture_id=" + picture_id +
                 ", src_url='" + src_url + '\'' +
                 ", type='" + type + '\'' +
