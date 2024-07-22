@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -123,4 +125,34 @@ public class UserController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<String> withdraw(@RequestBody String deletePassword, HttpSession session) {
+        Integer user_id = (Integer) session.getAttribute("user_id");
+        if (user_id == null) {
+            return new ResponseEntity<>("세션이 만료되었거나 잘못된 요청입니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        UserDTO user = userService.findUserById(user_id);
+        if (user == null) {
+            return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getPassword().equals(deletePassword)) {
+            System.out.println(user.getPassword());
+            System.out.println(deletePassword);
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            System.out.println("*********컨트롤러 진입*********");
+            userService.deleteUser(user);
+            session.invalidate();
+            return new ResponseEntity<>("회원 탈퇴가 완료되었습니다.", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("회원 탈퇴 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -23,7 +23,7 @@
         USER
         WHERE
 <!--        TODO: email -> user_id 수정 -->
-        email = #{user_id}
+        user_id = #{user_id}
     </select>
     <select id="findUserByEmail" parameterType="String" resultMap="userResultMap">
         SELECT
@@ -99,8 +99,9 @@
         WHERE email = #{email}
     </update>
 
-    <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
+    <delete id="deleteUserById" parameterType="int">
         DELETE FROM USER
-        WHERE email = #{email}
+        WHERE user_id = #{user_id}
     </delete>
+
 </mapper>
