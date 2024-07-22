@@ -12,7 +12,7 @@ public interface PostMapper {
 
     void createPost(CreateRequestDTO post);
 
-    void updatePost(CreateRequestDTO post);
+    void updatePost(PostDTO post);
 
     PostDTO findPostById(int postId);
 
