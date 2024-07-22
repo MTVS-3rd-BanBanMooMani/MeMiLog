@@ -6,10 +6,10 @@ public class MeMiLogInfoDiff {
     private int user_diff;
     private int post_diff;
 
-    public MeMiLogInfoDiff(int post_diff, int user_diff, int user_total_diff) {
-        this.post_diff = post_diff;
-        this.user_diff = user_diff;
+    public MeMiLogInfoDiff(int user_total_diff, int user_diff, int post_diff) {
         this.user_total_diff = user_total_diff;
+        this.user_diff = user_diff;
+        this.post_diff = post_diff;
     }
 
     public int getUser_total_diff() {
