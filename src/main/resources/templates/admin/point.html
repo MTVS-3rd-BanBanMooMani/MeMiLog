@@ -259,15 +259,10 @@
             .catch(error => {
                 location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
             });
-        // var row = checkbox.closest('tr');
-        // var rptCategoryId = row.id;
-        // rptList.push(parseInt(rptCategoryId, 10));
 
         // Do something with the updated values, for example, send to server
-        console.log('id:',parseInt(rptCategoryId, 10), 'Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
-
-        // alert('temp "' + rptCategoryId + '" Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
-        alert('Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
+        console.log('id:',rptCategoryId, 'Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+        alert('성공적으로 변경되었습니다.')
     }
 
     function deleteReason(buttonElement) {
