@@ -19,9 +19,9 @@ public class NoticeService {
         this.noticeMapper = noticeMapper;
     }
 
-    public PageResult<NoticeDTO> findAllNotice(int pageNum, int pageSize) {
+    public PageResult<NoticeDTO> findAllNotice(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
-        List<NoticeDTO> noticeList = noticeMapper.findAllNotice(rowBounds);
+        List<NoticeDTO> noticeList = noticeMapper.findAllNotice(content, rowBounds);
         int total = noticeMapper.countNotices();
         return new PageResult<>(noticeList, total);
     }

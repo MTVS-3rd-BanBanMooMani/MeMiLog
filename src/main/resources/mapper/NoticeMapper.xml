@@ -18,7 +18,7 @@
           FROM NOTICE
     </select>
 
-    <select id="findAllNotice" resultMap="noticeResultMap">
+    <select id="findAllNotice" resultMap="noticeResultMap" parameterType="String">
         SELECT
                notice_id
               ,notice_title
@@ -28,6 +28,10 @@
               ,visible_YN
               ,written_date
           FROM NOTICE
+         WHERE TRUE
+        <if test="content != null and content != ''">
+            AND notice_content LIKE CONCAT('%', #{content}, '%')
+        </if>
     </select>
     <insert id="createNotice" parameterType="com.banbanmoomani.memilog.DTO.NoticeDTO"
             useGeneratedKeys="true" keyProperty="notice_id">

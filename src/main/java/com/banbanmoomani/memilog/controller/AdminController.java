@@ -240,11 +240,12 @@ public class AdminController {
     }
 
     @GetMapping("/noticeBoard")
-    public void noticeBoard(@RequestParam(defaultValue = "1") int pageNum,
-                            @RequestParam(defaultValue = "10") int pageSize,
+    public void noticeBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
+                            @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
+                            @RequestParam(defaultValue = "", value = "content") String content,
                             Model model) {
 
-        PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize);
+        PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize, content);
         model.addAttribute("noticeList", pagedResult.getData());
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);
@@ -257,8 +258,8 @@ public class AdminController {
     }
 
     @GetMapping("/dailyTopicBoard")
-    public void dailyTopicBoard(@RequestParam(defaultValue = "1") int pageNum,
-                                @RequestParam(defaultValue = "10") int pageSize,
+    public void dailyTopicBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
+                                @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
                                 Model model) {
 
         PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize);

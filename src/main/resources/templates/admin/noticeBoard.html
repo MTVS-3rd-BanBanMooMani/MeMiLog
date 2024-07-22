@@ -83,14 +83,16 @@
                 <div class="table-header">
                     <button class="btn btn-primary mb-2" id="createNoticeBtn">공지사항 작성</button>
                     <span class="left-text">공지사항은 한 번에 최대 5개까지만 노출 가능합니다.</span>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="내용으로 검색">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
+                    <form method="get" action="/admin/noticeBoard">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="content" placeholder="내용으로 검색">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="notice-table">
