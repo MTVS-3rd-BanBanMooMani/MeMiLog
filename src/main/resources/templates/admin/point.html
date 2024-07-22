@@ -238,12 +238,35 @@
     function saveChanges(buttonElement) {
         var row = buttonElement.closest('tr');
         var reason = row.cells[1].innerText;
+        var rptCategoryId = parseInt(row.id);
         var score = row.querySelector('.score').value;
         var days = row.querySelector('.days').value;
 
-        // Do something with the updated values, for example, send to server
-        console.log('Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+        var data = {
+            rpt_category_id: parseInt(rptCategoryId),
+            category_name: reason,
+            rpt_weight: parseInt(score),
+            stop_day: parseInt(days)
+        }; // data를 Ajax를 사용하여 서버에 전송
+        fetch('/admin/updateRPTCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .catch(error => {
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            });
+        // var row = checkbox.closest('tr');
+        // var rptCategoryId = row.id;
+        // rptList.push(parseInt(rptCategoryId, 10));
 
+        // Do something with the updated values, for example, send to server
+        console.log('id:',parseInt(rptCategoryId, 10), 'Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+
+        // alert('temp "' + rptCategoryId + '" Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
         alert('Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
     }
 
