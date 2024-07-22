@@ -37,7 +37,6 @@ public class FileController {
 
             FileDTO fileDTO = fileService.handleFileUpload(file, type, user_id);
 
-            System.out.println("컨트롤러 갔다 왔음");
             return ResponseEntity.ok(fileDTO);
 
         } catch (IOException e) {
