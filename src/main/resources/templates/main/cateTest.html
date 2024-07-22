@@ -106,10 +106,10 @@
     <th>누구와</th>
   </tr>
   <tr th:each="post : ${post}">
-    <th th:text="${post.postId}"></th>
+    <th th:text="${post.post_Id}"></th>
     <th th:text="${post.content}"></th>
-    <th th:text="${post.nickname}"></th>
-    <th th:text="${post.companionType}"></th>
+    <th th:text="${post.user_id}"></th>
+    <th th:text="${post.companion_id}"></th>
   </tr>
 </table>
 </body>
