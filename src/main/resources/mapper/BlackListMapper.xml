@@ -31,6 +31,7 @@
         FROM USER u
         JOIN STOP s ON u.user_id = s.user_id
         WHERE s.perm_YN = 'N'
+        AND s.stop_end_date > CURDATE()
     </select>
 
     <!-- Corrected getBlackList query -->
