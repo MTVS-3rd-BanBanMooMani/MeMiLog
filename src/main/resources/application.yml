@@ -4,11 +4,11 @@ spring:
 
   cloud:
     gcp:
+      project-id: memilog
       storage:
         credentials:
           location: classpath:memilog-292b5416c430.json
-    project-id: memilog
-    bucket: memilog
+        bucket: memilog
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -24,3 +24,7 @@ mybatis:
 
 server:
   max-http-request-header-size: 40KB
+
+logging:
+  level:
+    root: debug
