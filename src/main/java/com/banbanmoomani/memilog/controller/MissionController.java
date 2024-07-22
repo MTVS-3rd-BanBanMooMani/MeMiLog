@@ -60,8 +60,12 @@ public class MissionController {
     // ==================================연습용
     // 모든 미션 보기
     @GetMapping("/allmission")
-    public String showAllMission(Model model) {
-
+    public String showAllMission(Model model, @RequestParam(name = "post_id",required = false)String post_id) {
+        if(post_id != null) {
+            System.out.println(post_id);
+            // mission 내용 조회
+            // post
+        }
         List<MissionDTO> missions = missionService.findAllMission();
         model.addAttribute("missions", missions);
 

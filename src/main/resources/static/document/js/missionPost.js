@@ -1,42 +1,69 @@
-document.addEventListener("DOMContentLoaded", function () {
+
+// document.addEventListener("DOMContentLoaded", function () {
   // 테마 카테고리
   const categoryBtns = document.querySelectorAll(".category-btn");
 
   const selectedCategories = [];
 
-  categoryBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // 버튼 클릭 시 선택된 카테고리 추가/제거
-      btn.classList.toggle("active");
-      if (btn.classList.contains("active")) {
-        selectedCategories.push(btn.textContent);
-        // 취소 버튼 생성
-        const cancelBtn = document.createElement("span");
-        cancelBtn.classList.add("cancel-btn");
-        cancelBtn.innerHTML = "&#10006;";
-        btn.appendChild(cancelBtn);
-        // 취소 버튼 클릭 시 선택 취소
-        cancelBtn.addEventListener("click", () => {
-          cancelBtn.classList.remove("active");
-          const index = selectedCategories.indexOf(btn.textContent);
-          if (index !== -1) {
-            selectedCategories.splice(index, 1);
-          }
-          btn.removeChild(cancelBtn);
-        });
-      } else {
-        const index = selectedCategories.indexOf(btn.textContent);
-        if (index !== -1) {
-          selectedCategories.splice(index, 1);
+  function addValue(button, value) {
+    if(!selectedCategories.includes(value)) {
+      selectedCategories.push(value);
+      button.classList.add("active");
+      addCancelButton(button);
+      console.log(`selectedCategories: ${selectedCategories}`);
+    }
+  }
+
+  function addCancelButton(button) {
+    // 취소 버튼 생성
+    const cancelBtn = document.createElement("span");
+    cancelBtn.classList.add("cancel-btn");
+    cancelBtn.innerHTML = "&#10006;";
+    cancelBtn.onclick = function (event) {
+      event.stopPropagation();
+      removeValue(button);
+    };
+    button.appendChild(cancelBtn);
+  }
+
+  function removeCancelButton(button) {
+    const cancelBtn = button.querySelector('.cancel-btn');
+    if(cancelBtn) {
+      button.removeChild(cancelBtn);
+    }
+  }
+
+  function removeValue(button) {
+    const value = button.value;
+    const index = selectedCategories.indexOf(value);
+    if (index !== -1) {
+      selectedCategories.splice(index, 1);
+      button.classList.remove('active');
+      removeCancelButton(button);
+      console.log(`selectedCategories: ${selectedCategories}`);
+    }
+  }
+
+  function submitForm() {
+    const themeTypeField = document.getElementById('themeType');
+    themeTypeField.value = selectedCategories.join(',');
+    const form = document.getElementById('themeForm');
+    form.submit();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const themeTypes = params.get('type');
+    if (themeTypes) {
+      const typesArray = themeTypes.split(',');
+      typesArray.forEach(type => {
+        const button = document.querySelector(`button[value="${type}"]`);
+        if (button) {
+          addValue(button, type);
         }
-        // 취소 버튼 제거
-        const cancelBtn = btn.querySelector(".cancel-btn");
-        if (cancelBtn) {
-          btn.removeChild(cancelBtn);
-        }
-      }
-    });
-  });
+      })
+    }
+  })
 
   // ==================================================================================
   // mission note(메모지) 관련
@@ -100,10 +127,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       noteElement.style.backgroundColor = selectedNoteColor;
       noteElement.querySelector(".masking-tape").style.backgroundColor = selectedTapeColor;
+      noteElement.addEventListener("click", () => {
+        location.href = "/allmission?post_id="+note["missionId"]
+      })
       noteContainer.appendChild(noteElement);
 
     });
   }
+
+// ==================================================================================
 
 // 페이지네이션 렌더링 함수
   function renderPagination() {
@@ -130,4 +162,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
   renderNotes(1);
   renderPagination();
-});
+// });

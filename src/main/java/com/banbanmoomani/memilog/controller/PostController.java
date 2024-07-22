@@ -135,6 +135,7 @@ public class PostController {
             return "redirect:/user/login";
         }
         createRequestDTO.setUser_id((int) user_id);
+
         try {
             postService.updatePost(createRequestDTO);
             rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 업데이트되었습니다");
@@ -169,6 +170,9 @@ public class PostController {
 
     @GetMapping("/all")
     public String viewAllPost(Model model) {
+        List<PostDTO> post = postService.findAllPosts();
+        System.out.println("============all post");
+        post.forEach(System.out::println);
         model.addAttribute("posts", postService.findAllPosts());
         return "main/allview";
     }
@@ -193,7 +197,9 @@ public class PostController {
         List<PostDTO> posts = postService.findAllPostOnMissionByDate();
         model.addAttribute("post", posts);
 
+        System.out.println("====================post");
         posts.forEach(System.out::println);
+
         return "main/cateTest";
     }
 
