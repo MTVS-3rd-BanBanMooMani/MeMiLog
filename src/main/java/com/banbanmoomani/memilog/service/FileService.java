@@ -2,11 +2,13 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DTO.FileDTO;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.UUID;
@@ -31,8 +33,10 @@ public class FileService {
         System.out.println("******프사 바꾸기 서비스 요청 들옴******");
 
         String oldFileUrl = fileMapper.getFileUrl(user_id, type);
+        System.out.println("*****************oldFileUrl = "+oldFileUrl);
 
         String newImageUrl = uploadFile(file);
+        System.out.println("*****************newImageUrl = "+newImageUrl);
 
         if (oldFileUrl != null && !oldFileUrl.isEmpty()) {
             String oldFileName = oldFileUrl.substring(oldFileUrl.lastIndexOf('/') + 1);
@@ -51,7 +55,10 @@ public class FileService {
     }
 
     public String uploadFile(MultipartFile file) throws IOException {
-        Storage storage = StorageOptions.getDefaultInstance().getService();
+        Storage storage = StorageOptions.newBuilder()
+                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
+                .build()
+                .getService();
 
         String uuid = UUID.randomUUID().toString();
         String extension = file.getContentType();
@@ -63,10 +70,18 @@ public class FileService {
                         file.getInputStream()
         );
 
-        URL newImageUrl = storage.signUrl(blobInfo, 365, TimeUnit.DAYS, Storage.SignUrlOption.httpMethod(HttpMethod.POST));
+        System.out.println("$$$$$$$$$$$$$$$blobInfo$$$$$$$$$$$$$$$ = " + blobInfo);
 
-        System.out.println("************newImageUrl************: " + newImageUrl);
-        return newImageUrl.toString();
+        URL newImageUrl = null;
+        try {
+            newImageUrl = storage.signUrl(blobInfo, 365, TimeUnit.DAYS, Storage.SignUrlOption.httpMethod(HttpMethod.GET));
+            System.out.println("************newImageUrl************: " + newImageUrl);
+        } catch (Exception e) {
+            System.err.println("Error while signing url: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return (newImageUrl != null) ? newImageUrl.toString() : null;
     }
 
     public void deleteFile(String fileName) {
