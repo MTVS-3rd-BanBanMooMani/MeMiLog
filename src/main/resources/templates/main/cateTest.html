@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Posts</title>
+  <style>
+    .selected {
+      background-color: lightblue;
+      position: relative;
+    }
+    .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    // 선택된 값을 저장할 배열
+    let selectedValues = [];
+
+    function addValue(button, value) {
+      if (!selectedValues.includes(value)) {
+        selectedValues.push(value);
+        button.classList.add('selected');
+        addRemoveButton(button);
+        console.log(`Selected Values: ${selectedValues}`);
+      }
+    }
+
+    function addRemoveButton(button) {
+      const removeBtn = document.createElement('button');
+      removeBtn.innerHTML = 'x';
+      removeBtn.className = 'remove-btn';
+      removeBtn.onclick = function(event) {
+        event.stopPropagation();
+        removeValue(button);
+      };
+      button.appendChild(removeBtn);
+    }
+
+    function removeRemoveButton(button) {
+      const removeBtn = button.querySelector('.remove-btn');
+      if (removeBtn) {
+        button.removeChild(removeBtn);
+      }
+    }
+
+    function removeValue(button) {
+      const value = button.value;
+      const index = selectedValues.indexOf(value);
+      if (index !== -1) {
+        selectedValues.splice(index, 1);
+        button.classList.remove('selected');
+        removeRemoveButton(button);
+        console.log(`Selected Values: ${selectedValues}`);
+      }
+    }
+
+    function submitForm() {
+      const companionTypeField = document.getElementById('companionType');
+      companionTypeField.value = selectedValues.join(',');
+      const form = document.getElementById('companionForm');
+      form.submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const companionTypes = params.get('type');
+      if (companionTypes) {
+        const typesArray = companionTypes.split(',');
+        typesArray.forEach(type => {
+          const button = document.querySelector(`button[value="${type}"]`);
+          if (button) {
+            addValue(button, type);
+          }
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+<h3>누구와 카테고리 선택</h3>
+<form id="companionForm" action="/post/companion" method="get">
+  <input type="hidden" id="companionType" name="type" />
+  <button type="button" value="1" onclick="addValue(this, this.value)">친구</button>
+  <button type="button" value="2" onclick="addValue(this, this.value)">가족</button>
+  <button type="button" value="3" onclick="addValue(this, this.value)">학교</button>
+  <button type="button" value="4" onclick="addValue(this, this.value)">파트너</button>
+  <button type="button" value="5" onclick="addValue(this, this.value)">애완동물</button>
+  <input type="button" value="조회" onclick="submitForm()" />
+</form>
+
+<h3>게시물 목록</h3>
+<table>
+  <tr>
+    <th>번호</th>
+    <th>내용</th>
+    <th>닉네임</th>
+    <th>누구와</th>
+  </tr>
+  <tr th:each="post : ${post}">
+    <th th:text="${post.post_id}"></th>
+    <th th:text="${post.content}"></th>
+    <th th:text="${post.user_id}"></th>
+    <th th:text="${post.companion_id}"></th>
+  </tr>
+</table>
+</body>
+</html>

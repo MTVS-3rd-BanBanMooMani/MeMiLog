@@ -24,10 +24,28 @@ public class PostService {
     public void createPost(CreateRequestDTO createRequestDTO) {
         postMapper.createPost(createRequestDTO);
     }
+//    @Transactional
+//    public void updatePost(PostDTO updateRequestDTO) {
+//        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
+//        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
+//            postMapper.updatePost(updateRequestDTO);
+//        } else {
+//            throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
+//        }
+//    }
     @Transactional
-    public void updatePost(CreateRequestDTO updateRequestDTO) {
-        PostDTO post = postMapper.findPostById(updateRequestDTO.getPostId());
-        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
+    public void updatePost(PostDTO updateRequestDTO) {
+    // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
+        int postId = 35;
+        int userId = 1;
+        PostDTO post = postMapper.findPostById(postId);
+        System.out.println("Post: " + post);
+        System.out.println("UpdateRequest User ID: " + userId);
+
+        if (post != null && post.getUser_id() == userId) {
+        // 하드코딩된 post_id와 user_id를 설정
+            updateRequestDTO.setPost_id(postId);
+            updateRequestDTO.setUser_id(userId);
             postMapper.updatePost(updateRequestDTO);
         } else {
             throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
@@ -51,6 +69,10 @@ public class PostService {
     public List<PostDTO> findAllPostOnMissionByDate() {
 
         return postMapper.findAllPostOnMissionByDate();
+    }
+
+    public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
+        return postMapper.findPostsByCompanion(companionIds);
     }
 
 }

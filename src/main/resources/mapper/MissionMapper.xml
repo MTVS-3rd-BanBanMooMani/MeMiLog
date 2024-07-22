@@ -35,14 +35,22 @@
             MISSION
     </select>
 
-    <!-- 미션 테마 카테고리 조회 SQL문 -->
-    <select id="findTemaMission" resultMap="missionResultMap">
+    <!-- 선택된 테마로 미션 조회 SQL문 -->
+    <select id="findMissionsByTheme" resultMap="missionResultMap">
         SELECT
-            *
+        *
         FROM
-            MISSION
+        MISSION
         WHERE
-            PRI_THEMA_ID = 1
+        pri_theme_id IN
+        <foreach item="themeId" index="index" collection="themeIds" open="(" separator="," close=")">
+            #{themeId}
+        </foreach>
+        OR
+        sub_theme_id IN
+        <foreach item="themeId" index="index" collection="themeIds" open="(" separator="," close=")">
+            #{themeId}
+        </foreach>
     </select>
     <select id="findTodayMission" resultMap="missionResultMap">
         SELECT

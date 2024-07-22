@@ -16,5 +16,13 @@
         WHERE user_id = #{user_id}
         AND type = #{type};
     </select>
+
+    <update id="deleteFileUrl">
+        UPDATE FILE
+        SET src_url = NULL
+        WHERE user_id = #{user_id}
+        AND type = #{type}
+    </update>
+
 </mapper>
 

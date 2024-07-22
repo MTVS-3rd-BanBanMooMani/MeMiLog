@@ -12,6 +12,8 @@
 <div class="container">
   <div th:replace="~{/fragments/mainHeader :: header}"></div>
   <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="postId" th:value="35"/>
+    <input type="hidden" name="user_id" th:value="1">
     <div class="middle-container">
       <div class="left-container">
         <div class="date-category">
@@ -47,23 +49,19 @@
             <ul class="icon-box">
               <li id="happy" onclick="changeIconColor('happy', 1)">
                 <img src="/document/img/happy.png" alt="happy" class="icon1" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
-                <span th:text="${post.emotion_id == 1 ? '선택됨' : ''}"></span>
               </li>
               <li id="cool" onclick="changeIconColor('cool', 2)">
                 <img src="/document/img/cool.png" alt="cool" class="icon1" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
-                <span th:text="${post.emotion_id == 2 ? '선택됨' : ''}"></span>
               </li>
               <li id="surprised" onclick="changeIconColor('surprised', 3)">
-                <img src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
-                <span th:text="${post.emotion_id == 3 ? '선택됨' : ''}"></span>
+                <img th:if="${post.emotion_id != 3}" src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
+                <img th:if="${post.emotion_id == 3}" src="/document/img/colored_surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/colored_surprised.png}" th:data-colored="@{/document/img/surprised.png}">
               </li>
               <li id="soso" onclick="changeIconColor('soso', 4)">
                 <img src="/document/img/soso.png" alt="soso" class="icon1" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
-                <span th:text="${post.emotion_id == 4 ? '선택됨' : ''}"></span>
               </li>
               <li id="sad" onclick="changeIconColor('sad', 5)">
                 <img src="/document/img/sad.png" alt="sad" class="icon1" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
-                <span th:text="${post.emotion_id == 5 ? '선택됨' : ''}"></span>
               </li>
             </ul>
           </div>
@@ -84,7 +82,7 @@
         <input type="hidden" name="user_id" th:value="${post.user_id}">
         <div class="buttons">
           <button class="submit-btn" type="submit" name="submit">수정 완료</button>
-          <button class="back-btn" type="button" onclick="window.location.href='/back'">돌아가기</button>
+          <button class="back-btn" type="button" onclick="window.history.back()">돌아가기</button>
         </div>
       </div>
     </div>
