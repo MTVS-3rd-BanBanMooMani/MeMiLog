@@ -7,11 +7,8 @@ import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
-import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryListDTO;
-import com.banbanmoomani.memilog.DTO.admin.report.processedPostListDTO;
-import com.banbanmoomani.memilog.DTO.admin.report.unProcessedPostListDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.*;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
-import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
 import com.banbanmoomani.memilog.service.AdminService;
 import com.banbanmoomani.memilog.service.MissionService;
@@ -221,6 +218,24 @@ public class AdminController {
     public void point(Model model) {
         List<RPTCategoryDTO> rpt_categorise = rptCategoryService.findAllCategorise();
         model.addAttribute("rpt_categorise", rpt_categorise);
+    }
+
+    @PostMapping("/point")
+    public String createRPTCategory(@RequestBody RPTCategoryRequestDTO rptCategoryRequestDTO) {
+        rptCategoryService.createRPTCategory(rptCategoryRequestDTO);
+        return "redirect:/admin/point";
+    }
+
+    @PostMapping("/updateRPTCategory")
+    public String updateRPTCategory(@RequestBody RPTCategoryDTO rptCategoryDTO) {
+        rptCategoryService.updateRPTCategory(rptCategoryDTO);
+        return "redirect:/admin/point";
+    }
+    @PostMapping("/deleteRPTCategory")
+    public String deleteRPTCategory(@RequestBody RPTCategoryDeleteRequestDTO request) {
+
+        rptCategoryService.deleteRPTCategory(request.getRptList());
+        return "redirect:/admin/point";
     }
 
     @GetMapping("/noticeBoard")

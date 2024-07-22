@@ -2,11 +2,14 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DTO.FileDTO;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.UUID;
@@ -18,21 +21,23 @@ public class FileService {
     @Value("${spring.cloud.gcp.storage.bucket}")
 
     private String bucketName;
-    private final Storage storage = StorageOptions.getDefaultInstance().getService();
+    private final Storage storage;
 
     private final FileMapper fileMapper;
 
-    public FileService(FileMapper fileMapper) {
+    public FileService(FileMapper fileMapper) throws IOException {
         this.fileMapper = fileMapper;
+        this.storage = StorageOptions.newBuilder()
+                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
+                .build()
+                .getService();
     }
 
     public FileDTO handleFileUpload(MultipartFile file, String type, Integer user_id) throws IOException {
 
-        System.out.println("******프사 바꾸기 서비스 요청 들옴******");
-
         String oldFileUrl = fileMapper.getFileUrl(user_id, type);
 
-        String newImageUrl = uploadFile(file);
+        String newImageUrl = uploadFile(file, user_id);
 
         if (oldFileUrl != null && !oldFileUrl.isEmpty()) {
             String oldFileName = oldFileUrl.substring(oldFileUrl.lastIndexOf('/') + 1);
@@ -45,28 +50,30 @@ public class FileService {
         fileDTO.setSrc_url(newImageUrl);
 
         fileMapper.updateFile(fileDTO);
-        System.out.println("서비스-매퍼 파일 수정 완.");
 
         return fileDTO;
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        Storage storage = StorageOptions.getDefaultInstance().getService();
+    public String uploadFile(MultipartFile file, Integer user_id) throws IOException {
 
-        String uuid = UUID.randomUUID().toString();
+        String originalFilename = file.getOriginalFilename();
+
+        if (originalFilename == null) {
+            throw new IOException("파일이 존재하지 않습니다.");
+        }
+
         String extension = file.getContentType();
+        String fileName = user_id + "-" +System.currentTimeMillis() + "." + extension;
 
-        BlobInfo blobInfo = storage.create(
-                BlobInfo.newBuilder(bucketName, uuid)
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
                         .setContentType(extension)
-                        .build(),
-                        file.getInputStream()
-        );
+                        .build();
 
-        URL newImageUrl = storage.signUrl(blobInfo, 365, TimeUnit.DAYS, Storage.SignUrlOption.httpMethod(HttpMethod.POST));
+        storage.create(blobInfo, file.getInputStream());
 
-        System.out.println("************newImageUrl************: " + newImageUrl);
-        return newImageUrl.toString();
+        String newImageUrl = "https://storage.googleapis.com/"+bucketName+"/"+fileName;
+
+        return newImageUrl;
     }
 
     public void deleteFile(String fileName) {

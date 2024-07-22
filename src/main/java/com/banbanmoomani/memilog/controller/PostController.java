@@ -45,7 +45,7 @@ public class PostController {
     }
 
     @GetMapping("/create")
-    public String createPost(Model model, HttpSession session, RedirectAttributes rttr) {
+    public String createPost(Model model, HttpSession session, @SessionAttribute(name = "user_id", required = false) String userId, RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         if(user_id == null) {
             rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
@@ -94,15 +94,12 @@ public class PostController {
         return "redirect:/post/all";
     }
     @GetMapping("/update")
-    public String updatePost(@RequestParam("postId") int postId,
+    public String updatePost(
                              Model model,
                              HttpSession session,
                              RedirectAttributes rttr) {
-        Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-            return "redirect:/user/login";
-        }
+        int postId = 35;  // postId를 하드코딩합니다.
+        int user_id = 1;
         PostDTO post = postService.findPostById(postId);
 
         if(post == null || post.getUser_id() != (int)user_id) {
@@ -125,28 +122,41 @@ public class PostController {
         return "main/postupdate";
     }
 
-    @PostMapping("/update")
-    public String updatePost(@ModelAttribute CreateRequestDTO createRequestDTO,
-                             HttpSession session,
-                             RedirectAttributes rttr) {
-        Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-            return "redirect:/user/login";
-        }
-        createRequestDTO.setUser_id((int) user_id);
+//    @PostMapping("/update")
+//    public String updatePost(@ModelAttribute PostDTO post,
+//                             HttpSession session,
+//                             RedirectAttributes rttr) {
+//        Object user_id = session.getAttribute("user_id");
+//        if(user_id == null) {
+//            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
+//            return "redirect:/user/login";
+//        }
+//        post.setUser_id((int) user_id);
+//        try {
+//            postService.updatePost(post);
+//            rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 업데이트되었습니다");
+//        } catch (IllegalArgumentException e) {
+//            rttr.addFlashAttribute("failMessage", "업데이트 권한이 없습니다.");
+//        } catch (Exception e) {
+//            rttr.addFlashAttribute("failMessage", "포스트 업데이트 중 오류가 발생했습니다.");
+//        }
+//        return "redirect:/post/all";
+//    }
+@PostMapping("/update")
+public String updatePostSubmit(@ModelAttribute PostDTO post,
+                               RedirectAttributes rttr) {
+    // 하드코딩된 값 설정
+    post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
+    post.setPost_id(35); // post_id를 하드코딩합니다.
 
-        try {
-            postService.updatePost(createRequestDTO);
-            rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 업데이트되었습니다");
-        } catch (IllegalArgumentException e) {
-            rttr.addFlashAttribute("failMessage", "업데이트 권한이 없습니다.");
-        } catch (Exception e) {
-            rttr.addFlashAttribute("failMessage", "포스트 업데이트 중 오류가 발생했습니다.");
-        }
-        return "redirect:/post/all";
+    try {
+        postService.updatePost(post);
+        rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
+    } catch (IllegalArgumentException e) {
+        rttr.addFlashAttribute("failMessage", e.getMessage());
     }
-
+    return "redirect:/post/all";
+}
 
     @PostMapping("/delete")
     public String deletePost(@RequestParam("postId") int postId,

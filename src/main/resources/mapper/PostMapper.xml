@@ -63,23 +63,49 @@
             #{user_id}
         )
     </insert>
-    <update id="updatePost" parameterType="com.banbanmoomani.memilog.DTO.post.CreateRequestDTO">
+    <select id="findPostById" resultMap="postResultMap" parameterType="_int">
+    SELECT
+    p.post_id,
+    p.content,
+    p.like_count,
+    p.mission_id,
+    p.written_datetime,
+    p.emotion_id,
+    p.user_id,
+    p.companion_id,
+    p.report_count,
+    p.hidden_YN,
+    mt.theme_name AS pri_theme_name,
+    st.theme_name AS sub_theme_name
+    FROM
+    POST p
+    LEFT JOIN
+    MISSION m ON p.mission_id = m.mission_id
+    LEFT JOIN
+    THEME mt ON m.pri_theme_id = mt.theme_id
+    LEFT JOIN
+    THEME st ON m.sub_theme_id = st.theme_id
+    WHERE
+    p.post_id = #{postId}
+    </select>
+
+    <update id="updatePost" parameterType="com.banbanmoomani.memilog.DTO.post.PostDTO">
         UPDATE
             POST
         SET
             content = #{content},
-            mission_id = (SELECT mission_id FROM MISSION WHERE mission_content = #{mission_content}),
+            mission_id = #{mission_id},
             emotion_id = #{emotion_id},
             companion_id = #{companion_id}
         WHERE
-            post_id = #{postId} AND user_id = #{user_id}
+            post_id = #{post_id} AND user_id = #{user_id}
     </update>
     <delete id="deletePostById" parameterType="_int">
         DELETE
         FROM
             POST
         WHERE
-            post_id = #{postId}
+            post_id = #{post_id}
     </delete>
 
 
