@@ -140,38 +140,11 @@
                             </tr>
                             </thead>
                             <tbody id="banReasonTableBody">
-                            <tr th:each="rpt_category : ${rpt_categorise}">
+                            <tr th:each="rpt_category : ${rpt_categorise}" th:id="${rpt_category.rpt_category_id}">
                                 <td><input type="checkbox" class="selectReason"></td>
                                 <td th:text="${rpt_category.category_name}"></td>
                                 <td><input type="number" class="form-control score" th:value="${rpt_category.rpt_weight}"></td>
                                 <td><input type="number" class="form-control days" th:value="${rpt_category.stop_day}"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>정치</td>
-                                <td><input type="number" class="form-control score" value="5"></td>
-                                <td><input type="number" class="form-control days" value="7"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>광고</td>
-                                <td><input type="number" class="form-control score" value="3"></td>
-                                <td><input type="number" class="form-control days" value="5"></td>
-                                <td>
-                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="selectReason"></td>
-                                <td>욕설</td>
-                                <td><input type="number" class="form-control score" value="4"></td>
-                                <td><input type="number" class="form-control days" value="10"></td>
                                 <td>
                                     <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
                                 </td>
@@ -265,13 +238,31 @@
     function saveChanges(buttonElement) {
         var row = buttonElement.closest('tr');
         var reason = row.cells[1].innerText;
+        var rptCategoryId = parseInt(row.id);
         var score = row.querySelector('.score').value;
         var days = row.querySelector('.days').value;
 
-        // Do something with the updated values, for example, send to server
-        console.log('Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+        var data = {
+            rpt_category_id: parseInt(rptCategoryId),
+            category_name: reason,
+            rpt_weight: parseInt(score),
+            stop_day: parseInt(days)
+        }; // data를 Ajax를 사용하여 서버에 전송
+        fetch('/admin/updateRPTCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .catch(error => {
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            });
 
-        alert('Ban reason "' + reason + '" updated to score: ' + score + ', days: ' + days);
+        // Do something with the updated values, for example, send to server
+        console.log('id:',rptCategoryId, 'Updated Reason:', reason, 'Updated Score:', score, 'Updated Days:', days);
+        alert('성공적으로 변경되었습니다.')
     }
 
     function deleteReason(buttonElement) {
@@ -296,37 +287,88 @@
 
     function deleteSelectedReasons() {
         var checkboxes = document.querySelectorAll('.selectReason:checked');
+        var rptList = [];
+
         checkboxes.forEach(function(checkbox) {
             var row = checkbox.closest('tr');
-            var reason = row.cells[1].innerText;
-            row.remove();
-            console.log('Deleted Reason:', reason);
+            var rptCategoryId = row.id;
+            rptList.push(parseInt(rptCategoryId, 10));
         });
-        alert('Selected reasons have been deleted.');
+
+        if (rptList.length > 0) {
+            var data = {
+                rptList: rptList
+            };
+
+            // AJAX request
+            fetch('/admin/deleteRPTCategory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .catch(error => {
+                    location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                });
+        } else {
+            alert('No reasons selected for deletion.');
+        }
     }
 
     document.getElementById('addReasonForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
         var reason = document.getElementById('reason').value;
-        var score = document.getElementById('score').value;
-        var days = document.getElementById('days').value;
+        var score = parseInt(document.getElementById('score').value, 10);
+        var days = parseInt(document.getElementById('days').value, 10);
 
-        var newRow = `
-                <tr>
-                    <td><input type="checkbox" class="selectReason"></td>
-                    <td>${reason}</td>
-                    <td><input type="number" class="form-control score" value="${score}"></td>
-                    <td><input type="number" class="form-control days" value="${days}"></td>
-                    <td>
-                        <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
-                    </td>
-                </tr>
-            `;
+        // Prepare data for the AJAX request
+        var data = {
+            categoryName: reason,
+            rptWeight: score,
+            stopDay: days
+        };
 
-        document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
-        $('#addReasonModal').modal('hide');
-        document.getElementById('addReasonForm').reset();
+        // AJAX request
+        fetch('/admin/point', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                // Add the new row to the table if the request was successful
+                if (result.success) {
+                //     var newRow = `
+                //     <tr>
+                //         <td><input type="checkbox" class="selectReason"></td>
+                //         <td>${reason}</td>
+                //         <td><input type="number" class="form-control score" value="${score}"></td>
+                //         <td><input type="number" class="form-control days" value="${days}"></td>
+                //         <td>
+                //             <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                //         </td>
+                //     </tr>
+                // `;
+                //     document.getElementById('banReasonTableBody').insertAdjacentHTML('beforeend', newRow);
+                    $('#addReasonModal').modal('hide');
+                    document.getElementById('addReasonForm').reset();
+                } else {
+                    alert('Failed to add reason.');
+                }
+            })
+            .catch(error => {
+
+                $('#addReasonModal').modal('hide');
+                document.getElementById('addReasonForm').reset();
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                // console.error('Error:', error);
+                // alert('An error occurred while adding the reason.');
+            });
     });
 </script>
 </body>
