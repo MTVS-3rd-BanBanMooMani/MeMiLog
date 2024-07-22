@@ -8,7 +8,7 @@
         <result property="email" column="email"/>
         <result property="password" column="password"/>
         <result property="birthday" column="birthday"/>
-        <result property="nickName" column="nickname"/>
+        <result property="nickname" column="nickname"/>
         <result property="gender" column="gender"/>
         <result property="caution_weights" column="caution_weights"/>
         <result property="temporary_YN" column="temporary_YN"/>
@@ -22,6 +22,7 @@
         FROM
         USER
         WHERE
+<!--        TODO: email -> user_id 수정 -->
         email = #{user_id}
     </select>
     <select id="findUserByEmail" parameterType="String" resultMap="userResultMap">
@@ -58,7 +59,7 @@
             #{email},
             #{password},
             #{birthday},
-            #{nickName},
+            #{nickname},
             #{gender},
             #{caution_weights},
             'N',
@@ -69,37 +70,35 @@
     </insert>
     <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         UPDATE USER
-        <trim prefix="SET" prefixOverrides=",">
+        <trim prefix="SET" suffixOverrides=",">
             <if test="password != null and password != ''">
-                password = #{password}
+                password = #{password},
             </if>
             <if test="birthday != null and birthday != ''">
-                ,birthday = #{birthday}
+                birthday = #{birthday},
             </if>
-            <if test="nickName != null and nickName != ''">
-                ,nickname = #{nickName}
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
             </if>
             <if test="gender != null and gender != ''">
-                ,gender = #{gender}
+                gender = #{gender},
             </if>
-            <if test="caution_weights != null and caution_weights gt 0">
-                ,caution_weights = #{caution_weights}
+            <if test="caution_weights != null and caution_weights > 0">
+                caution_weights = #{caution_weights},
             </if>
             <if test="susp_period != null">
-                ,susp_period = #{susp_period}
+                susp_period = #{susp_period},
             </if>
             <if test="today_access_YN != null and today_access_YN != ''">
-                ,today_access_YN = #{today_access_YN}
+                today_access_YN = #{today_access_YN},
             </if>
             <if test="temporary_YN != null and temporary_YN != ''">
-                ,temporary_YN = #{temporary_YN}
+                temporary_YN = #{temporary_YN},
             </if>
         </trim>
-            nickname = #{nickname}
-            password = #{password},
-        WHERE
-            email = #{email}
+        WHERE email = #{email}
     </update>
+
     <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         DELETE FROM USER
         WHERE email = #{email}

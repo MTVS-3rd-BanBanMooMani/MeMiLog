@@ -6,9 +6,9 @@ function changeIconColor(icon, id) {
     });
     document.getElementById(icon).querySelector('.icon1').src = document.getElementById(icon).querySelector('.icon1').getAttribute('data-colored');
 }
+
 function selectCompanion(button) {
     document.getElementById('companionId').value = button.getAttribute('data-id');
-    document.getElementById('companionType').value = button.getAttribute('data-type');
     var buttons = document.querySelectorAll('.answer');
     buttons.forEach(function(item) {
         item.classList.remove('selected');

@@ -31,8 +31,8 @@
                         <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img th:src="@{/assets/images/avatar-1.jpg}" alt="" class="user-avatar-md rounded-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                             <div class="nav-user-info">
-                                <h5 class="mb-0 text-white nav-user-name">John Abraham</h5>
-                                <span class="status"></span><span class="ml-2">ja@naver.com</span>
+                                <h5 class="mb-0 text-white nav-user-name" th:text="${adminInfo.getAdmin_name()}"></h5>
+                                <span class="status"></span><span class="ml-2" th:text="${adminInfo.getEmail()}"></span>
                             </div>
                             <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                         </div>
@@ -53,10 +53,10 @@
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider">Menu</li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                            <a class="nav-link" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
+                            <a class="nav-link active" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
@@ -121,14 +121,16 @@
                                     </tbody>
                                 </table>
                                 <div class="table-controls">
-                                    <button id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                    <form id="blacklistForm" method="post" action="/admin/userBlackList/black">
+                                        <input type="hidden" id="userIdList" name="userIdList"/>
+                                        <button type="button" id="moveToBlacklist" class="btn btn-primary">영구 활동 정지</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <!-- Blacklist Users Table -->
             <div class="row">
@@ -162,7 +164,10 @@
                                     </tbody>
                                 </table>
                                 <div class="table-controls">
-                                    <button id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                    <form id="releaseUserForm" method="post" action="/admin/userBlackList/release">
+                                        <input type="hidden" id="releaseUserIdList" name="userIdList"/>
+                                        <button type="button" id="deleteFromBlacklist" class="btn btn-primary">삭제</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -176,40 +181,48 @@
             <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
             <script th:src="@{/assets/libs/js/main-js.js}"></script>
             <script>
+                document.getElementById('moveToBlacklist').addEventListener('click', function () {
+                    let selectedUserIds = [];
+                    document.querySelectorAll('.checkItemSuspended:checked').forEach(function (checkbox) {
+                        let userId = checkbox.closest('tr').querySelector('td:nth-child(2)').innerText;
+                        selectedUserIds.push(userId);
+                    });
+
+                    if (selectedUserIds.length > 0) {
+                        document.getElementById('userIdList').value = selectedUserIds.join(',');
+                        document.getElementById('blacklistForm').submit();
+                    } else {
+                        alert('Please select at least one user.');
+                    }
+                });
+
+                document.getElementById('deleteFromBlacklist').addEventListener('click', function () {
+                    let selectedUserIds = [];
+                    document.querySelectorAll('.checkItemBlackList:checked').forEach(function (checkbox) {
+                        let userId = checkbox.closest('tr').querySelector('td:nth-child(2)').innerText;
+                        selectedUserIds.push(userId);
+                    });
+
+                    if (selectedUserIds.length > 0) {
+                        document.getElementById('releaseUserIdList').value = selectedUserIds.join(',');
+                        document.getElementById('releaseUserForm').submit();
+                    } else {
+                        alert('Please select at least one user.');
+                    }
+                });
+
                 $(document).ready(function() {
                     $('#checkAllSuspended').click(function() {
                         $('.checkItemSuspended').prop('checked', this.checked);
                     });
 
                     $('#checkAllBlacklist').click(function() {
-                        $('.checkItemBlacklist').prop('checked', this.checked);
-                    });
-
-                    $('#moveToBlacklist').click(function() {
-                        $('#suspended-users-table tbody tr').each(function() {
-                            if ($(this).find('.checkItemSuspended').is(':checked')) {
-                                var name = $(this).find('td').eq(1).text();
-                                var nickname = $(this).find('td').eq(2).text();
-                                var ageGroup = $(this).find('td').eq(3).text();
-                                var currentDate = new Date().toISOString().split('T')[0];
-                                var newRow = `
-                                    <tr>
-                                        <td><input type="checkbox" class="checkItemBlacklist small-checkbox"></td>
-                                        <td>${name}</td>
-                                        <td>${nickname}</td>
-                                        <td>${ageGroup}</td>
-                                        <td>${currentDate}</td>
-                                    </tr>
-                                `;
-                                $('#blacklist-users-table tbody').append(newRow);
-                                $(this).remove();
-                            }
-                        });
+                        $('.checkItemBlackList').prop('checked', this.checked);
                     });
 
                     $('#deleteFromBlacklist').click(function() {
                         $('#blacklist-users-table tbody tr').each(function() {
-                            if ($(this).find('.checkItemBlacklist').is(':checked')) {
+                            if ($(this).find('.checkItemBlackList').is(':checked')) {
                                 $(this).remove();
                             }
                         });
@@ -231,22 +244,7 @@
                 });
             </script>
         </div>
-        <div class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        <div class="text-md-right footer-links d-none d-sm-block">
-                            <a href="javascript: void(0);">About</a>
-                            <a href="javascript: void(0);">Support</a>
-                            <a href="javascript: void(0);">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
     </div>
 </div>
 </body>

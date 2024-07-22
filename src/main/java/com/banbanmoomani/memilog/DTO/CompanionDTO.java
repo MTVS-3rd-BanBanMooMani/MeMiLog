@@ -1,37 +1,37 @@
 package com.banbanmoomani.memilog.DTO;
 
 public class CompanionDTO {
-    private int companionId;
-    private String companionType;
+    private int companion_id;
+    private String companion_type;
 
     public CompanionDTO() {}
 
-    public CompanionDTO(int companionId, String companionType) {
-        this.companionId = companionId;
-        this.companionType = companionType;
+    public CompanionDTO(int companion_id, String companion_type) {
+        this.companion_id = companion_id;
+        this.companion_type = companion_type;
     }
 
-    public int getCompanionId() {
-        return companionId;
+    public int getCompanion_id() {
+        return companion_id;
     }
 
-    public void setCompanionId(int companionId) {
-        this.companionId = companionId;
+    public void setCompanion_id(int companion_id) {
+        this.companion_id = companion_id;
     }
 
-    public String getCompanionType() {
-        return companionType;
+    public String getCompanion_type() {
+        return companion_type;
     }
 
-    public void setCompanionType(String companionType) {
-        this.companionType = companionType;
+    public void setCompanion_type(String companion_type) {
+        this.companion_type = companion_type;
     }
 
     @Override
     public String toString() {
         return "CompanionDTO{" +
-                "companionId=" + companionId +
-                ", companionType='" + companionType + '\'' +
+                "companion_id=" + companion_id +
+                ", companion_type='" + companion_type + '\'' +
                 '}';
     }
 }

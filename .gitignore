@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 application.properties
+memilog-292b5416c430.json
 
 ### STS ###
 .apt_generated

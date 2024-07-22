@@ -67,7 +67,7 @@
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider">Menu</li>
                         <li class="nav-item ">
-                            <a class="nav-link active" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
+                            <a class="nav-link" th:href="@{/admin/dashBoard}"><i class="fa fa-home fa-clipboard"></i>Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/userBlackList}"><i class="fa fa-user fa-user-circle"></i>BlackList</a>
@@ -76,7 +76,7 @@
                             <a class="nav-link" th:href="@{/admin/reportTotal}"><i class="fas fa-fw fa-file-alt"></i>Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
+                            <a class="nav-link active" th:href="@{/admin/point}"><i class="fas fa-fw fa-balance-scale"></i>Ban Points</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/noticeBoard}"><i class="fas fa-fw fa-database"></i>Notice</a>
@@ -140,6 +140,15 @@
                             </tr>
                             </thead>
                             <tbody id="banReasonTableBody">
+                            <tr th:each="rpt_category : ${rpt_categorise}">
+                                <td><input type="checkbox" class="selectReason"></td>
+                                <td th:text="${rpt_category.category_name}"></td>
+                                <td><input type="number" class="form-control score" th:value="${rpt_category.rpt_weight}"></td>
+                                <td><input type="number" class="form-control days" th:value="${rpt_category.stop_day}"></td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="saveChanges(this)">Save</button>
+                                </td>
+                            </tr>
                             <tr>
                                 <td><input type="checkbox" class="selectReason"></td>
                                 <td>정치</td>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.CompanionMapper">
+    <resultMap id="companionResultMap" type="com.banbanmoomani.memilog.DTO.CompanionDTO">
+        <id property="companion_id" column="companion_id"/>
+        <result property="companion_type" column="companion_type"/>
+    </resultMap>
+    <select id="findCompanionById" parameterType="_int" resultMap="companionResultMap">
+        SELECT companion_id, companion_type
+        FROM COMPANION
+        WHERE companion_id = #{companionId}
+    </select>
+    <select id="findAllCompanions" resultMap="companionResultMap">
+        SELECT companion_id, companion_type
+        FROM COMPANION
+    </select>
+</mapper>
