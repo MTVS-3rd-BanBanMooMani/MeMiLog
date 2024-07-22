@@ -215,9 +215,10 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                document.querySelector(".profile-pic").src = response.src_url;
-                closeModal('profilePicModal');
-                alert("프로필 사진이 성공적으로 변경되었습니다.");
+                var userConfirmed = confirm("프로필 사진이 성공적으로 변경되었습니다.");
+                if (userConfirmed) {
+                    location.reload();
+                }
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
