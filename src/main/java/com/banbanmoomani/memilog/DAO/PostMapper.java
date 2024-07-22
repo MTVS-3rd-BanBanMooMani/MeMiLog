@@ -12,7 +12,11 @@ public interface PostMapper {
 
     void createPost(CreateRequestDTO post);
 
+    void updatePost(CreateRequestDTO post);
+
     PostDTO findPostById(int postId);
 
     List<PostDTO> findAllPostOnMissionByDate();
+
+    void deletePostById(int postId);
 }

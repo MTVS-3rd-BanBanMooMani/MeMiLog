@@ -84,8 +84,9 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal('profilePicModal')">&times;</span>
                 <h2>프로필 사진 변경</h2>
-                <form id="profilePicForm" onsubmit="return updateProfilePic(event)">
+                <form id="profilePicForm" method="post" action="/editProfilePic" enctype="multipart/form-data">
                     <input type="file" id="profilePic" name="profilePic"><br><br>
+                    <input type="hidden" name="type" value="profile">
                     <div class="form-footer">
                         <button type="submit">업로드</button>
                         <button type="button" onclick="deleteProfilePic()">삭제</button>
@@ -202,24 +203,27 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    function updateProfilePic(event) {
+    document.getElementById('profilePicForm').onsubmit = function (event) {
         event.preventDefault();
-        const profilePicForm = document.getElementById('profilePicForm');
-        const formData = new FormData(profilePicForm);
-        var fileInput = document.getElementById('profilePic');
-        var file = fileInput.files[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            document.querySelector(".profile-pic").src = e.target.result;
-            closeModal('profilePicModal');
-            alert("회원 정보 수정이 완료되었습니다.");
-        }
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            alert("파일을 선택해주세요.")
-        }
-        return false;
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/file/upload',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                document.querySelector(".profile-pic").src = response.src_url;
+                closeModal('profilePicModal');
+                alert("프로필 사진이 성공적으로 변경되었습니다.");
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+                alert("프로필 사진 변경에 실패했습니다.");
+            }
+        });
     }
 
     function deleteProfilePic() {

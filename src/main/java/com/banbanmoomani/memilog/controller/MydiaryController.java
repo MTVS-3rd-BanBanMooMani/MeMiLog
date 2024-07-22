@@ -2,7 +2,6 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO;
-import com.banbanmoomani.memilog.DTO.user.ModifyRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
 import com.banbanmoomani.memilog.service.user.UserService;
