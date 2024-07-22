@@ -2,7 +2,9 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.NoticeMapper;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -17,8 +19,11 @@ public class NoticeService {
         this.noticeMapper = noticeMapper;
     }
 
-    public List<NoticeDTO> findAllNotice() {
-        return noticeMapper.findAllNotice();
+    public PageResult<NoticeDTO> findAllNotice(int pageNum, int pageSize) {
+        RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
+        List<NoticeDTO> noticeList = noticeMapper.findAllNotice(rowBounds);
+        int total = noticeMapper.countNotices();
+        return new PageResult<>(noticeList, total);
     }
 
     public void createNotice(NoticeRequestDTO noticeRequestDTO) {
@@ -32,7 +37,7 @@ public class NoticeService {
         noticeDTO.setWritten_date(date);
         noticeDTO.setNotice_file_url("temp");
         noticeDTO.setVisible_YN("Y");
-//        return noticeDTO;
+
         noticeMapper.createNotice(noticeDTO);
     }
 

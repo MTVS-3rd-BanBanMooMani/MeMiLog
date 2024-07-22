@@ -12,6 +12,12 @@
         <result property="written_date" column="written_date"/>
         <result property="admin_id" column="admin_id"/>
     </resultMap>
+    <select id="countNotices" resultType="int">
+        SELECT
+               COUNT(*)
+          FROM NOTICE
+    </select>
+
     <select id="findAllNotice" resultMap="noticeResultMap">
         SELECT
                notice_id

@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
@@ -239,9 +240,14 @@ public class AdminController {
     }
 
     @GetMapping("/noticeBoard")
-    public void noticeBoard(Model model) {
-        List<NoticeDTO> noticeList = noticeService.findAllNotice();
-        model.addAttribute("noticeList", noticeList);
+    public void noticeBoard(@RequestParam(defaultValue = "1") int pageNum,
+                            @RequestParam(defaultValue = "10") int pageSize,
+                            Model model) {
+
+        PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize);
+        model.addAttribute("noticeList", pagedResult.getData());
+        model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
+        model.addAttribute("currentPage", pageNum);
     }
 
     @PostMapping("/noticeBoard")
