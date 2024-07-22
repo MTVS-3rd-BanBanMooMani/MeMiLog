@@ -41,7 +41,7 @@ public class PostController {
     }
 
     @GetMapping("/create")
-    public String createPost(Model model, HttpSession session, RedirectAttributes rttr) {
+    public String createPost(Model model, HttpSession session, @SessionAttribute(name = "user_id", required = false) String userId, RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         if(user_id == null) {
             rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
