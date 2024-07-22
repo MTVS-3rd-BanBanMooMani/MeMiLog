@@ -3,10 +3,12 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.user.*;
 import com.banbanmoomani.memilog.service.user.RegisterMailService;
 import com.banbanmoomani.memilog.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,8 +23,18 @@ public class UserController {
         this.registerMailService = registerMailService;
     }
 
+    @GetMapping("/deleteSession")
+    public String deleteSession(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpSession session, Model model) {
+        if(session.getAttribute("failMessage") != null) {
+            model.addAttribute("failMessage", session.getAttribute("failMessage"));
+            session.removeAttribute("failMessage");
+        }
         return "user/login";
     }
 
