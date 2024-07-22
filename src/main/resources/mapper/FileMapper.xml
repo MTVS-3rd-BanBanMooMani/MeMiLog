@@ -24,8 +24,22 @@
         AND type = #{type}
     </update>
     <insert id="insertFile">
-        INSERT INTO FILE (src_url, type, post_id, user_id, picture_order)
-        VALUES (#{src_url}, #{type}, #{post_id}, #{user_id}, #{picture_order})
+        INSERT INTO FILE
+        (
+            src_url,
+            type,
+            post_id,
+            user_id,
+            picture_order
+        )
+        VALUES
+        (
+            #{src_url},
+            #{type},
+            #{post_id},
+            #{user_id},
+            #{picture_order}
+        )
     </insert>
 </mapper>
 
