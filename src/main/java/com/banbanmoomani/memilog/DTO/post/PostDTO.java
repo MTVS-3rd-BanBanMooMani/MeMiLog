@@ -107,4 +107,20 @@ public class PostDTO {
     public void setHidden_YN(boolean hidden_YN) {
         this.hidden_YN = hidden_YN;
     }
+
+    @Override
+    public String toString() {
+        return "PostDTO{" +
+                "post_id=" + post_id +
+                ", content='" + content + '\'' +
+                ", like_count=" + like_count +
+                ", mission_id=" + mission_id +
+                ", written_datetime=" + written_datetime +
+                ", emotion_id=" + emotion_id +
+                ", user_id=" + user_id +
+                ", companion_id=" + companion_id +
+                ", report_count=" + report_count +
+                ", hidden_YN=" + hidden_YN +
+                '}';
+    }
 }
