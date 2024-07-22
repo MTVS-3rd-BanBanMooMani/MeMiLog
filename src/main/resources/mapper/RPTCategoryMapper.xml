@@ -17,4 +17,36 @@
              , stop_day
         FROM RPT_CATEGORY
     </select>
+    <insert id="createRPTCategory" useGeneratedKeys="true"
+            parameterType="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryRequestDTO">
+        INSERT
+          INTO RPT_CATEGORY
+        (
+             category_name
+            ,rpt_weight
+            ,stop_day
+        )
+        VALUES
+        (
+             #{categoryName}
+            ,#{rptWeight}
+            ,#{stopDay}
+        )
+    </insert>
+
+    <delete id="deleteRPTCategory" parameterType="int">
+        DELETE
+          FROM RPT_CATEGORY
+         WHERE rpt_category_id = #{rpt_category_id}
+    </delete>
+
+    <update id="updateRPTCategory" parameterType="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO"
+            useGeneratedKeys="true" keyProperty="rpt_category_id">
+        UPDATE
+               RPT_CATEGORY
+           SET
+               rpt_weight = #{rpt_weight}
+             , stop_day = #{stop_day}
+         WHERE rpt_category_id = #{rpt_category_id}
+    </update>
 </mapper>
