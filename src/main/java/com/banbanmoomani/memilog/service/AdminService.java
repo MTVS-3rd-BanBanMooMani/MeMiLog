@@ -93,20 +93,26 @@ public class AdminService {
 
     public MeMiLogInfoDiff calculateMeMiLogInfoDiff(MeMiLogInfoDTO todayMeMiLogInfoDTO, MeMiLogInfoDTO yesterdayMeMiLogInfoDTO) {
 
-        // Ensure there is no division by zero
-        int userTotalDiffPercent = yesterdayMeMiLogInfoDTO.getUserTotalCount() != 0
-                ? (int)(((double)(todayMeMiLogInfoDTO.getUserTotalCount() - yesterdayMeMiLogInfoDTO.getUserTotalCount()) / yesterdayMeMiLogInfoDTO.getUserTotalCount()) * 100)
-                : 0;
+        // 오늘과 어제의 사용자 총 수 차이 비율 계산
+        int userTotalDiffPercent = calculatePercentageDiff(todayMeMiLogInfoDTO.getUserTotalCount(), yesterdayMeMiLogInfoDTO.getUserTotalCount());
+        System.out.println(userTotalDiffPercent);
 
-        int userDiffPercent = yesterdayMeMiLogInfoDTO.getUserCount() != 0
-                ? (int)(((double)(todayMeMiLogInfoDTO.getUserCount() - yesterdayMeMiLogInfoDTO.getUserCount()) / yesterdayMeMiLogInfoDTO.getUserCount()) * 100)
-                : 0;
+        // 오늘과 어제의 사용자 수 차이 비율 계산
+        int userDiffPercent = calculatePercentageDiff(todayMeMiLogInfoDTO.getUserCount(), yesterdayMeMiLogInfoDTO.getUserCount());
+        System.out.println(userDiffPercent);
 
-        int postDiffPercent = yesterdayMeMiLogInfoDTO.getPostCount() != 0
-                ? (int)(((double)(todayMeMiLogInfoDTO.getPostCount() - yesterdayMeMiLogInfoDTO.getPostCount()) / yesterdayMeMiLogInfoDTO.getPostCount()) * 100)
-                : 0;
+        // 오늘과 어제의 게시물 수 차이 비율 계산
+        int postDiffPercent = calculatePercentageDiff(todayMeMiLogInfoDTO.getPostCount(), yesterdayMeMiLogInfoDTO.getPostCount());
+        System.out.println(postDiffPercent);
 
         return new MeMiLogInfoDiff(userTotalDiffPercent, userDiffPercent, postDiffPercent);
+    }
+
+    private int calculatePercentageDiff(int todayCount, int yesterdayCount) {
+        if (yesterdayCount == 0) {
+            return 0; // 어제의 수치가 0일 경우, 변화율을 0으로 설정
+        }
+        return (int) Math.round(((double)(todayCount - yesterdayCount) / yesterdayCount) * 100);
     }
 
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
