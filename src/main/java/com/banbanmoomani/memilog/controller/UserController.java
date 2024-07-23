@@ -145,7 +145,6 @@ public class UserController {
         }
 
         try {
-            System.out.println("*********컨트롤러 진입*********");
             userService.deleteUser(user);
             session.invalidate();
             return new ResponseEntity<>("회원 탈퇴가 완료되었습니다.", HttpStatus.OK);

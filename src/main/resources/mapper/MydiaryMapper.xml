@@ -20,7 +20,7 @@
         <result property="src_url" column="src_url"/>
     </resultMap>
 
-    <select id="findUserById" resultType="com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO">
+    <select id="findUserInfoById" parameterType="HashMap" resultType="com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO">
         SELECT
             u.user_id
              , u.email
@@ -33,11 +33,11 @@
         FROM USER u
                  LEFT JOIN
              FILE f ON u.user_id = f.user_id
-        WHERE u.user_id = 1
+        WHERE u.user_id = #{user_id}
           AND f.type = 'profile';
     </select>
 
-    <select id="findPosts" parameterType="String" resultMap="postResultMap">
+    <select id="findPosts" parameterType="HashMap" resultMap="postResultMap">
         SELECT
               p.post_id
             , m.mission_content
@@ -62,7 +62,7 @@
                 LEFT JOIN USER u ON p.user_id = u.user_id
                 LEFT JOIN FILE f ON p.post_id = f.post_id
         WHERE
-            u.user_id = 1
+            u.user_id = #{user_id}
           AND f.type = 'post'
         <if test="selectedDate != null and selectedDate != ''">
         AND DATE_FORMAT( m.mission_date, '%e' ) = #{selectedDate}
