@@ -63,7 +63,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(UserDTO userDTO) {
-        userMapper.deleteUserByEmail(userDTO);
+        userMapper.deleteUserById(userDTO.getUser_id());
     }
 
     private static ModifyRequestDTO convertToModifyRequestDTO(UserDTO userDTO) {

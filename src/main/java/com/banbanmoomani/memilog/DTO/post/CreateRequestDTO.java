@@ -7,16 +7,18 @@ public class CreateRequestDTO {
     private int emotion_id;
     private int companion_id;
     private int user_id;
+    private String fileUrl; // 추가된 필드
 
     public CreateRequestDTO() {}
 
-    public CreateRequestDTO(int postId, String mission_content, String content, int emotion_id, int companion_id, int user_id) {
+    public CreateRequestDTO(int postId, String mission_content, String content, int emotion_id, int companion_id, int user_id, String fileUrl) {
         this.postId = postId;
         this.mission_content = mission_content;
         this.content = content;
         this.emotion_id = emotion_id;
         this.companion_id = companion_id;
         this.user_id = user_id;
+        this.fileUrl = fileUrl;
     }
 
     public int getPostId() {
@@ -67,6 +69,14 @@ public class CreateRequestDTO {
         this.user_id = user_id;
     }
 
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
     @Override
     public String toString() {
         return "CreateRequestDTO{" +
@@ -76,6 +86,7 @@ public class CreateRequestDTO {
                 ", emotion_id=" + emotion_id +
                 ", companion_id=" + companion_id +
                 ", user_id=" + user_id +
+                ", fileUrl='" + fileUrl + '\'' +
                 '}';
     }
 }

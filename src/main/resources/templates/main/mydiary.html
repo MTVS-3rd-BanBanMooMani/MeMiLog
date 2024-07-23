@@ -97,6 +97,7 @@
                 </form>
             </div>
         </div>
+
         <div id="deleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('deleteModal')">&times;</span>
@@ -291,32 +292,54 @@
     };
 
     document.getElementById('deleteForm').onsubmit = function(event) {
-    event.preventDefault();
-    alert("회원 탈퇴가 완료되었습니다.");
-    closeModal('deleteModal');
-    closeModal('userModal');
-    }
+        event.preventDefault();
+
+        const password = document.getElementById('deletePassword').value;
+
+        fetch('/user/withdraw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: password
+        })
+            .then(response => {
+                return response.text().then(text => {
+                    if (response.ok) {
+                        alert(text);
+                        closeModal('deleteModal');
+                        location.href = '/';
+                    } else {
+                        throw new Error(text);
+                    }
+                });
+            })
+            .catch(error => {
+                alert(error.message);
+                closeModal('deleteModal');
+            });
+    };
 
     function fetchPostsForDate(date) {
-    fetch("/selectedDate", {
-    method : "POST",
-    headers : {
-    "Content-Type" : "application/json"
-    },
-    body: JSON.stringify({ selectedDate: date })
-    })
-    .then(response => response.json())
-    .then(data => {
-    displayPosts(data);
-    })
-    .catch(error => console.error("Error fetching posts: " , error));
+        fetch("/selectedDate", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({ selectedDate: date })
+        })
+            .then(response => response.json())
+            .then(data => {
+                displayPosts(data);
+            })
+            .catch(error => console.error("Error fetching posts: " , error));
     }
 
     function displayPosts(posts) {
-    const calendarContents = document.querySelector(".calendar-contents");
-    calendarContents.innerHTML = "";
+        const calendarContents = document.querySelector(".calendar-contents");
+        calendarContents.innerHTML = "";
 
-    posts.forEach(post => {
+        posts.forEach(post => {
             const postElement = document.createElement("div");
             postElement.className = "calendar-card";
             const postImage = document.createElement("img");
