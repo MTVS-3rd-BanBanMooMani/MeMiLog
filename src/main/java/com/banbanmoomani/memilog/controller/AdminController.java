@@ -248,7 +248,7 @@ public class AdminController {
         return "redirect:/admin/dailyTopicBoard";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/admin/login";
