@@ -249,6 +249,7 @@ public class AdminController {
         model.addAttribute("noticeList", pagedResult.getData());
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);
+        model.addAttribute("content", content);
     }
 
     @PostMapping("/noticeBoard")
@@ -267,6 +268,8 @@ public class AdminController {
         model.addAttribute("missionList", pagedResult.getData());
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);
+        model.addAttribute("content", content);
+
     }
 
     @PostMapping("/dailyTopicBoard")

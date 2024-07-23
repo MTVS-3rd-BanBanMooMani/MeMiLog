@@ -12,10 +12,14 @@
         <result property="written_date" column="written_date"/>
         <result property="admin_id" column="admin_id"/>
     </resultMap>
-    <select id="countNotices" resultType="int">
+    <select id="countNotices" resultType="int" parameterType="String">
         SELECT
-               COUNT(*)
-          FROM NOTICE
+              COUNT(*)
+        FROM NOTICE
+        WHERE TRUE
+        <if test="content != null and content != ''">
+            AND notice_content LIKE CONCAT('%', #{content}, '%')
+        </if>
     </select>
 
     <select id="findAllNotice" resultMap="noticeResultMap" parameterType="String">

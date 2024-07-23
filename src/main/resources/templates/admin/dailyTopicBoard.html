@@ -83,14 +83,16 @@
                 <div class="table-header">
                     <button class="btn btn-primary mb-2" id="createTopicBtn">데일리미션 등록</button>
                     <span class="left-text"></span>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="주제로 검색">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
+                    <form method="get" action="/admin/dailyTopicBoard">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="content" placeholder="주제로 검색">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="topic-table">
@@ -216,11 +218,11 @@
                 <div class="pagination">
                     <nav class="pagination-container">
                         <div class="pagination">
-                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/dailyTopicBoard(pageNum=${currentPage - 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
+                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/dailyTopicBoard(pageNum=${currentPage - 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
                             <span class="pagination-inner">
-                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/dailyTopicBoard(pageNum=${i}, pageSize=${pageSize})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
+                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/dailyTopicBoard(pageNum=${i}, pageSize=${pageSize}, content=${content})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
                     </span>
-                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/dailyTopicBoard(pageNum=${currentPage + 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
+                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/dailyTopicBoard(pageNum=${currentPage + 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
                         </div>
                     </nav>
                 </div>

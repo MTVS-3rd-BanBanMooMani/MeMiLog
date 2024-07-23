@@ -12,5 +12,5 @@ public interface NoticeMapper {
     List<NoticeDTO> findAllNotice(@Param("content") String content, RowBounds rowBounds);
     void createNotice(NoticeDTO noticeDTO);
 
-    int countNotices();
+    int countNotices(@Param("content") String content);
 }

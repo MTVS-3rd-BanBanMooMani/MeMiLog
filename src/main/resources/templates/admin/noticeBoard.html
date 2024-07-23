@@ -194,11 +194,11 @@
                 <div class="pagination">
                     <nav class="pagination-container">
                         <div class="pagination">
-                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/noticeBoard(pageNum=${currentPage - 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
+                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/noticeBoard(pageNum=${currentPage - 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
                             <span class="pagination-inner">
-                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/noticeBoard(pageNum=${i}, pageSize=${pageSize})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
+                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/noticeBoard(pageNum=${i}, pageSize=${pageSize}, content=${content})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
                     </span>
-                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/noticeBoard(pageNum=${currentPage + 1}, pageSize=${pageSize})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
+                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/noticeBoard(pageNum=${currentPage + 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
                         </div>
                     </nav>
                 </div>

@@ -22,7 +22,7 @@ public class NoticeService {
     public PageResult<NoticeDTO> findAllNotice(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
         List<NoticeDTO> noticeList = noticeMapper.findAllNotice(content, rowBounds);
-        int total = noticeMapper.countNotices();
+        int total = noticeMapper.countNotices(content);
         return new PageResult<>(noticeList, total);
     }
 
