@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.PostService;
@@ -33,6 +34,7 @@ public class MainController {
         // today post
         List<todayPostDTO> todayPostDTOList = postService.getTodayPostDTOList();
         model.addAttribute("todayPostDTOList", todayPostDTOList);
+        System.out.println(todayPostDTOList);
 
         // post archive
         List<archivePostDTO> archivePostDTOList = postService.getArchivePostDTOList();
