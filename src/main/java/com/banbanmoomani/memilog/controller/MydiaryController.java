@@ -5,12 +5,14 @@ import com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
 import com.banbanmoomani.memilog.service.user.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +28,17 @@ public class MydiaryController {
     }
 
     @GetMapping("/mydiary")
-    public String mydiary(@RequestParam(value = "selectedDate", required = false) String selectedDate, Model model) {
+    public String mydiary(HttpSession session, Model model) {
 
-        List<PostRequestDTO> postList = mydiaryService.findPosts(selectedDate);
-        postList.forEach(System.out::println);
+        int user_id = (Integer) session.getAttribute("user_id");
+        System.out.println("user_id: " + user_id);
 
-        UserProfileDTO user = mydiaryService.findUserById();
-        System.out.println(user);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+
+        List<PostRequestDTO> postList = mydiaryService.findPosts(params);
+
+        UserProfileDTO user = mydiaryService.findUserInfoById(params);
 
         model.addAttribute("posts", postList);
         model.addAttribute("user", user);
@@ -41,11 +47,16 @@ public class MydiaryController {
     }
 
     @PostMapping("/selectedDate")
-    public ResponseEntity<List<PostRequestDTO>> selectedDate(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<List<PostRequestDTO>> selectedDate(@RequestBody Map<String, String> payload, HttpSession session) {
+        int user_id = (Integer) session.getAttribute("user_id");
         String selectedDate = (String) payload.get("selectedDate");
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("selectedDate", selectedDate);
+
         System.out.println("Selected Date: " + selectedDate);
-        List<PostRequestDTO> posts = mydiaryService.findPosts(selectedDate);
-        System.out.println(posts);
+        List<PostRequestDTO> posts = mydiaryService.findPosts(params);
         return ResponseEntity.ok(posts);
     }
 
