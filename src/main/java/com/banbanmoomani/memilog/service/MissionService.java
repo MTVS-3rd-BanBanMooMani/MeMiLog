@@ -2,7 +2,10 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -67,4 +70,11 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+    // mission 전체조회 paging
+    public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
+        RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
+        List<MissionDTO> missionList = missionMapper.findAllMissionPaging(content, rowBounds);
+        int total = missionMapper.countMissions();
+        return new PageResult<>(missionList, total);
+    }
 }
