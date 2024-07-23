@@ -188,7 +188,7 @@ public class AdminController {
 
         if (postIdList == null || postIdList.isEmpty()) {
             System.out.println("postIdList is null or empty");
-            return "redirect:/admin/userBlackList";
+            return "redirect:/admin/reportTotal";
         }
 
         for (String postId : postIdList) {
@@ -197,7 +197,7 @@ public class AdminController {
 
         adminService.processReport(postIdList);
 
-        return "redirect:/admin/userBlackList";
+        return "redirect:/admin/reportTotal";
     }
 
     @GetMapping("/point")
