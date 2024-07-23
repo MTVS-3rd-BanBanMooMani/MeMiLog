@@ -202,7 +202,12 @@ public class AdminController {
     }
 
     @GetMapping("/point")
-    public void point(Model model) {
+    public void point(Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
         List<RPTCategoryDTO> rpt_categorise = rptCategoryService.findAllCategorise();
         model.addAttribute("rpt_categorise", rpt_categorise);
     }
@@ -229,7 +234,12 @@ public class AdminController {
     public void noticeBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
                             @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
                             @RequestParam(defaultValue = "", value = "content") String content,
-                            Model model) {
+                            Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize, content);
         model.addAttribute("noticeList", pagedResult.getData());
@@ -248,7 +258,12 @@ public class AdminController {
     public void dailyTopicBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
                                 @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
                                 @RequestParam(defaultValue = "", value = "content") String content,
-                                Model model) {
+                                Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
         model.addAttribute("missionList", pagedResult.getData());
