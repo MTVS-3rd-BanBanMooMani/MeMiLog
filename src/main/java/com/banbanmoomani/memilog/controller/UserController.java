@@ -42,6 +42,12 @@ public class UserController {
     public String loginUser(LoginRequestDTO loginRequestDTO, RedirectAttributes rttr,
                             HttpSession httpSession) {
         UserDTO userInfo = userService.findByEmail(loginRequestDTO.getEmail());
+
+        if(userInfo.getTemporary_YN().equals("Y")) {
+            rttr.addFlashAttribute("failMessage", "정지 회원입니다.");
+            return "redirect:/user/login";
+        }
+
         if(userInfo != null && userInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("user_id", userInfo.getUser_id());
