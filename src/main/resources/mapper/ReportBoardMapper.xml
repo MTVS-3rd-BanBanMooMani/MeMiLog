@@ -79,4 +79,32 @@
             category_name
         FROM RPT_CATEGORY
     </select>
+
+    <update id="hidePosts">
+        UPDATE POST
+        SET hidden_YN = 1
+        WHERE post_id IN
+        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </update>
+
+    <update id="updateUserBans">
+        UPDATE USER
+        SET
+        caution_weights = caution_weights + 1,
+        temporary_YN = 'Y',
+        susp_period = DATE_ADD(CURDATE(), INTERVAL 7 DAY)
+        WHERE user_id IN (
+        SELECT DISTINCT user_id FROM POST WHERE post_id IN
+        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+        )
+    </update>
+
+    <update id="processReport">
+        <include refid="hidePosts"/>
+        <include refid="updateUserBans"/>
+    </update>
 </mapper>
