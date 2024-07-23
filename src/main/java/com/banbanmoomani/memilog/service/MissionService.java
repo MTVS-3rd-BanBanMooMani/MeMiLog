@@ -70,11 +70,16 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+<<<<<<< HEAD
     // mission 전체조회 paging
     public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
         List<MissionDTO> missionList = missionMapper.findAllMissionPaging(content, rowBounds);
         int total = missionMapper.countMissions();
         return new PageResult<>(missionList, total);
+=======
+    public String getMissionTitle() {
+        return missionMapper.getMissionTitle();
+>>>>>>> a5b776b (Feat: post 다중 사진 추가, 메인페이지 타임리프 연동)
     }
 }

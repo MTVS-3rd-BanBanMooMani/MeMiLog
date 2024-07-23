@@ -3,6 +3,8 @@ package com.banbanmoomani.memilog.service;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,4 +78,20 @@ public class PostService {
     public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
         return postMapper.findPostsByCompanion(companionIds);
     }
+<<<<<<< HEAD
+=======
+
+    public List<todayPostDTO> getTodayPostDTOList() {
+        return postMapper.findTodayPost();
+    }
+
+    public List<archivePostDTO> getArchivePostDTOList() {
+        return postMapper.findArchivePost();
+    }
+
+    public int getTodayPostCount() {
+        Integer count = postMapper.findTodayPostCount();
+        return count == null ? 0 : count;
+    }
+>>>>>>> a5b776b (Feat: post 다중 사진 추가, 메인페이지 타임리프 연동)
 }

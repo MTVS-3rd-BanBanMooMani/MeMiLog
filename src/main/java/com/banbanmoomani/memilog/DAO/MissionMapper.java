@@ -29,7 +29,11 @@ public interface MissionMapper {
 
     String findSubThemeName(int subThemeId);
 
+<<<<<<< HEAD
     List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
 
     int countMissions();
+=======
+    String getMissionTitle();
+>>>>>>> a5b776b (Feat: post 다중 사진 추가, 메인페이지 타임리프 연동)
 }
