@@ -124,5 +124,7 @@ public class AdminService {
 
         MeMiLogInfoDTO meMiLogInfoDTO = new MeMiLogInfoDTO(LocalDate.now(), todayUserTotalCount, todayUserCount, todayPostCount);
         meMiLogInfoMapper.saveTodayMeMiLogInfoDTO(meMiLogInfoDTO);
+
+        blackListMapper.releaseToday();
     }
 }

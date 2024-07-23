@@ -64,4 +64,11 @@
             #{userId}
         </foreach>
     </update>
+
+    <update id="releaseToday">
+        UPDATE USER u
+        JOIN STOP s ON u.user_id = s.user_id
+        SET u.temporary_YN = 'N', u.caution_weights = 0
+        WHERE s.stop_end_date > CURDATE()
+    </update>
 </mapper>
