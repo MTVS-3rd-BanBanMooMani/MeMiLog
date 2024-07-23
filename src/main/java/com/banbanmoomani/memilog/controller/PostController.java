@@ -7,20 +7,23 @@ import com.banbanmoomani.memilog.DTO.EmotionDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
-import com.banbanmoomani.memilog.service.ComPanionService;
-import com.banbanmoomani.memilog.service.EmotionService;
-import com.banbanmoomani.memilog.service.MissionService;
-import com.banbanmoomani.memilog.service.PostService;
+import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 
 @Controller
@@ -30,13 +33,15 @@ public class PostController {
     private final MissionService missionService;
     private final EmotionService emotionService;
     private final ComPanionService comPanionService;
+    private final FileService fileService;
     private final PostMapper postMapper;
 
-    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, PostMapper postMapper) {
+    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper) {
         this.postService = postService;
         this.missionService = missionService;
         this.emotionService = emotionService;
         this.comPanionService = comPanionService;
+        this.fileService = fileService;
         this.postMapper = postMapper;
     }
 
@@ -69,12 +74,13 @@ public class PostController {
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute CreateRequestDTO createRequestDTO,
+                             @RequestParam("files") MultipartFile[] files,
                              HttpSession session,
-                             RedirectAttributes rttr) {
+                             RedirectAttributes rttr) throws IOException {
         System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
+        if (user_id == null) {
             rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
             return "redirect:/user/login";
         }
@@ -85,7 +91,16 @@ public class PostController {
         System.out.println(companion);
         createRequestDTO.setEmotion_id(emotion.getEmotionId());
         createRequestDTO.setCompanion_id(companion.getCompanion_id());
+
         postService.createPost(createRequestDTO);
+
+        int pictureOrder = 1;
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                String fileUrl = fileService.uploadFile(file, (int) user_id);
+                fileService.saveFileUrl(fileUrl, "post", createRequestDTO.getPostId(), (int) user_id, pictureOrder++);
+            }
+        }
 
         return "redirect:/post/all";
     }
@@ -176,17 +191,64 @@ public String updatePostSubmit(@ModelAttribute PostDTO post,
 
     @GetMapping("/all")
     public String viewAllPost(Model model) {
+        List<PostDTO> post = postService.findAllPosts();
+        System.out.println("============all post");
+        post.forEach(System.out::println);
         model.addAttribute("posts", postService.findAllPosts());
         return "main/allview";
     }
 
     // 오늘 mission에 해당하는 post 보기
-//    @GetMapping("/by-mission")
+//    @GetMapping("/bymission")
 //    public String findAllPostOnMissionByDate(Model model) {
 //
 //        List<PostDTO> posts = postService.findAllPostOnMissionByDate();
+//        model.addAttribute("posts", posts);
 //        posts.forEach(System.out::println);
-//
-//        return "main/test";
+//        return "main/postview";
 //    }
+
+
+//    ============================ 연습
+
+    // 오늘 mission에 해당하는 post 보기
+    @GetMapping("/bymission")
+    public String findAllPostOnMissionByDate(Model model) {
+
+        List<PostDTO> posts = postService.findAllPostOnMissionByDate();
+        model.addAttribute("post", posts);
+
+        System.out.println("====================post");
+        posts.forEach(System.out::println);
+
+        return "main/cateTest";
+    }
+
+    // 누구와 카테고리 필터 적용
+    @GetMapping("/companion")
+    public String findPostsByCompanion(@RequestParam("type") String companionTypes, Model model) {
+
+        System.out.println("companionTypes = " + companionTypes);
+
+        List<PostDTO> posts;
+
+        if (companionTypes != null && !companionTypes.isEmpty()) {
+            List<Integer> companionIds = Arrays.stream(companionTypes.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+            posts = postService.findPostsByCompanion(companionIds);
+        } else {
+            // 선택한 타입이 없는 경우에는 어떤 걸로 할지
+            posts = postService.findAllPostOnMissionByDate();
+//            return "redirect:/post/bymission";
+        }
+
+        model.addAttribute("post", posts);
+
+        posts.forEach(System.out::println);
+
+        return "main/cateTest";
+
+    }
+
 }

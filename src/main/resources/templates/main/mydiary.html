@@ -14,7 +14,8 @@
 
     <div class="user-container">
         <div class="user-profile">
-            <img th:src="${user.src_url}" alt="Profile Picture">
+            <img th:if="${user.src_url != null && !user.src_url.isEmpty()}" th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" />
+            <img th:if="${user.src_url == null || user.src_url.isEmpty()}" th:src="@{/document/img/default_profile.png}" alt="Profile Picture" class="profile-pic" />
             <p id="userNickname" th:text="${user.nickname}"/>
             <img th:src="@{/document/img/settings.png}" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
         </div>
@@ -31,7 +32,8 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic">
+                            <img th:if="${user.src_url != null && !user.src_url.isEmpty()}" th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" />
+                            <img th:if="${user.src_url == null || user.src_url.isEmpty()}" th:src="@{/document/img/default_profile.png}" alt="Profile Picture" class="profile-pic" />
                         </div>
                     </div>
                 </div>
@@ -72,7 +74,7 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic">
+                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" data-default-src="@{/document/img/default_profile.png}">
                             <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
@@ -87,6 +89,7 @@
                 <form id="profilePicForm" method="post" action="/editProfilePic" enctype="multipart/form-data">
                     <input type="file" id="profilePic" name="profilePic"><br><br>
                     <input type="hidden" name="type" value="profile">
+                    <input type="hidden" name="user_id" value="${user_id}">
                     <div class="form-footer">
                         <button type="submit">업로드</button>
                         <button type="button" onclick="deleteProfilePic()">삭제</button>
@@ -94,6 +97,7 @@
                 </form>
             </div>
         </div>
+
         <div id="deleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('deleteModal')">&times;</span>
@@ -159,6 +163,7 @@
         const calendarContainer = document.getElementById("calendar-container");
         const dateSelector = document.querySelector(".date-selector ul");
 
+
         if (firstTabLink) {
             firstTabLink.click();
         }
@@ -215,9 +220,10 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                document.querySelector(".profile-pic").src = response.src_url;
-                closeModal('profilePicModal');
-                alert("프로필 사진이 성공적으로 변경되었습니다.");
+                var userConfirmed = confirm("프로필 사진이 성공적으로 변경되었습니다.");
+                if (userConfirmed) {
+                    location.reload();
+                }
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
@@ -227,9 +233,27 @@
     }
 
     function deleteProfilePic() {
-        document.querySelector('.profile-pic').src = '../../document/img/default_profile.png';
-        alert("프로필 사진이 삭제되었습니다.");
-        closeModal('profilePicModal');
+        var user_id = document.querySelector('input[name="user_id"]').value;
+        var type = "profile";
+        $.ajax({
+            url: 'file/resetPic',
+            type: 'POST',
+            data: {
+                user_id: user_id,
+                type: type
+            },
+            success: function (response){
+                var defaultSrc = document.querySelector('.profile-pic').getAttribute('data-default-src');
+                document.querySelector('.profile-pic').src = defaultSrc;
+                var userConfirmed = confirm("프로필 사진이 성공적으로 삭제되었습니다.");
+                if (userConfirmed) {
+                    location.reload();
+                }
+            },
+            error: function(xhr, status, error){
+                alert("프로필 사진 삭제에 실패했습니다. 다시 시도해주세요.")
+            }
+        });
     }
 
     window.onclick = function (event) {
@@ -268,32 +292,54 @@
     };
 
     document.getElementById('deleteForm').onsubmit = function(event) {
-    event.preventDefault();
-    alert("회원 탈퇴가 완료되었습니다.");
-    closeModal('deleteModal');
-    closeModal('userModal');
-    }
+        event.preventDefault();
+
+        const password = document.getElementById('deletePassword').value;
+
+        fetch('/user/withdraw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: password
+        })
+            .then(response => {
+                return response.text().then(text => {
+                    if (response.ok) {
+                        alert(text);
+                        closeModal('deleteModal');
+                        location.href = '/';
+                    } else {
+                        throw new Error(text);
+                    }
+                });
+            })
+            .catch(error => {
+                alert(error.message);
+                closeModal('deleteModal');
+            });
+    };
 
     function fetchPostsForDate(date) {
-    fetch("/selectedDate", {
-    method : "POST",
-    headers : {
-    "Content-Type" : "application/json"
-    },
-    body: JSON.stringify({ selectedDate: date })
-    })
-    .then(response => response.json())
-    .then(data => {
-    displayPosts(data);
-    })
-    .catch(error => console.error("Error fetching posts: " , error));
+        fetch("/selectedDate", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({ selectedDate: date })
+        })
+            .then(response => response.json())
+            .then(data => {
+                displayPosts(data);
+            })
+            .catch(error => console.error("Error fetching posts: " , error));
     }
 
     function displayPosts(posts) {
-    const calendarContents = document.querySelector(".calendar-contents");
-    calendarContents.innerHTML = "";
+        const calendarContents = document.querySelector(".calendar-contents");
+        calendarContents.innerHTML = "";
 
-    posts.forEach(post => {
+        posts.forEach(post => {
             const postElement = document.createElement("div");
             postElement.className = "calendar-card";
             const postImage = document.createElement("img");

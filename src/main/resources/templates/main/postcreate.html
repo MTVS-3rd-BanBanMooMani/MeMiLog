@@ -27,7 +27,7 @@
                     <div class="image-thumbnails" id="plus-thumbnail">
                         <div class="thumbnail add-thumbnail" id="addBtn">
                             +
-                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">
+                            <input type="file" id="imageUpload" name="files" accept="image/*" style="display: none;">
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 <input type="hidden" name="user_id" th:value="${session.user_id}">
                 <div class="buttons">
                     <button class="submit-btn" type="submit" name="submit">작성 완료</button>
-                    <button class="back-btn" type="button" onclick="window.location.href='/back'">돌아가기</button>
+                    <button class="back-btn" type="button" onclick="window.history.back()">돌아가기</button>
                 </div>
             </div>
         </div>

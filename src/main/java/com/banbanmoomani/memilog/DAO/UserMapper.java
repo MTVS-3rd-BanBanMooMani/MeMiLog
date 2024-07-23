@@ -13,5 +13,5 @@ public interface UserMapper {
     List<UserDTO> findAllUser();
     void insertUser(UserDTO userDTO);
     void updateUserByEmail(UserDTO userDTO);
-    void deleteUserByEmail(UserDTO userDTO);
+    void deleteUserById(int user_id);
 }

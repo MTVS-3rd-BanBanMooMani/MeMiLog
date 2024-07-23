@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.ReportMapper">
+
+    <insert id="createReport" parameterType="com.banbanmoomani.memilog.DTO.ReportDTO" useGeneratedKeys="true" keyProperty="rpt_id">
+        INSERT INTO REPORT
+        (
+        rpt_category_id,
+        content,
+        post_id,
+        reporter_user_id,
+        reported_user_id,
+        report_datetime
+        )
+        VALUES
+        (
+        #{rpt_category_id},
+        #{rpt_content},
+        #{post_id},
+        #{rpter_user_id},
+        #{rpted_user_id},
+        #{rpt_datetime}
+        )
+    </insert>
+</mapper>

@@ -10,33 +10,28 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class FileService {
 
     @Value("${spring.cloud.gcp.storage.bucket}")
-
     private String bucketName;
-    private final Storage storage = StorageOptions.getDefaultInstance().getService();
-
+    private final Storage storage;
     private final FileMapper fileMapper;
 
-    public FileService(FileMapper fileMapper) {
+    public FileService(FileMapper fileMapper) throws IOException {
         this.fileMapper = fileMapper;
+        this.storage = StorageOptions.newBuilder()
+                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
+                .build()
+                .getService();
     }
 
-    public FileDTO handleFileUpload(MultipartFile file, String type, Integer user_id) throws IOException {
-
-        System.out.println("******프사 바꾸기 서비스 요청 들옴******");
+    public FileDTO updateFile(MultipartFile file, String type, Integer user_id) throws IOException {
 
         String oldFileUrl = fileMapper.getFileUrl(user_id, type);
-        System.out.println("*****************oldFileUrl = "+oldFileUrl);
 
-        String newImageUrl = uploadFile(file);
-        System.out.println("*****************newImageUrl = "+newImageUrl);
+        String newImageUrl = uploadFile(file, user_id);
 
         if (oldFileUrl != null && !oldFileUrl.isEmpty()) {
             String oldFileName = oldFileUrl.substring(oldFileUrl.lastIndexOf('/') + 1);
@@ -49,39 +44,33 @@ public class FileService {
         fileDTO.setSrc_url(newImageUrl);
 
         fileMapper.updateFile(fileDTO);
-        System.out.println("서비스-매퍼 파일 수정 완.");
 
         return fileDTO;
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        Storage storage = StorageOptions.newBuilder()
-                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
-                .build()
-                .getService();
+    public String uploadFile(MultipartFile file, Integer user_id) throws IOException {
 
-        String uuid = UUID.randomUUID().toString();
-        String extension = file.getContentType();
+        String originalFilename = file.getOriginalFilename();
 
-        BlobInfo blobInfo = storage.create(
-                BlobInfo.newBuilder(bucketName, uuid)
-                        .setContentType(extension)
-                        .build(),
-                        file.getInputStream()
-        );
-
-        System.out.println("$$$$$$$$$$$$$$$blobInfo$$$$$$$$$$$$$$$ = " + blobInfo);
-
-        URL newImageUrl = null;
-        try {
-            newImageUrl = storage.signUrl(blobInfo, 365, TimeUnit.DAYS, Storage.SignUrlOption.httpMethod(HttpMethod.GET));
-            System.out.println("************newImageUrl************: " + newImageUrl);
-        } catch (Exception e) {
-            System.err.println("Error while signing url: " + e.getMessage());
-            e.printStackTrace();
+        if (originalFilename == null) {
+            throw new IOException("파일이 존재하지 않습니다.");
         }
 
-        return (newImageUrl != null) ? newImageUrl.toString() : null;
+        String extension = file.getContentType();
+        String fileName = user_id + "-" +System.currentTimeMillis() + "." + extension;
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
+                        .setContentType(extension)
+                        .build();
+
+        storage.create(blobInfo, file.getInputStream());
+
+        return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
+    }
+
+    public void saveFileUrl(String srcUrl, String type, int postId, int userId, int pictureOrder) {
+        FileDTO fileDTO = new FileDTO(srcUrl, type, postId, userId, pictureOrder);
+        fileMapper.insertFile(fileDTO);
     }
 
     public void deleteFile(String fileName) {
@@ -90,5 +79,17 @@ public class FileService {
             blob.delete();
         }
     }
-}
 
+    public void deleteFileUrl(FileDTO fileDTO) {
+        int user_id = fileDTO.getUser_id();
+        String type = fileDTO.getType();
+
+        String fileUrl = fileMapper.getFileUrl(user_id, type);
+
+        if (fileUrl != null && !fileUrl.isEmpty()) {
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            deleteFile(fileName);
+            fileMapper.deleteFileUrl(fileDTO);
+        }
+    }
+}
