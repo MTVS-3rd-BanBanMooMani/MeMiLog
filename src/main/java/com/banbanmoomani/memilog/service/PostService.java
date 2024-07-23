@@ -1,6 +1,8 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,11 @@ import java.util.List;
 public class PostService {
     private final PostMapper postMapper;
 
-    public PostService(PostMapper postMapper) {
+    private final LikeMapper likeMapper;
+
+    public PostService(PostMapper postMapper, LikeMapper likeMapper) {
         this.postMapper = postMapper;
+        this.likeMapper = likeMapper;
     }
 
     public List<PostDTO> findAllPosts() {
@@ -75,4 +80,17 @@ public class PostService {
         return postMapper.findPostsByCompanion(companionIds);
     }
 
+    @Transactional
+    public void increaseLikeCount(int post_id, int user_id) {
+        postMapper.increaseLikeCount(post_id);
+        LikeDTO likeDTO = new LikeDTO(user_id, post_id);
+        likeMapper.insertLikeInfo(likeDTO);
+    }
+
+    @Transactional
+    public void decreaseLikeCount(int post_id, int user_id) {
+        postMapper.decreaseLikeCount(post_id);
+        LikeDTO likeDTO = new LikeDTO(user_id, post_id);
+        likeMapper.deleteLikeInfo(likeDTO);
+    }
 }

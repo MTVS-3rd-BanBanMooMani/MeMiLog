@@ -22,4 +22,8 @@ public interface PostMapper {
     List<PostDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 
     void deletePostById(int postId);
+
+    void increaseLikeCount(@Param("post_id")int post_id);
+
+    void decreaseLikeCount(@Param("post_id")int post_id);
 }
