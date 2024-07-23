@@ -61,4 +61,15 @@
         , #{notice_id}
         )
     </insert>
+    <update id="updateNotice" parameterType="com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO">
+        UPDATE NOTICE
+        SET
+        (
+             notice_title = #{notice_title}
+            ,notice_content = #{notice_content}
+            ,visible_YN = #{visible_YN}
+        )
+         WHERE notice_id = #{notice_id}
+
+    </update>
 </mapper>

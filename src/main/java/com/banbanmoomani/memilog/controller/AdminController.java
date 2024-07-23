@@ -8,6 +8,7 @@ import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.*;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
@@ -21,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.PublicKey;
 import java.util.List;
 
 @Controller
@@ -249,8 +251,16 @@ public class AdminController {
     }
 
     @PostMapping("/noticeBoard")
-    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
-        noticeService.createNotice(noticeRequestDTO);
+    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO,
+                               HttpSession httpSession) {
+        int adminId = (int) httpSession.getAttribute("admin_id");
+        noticeService.createNotice(noticeRequestDTO, adminId);
+        return "redirect:/admin/noticeBoard";
+    }
+
+    @PostMapping("/notice-update")
+    public String updateNotice(@RequestBody NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        noticeService.updateNotice(noticeUpdateRequestDTO);
         return "redirect:/admin/noticeBoard";
     }
 
