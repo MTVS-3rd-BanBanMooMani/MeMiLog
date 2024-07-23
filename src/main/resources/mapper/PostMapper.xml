@@ -164,6 +164,51 @@
         </foreach>
         AND DAY(m.mission_date) = 1
     </select>
+    <select id="findTodayPost" resultType="com.banbanmoomani.memilog.DTO.todayPostDTO">
+        SELECT
+            p.post_id AS postId,
+            f.src_url AS picture,
+            u.nickname AS nickname
+        FROM
+            POST p
+        LEFT JOIN
+            FILE f ON p.post_id = f.post_id
+        LEFT JOIN
+            USER u ON p.user_id = u.user_id
+        WHERE
+            DATE_FORMAT(p.written_datetime, '%Y-%m-%d') = CURDATE()
+            AND f.picture_order = 1
+        ORDER BY
+            p.post_id DESC
+        LIMIT 8
+    </select>
 
+    <select id="findArchivePost" resultType="com.banbanmoomani.memilog.DTO.archivePostDTO">
+        SELECT
+            p.post_id AS archiveId,
+            f.src_url AS picture,
+            u.nickname AS nickname
+        FROM
+            POST p
+        LEFT JOIN
+            FILE f ON p.post_id = f.post_id
+        LEFT JOIN
+            USER u ON p.user_id = u.user_id
+        WHERE
+        f.type = 'post'
+        AND
+        f.picture_order = 1
+        ORDER BY
+            RAND()
+        LIMIT 8
+    </select>
+    <select id="findTodayPostCount" resultType="_int">
+        SELECT
+            COUNT(*) AS post_count
+        FROM
+            POST
+        WHERE
+             DATE(written_datetime) = CURDATE()
+    </select>
 
 </mapper>

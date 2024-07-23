@@ -26,4 +26,6 @@ public interface MissionMapper {
     String findPriThemeName(int priThemeId);
 
     String findSubThemeName(int subThemeId);
+
+    String getMissionTitle();
 }

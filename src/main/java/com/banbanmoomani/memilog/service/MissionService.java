@@ -67,4 +67,7 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+    public String getMissionTitle() {
+        return missionMapper.getMissionTitle();
+    }
 }

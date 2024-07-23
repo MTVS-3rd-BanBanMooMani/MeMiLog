@@ -2,6 +2,8 @@ package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +24,10 @@ public interface PostMapper {
     List<PostDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 
     void deletePostById(int postId);
+
+    List<todayPostDTO> findTodayPost();
+
+    List<archivePostDTO> findArchivePost();
+
+    Integer findTodayPostCount();
 }

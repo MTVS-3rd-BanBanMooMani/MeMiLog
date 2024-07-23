@@ -74,7 +74,11 @@ public class PostController {
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute CreateRequestDTO createRequestDTO,
-                             @RequestParam("files") MultipartFile[] files,
+                             @RequestParam(name = "file1", required = true) MultipartFile file1,
+                             @RequestParam(name = "file2", required = false) MultipartFile file2,
+                             @RequestParam(name = "file3", required = false) MultipartFile file3,
+                             @RequestParam(name = "file4", required = false) MultipartFile file4,
+                             @RequestParam(name = "file5", required = false) MultipartFile file5,
                              HttpSession session,
                              RedirectAttributes rttr) throws IOException {
         System.out.println(createRequestDTO);
@@ -94,9 +98,10 @@ public class PostController {
 
         postService.createPost(createRequestDTO);
 
+        MultipartFile[] files = {file1, file2, file3, file4, file5};
         int pictureOrder = 1;
         for (MultipartFile file : files) {
-            if (!file.isEmpty()) {
+            if (file != null && !file.isEmpty()) {
                 String fileUrl = fileService.uploadFile(file, (int) user_id);
                 fileService.saveFileUrl(fileUrl, "post", createRequestDTO.getPostId(), (int) user_id, pictureOrder++);
             }
@@ -104,6 +109,7 @@ public class PostController {
 
         return "redirect:/post/all";
     }
+
     @GetMapping("/update")
     public String updatePost(
                              Model model,
