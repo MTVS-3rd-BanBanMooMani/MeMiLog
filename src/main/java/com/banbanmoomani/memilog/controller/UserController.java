@@ -43,17 +43,16 @@ public class UserController {
                             HttpSession httpSession) {
         UserDTO userInfo = userService.findByEmail(loginRequestDTO.getEmail());
 
-        if(userInfo.getTemporary_YN().equals("Y")) {
-            rttr.addFlashAttribute("failMessage", "정지 회원입니다.");
-            return "redirect:/user/login";
-        }
-
         if(userInfo != null && userInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("user_id", userInfo.getUser_id());
             rttr.addFlashAttribute("successMessage", userInfo.getNickname() + "님, 환영합니다.");
             return "redirect:/";
         } else {
+            if(userInfo != null && userInfo.getTemporary_YN().equals("Y")) {
+                rttr.addFlashAttribute("failMessage", "정지 회원입니다.");
+            }
+
             rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
             return "redirect:/user/login";
         }
