@@ -71,9 +71,9 @@ public class MissionService {
     }
 
     // mission 전체조회 paging
-    public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize) {
+    public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
-        List<MissionDTO> missionList = missionMapper.findAllMissionPaging(rowBounds);
+        List<MissionDTO> missionList = missionMapper.findAllMissionPaging(content, rowBounds);
         int total = missionMapper.countMissions();
         return new PageResult<>(missionList, total);
     }

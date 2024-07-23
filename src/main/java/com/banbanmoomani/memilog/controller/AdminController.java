@@ -260,9 +260,10 @@ public class AdminController {
     @GetMapping("/dailyTopicBoard")
     public void dailyTopicBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
                                 @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
+                                @RequestParam(defaultValue = "", value = "content") String content,
                                 Model model) {
 
-        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize);
+        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
         model.addAttribute("missionList", pagedResult.getData());
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);

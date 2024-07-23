@@ -29,7 +29,7 @@ public interface MissionMapper {
 
     String findSubThemeName(int subThemeId);
 
-    List<MissionDTO> findAllMissionPaging(RowBounds rowBounds);
+    List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
 
     int countMissions();
 }
