@@ -195,7 +195,7 @@ public class AdminController {
             System.out.println(postId);
         }
 
-        adminService.processReport(postIdList);
+        adminService.processReport(postIdList, (int) admin_id);
 
         return "redirect:/admin/reportTotal";
     }

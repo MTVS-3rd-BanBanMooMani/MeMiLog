@@ -80,31 +80,43 @@
         FROM RPT_CATEGORY
     </select>
 
-<!--    <update id="hidePosts">-->
-<!--        UPDATE POST-->
-<!--        SET hidden_YN = 1-->
-<!--        WHERE post_id IN-->
-<!--        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">-->
-<!--            #{postId}-->
-<!--        </foreach>-->
-<!--    </update>-->
+    <update id="hidePosts">
+        UPDATE POST
+        SET hidden_YN = 1
+        WHERE post_id IN
+        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </update>
 
-<!--    <update id="updateUserBans">-->
-<!--        UPDATE USER-->
-<!--        SET-->
-<!--        caution_weights = caution_weights + 1,-->
-<!--        temporary_YN = 'Y',-->
-<!--        susp_period = DATE_ADD(CURDATE(), INTERVAL 7 DAY)-->
-<!--        WHERE user_id IN (-->
-<!--        SELECT DISTINCT user_id FROM POST WHERE post_id IN-->
-<!--        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">-->
-<!--            #{postId}-->
-<!--        </foreach>-->
-<!--        )-->
-<!--    </update>-->
+    <update id="updateUserBans">
+        UPDATE USER
+        SET
+        caution_weights = 0,
+        temporary_YN = 'Y'
+        WHERE user_id IN (
+        SELECT DISTINCT user_id FROM POST WHERE post_id IN
+        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+        )
+    </update>
 
-<!--    <update id="processReport">-->
-<!--        <include refid="hidePosts"/>-->
-<!--        <include refid="updateUserBans"/>-->
-<!--    </update>-->
+    <insert id="insertStopRecord">
+        INSERT INTO STOP (stop_start_date, stop_end_date, admin_id, user_id, stop_category_id)
+        SELECT
+        CURDATE(),
+        DATE_ADD(CURDATE(), INTERVAL 7 DAY),
+        #{adminId},
+        p.user_id,
+        r.rpt_category_id
+        FROM REPORT r
+        JOIN POST p ON r.post_id = p.post_id
+        WHERE r.post_id IN
+        <foreach item="postId" collection="postIdList" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+        ORDER BY r.report_datetime DESC
+        LIMIT 1
+    </insert>
 </mapper>

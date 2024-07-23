@@ -63,8 +63,10 @@ public class AdminService {
     }
 
     @Transactional
-    public void processReport(List<String> postIdList) {
-        reportBoardMapper.processReport(postIdList);
+    public void processReport(List<String> postIdList, int adminId) {
+        reportBoardMapper.hidePosts(postIdList);
+        reportBoardMapper.updateUserBans(postIdList);
+        reportBoardMapper.insertStopRecord(postIdList, adminId);
     }
 
     public List<MeMiLogInfoDTO> getMeMiLogInfo() {
