@@ -167,9 +167,9 @@ textarea.form-control {
 }
 
 select.form-control {
-    width: 10%;
+    width: 70%;
     height: auto;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .form-group button {

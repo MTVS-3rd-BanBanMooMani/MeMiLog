@@ -132,13 +132,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="topicTag">태그</label>
-                                    <div id="tagButtons" class="mb-3">
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '일상')">일상</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '취미')">취미</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '여행')">여행</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '음식')">음식</button>
-                                    </div>
+                                    <label for="topicTag1">주 태그</label>
+                                    <select class="form-control w" id="topicTag1">
+                                        <option value="일상">일상</option>
+                                        <option value="취미">취미</option>
+                                        <option value="여행">여행</option>
+                                        <option value="음식">음식</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="topicTag2">부 태그</label>
+                                    <select class="form-control" id="topicTag2">
+                                        <option value="일상">일상</option>
+                                        <option value="취미">취미</option>
+                                        <option value="여행">여행</option>
+                                        <option value="음식">음식</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
