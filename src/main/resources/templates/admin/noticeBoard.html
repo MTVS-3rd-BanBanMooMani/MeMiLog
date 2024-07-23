@@ -214,6 +214,7 @@
 <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
 <script th:src="@{/assets/libs/js/main-js.js}"></script>
 <script>
+    var noticeId;
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
     }
@@ -227,7 +228,7 @@
     });
 
     $("#noticeTable").on('click', 'tbody tr', function () {
-        var noticeId = $(this).find("td:eq(0)").text();
+        noticeId = $(this).find("td:eq(0)").text();
         var ntitle = $(this).find("td:eq(1)").text();
         var ncontent = $(this).find("td:eq(2)").text();
         var writeDate = $(this).find("td:eq(3)").text();
@@ -291,15 +292,37 @@
         let modifyNoticeContent = document.getElementById('modifyNoticeContent').value;
         let noticeVisibility = document.getElementById('noticeVisibility').value;
 
+        var data = {
+            notice_id : noticeId,
+            notice_content : modifyNoticeContent,
+            notice_title : modifyNoticeTitle,
+            visible_YN : noticeVisibility
+        }
         if (!modifyNoticeTitle || !modifyNoticeContent) {
             alert("모든 필드를 입력해주세요.");
             return;
         }
+        $.ajax({
+            type: 'POST',
+            url: '/admin/notice-update',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                alert("공지사항 수정이 완료되었습니다.");
+                closeModal('modifyNoticeModal');
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            },
+            error: function(error) {
+                alert('공지사항 변경에 실패했습니다.');
+                console.error(error);
+            }
+        });
+
+
 
         // 서버에 데이터 전송하는 코드 추가 예정
 
-        alert("공지사항 수정이 완료되었습니다.");
-        closeModal('modifyNoticeModal');
+
     }
 </script>
 </body>
