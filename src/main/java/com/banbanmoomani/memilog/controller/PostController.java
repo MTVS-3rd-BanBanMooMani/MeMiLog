@@ -172,6 +172,7 @@ public class PostController {
     }
 
     @GetMapping("like")
+    @ResponseBody
     public ResponseEntity likePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
         postService.increaseLikeCount(post_id, user_id);
         return new ResponseEntity(HttpStatus.OK);
