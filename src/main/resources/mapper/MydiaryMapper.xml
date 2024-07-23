@@ -22,22 +22,19 @@
 
     <select id="findUserInfoById" parameterType="HashMap" resultType="com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO">
         SELECT
-        u.user_id,
-        u.email,
-        u.password,
-        u.birthday,
-        u.nickname,
-        u.gender,
-        u.signup_date,
-        <if test="hasProfilePic">
-            f.src_url AS src_url
-        </if>
-        <if test="!hasProfilePic">
-            NULL AS src_url
-        </if>
+            u.user_id
+             , u.email
+             , u.password
+             , u.birthday
+             , u.nickname
+             , u.gender
+             , u.signup_date
+             , f.src_url as src_url
         FROM USER u
-        LEFT JOIN FILE f ON u.user_id = f.user_id AND f.type = 'profile'
-        WHERE u.user_id = #{user_id};
+                 LEFT JOIN
+             FILE f ON u.user_id = f.user_id
+        WHERE u.user_id = #{user_id}
+          AND f.type = 'profile';
     </select>
 
     <select id="findPosts" parameterType="HashMap" resultMap="postResultMap">

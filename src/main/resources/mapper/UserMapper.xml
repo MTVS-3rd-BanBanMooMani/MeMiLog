@@ -67,6 +67,20 @@
             #{susp_period, jdbcType=DATE}
         )
     </insert>
+
+    <insert id="setDefaultProfile" parameterType="com.banbanmoomani.memilog.DTO.FileDTO">
+        INSERT INTO FILE
+        (
+            user_id
+          , type
+        )
+        VALUE
+        (
+              #{user_id}
+            , #{type}
+        )
+    </insert>
+
     <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         UPDATE USER
         <trim prefix="SET" suffixOverrides=",">
