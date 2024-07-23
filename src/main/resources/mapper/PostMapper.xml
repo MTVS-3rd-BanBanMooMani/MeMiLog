@@ -183,6 +183,18 @@
         LIMIT 8
     </select>
 
+    <update id="increaseLikeCount" parameterType="int">
+        UPDATE POST SET
+            `like_count` = `like_count` + 1
+        WHERE
+            post_id = #{post_id}
+    </update>
+    <update id="decreaseLikeCount" parameterType="int">
+        UPDATE POST SET
+            `like_count` = `like_count` - 1
+        WHERE
+            post_id = #{post_id}
+    </update>
     <select id="findArchivePost" resultType="com.banbanmoomani.memilog.DTO.archivePostDTO">
         SELECT
             p.post_id AS archiveId,

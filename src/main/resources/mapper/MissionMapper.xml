@@ -153,4 +153,22 @@
     </select>
 
 
+
+    <select id="countMissions" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM NOTICE
+    </select>
+
+    <select id="findAllMissionPaging" resultMap="missionResultMap" parameterType="String">
+        SELECT
+        *
+        FROM
+        MISSION
+        WHERE TRUE
+        <if test="content != null and content != ''">
+            AND mission_content LIKE CONCAT('%', #{content}, '%')
+        </if>
+    </select>
+
 </mapper>

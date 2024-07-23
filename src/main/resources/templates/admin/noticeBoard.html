@@ -83,14 +83,16 @@
                 <div class="table-header">
                     <button class="btn btn-primary mb-2" id="createNoticeBtn">공지사항 작성</button>
                     <span class="left-text">공지사항은 한 번에 최대 5개까지만 노출 가능합니다.</span>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="내용으로 검색">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
+                    <form method="get" action="/admin/noticeBoard">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="content" placeholder="내용으로 검색">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="notice-table">
@@ -192,20 +194,11 @@
                 <div class="pagination">
                     <nav class="pagination-container">
                         <div class="pagination">
-                            <a class="pagination-newer" href="#">PREV</a>
+                            <a class="pagination-newer" th:href="${currentPage > 1} ? @{/admin/noticeBoard(pageNum=${currentPage - 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == 1} ? ' disabled'">PREV</a>
                             <span class="pagination-inner">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
-                                <a href="#">6</a>
-                                <a href="#">7</a>
-                                <a href="#">8</a>
-                                <a href="#">9</a>
-                                <a href="#">10</a>
-                            </span>
-                            <a class="pagination-older" href="#">NEXT</a>
+                        <a th:each="i : ${#numbers.sequence(1, totalPages)}" th:href="@{/admin/noticeBoard(pageNum=${i}, pageSize=${pageSize}, content=${content})}" th:text="${i}" th:classappend="${i == currentPage} ? ' active'"></a>
+                    </span>
+                            <a class="pagination-older" th:href="${currentPage < totalPages} ? @{/admin/noticeBoard(pageNum=${currentPage + 1}, pageSize=${pageSize}, content=${content})} : 'javascript:void(0);'" th:classappend="${currentPage == totalPages} ? ' disabled'">NEXT</a>
                         </div>
                     </nav>
                 </div>

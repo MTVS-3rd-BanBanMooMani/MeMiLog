@@ -9,6 +9,8 @@ import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -159,21 +161,35 @@ public class PostController {
 //        }
 //        return "redirect:/post/all";
 //    }
-@PostMapping("/update")
-public String updatePostSubmit(@ModelAttribute PostDTO post,
-                               RedirectAttributes rttr) {
-    // 하드코딩된 값 설정
-    post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
-    post.setPost_id(35); // post_id를 하드코딩합니다.
+    @PostMapping("/update")
+    public String updatePostSubmit(@ModelAttribute PostDTO post,
+                                   RedirectAttributes rttr) {
+        // 하드코딩된 값 설정
+        post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
+        post.setPost_id(35); // post_id를 하드코딩합니다.
 
-    try {
-        postService.updatePost(post);
-        rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-    } catch (IllegalArgumentException e) {
-        rttr.addFlashAttribute("failMessage", e.getMessage());
+        try {
+            postService.updatePost(post);
+            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
+        } catch (IllegalArgumentException e) {
+            rttr.addFlashAttribute("failMessage", e.getMessage());
+        }
+        return "redirect:/post/all";
     }
-    return "redirect:/post/all";
-}
+
+    @GetMapping("like")
+    @ResponseBody
+    public ResponseEntity likePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+        postService.increaseLikeCount(post_id, user_id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("dislike")
+    @ResponseBody
+    public ResponseEntity dislikePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+        postService.decreaseLikeCount(post_id, user_id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @PostMapping("/delete")
     public String deletePost(@RequestParam("postId") int postId,
