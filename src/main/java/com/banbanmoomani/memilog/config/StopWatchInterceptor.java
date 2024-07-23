@@ -17,16 +17,18 @@ public class StopWatchInterceptor implements HandlerInterceptor {
                             Object handler) throws Exception {
         HttpSession session = request.getSession(true);
         String uri = request.getRequestURI();
-        if (uri.startsWith("/admin/") && session.getAttribute("admin_id") == null) {
-            session.setAttribute("failMessage", "관리자 로그인을 먼저 해주세요!");
-            response.sendRedirect("/admin/login"); // 세션에 user_id가 없으면 루트로 리다이렉트
-            return false; // 요청 처리 중단
-        }
-
-        if (session.getAttribute("user_id") == null) {
-            session.setAttribute("failMessage", "로그인을 먼저 해주세요!");
-            response.sendRedirect("/user/login"); // 세션에 user_id가 없으면 루트로 리다이렉트
-            return false; // 요청 처리 중단
+        if (uri.startsWith("/admin/")) {
+            if (session.getAttribute("admin_id") == null) {
+                session.setAttribute("failMessage", "관리자 로그인을 먼저 해주세요!");
+                response.sendRedirect("/admin/login"); // 세션에 user_id가 없으면 루트로 리다이렉트
+                return false; // 요청 처리 중단
+            }
+        } else {
+            if (session.getAttribute("user_id") == null) {
+                session.setAttribute("failMessage", "로그인을 먼저 해주세요!");
+                response.sendRedirect("/user/login"); // 세션에 user_id가 없으면 루트로 리다이렉트
+                return false; // 요청 처리 중단
+            }
         }
 
         return true;
