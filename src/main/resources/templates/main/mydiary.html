@@ -14,8 +14,10 @@
 
     <div class="user-container">
         <div class="user-profile">
-            <img th:if="${user.src_url != null && !user.src_url.isEmpty()}" th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" />
-            <img th:if="${user.src_url == null || user.src_url.isEmpty()}" th:src="@{/document/img/default_profile.png}" alt="Profile Picture" class="profile-pic" />
+            <img th:src="${user.src_url != null && !user.src_url.isEmpty() ? user.src_url : '/document/img/default_profile.png'}"
+                 alt="Profile Picture"
+                 class="profile-pic">
+
             <p id="userNickname" th:text="${user.nickname}"/>
             <img th:src="@{/document/img/settings.png}" alt="Settings Icon" class="settings-icon" onclick="openModal('userModal')">
         </div>
@@ -32,8 +34,10 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:if="${user.src_url != null && !user.src_url.isEmpty()}" th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" />
-                            <img th:if="${user.src_url == null || user.src_url.isEmpty()}" th:src="@{/document/img/default_profile.png}" alt="Profile Picture" class="profile-pic" />
+                            <img th:src="${user.src_url != null && !user.src_url.isEmpty() ? user.src_url : '/document/img/default_profile.png'}"
+                                 alt="Profile Picture"
+                                 class="profile-pic">
+
                         </div>
                     </div>
                 </div>
@@ -74,7 +78,9 @@
                     </div>
                     <div class="modal-right">
                         <div class="profile-pic-container">
-                            <img th:src="${user.src_url}" alt="Profile Picture" class="profile-pic" data-default-src="@{/document/img/default_profile.png}">
+                            <img th:src="${user.src_url != null && !user.src_url.isEmpty() ? user.src_url : '/document/img/default_profile.png'}"
+                                 alt="Profile Picture"
+                                 class="profile-pic">
                             <button class="change-profile-button" onclick="openModal('profilePicModal')">사진 수정</button>
                         </div>
                     </div>
@@ -131,7 +137,7 @@
 
         <div id="post-card-container" class="tabcontent" style="display: flex;">
             <div th:each="post : ${posts}" class="post-card">
-                <img th:src="@{|${posts[0].src_url}|}" alt="Post Image">
+                <img th:src="@{|${post.src_url}|}" alt="Post Image">
             </div>
         </div>
 
@@ -320,6 +326,11 @@
             });
     };
 
+    function sendDate(day) {
+        const selectedDate = day;
+        fetchPostsForDate(selecteDate);
+    }
+
     function fetchPostsForDate(date) {
         fetch("/selectedDate", {
             method : "POST",
@@ -342,10 +353,12 @@
         posts.forEach(post => {
             const postElement = document.createElement("div");
             postElement.className = "calendar-card";
+
             const postImage = document.createElement("img");
-            postImage.src = `${posts[0].src_url}`;
+            postImage.src = `${post.src_url}`;
             postImage.width = 150;
             postImage.height = 180;
+
             postElement.appendChild(postImage);
             calendarContents.appendChild(postElement);
         });

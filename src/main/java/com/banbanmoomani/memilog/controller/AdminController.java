@@ -40,8 +40,12 @@ public class AdminController {
     }
 
     @GetMapping("/login")
-    public void login() {
-
+    public String login(HttpSession session, Model model) {
+        if(session.getAttribute("failMessage") != null) {
+            model.addAttribute("failMessage", session.getAttribute("failMessage"));
+            session.removeAttribute("failMessage");
+        }
+        return "admin/login";
     }
 
     @PostMapping("/login")
@@ -64,9 +68,6 @@ public class AdminController {
     public String dashBoard(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -110,9 +111,6 @@ public class AdminController {
     public String userBlackList(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -130,9 +128,6 @@ public class AdminController {
     public String blackUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -151,9 +146,6 @@ public class AdminController {
     public String releaseUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -173,9 +165,6 @@ public class AdminController {
     public String reportTotal(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -197,22 +186,19 @@ public class AdminController {
     public String processReport(@RequestParam("postIdList") List<String> postIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (postIdList == null || postIdList.isEmpty()) {
             System.out.println("postIdList is null or empty");
-            return "redirect:/admin/userBlackList";
+            return "redirect:/admin/reportTotal";
         }
 
         for (String postId : postIdList) {
             System.out.println(postId);
         }
 
-        adminService.processReport(postIdList);
+        adminService.processReport(postIdList, (int) admin_id);
 
-        return "redirect:/admin/userBlackList";
+        return "redirect:/admin/reportTotal";
     }
 
     @GetMapping("/point")
@@ -278,7 +264,7 @@ public class AdminController {
         return "redirect:/admin/dailyTopicBoard";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/admin/login";

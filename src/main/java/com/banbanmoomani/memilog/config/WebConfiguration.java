@@ -19,6 +19,8 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/user/**")
                 .excludePathPatterns("/document/css/**")
                 .excludePathPatterns("/document/js/**")
-                .excludePathPatterns("/document/img/**");
+                .excludePathPatterns("/document/img/**")
+                .excludePathPatterns("/static/**", "/public/**", "/resources/**", "/META-INF/resources/**")
+                .excludePathPatterns("/assets/**");
     }
 }
