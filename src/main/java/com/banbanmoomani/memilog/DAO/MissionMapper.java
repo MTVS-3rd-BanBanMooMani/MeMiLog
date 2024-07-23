@@ -32,4 +32,6 @@ public interface MissionMapper {
     List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
 
     int countMissions();
+
+    String getMissionTitle();
 }

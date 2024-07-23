@@ -28,19 +28,37 @@ document.getElementById('addBtn').addEventListener('click', function() {
     document.getElementById('imageUpload').click();
 });
 
+var fileCount = 0;
+
 document.getElementById('imageUpload').addEventListener('change', function(event) {
     const files = event.target.files;
+    fileCount++;
+    console.log(fileCount)
     if (files.length > 0) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const newThumbnail = document.createElement('div');
+            const newInputThunmbnail = document.createElement('input');
             newThumbnail.classList.add('thumbnail');
             newThumbnail.setAttribute('draggable', 'true');
             newThumbnail.innerHTML = `
                 <img src="${e.target.result}" alt="이미지" onclick="showImageInContainer('${e.target.result}')">
                 <button class="image-close-btn" onclick="removeThumbnail(this)"></button>
             `;
+            newInputThunmbnail.type = 'file';
+            newInputThunmbnail.name = "file"+fileCount.toString();
+            //
+            const dataTransfer = new DataTransfer();
+
+            dataTransfer.items.add(event.target.files[0])
+            newInputThunmbnail.style.display = 'none';
+
+            newInputThunmbnail.files = dataTransfer.files;
+
+            // 지금 생성한 img 태그를 html상에 추가하기 : appendChild()
+
             document.querySelector('.image-thumbnails').insertBefore(newThumbnail, document.querySelector('.add-thumbnail'));
+            document.querySelector('.image-thumbnails-container').appendChild(newInputThunmbnail);
             addDragAndDropHandlers(newThumbnail);
 
             const div = document.getElementById("plus-thumbnail");
@@ -70,6 +88,7 @@ function showImageInContainer(imageSrc) {
 }
 
 function removeThumbnail(button) {
+    fileCount--;
     const thumbnail = button.parentElement;
     const thumbnailsContainer = document.getElementById('plus-thumbnail');
     thumbnailsContainer.removeChild(thumbnail);

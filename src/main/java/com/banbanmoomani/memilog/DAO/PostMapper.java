@@ -2,6 +2,8 @@ package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +28,10 @@ public interface PostMapper {
     void increaseLikeCount(@Param("post_id")int post_id);
 
     void decreaseLikeCount(@Param("post_id")int post_id);
+
+    List<todayPostDTO> findTodayPost();
+
+    List<archivePostDTO> findArchivePost();
+
+    Integer findTodayPostCount();
 }

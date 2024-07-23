@@ -6,118 +6,171 @@
     <title>Me Mission Log</title>
     <link th:href="@{/document/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
     <link rel="stylesheet" href="../../document/css/layout.css" />
     <link href="../../static/document/css/home.css" rel="stylesheet" />
+    <style>
+        .photo-div {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .photo-div.hidden {
+            opacity: 0;
+        }
+        .photo-div.visible {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div th:replace="~{/fragments/mainHeader :: header}"></div>
-        <!-- 이 밑으로 작성 -->
-        <div class="middle-container">
-            <div class="search-bar-container">
-                <form action="/mission" method="get">
-                    <input type="text" name="word">
-                    <button type="submit">
-                        <img th:src="@{/document/img/material-symbols-light.png}">
-                    </button>
-                </form>
+<div class="container">
+    <div th:replace="~{/fragments/mainHeader :: header}"></div>
+    <!-- 이 밑으로 작성 -->
+    <div class="middle-container">
+        <div class="search-bar-container">
+            <form action="/mission" method="get">
+                <input type="text" name="word">
+                <button type="submit">
+                    <img th:src="@{/document/img/material-symbols-light.png}">
+                </button>
+            </form>
+        </div>
+        <div class="mission-container">
+            <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
+            <div th:text="'6월 20일의 미션'"></div>
+            <div th:text="${missionTitle}"></div>
+            <button onclick="location.href='/post/create'">나도 남기러 가기</button>
+        </div>
+        <div class="today-container">
+            <div class="today-label">
+                <p th:text="${todayPostCount} + ' 명의 미미들의 오늘📷'"></p>
             </div>
-            <div class="mission-container">
-                <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
-                <div>6월 20일의 미션</div>
-                <div>미미들이 생각하는 여름 낭만은?</div>
-                <button onclick="location.href='/post/create'">나도 남기러 가기</button>
-            </div>
-            <div class="today-container">
-                <div class="today-label">
-                    <p>000,000 명의 미미들의 오늘📷</p>
+            <div class="today-photo-container" id="today-photo-container">
+                <img th:src="@{/document/img/home-left-arrow.png}" onclick="scrollTodayPhotos(-1)">
+                <div th:each="post : ${todayPostDTOList}" class="photo-div hidden">
+                    <img th:src="${post.picture}">
+                    <p th:text="${post.nickname}"></p>
                 </div>
-                <div class="today-photo-container">
-                    <img th:src="@{/document/img/home-left-arrow.png.png}">
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <img th:src="@{/document/img/home-right-arrow.png.png}">
-                </div>
-            </div>
-            <div class="random-container">
-                <div class="random-label">
-                    <p>미미로그 아카이브🍰</p>
-                </div>
-                <div class="random-photo-container">
-                    <img th:src="@{/document/img/home-left-arrow.png.png}">
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <img th:src="@{/document/img/home-right-arrow.png.png}">
-                </div>
+                <img th:src="@{/document/img/home-right-arrow.png}" onclick="scrollTodayPhotos(1)">
             </div>
         </div>
-
-        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+        <div class="random-container">
+            <div class="random-label">
+                <p>미미로그 아카이브🍰</p>
+            </div>
+            <div class="random-photo-container" id="archive-photo-container">
+                <img th:src="@{/document/img/home-left-arrow.png}" onclick="showRandomPosts()">
+                <div th:each="archive : ${archivePostDTOList}" class="photo-div" type="post">
+                    <img th:src="${archive.picture}">
+                    <p th:text="${archive.nickname}"></p>
+                </div>
+                <img th:src="@{/document/img/home-right-arrow.png}" onclick="showRandomPosts()">
+            </div>
+        </div>
     </div>
+
+    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+</div>
 <script>
-    var successMessage=`[[${successMessage}]]`
-    if (successMessage) alert(successMessage)
+    var successMessage = `[[${successMessage}]]`;
+    if (successMessage) alert(successMessage);
+
+    var todayPhotoIndex = 0;
+    const photosPerPage = 8;
+    const totalTodayPhotos = [[${todayPostCount}]];
+
+    console.log(totalTodayPhotos);
+    function scrollTodayPhotos(step) {
+        var container = document.getElementById('today-photo-container');
+        if (!container) {
+            console.error('today-photo-container not found');
+            return;
+        }
+        var photos = container.getElementsByClassName('photo-div');
+
+        // 다음 인덱스를 계산
+        todayPhotoIndex += step * photosPerPage;
+
+        // 인덱스가 음수가 되지 않도록 조정
+        if (todayPhotoIndex < 0) {
+            todayPhotoIndex = 0;
+        }
+
+        // 인덱스가 총 포스트 수를 넘지 않도록 조정
+        if (todayPhotoIndex >= totalTodayPhotos) {
+            todayPhotoIndex = Math.max(0, totalTodayPhotos - photosPerPage);
+        }
+
+        // 실제 표시 가능한 사진 수 계산
+        var maxIndex = Math.min(todayPhotoIndex + photosPerPage, totalTodayPhotos);
+
+        // 남은 포스트 수를 계산
+        var remainingPosts = totalTodayPhotos - todayPhotoIndex;
+
+        // 모든 포토를 숨김 처리
+        for (var i = 0; i < photos.length; i++) {
+            photos[i].classList.remove('visible');
+            photos[i].classList.add('hidden');
+        }
+
+        setTimeout(() => {
+            // 현재 인덱스에 따라 포토 보여주기
+            for (var i = todayPhotoIndex; i < maxIndex; i++) {
+                if (i < photos.length) {
+                    photos[i].classList.remove('hidden');
+                    photos[i].classList.add('visible');
+                }
+            }
+
+            // 남은 포스트가 8개 미만일 경우 빈 공간 처리
+            if (remainingPosts < photosPerPage) {
+                for (var i = maxIndex; i < todayPhotoIndex + photosPerPage; i++) {
+                    if (i < photos.length) {
+                        // 빈 공간을 위해 숨김 처리
+                        photos[i].classList.add('hidden');
+                    }
+                }
+            }
+
+            console.log(`Visible Photos: ${Array.from(photos).filter(photo => !photo.classList.contains('hidden')).map(photo => photo.innerHTML)}`);
+        }, 500); // 애니메이션 시간과 일치하도록 설정
+    }
+    // 초기화할 때 첫 8장 표시
+    document.addEventListener("DOMContentLoaded", () => {
+        scrollTodayPhotos(0);
+    });
+
+
+    function showRandomPosts() {
+        var container = document.getElementById('archive-photo-container');
+        if (!container) {
+            console.error('archive-photo-container not found');
+            return;
+        }
+        var allPhotos = container.getElementsByClassName('photo-div');
+        var postPhotos = Array.from(allPhotos).filter(photo => photo.getAttribute('type') === 'post');
+
+        // 모든 포토를 숨김 처리
+        for (var i = 0; i < allPhotos.length; i++) {
+            allPhotos[i].classList.remove('visible');
+            allPhotos[i].classList.add('hidden');
+        }
+
+        // 무작위로 사진 선택
+        var randomPhotos = [];
+        while (randomPhotos.length < photosPerPage && postPhotos.length > 0) {
+            var randomIndex = Math.floor(Math.random() * postPhotos.length);
+            randomPhotos.push(postPhotos.splice(randomIndex, 1)[0]);
+        }
+
+        setTimeout(() => {
+            // 무작위로 선택된 포토를 보여주기
+            randomPhotos.forEach(photo => {
+                photo.classList.remove('hidden');
+                photo.classList.add('visible');
+            });
+
+            console.log(`Random Photos: ${randomPhotos.map(photo => photo.innerHTML)}`);
+        }, 500); // 애니메이션 시간과 일치하도록 설정
+    }
 </script>
 </body>
 </html>

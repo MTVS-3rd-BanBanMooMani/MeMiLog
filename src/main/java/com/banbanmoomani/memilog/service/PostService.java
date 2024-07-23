@@ -5,6 +5,8 @@ import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,5 +94,17 @@ public class PostService {
         postMapper.decreaseLikeCount(post_id);
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
+    }
+    public List<todayPostDTO> getTodayPostDTOList() {
+        return postMapper.findTodayPost();
+    }
+
+    public List<archivePostDTO> getArchivePostDTOList() {
+        return postMapper.findArchivePost();
+    }
+
+    public int getTodayPostCount() {
+        Integer count = postMapper.findTodayPostCount();
+        return count == null ? 0 : count;
     }
 }

@@ -141,6 +141,17 @@
             , #{priThemeId}
         )
     </insert>
+    
+    <select id="getMissionTitle" resultType="string">
+        SELECT
+            mission_content
+        FROM
+            MISSION
+        ORDER BY
+            mission_date DESC
+        LIMIT 1
+    </select>
+
 
 
     <select id="countMissions" resultType="int">

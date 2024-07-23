@@ -70,6 +70,9 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+    public String getMissionTitle() {
+        return missionMapper.getMissionTitle();
+    }
     // mission 전체조회 paging
     public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
