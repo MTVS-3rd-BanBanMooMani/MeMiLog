@@ -132,7 +132,7 @@
         LEFT JOIN
         USER u ON p.user_id = u.user_id
         WHERE
-            DAY(m.mission_date) = 1
+        DATE(m.mission_date) = CURDATE()
     </select>
 
     <select id="findPostsByCompanion" resultMap="postResultMap">
@@ -177,10 +177,9 @@
             USER u ON p.user_id = u.user_id
         WHERE
             DATE_FORMAT(p.written_datetime, '%Y-%m-%d') = CURDATE()
-            AND f.picture_order = 1
-        ORDER BY
+        AND f.picture_order = 1
+            ORDER BY
             p.post_id DESC
-        LIMIT 8
     </select>
 
 <<<<<<< HEAD
@@ -202,7 +201,6 @@
         f.picture_order = 1
         ORDER BY
             RAND()
-        LIMIT 8
     </select>
     <select id="findTodayPostCount" resultType="_int">
         SELECT
