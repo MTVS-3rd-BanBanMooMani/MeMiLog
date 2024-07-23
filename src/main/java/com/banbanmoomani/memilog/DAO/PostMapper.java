@@ -5,7 +5,9 @@ import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PostMapper {
@@ -22,4 +24,5 @@ public interface PostMapper {
     List<PostDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 
     void deletePostById(int postId);
+
 }

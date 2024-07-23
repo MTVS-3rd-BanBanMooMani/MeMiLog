@@ -6,7 +6,9 @@ import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostService {
@@ -74,5 +76,4 @@ public class PostService {
     public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
         return postMapper.findPostsByCompanion(companionIds);
     }
-
 }

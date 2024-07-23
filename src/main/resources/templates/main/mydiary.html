@@ -364,25 +364,53 @@
         });
     }
 
+
+    var barChart;
+
+    async function fetchEmotionCounts() {
+        try {
+            const response = await fetch('/emotions?emotion_ids=1,2,3,4,5');
+            if (!response.ok) {
+                throw new Error('Failed to fetch emotion counts');
+            }
+            const emotionCounts = await response.json();
+            updateBarChart(emotionCounts);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     function displayBarChart() {
+        fetchEmotionCounts();
+    }
+
+    function updateBarChart(emotionCounts) {
+        const labels = [
+            { img: '../../document/img/colored_happy.png', text: '😃', id: 1 },
+            { img: '../../document/img/colored_cool.png', text: '😎', id: 2 },
+            { img: '../../document/img/colored_surprised.png', text: '😮', id: 3 },
+            { img: '../../document/img/colored_soso.png', text: '😐', id: 4 },
+            { img: '../../document/img/colored_sad.png', text: '🥲', id: 5 }
+        ];
+
+        const data = labels.map(label => emotionCounts[label.id] || 0);
+
         if (barChart) {
             barChart.destroy();
+            barChart = null;
         }
+
         var barChartCanvas = document.getElementById("bar-chart-horizontal");
         barChartCanvas.height = 240;
         barChartCanvas.width = 400;
         var ctx = barChartCanvas.getContext("2d");
 
-        var labels = [
-            { img: '../../document/img/colored_happy.png', text: '😃' },
-            { img: '../../document/img/colored_cool.png', text: '😎' },
-            { img: '../../document/img/colored_surprised.png', text: '😮' },
-            { img: '../../document/img/colored_soso.png', text: '😐' },
-            { img: '../../document/img/colored_sad.png', text: '🥲' }
-        ];
+        ctx.clearRect(0, 0, barChartCanvas.width, barChartCanvas.height);
+
 
         var images = [];
         var imagesLoaded = 0;
+
         labels.forEach((label, index) => {
             var image = new Image();
             image.src = label.img;
@@ -402,7 +430,7 @@
                     labels: labels.map(label => label.text),
                     datasets: [{
                         backgroundColor: ["#8D7CB3", "#83A1B5", "#B39F7F", "#98B681", "#AE7E8A"],
-                        data: [25, 62, 39, 43, 58]
+                        data: data
                     }]
                 },
                 options: {
@@ -465,6 +493,10 @@
             });
         }
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchEmotionCounts();
+    });
 
     function getEmojiImage(emoji) {
         switch (emoji) {

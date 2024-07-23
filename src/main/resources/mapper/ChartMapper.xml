@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banbanmoomani.memilog.DAO.ChartMapper">
+
+    <select id="getEmotionCounts" parameterType="map" resultType="map">
+        SELECT emotion_id, COUNT(*) as count
+        FROM POST
+        WHERE user_id = #{user_id}
+        <if test="emotion_ids != null and !emotion_ids.isEmpty()">
+            AND emotion_id IN
+            <foreach item="item" index="index" collection="emotion_ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY emotion_id
+    </select>
+
+</mapper>

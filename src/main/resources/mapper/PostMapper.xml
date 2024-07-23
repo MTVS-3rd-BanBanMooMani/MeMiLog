@@ -165,5 +165,4 @@
         AND DAY(m.mission_date) = 1
     </select>
 
-
 </mapper>
