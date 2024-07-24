@@ -44,11 +44,23 @@
     }
   }
 
-  function submitForm() {
+  async function submitForm() {
     const themeTypeField = document.getElementById('themeType');
     themeTypeField.value = selectedCategories.join(',');
     const form = document.getElementById('themeForm');
-    form.submit();
+
+    const queryString = new URLSearchParams(new FormData(form)).toString();
+    const url = `/theme?${queryString}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      notesData = data; // notesData를 업데이트
+      renderNotes(1);
+      renderPagination();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -163,3 +175,23 @@
   renderNotes(1);
   renderPagination();
 // });
+
+function likeFetch() {
+  // const postIdValue = document.getElementById('id').value; 나중에 여기에 값 넣어서 주석 제거하고 사용하시면 됩니다.
+  const postIdValue = 49
+  fetch("/post/like?post_id="+postIdValue)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+}
+
+function dislikeFetch() {
+  // const postIdValue = document.getElementById('id').value; 나중에 여기에 값 넣어서 주석 제거하고 사용하시면 됩니다.
+  const postIdValue = 49
+  fetch("/post/dislike?post_id="+postIdValue)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+}

@@ -1,19 +1,28 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
+import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class PostService {
     private final PostMapper postMapper;
 
-    public PostService(PostMapper postMapper) {
+    private final LikeMapper likeMapper;
+
+    public PostService(PostMapper postMapper, LikeMapper likeMapper) {
         this.postMapper = postMapper;
+        this.likeMapper = likeMapper;
     }
 
     public List<PostDTO> findAllPosts() {
@@ -34,15 +43,20 @@ public class PostService {
 //        }
 //    }
     @Transactional
-    public void updatePost(PostDTO updateRequestDTO) {
-    // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
-        int postId = 35;
-        int userId = 1;
+    public void updatePost(PostDTO updateRequestDTO, int userId) {
+
+        int postId = updateRequestDTO.getPost_id();
+
         PostDTO post = postMapper.findPostById(postId);
         System.out.println("Post: " + post);
         System.out.println("UpdateRequest User ID: " + userId);
 
-        if (post != null && post.getUser_id() == userId) {
+        LocalDate localDate = LocalDate.from(post.getWritten_datetime().toLocalDateTime());
+        if(!localDate.equals(LocalDate.now())) {
+            throw new IllegalArgumentException("The post date is not today.");
+        }
+
+        if (post.getUser_id() == userId) {
         // 하드코딩된 post_id와 user_id를 설정
             updateRequestDTO.setPost_id(postId);
             updateRequestDTO.setUser_id(userId);
@@ -66,13 +80,47 @@ public class PostService {
         return postMapper.findPostById(postId);
     }
 
-    public List<PostDTO> findAllPostOnMissionByDate() {
+    public List<PostRequestDTO> findAllPostOnMissionByDate() {
 
         return postMapper.findAllPostOnMissionByDate();
     }
 
-    public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
+    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
         return postMapper.findPostsByCompanion(companionIds);
     }
 
+
+    public PostRequestDTO showPostDetail(Long postId) {
+        return postMapper.showPostDetail(postId);
+    }
+
+    @Transactional
+    public void increaseLikeCount(int post_id, int user_id) {
+        postMapper.increaseLikeCount(post_id);
+        LikeDTO likeDTO = new LikeDTO(user_id, post_id);
+        likeMapper.insertLikeInfo(likeDTO);
+    }
+
+    @Transactional
+    public void decreaseLikeCount(int post_id, int user_id) {
+        postMapper.decreaseLikeCount(post_id);
+        LikeDTO likeDTO = new LikeDTO(user_id, post_id);
+        likeMapper.deleteLikeInfo(likeDTO);
+    }
+    @Transactional
+    public void updateHidden() {
+        postMapper.updateHidden();
+    } 
+    public List<todayPostDTO> getTodayPostDTOList() {
+        return postMapper.findTodayPost();
+    }
+
+    public List<archivePostDTO> getArchivePostDTOList() {
+        return postMapper.findArchivePost();
+    }
+
+    public int getTodayPostCount() {
+        Integer count = postMapper.findTodayPostCount();
+        return count == null ? 0 : count;
+    }
 }

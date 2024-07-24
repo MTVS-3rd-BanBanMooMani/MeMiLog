@@ -29,4 +29,8 @@ public class RPTCategoryService {
     public void updateRPTCategory(RPTCategoryDTO rptCategoryDTO) {
         rptCategoryMapper.updateRPTCategory(rptCategoryDTO);
     }
+
+    public RPTCategoryDTO findRPTWeightById(int rptCategoryId) {
+        return rptCategoryMapper.findRPTWeightById(rptCategoryId);
+    }
 }

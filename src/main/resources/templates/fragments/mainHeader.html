@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header Fragment</title>
-    <link rel="stylesheet" href="../../document/css/layout.css" />
+    <link rel="stylesheet" href="../static/document/css/layout.css" />
 </head>
 <body>
 <div th:fragment="header" class="header">
-    <a class="logo">Me Mission Log</a>
+    <a class="logo" th:href="@{/}">Me Mission Log</a>
     <div class="menu-bar">
         <a class="menu-btn" th:href="@{/allview}">둘러보기</a>
         <a class="menu-btn" th:href="@{/post}">오늘일기</a>
         <a class="menu-btn" th:href="@{/mydiary}">마이다이어리</a>
-        <button class="login-btn" th:onclick="|location.href='@{/user/login}'|">로그인</button>
+        <button class="login-btn"
+                th:if="${session.user_id == null}"
+                th:onclick="|location.href='@{/user/login}'|">로그인</button>
+        <button class="logout-btn"
+                th:if="${session.user_id != null}"
+                th:onclick="|location.href='@{/user/deleteSession}'|">로그아웃</button>
     </div>
 </div>
 </body>

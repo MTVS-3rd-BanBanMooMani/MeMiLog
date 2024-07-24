@@ -58,7 +58,8 @@ body {
   text-decoration: none;
 }
 
-.header .menu-bar .login-btn {
+.header .menu-bar .login-btn,
+.logout-btn {
   padding-left: 1.5vw;
   padding-right: 1.5vw;
   padding-top: 1vh;
@@ -79,7 +80,8 @@ body {
 }
 
 .header .menu-bar .menu-btn:hover,
-.login-btn:hover {
+.login-btn:hover,
+.logout-btn:hover {
   text-decoration: underline;
 }
 

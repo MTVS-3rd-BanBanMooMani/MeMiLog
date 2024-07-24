@@ -45,31 +45,33 @@
   <main>
       <div class="content">
         <!-- 검색바 -->
-        <div class="search-box">
-          <input
-            type="text"
-            placeholder="찾고싶은 질문 키워드를 검색해보세요!"
-            class="search-bar"
-          />
-          <img
-            src="../../document/img/search.png"
-            alt="search icon"
-            class="search-Img"
-          />
-        </div>
-        <!-- 테마 선택 -->
-        <form id="themeForm" action="/theme" method="get" class="category-box">
-<!--          <div class="category-box">-->
-            <span class="category-title">테마</span>
+        <form id="themeWordForm" action="/theme" method="get" class="search-box">
+<!--          <div class="search-box">-->
+            <input
+                    type="text"
+                    placeholder="찾고싶은 질문 키워드를 검색해보세요!"
+                    class="search-bar"
+                    name="word"
+            />
+          <button type="submit">검색</button>
           <input type="hidden" id="themeType" name="type">
-            <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">자연</button>
-            <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">여행</button>
-            <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">취미</button>
-            <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">일상</button>
-            <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">음식</button>
-            <input type="button" value="조회" onclick="submitForm()"/>
+            <img
+                    src="../../document/img/search.png"
+                    alt="search icon"
+                    class="search-Img"
+            />
 <!--          </div>-->
         </form>
+        <!-- 테마 선택 -->
+        <div>
+          <span class="category-title">테마</span>
+          <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">자연</button>
+          <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">여행</button>
+          <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">취미</button>
+          <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">일상</button>
+          <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">음식</button>
+          <button type="button" onclick="submitForm()">조회</button>
+        </div>
         <div class="note-container" id="note-container"></div>
         <div class="pagination" id="pagination"></div>
       </div>

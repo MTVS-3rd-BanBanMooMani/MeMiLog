@@ -1,7 +1,7 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
-import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,25 +75,30 @@ public class MissionController {
     }
 
     @GetMapping("/theme")
-    public String findMissionsByTheme(@RequestParam("type") String themeTypes, Model model) {
+    public String findMissionsByTheme(@RequestParam(name = "word", required = false) String word,
+                                      @RequestParam(name = "type", required = false) String type,
+                                      Model model) {
 
-        System.out.println("themeTypes = " + themeTypes);
+        System.out.println("keyword = " + word);
+        System.out.println("themeTypes = " + type);
+
+        List<Integer> themeIds = new ArrayList<>();
+
+        if (type != null && !type.isEmpty()) {
+            themeIds = Arrays.stream(type.split(","))
+                    .map(Integer::parseInt)
+                    .toList();
+        }
+
+        MissionSearhCriteria missionSearhCriteria = new MissionSearhCriteria(word, themeIds);
 
         List<MissionDTO> missions;
 
-        if (themeTypes != null && !themeTypes.isEmpty()) {
-            List<Integer> themeIds = Arrays.stream(themeTypes.split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            missions = missionService.findMissionsByTheme(themeIds);
-        } else {
-            missions = missionService.findAllMission();
-        }
-
+        missions = missionService.findMissionsBySearchCriteria(missionSearhCriteria);
         model.addAttribute("missions", missions);
 
         missions.forEach(System.out::println);
-        return "main/themeTest";
-    }
 
+        return "/main/themeTest";
+    }
 }

@@ -13,7 +13,6 @@
   <div th:replace="~{/fragments/mainHeader :: header}"></div>
   <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="postId" th:value="35"/>
-    <input type="hidden" name="user_id" th:value="1">
     <div class="middle-container">
       <div class="left-container">
         <div class="date-category">

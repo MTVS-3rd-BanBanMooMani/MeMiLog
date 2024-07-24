@@ -17,4 +17,8 @@ public interface UserMapper {
     void deleteUserById(int user_id);
 
     void setDefaultProfile(FileDTO fileDTO);
+
+    void updateTemporary(int rptedUserId);
+
+    void addCautionWeights(int rptWeight);
 }

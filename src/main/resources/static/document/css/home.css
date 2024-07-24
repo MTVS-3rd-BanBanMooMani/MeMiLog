@@ -105,7 +105,7 @@
     display: flex;
     flex-direction: row;
     width: 82vw;
-    margin: auto;    
+    margin: auto;
 }
 
 .today-container .today-label p{
@@ -136,24 +136,50 @@
 }
 
 .photo-div {
-    background: #F7F7F7; box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.5s ease-in-out;
+    background: #F7F7F7;
+    box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
     padding: 5px;
     border: 1px rgba(0, 0, 0, 0.15);
     height: 200px;
     width: 138px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.photo-div.hidden {
+    opacity: 0;
+}
+.photo-div.visible {
+    opacity: 1;
 }
 
+.photo-div img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.arrow-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 .photo-div p {
     margin: 0;
+    padding: 5px 0;
     color: black;
     font-size: 12px;
     font-family: "Yeon Sung";
     font-weight: 400;
     line-height: 18px;
     word-wrap: break-word;
-    margin-left: 5px;
-    float: left;
+    text-align: center;
+    width: 100%;
 }
+
 
 .random-container {
     margin-top: 30px;
@@ -170,7 +196,7 @@
     display: flex;
     flex-direction: row;
     width: 82vw;
-    margin: auto;    
+    margin: auto;
 }
 
 .random-container .random-label p {
@@ -194,14 +220,14 @@
 }
 
 .modal-bg{
-    display: flex; 
-    position: fixed; 
-    z-index: 1; 
+    display: flex;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; 
+    overflow: auto;
     background-color: rgba(0,0,0,0.6);
 }
 
@@ -252,34 +278,34 @@
 }
 
 .modal-mission-container div:nth-of-type(1) {
-    left: 130px; 
-    top: 70px; 
-    position: absolute; 
-    color: white; 
-    font-size: 1.2rem; 
-    font-family: "Yeon Sung"; 
-    font-weight: 400; 
-    line-height: 36px; 
+    left: 130px;
+    top: 70px;
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    font-family: "Yeon Sung";
+    font-weight: 400;
+    line-height: 36px;
     word-wrap: break-word
 }
 
 .modal-mission-container div:nth-of-type(2) {
-    width: 50%; 
-    left: 25%; 
-    top: 130px; 
-    position: absolute; 
-    text-align: center; 
-    color: white; 
-    font-size: 3rem; 
-    font-family: "Yeon Sung"; 
-    font-weight: 400; 
+    width: 50%;
+    left: 25%;
+    top: 130px;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-family: "Yeon Sung";
+    font-weight: 400;
     word-wrap: break-word
 }
 
 .category-box {
     margin: 0;
 }
-  
+
 .category-title {
     font-weight: bold;
     margin: 0 10px;

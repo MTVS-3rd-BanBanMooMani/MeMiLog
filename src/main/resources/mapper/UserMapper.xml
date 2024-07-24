@@ -112,6 +112,21 @@
         WHERE email = #{email}
     </update>
 
+    <update id="updateTemporary" parameterType="int">
+        UPDATE USER
+        SET temporary = CASE
+                WHEN temporary = 'N' THEN 'T'
+                WHEN temporary = 'T' THEN 'N'
+            END
+        WHERE temporary IN ('N', 'T');
+        AND user_id = #{rptedUserId}
+    </update>
+
+    <update id="addCautionWeights" parameterType="int">
+        UPDATE USER
+        SET caution_weights = caution_weights + #{rptWeight};
+    </update>
+
     <delete id="deleteUserById" parameterType="int">
         DELETE FROM USER
         WHERE user_id = #{user_id}

@@ -3,6 +3,8 @@ package com.banbanmoomani.memilog.service;
 import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DAO.ThemeMapper;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
+import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class MissionService {
 //    public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
 
     public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
+
     public MissionDTO findTodayMission() {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,6 +58,17 @@ public class MissionService {
     }
     public MissionDTO findMissionById(int missionId) {
         return missionMapper.findMissionById(missionId);
+    }
+
+    public List<MissionDTO> findMissionsByWord(String wordTypes) {
+        return missionMapper.findMissionsByWord(wordTypes);
+    }
+
+    public List<MissionDTO> findMissionsBySearchCriteria(MissionSearhCriteria missionSearhCriteria) {
+        return missionMapper.findMissionByCriteria(missionSearhCriteria);
+    }
+    public String getMissionTitle() {
+        return missionMapper.getMissionTitle();
     }
     // mission 전체조회 paging
 

@@ -135,11 +135,8 @@
             <button class="tablinks" onclick="openPage(event, 'calendar-container')">일자별 보기</button>
         </div>
 
-        <div id="post-card-container" class="tabcontent" style="display: flex;">
-            <div th:each="post : ${posts}" class="post-card">
-                <img th:src="@{|${post.src_url}|}" alt="Post Image">
-            </div>
-        </div>
+        <div id="post-card-container" class="tabcontent" style="display: flex;"></div>
+        <div id="posts-data" th:utext="${postsJson}" style="display:none;"></div>
 
         <div id="calendar-container" class="tabcontent">
             <div class="date-selector">
@@ -152,7 +149,6 @@
             </div>
 
             <div class="calendar-contents">
-
             </div>
         </div>
     </div>
@@ -166,9 +162,42 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         const firstTabLink = document.querySelector(".tablinks");
-        const calendarContainer = document.getElementById("calendar-container");
         const dateSelector = document.querySelector(".date-selector ul");
 
+        const allPosts = JSON.parse(document.getElementById("posts-data").textContent);
+
+        let currentIndex = 0;
+        const batchSize = 10;
+
+        const postCardContainer = document.getElementById("post-card-container");
+
+        loadMorePosts();
+
+        postCardContainer.addEventListener('scroll', function () {
+            if (postCardContainer.scrollTop + postCardContainer.clientHeight >= postCardContainer.scrollHeight) {
+                loadMorePosts();
+            }
+        });
+
+        function loadMorePosts() {
+            const postsToLoad = allPosts.slice(currentIndex, currentIndex + batchSize);
+            displayPosts(postsToLoad);
+            currentIndex += batchSize;
+        }
+
+        function displayPosts(posts) {
+            posts.forEach(post => {
+                const postCard = document.createElement("div");
+                postCard.className = "post-card";
+
+                const postImage = document.createElement("img");
+                postImage.src = post.src_url;
+                postImage.alt = "post image";
+
+                postCard.appendChild(postImage);
+                postCardContainer.appendChild(postCard);
+            });
+        }
 
         if (firstTabLink) {
             firstTabLink.click();
@@ -364,45 +393,71 @@
         });
     }
 
+    async function fetchEmotionCounts() {
+        try {
+            const response = await fetch('/emotions?emotion_ids=1,2,3,4,5');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch emotion counts');
+            }
+            const emotionCounts = await response.json();
+            updateBarChart(emotionCounts);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     function displayBarChart() {
+        fetchEmotionCounts();
+    }
+
+    function updateBarChart(emotionCounts) {
+        const labels = [
+            { img: '../../document/img/colored_happy.png', text: '😃', id: 1 },
+            { img: '../../document/img/colored_cool.png', text: '😎', id: 2 },
+            { img: '../../document/img/colored_surprised.png', text: '😮', id: 3 },
+            { img: '../../document/img/colored_soso.png', text: '😐', id: 4 },
+            { img: '../../document/img/colored_sad.png', text: '🥲', id: 5 }
+        ];
+
+        const data = labels.map(label => emotionCounts[label.id] || 0);
+
         if (barChart) {
             barChart.destroy();
+            barChart = null;
         }
+
         var barChartCanvas = document.getElementById("bar-chart-horizontal");
         barChartCanvas.height = 240;
         barChartCanvas.width = 400;
         var ctx = barChartCanvas.getContext("2d");
 
-        var labels = [
-            { img: '../../document/img/colored_happy.png', text: '😃' },
-            { img: '../../document/img/colored_cool.png', text: '😎' },
-            { img: '../../document/img/colored_surprised.png', text: '😮' },
-            { img: '../../document/img/colored_soso.png', text: '😐' },
-            { img: '../../document/img/colored_sad.png', text: '🥲' }
-        ];
+        ctx.clearRect(0, 0, barChartCanvas.width, barChartCanvas.height);
+
 
         var images = [];
         var imagesLoaded = 0;
+
         labels.forEach((label, index) => {
             var image = new Image();
             image.src = label.img;
             image.onload = () => {
                 imagesLoaded++;
                 if (imagesLoaded === labels.length) {
-                    drawChart();
+                    drawBarChart();
                 }
             };
             images.push(image);
         });
 
-        function drawChart() {
+        function drawBarChart() {
             barChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels.map(label => label.text),
                     datasets: [{
                         backgroundColor: ["#8D7CB3", "#83A1B5", "#B39F7F", "#98B681", "#AE7E8A"],
-                        data: [25, 62, 39, 43, 58]
+                        data: data
                     }]
                 },
                 options: {
@@ -466,53 +521,67 @@
         }
     }
 
-    function getEmojiImage(emoji) {
-        switch (emoji) {
-            case "😀": return '../../document/img/colored_happy.png';
-            case "😎": return '../../document/img/colored_cool.png';
-            case "😮": return '../../document/img/colored_surprised.png';
-            case "😐": return '../../document/img/colored_soso.png';
-            case "😢": return '../../document/img/colored_sad.png';
-            default: return '';
+    async function fetchMonthlyEmotionCounts(){
+        try {
+            const response = await fetch('/monthlyemotions?emotion_ids=1,2,3,4,5&months=1,2,3,4,5,6,7,8,9,10,11,12');
+
+            if(!response.ok){
+                throw new Error('Failed to fetch monthly emotion counts');
+            }
+            const monthlyEmotionCounts = await response.json();
+            console.log('Fetched data: ', monthlyEmotionCounts);
+            updateLineChart(monthlyEmotionCounts);
+        } catch (error) {
+            console.error('Error: ', error)
         }
     }
 
     function displayLineChart() {
-        if (window.lineChart) {
-            window.lineChart.destroy();
+        fetchMonthlyEmotionCounts();
+        }
+
+    function updateLineChart(monthlyEmotionCounts = {}){
+
+        console.log('Monthly Emotion Counts:', monthlyEmotionCounts);
+
+        const labels = [
+            { id: 1, label: "😀", borderColor: "#8D7CB3" },
+            { id: 2, label: "😎", borderColor: "#83A1B5" },
+            { id: 3, label: "😮", borderColor: "#B39F7F" },
+            { id: 4, label: "😐", borderColor: "#98B681" },
+            { id: 5, label: "😢", borderColor: "#AE7E8A" }
+        ];
+
+        const datasets = labels.map(label => ({
+            data: [],
+            label: label.label,
+            borderColor: label.borderColor,
+            fill: false
+        }));
+
+        labels.forEach(label => {
+            for(let month = 1; month <=12; month++){
+                datasets.find(dataset => dataset.label === label.label).data[month - 1] = monthlyEmotionCounts[label.id] && monthlyEmotionCounts[label.id][month] || 0;
+            }
+        });
+
+        console.log('Datasets: ', datasets);
+
+        if(lineChart){
+            lineChart.destroy();
+            lineChart = null;
         }
 
         var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
-        window.lineChart = new Chart(lineChartCanvas, {
+        drawLineChart(lineChartCanvas, datasets);
+    }
+
+    function drawLineChart(ctx, datasets) {
+        lineChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                datasets: [{
-                    data: [20, 18, 22, 25, 24, 26, 19, 21, 23, 17, 16, 20],
-                    label: "😀",
-                    borderColor: "#8D7CB3",
-                    fill: false,
-                }, {
-                    data: [15, 17, 16, 10, 13, 14, 12, 19, 14, 15, 18, 10],
-                    label: "😎",
-                    borderColor: "#83A1B5",
-                    fill: false
-                }, {
-                    data: [30, 20, 18, 25, 20, 18, 24, 20, 20, 18, 21, 20],
-                    label: "😮",
-                    borderColor: "#B39F7F",
-                    fill: false
-                }, {
-                    data: [10, 15, 20, 15, 18, 17, 15, 15, 15, 20, 15, 15],
-                    label: "😐",
-                    borderColor: "#98B681",
-                    fill: false
-                }, {
-                    data: [25, 30, 24, 25, 25, 25, 30, 25, 28, 30, 30, 35],
-                    label: "😢",
-                    borderColor: "#AE7E8A",
-                    fill: false
-                }]
+                datasets: datasets
             },
             options: {
                 plugins: {
@@ -542,20 +611,20 @@
             },
             plugins: [{
                 afterRender: function(chart) {
-                    var legendContainer = document.getElementById('legend');
+                    const legendContainer = document.getElementById('legend');
                     legendContainer.innerHTML = '';
-                    chart.data.datasets.forEach(function(dataset, i) {
-                        var legendItem = document.createElement('div');
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const legendItem = document.createElement('div');
                         legendItem.classList.add('legend-item');
                         legendItem.onclick = function() {
-                            var meta = chart.getDatasetMeta(i);
+                            const meta = chart.getDatasetMeta(i);
                             meta.hidden = meta.hidden === null ? !chart.data.datasets[i].hidden : null;
                             chart.update();
                         };
-                        var colorBox = document.createElement('span');
+                        const colorBox = document.createElement('span');
                         colorBox.classList.add('color-box');
                         colorBox.style.borderColor = dataset.borderColor;
-                        var img = document.createElement('img');
+                        const img = document.createElement('img');
                         img.src = getEmojiImage(dataset.label);
                         img.classList.add('legend-image');
                         legendItem.appendChild(colorBox);
@@ -567,9 +636,18 @@
         });
     }
 
-    window.onload = function() {
-        displayLineChart();
-    };
+
+    function getEmojiImage(emoji) {
+        switch (emoji) {
+            case "😀": return '../../document/img/colored_happy.png';
+            case "😎": return '../../document/img/colored_cool.png';
+            case "😮": return '../../document/img/colored_surprised.png';
+            case "😐": return '../../document/img/colored_soso.png';
+            case "😢": return '../../document/img/colored_sad.png';
+            default: return '';
+        }
+    }
+
 </script>
 </body>
 </html>
