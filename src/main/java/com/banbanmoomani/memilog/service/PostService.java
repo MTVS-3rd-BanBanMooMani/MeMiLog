@@ -2,13 +2,10 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
-import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
+import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
-import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
-import com.banbanmoomani.memilog.DTO.archivePostDTO;
-import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -121,4 +118,13 @@ public class PostService {
         return postMapper.findMainFile(postId);
     }
 
+    public void updateImageOrder(ImageOrderDTO imageOrderDTO) {
+        postMapper.updateImageOrder(imageOrderDTO);
+    }
+    public void deleteImageOrder(ImageOrderDTO imageOrderDTO) {
+        postMapper.deleteImageOrder(imageOrderDTO);
+    }
+    public void addImage(ImageOrderDTO imageOrderDTO) {
+        postMapper.addImage(imageOrderDTO);
+    }
 }

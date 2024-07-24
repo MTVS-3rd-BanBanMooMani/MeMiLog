@@ -321,5 +321,36 @@
         post_id = #{postId}
         AND picture_order = 1
     </select>
+    <insert id="addImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        INSERT
+        INTO
+        FILE (
+            post_id,
+            src_url,
+            picture_order
+        )
+        VALUES
+        (
+            #{post_id},
+            #{src_url},
+            #{picture_order}
+        )
+    </insert>
+
+    <update id="updateImageOrder" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        UPDATE
+            FILE
+        SET
+            picture_order = #{picture_order}
+        WHERE
+            post_id = #{post_id} AND src_url = #{src_url}
+    </update>
+    <delete id="deleteImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        DELETE
+        FROM
+            FILE
+        WHERE
+            post_id = #{post_id} AND src_url = #{src_url}
+    </delete>
 
 </mapper>
