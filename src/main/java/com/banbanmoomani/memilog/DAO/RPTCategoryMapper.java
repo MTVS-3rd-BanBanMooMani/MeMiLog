@@ -11,4 +11,6 @@ public interface RPTCategoryMapper {
     void createRPTCategory(RPTCategoryRequestDTO rptCategoryRequestDTO);
     void deleteRPTCategory(int rpt_category_id);
     void updateRPTCategory(RPTCategoryDTO rptCategoryDTO);
+
+    RPTCategoryDTO findRPTWeightById(int rptCategoryId);
 }

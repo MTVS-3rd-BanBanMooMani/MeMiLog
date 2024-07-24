@@ -93,4 +93,9 @@ public class PostService {
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
     }
+
+    @Transactional
+    public void updateHidden() {
+        postMapper.updateHidden();
+    }
 }

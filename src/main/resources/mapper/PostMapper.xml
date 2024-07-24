@@ -177,4 +177,13 @@
         WHERE
             post_id = #{post_id}
     </update>
+    <update id="updateHidden">
+        UPDATE your_table_name
+        SET hidden_YN =
+            CASE
+                WHEN hidden_YN = 0 THEN 1
+                WHEN hidden_YN = 1 THEN 0
+            END
+        WHERE hidden_YN IN (0, 1);
+    </update>
 </mapper>

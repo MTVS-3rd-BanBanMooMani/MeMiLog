@@ -26,4 +26,6 @@ public interface PostMapper {
     void increaseLikeCount(@Param("post_id")int post_id);
 
     void decreaseLikeCount(@Param("post_id")int post_id);
+
+    void updateHidden();
 }

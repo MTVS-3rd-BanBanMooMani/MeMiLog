@@ -17,6 +17,11 @@
              , stop_day
         FROM RPT_CATEGORY
     </select>
+    <select id="findRPTWeightById" parameterType="int">
+        SELECT *
+        FROM RPT_CATEGORY
+        WHERE rpt_category_id = #{rptCategoryId}
+    </select>
     <insert id="createRPTCategory" useGeneratedKeys="true"
             parameterType="com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryRequestDTO">
         INSERT
