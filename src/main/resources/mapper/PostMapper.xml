@@ -158,6 +158,8 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.hidden_YN = 0
+        AND
+        f.picture_order = 1
     </select>
 
     <select id="findPostsByCompanion" resultMap="postRequestMap">
