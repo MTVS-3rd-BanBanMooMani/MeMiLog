@@ -217,23 +217,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     let todayIndex = 0;
-    const maxPhotos = 7;
+    const maxPhotos = 8;
     let todayPhotos;
     let archivePhotos;
 
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded event fired');
         todayPhotos = Array.from(document.querySelectorAll('#today-photo-container .photo-div'));
         archivePhotos = Array.from(document.querySelectorAll('#archive-photo-container .photo-div'));
-        console.log('Today Photos:', todayPhotos);
-        console.log('Archive Photos:', archivePhotos);
         showPhotos(todayPhotos, todayIndex);
         shuffleAndShowArchivePhotos();
         updateArrows(todayIndex, todayPhotos, maxPhotos);
     });
 
     function showPhotos(photos, index) {
-        console.log('showPhotos called with index:', index);
         photos.forEach((photo, i) => {
             if (i >= index * maxPhotos && i < (index + 1) * maxPhotos) {
                 photo.classList.remove('hidden');
@@ -262,7 +258,6 @@
     }
 
     window.scrollTodayPhotos = (direction) => {
-        console.log('scrollTodayPhotos called with direction:', direction);
         const maxIndex = Math.ceil(todayPhotos.length / maxPhotos) - 1;
         todayIndex += direction;
         if (todayIndex < 0) todayIndex = 0;
@@ -279,7 +274,6 @@
     }
 
     function shuffleAndShowArchivePhotos() {
-        console.log('shuffleAndShowArchivePhotos called');
         shuffleArray(archivePhotos);
         showPhotos(archivePhotos, 0);
     }
@@ -291,12 +285,10 @@
 
     photoDivs.forEach((photoDiv) => {
         photoDiv.addEventListener("click", function () {
-            console.log(photoDiv)
             modalBg.style.display = 'flex';
             postModal.style.display = 'block';
             updateArrows();
             const postId = photoDiv.getAttribute('data-post-id');
-
             fetch("/post/bymission", {
                 method: 'POST',
                 headers: {
@@ -304,42 +296,40 @@
                 },
                 body: JSON.stringify({postId: postId})
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log("post detail: ", data);
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("priTheme").innerText = data.pri_theme_name;
+                    document.getElementById("subTheme").innerText = data.sub_theme_name;
+                    document.getElementById("companion").innerText = data.companion_type;
+                    document.getElementById("missionContent").innerText = data.mission_content;
+                    document.getElementById("likeCount").innerText = data.like_count;
+                    document.getElementById("nickname").innerText = data.nickname;
+                    document.getElementById("writtenDate").innerText = data.written_datetime;
+                    document.getElementById("content").innerText = data.content;
 
-                document.getElementById("priTheme").innerText = data.pri_theme_name;
-                document.getElementById("subTheme").innerText = data.sub_theme_name;
-                document.getElementById("companion").innerText = data.companion_type;
-                document.getElementById("missionContent").innerText = data.mission_content;
-                document.getElementById("likeCount").innerText = data.like_count;
-                document.getElementById("nickname").innerText = data.nickname;
-                document.getElementById("writtenDate").innerText = data.written_datetime;
-                document.getElementById("content").innerText = data.content;
+                    const emotionImg = document.getElementById("emotionImg");
+                    switch (data.emotion_name) {
+                        case "Happy":
+                            emotionImg.src = "../../document/img/colored_happy.png";
+                            break;
+                        case "Cool":
+                            emotionImg.src = "../../document/img/colored_cool.png";
+                            break;
+                        case "Surprised":
+                            emotionImg.src = "../../document/img/colored_surprised.png";
+                            break;
+                        case "Soso":
+                            emotionImg.src = "../../document/img/colored_soso.png";
+                            break;
+                        case "Sad":
+                            emotionImg.src = "../../document/img/colored_sad.png";
+                            break;
+                        default:
+                            emotionImg.src = "";
+                    }
 
-                const emotionImg = document.getElementById("emotionImg");
-                switch (data.emotion_name) {
-                    case "Happy":
-                        emotionImg.src = "../../document/img/colored_happy.png";
-                        break;
-                    case "Cool":
-                        emotionImg.src = "../../document/img/colored_cool.png";
-                        break;
-                    case "Surprised":
-                        emotionImg.src = "../../document/img/colored_surprised.png";
-                        break;
-                    case "Soso":
-                        emotionImg.src = "../../document/img/colored_soso.png";
-                        break;
-                    case "Sad":
-                        emotionImg.src = "../../document/img/colored_sad.png";
-                        break;
-                    default:
-                        emotionImg.src = "";
-                }
-
-            })
-            .catch(error => console.error("post detail error: ", error));
+                })
+                .catch(error => console.error("post detail error: ", error));
 
             const modifyBtn = document.querySelector(".post-edit-btn")
 
@@ -347,13 +337,11 @@
                 location.href="/post/update?postId="+postId
             })
 
-            // 삭제 버튼 클릭 시 alert
             const deleteAlert = document.querySelector(".post-delete-btn");
 
             deleteAlert.addEventListener("click", () => {
                 Swal.fire({
                     title: "정말로 삭제하시겠습니까?",
-                    // text: "You won't be able to revert this!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
@@ -363,17 +351,16 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         fetch("/post/delete?postId=" + postId)
-                        .then(res => {
-                            if(res.ok) {
-                                location.href = "/post/bymission"
-                            } else {
-                                Swal.fire({
-                                    title: "삭제 실패하였습니다!",
-                                    // text: "Your file has been deleted.",
-                                    icon: "Fail",
-                                });
-                            }
-                        })
+                            .then(res => {
+                                if(res.ok) {
+                                    location.href = "/post/bymission"
+                                } else {
+                                    Swal.fire({
+                                        title: "삭제 실패하였습니다!",
+                                        icon: "Fail",
+                                    });
+                                }
+                            })
                     }
                 });
             });
@@ -393,7 +380,7 @@
             postModal.style.display = "none";
         }
     });
-    // post img
+
     const modalImages = document.querySelectorAll(".modal-image");
     const arrowLeft = document.querySelector(".arrow-left");
     const arrowRight = document.querySelector(".arrow-right");
@@ -411,13 +398,6 @@
             );
         }
     }
-
-    // photoDivs.forEach((photoDiv) => {
-    //   photoDiv.addEventListener("click", function () {
-    //     postModal.style.display = "block";
-    //     updateArrows();
-    //   });
-    // });
 
     closePostModalBtn.addEventListener("click", function () {
         postModal.style.display = "none";
@@ -446,7 +426,6 @@
     });
     updateArrows();
 
-    // etc dropdown
     const etcImg = document.querySelector(".etc-img");
     const dropdownContent = document.querySelector(".dropdown-content");
 
@@ -454,7 +433,6 @@
         dropdownContent.classList.toggle("show");
     });
 
-    // 다른 곳 클릭 시 dropdown 닫기
     window.addEventListener("click", function (event) {
         if (!event.target.matches(".etc-img")) {
             if (dropdownContent.classList.contains("show")) {
@@ -463,31 +441,13 @@
         }
     });
 
-    // 신고 모달 관련
     const reportModalBg = document.querySelector(".report-modal-bg");
     const reportModal = document.querySelector(".report-modal");
     const reportModalCloseBtn = document.querySelector(".report-modal-close-btn");
 
     document.querySelector(".post-report-btn").addEventListener("click", function() {
-        console.log("신고버튼 클릭함");
         reportModalBg.style.display = "flex";
         reportModal.style.display = "block";
-
-        // 기존 게시물 정보 가져오기
-        const postId = document.querySelector(".photo-div[data-post-id]").getAttribute('data-post-id');
-        // fetch("/post/bymission", {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({postId: postId})
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //       document.getElementById("editMissionContent").innerText = data.mission_content;
-        //       document.getElementById("editPostId").value = data.post_id;
-        //     })
-        //     .catch(error => console.error("edit detail error: ", error));
     });
 
     reportModalCloseBtn.addEventListener("click", function () {
@@ -502,7 +462,6 @@
         }
     });
 
-    // 좋아요 기능
     const likeBtn = document.querySelector(".post-like-btn");
 
     likeBtn.addEventListener("click", function () {
@@ -512,6 +471,7 @@
             likeBtn.src = "../documentation/img/heart.png";
         }
     });
+
 </script>
 </body>
 </html>

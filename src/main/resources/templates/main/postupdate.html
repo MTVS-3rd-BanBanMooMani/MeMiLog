@@ -23,10 +23,13 @@
         </div>
         <div class="title" th:text="${mission.missionContent}">미미들이 생각하는 여름 낭만은?</div>
         <div class="image-container">
-          <img id="main-image" class="main-image" th:src="@{/images/default.png}" src="/images/default.png">
+          <img id="main-image" class="main-image" th:src="${mainImageUrl}" src="/images/default.png">
         </div>
         <div class="image-thumbnails-container">
           <div class="image-thumbnails" id="plus-thumbnail">
+            <div class="thumbnail" th:each="file : ${imageUrls}">
+              <img th:src="@{${file.src_url}}" alt="thumbnail">
+            </div>
             <div class="thumbnail add-thumbnail" id="addBtn">
               +
               <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">

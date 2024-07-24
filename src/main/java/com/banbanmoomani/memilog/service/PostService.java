@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
@@ -11,7 +12,6 @@ import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -112,4 +112,13 @@ public class PostService {
         Integer count = postMapper.findTodayPostCount();
         return count == null ? 0 : count;
     }
+
+    public List<UpdateFileDTO> updatefiles(int postId) {
+        return postMapper.updateFile(postId);
+    }
+
+    public String findMainFile(int postId) {
+        return postMapper.findMainFile(postId);
+    }
+
 }

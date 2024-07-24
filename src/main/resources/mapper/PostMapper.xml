@@ -301,4 +301,22 @@
         WHERE
              DATE(written_datetime) = CURDATE()
     </select>
+    <select id="updateFile" parameterType="_int" resultType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        SELECT
+            src_url
+        FROM
+            FILE
+        WHERE
+            post_id = #{postId}
+    </select>
+    <select id="findMainFile" parameterType="int" resultType="string">
+        SELECT
+        src_url
+        FROM
+        FILE
+        WHERE
+        post_id = #{postId}
+        AND picture_order = 1
+    </select>
+
 </mapper>
