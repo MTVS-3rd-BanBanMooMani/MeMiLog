@@ -12,7 +12,8 @@
 <div class="container">
   <div th:replace="~{/fragments/mainHeader :: header}"></div>
   <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="postId" th:value="35"/>
+    <input type="hidden" name="post_id" th:value="${post.post_id}"/>
+    <input type="hidden" name="user_id" th:value="${post.user_id}"/>
     <div class="middle-container">
       <div class="left-container">
         <div class="date-category">
@@ -78,7 +79,6 @@
           </div>
         </div>
         <input type="hidden" name="mission_content" th:value="${post.content}">
-        <input type="hidden" name="user_id" th:value="${post.user_id}">
         <div class="buttons">
           <button class="submit-btn" type="submit" name="submit">수정 완료</button>
           <button class="back-btn" type="button" onclick="window.history.back()">돌아가기</button>
