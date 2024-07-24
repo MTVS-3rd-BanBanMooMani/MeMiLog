@@ -330,6 +330,26 @@
         fetchPostsForDate(selecteDate);
     }
 
+    (() => {
+        const container = document.getElementById('post-card-container');
+        let count = container.children.length;
+
+        document.addEventListener('srcoll', () => {
+            if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                const newCard = document.createElement('div');
+                newCard.className = 'post-card';
+                newCard.style.width = '175px';
+                newCard.style.height = '190px';
+
+                const img = document.createElement('img');
+
+                newCard.appendChild(img);
+                container.appendChild(newCard);
+                count++;
+            }
+        });
+    })();
+
     function fetchPostsForDate(date) {
         fetch("/selectedDate", {
             method : "POST",
