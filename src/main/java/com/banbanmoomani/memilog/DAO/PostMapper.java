@@ -21,7 +21,7 @@ public interface PostMapper {
 
     PostDTO findPostById(int postId);
 
-    List<PostRequestDTO> findAllPostOnMissionByDate();
+    List<PostRequestDTO> findAllPostOnMissionByDate(String date);
 
     List<PostRequestDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 

@@ -30,6 +30,19 @@
   align-items: center;
 }
 
+.search-btn {
+  background-image: url('../../document/img/search.png');
+  background-color: #ffffff;
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}
+
 .search-Img:hover {
   filter: invert(62%) sepia(87%) saturate(275%) hue-rotate(344deg)
     brightness(102%) contrast(98%);

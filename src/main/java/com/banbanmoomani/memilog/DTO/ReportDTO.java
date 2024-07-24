@@ -78,4 +78,17 @@ public class ReportDTO {
     public void setRpt_datetime(Date rpt_datetime) {
         this.rpt_datetime = rpt_datetime;
     }
+
+    @Override
+    public String toString() {
+        return "ReportDTO{" +
+                "rpt_id=" + rpt_id +
+                ", rpt_category_id=" + rpt_category_id +
+                ", rpt_content='" + rpt_content + '\'' +
+                ", post_id=" + post_id +
+                ", rpter_user_id=" + rpter_user_id +
+                ", rpted_user_id=" + rpted_user_id +
+                ", rpt_datetime=" + rpt_datetime +
+                '}';
+    }
 }
