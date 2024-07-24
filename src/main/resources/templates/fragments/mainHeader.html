@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:fragment="header" class="header">
-    <a class="logo">Me Mission Log</a>
+    <a class="logo" th:href="@{/}">Me Mission Log</a>
     <div class="menu-bar">
         <a class="menu-btn" th:href="@{/allview}">둘러보기</a>
         <a class="menu-btn" th:href="@{/post}">오늘일기</a>
