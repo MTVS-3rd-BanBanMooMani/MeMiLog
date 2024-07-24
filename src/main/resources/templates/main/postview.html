@@ -19,7 +19,7 @@
             rel="stylesheet"
     />
     <link
-            href="../../document/css/allview.css"
+            href="../../document/css/postview.css"
             rel="stylesheet"
     />
 
@@ -44,33 +44,10 @@
 <div th:replace="~{/fragments/mainHeader :: header}"></div>
 <main>
     <div class="content">
-        <!-- 검색바 -->
-        <div class="search-box">
-            <input
-                    type="text"
-                    placeholder="찾고싶은 질문 키워드를 검색해보세요!"
-                    class="search-bar"
-            />
-            <img
-                    src="../../document/img/search.png"
-                    alt="search icon"
-                    class="search-Img"
-            />
-        </div>
-        <!-- 테마 선택 -->
-        <div class="category-box">
-            <span class="category-title">누구와</span>
-            <button class="category-btn">자연</button>
-            <button class="category-btn">여행</button>
-            <button class="category-btn">취미</button>
-            <button class="category-btn">일상</button>
-            <button class="category-btn">음식</button>
-            <button class="category-btn">공부</button>
-        </div>
         <div class="modal-container">
-            <div class="modal-function">
-                <button class="modal-close-btn">&times;</button>
-            </div>
+<!--            <div class="modal-function">-->
+<!--                <button class="modal-close-btn">&times;</button>-->
+<!--            </div>-->
             <div class="modal-mission-container">
                 <img
                         class="modal-mission-img"
@@ -80,138 +57,162 @@
                 <div>미미들이 생각하는 여름 낭만은?</div>
             </div>
             <div class="modal-mission-filter-container">
-                <div class="category-box">
+                <form id="companionForm" action="/post/companion" method="get" class="category-box">
                     <span class="category-title">누구와</span>
-                    <button class="category-btn">나</button>
-                    <button class="category-btn">친구</button>
-                    <button class="category-btn">가족</button>
-                    <button class="category-btn">연인</button>
-                    <button class="category-btn">동료</button>
-                    <button class="category-btn">반려동물</button>
-                </div>
+                    <input type="hidden" id="companionType" name="type">
+                    <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">친구</button>
+                    <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">가족</button>
+                    <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">학교</button>
+                    <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">동료</button>
+                    <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">반려동물</button>
+                    <input type="button" value="조회" onclick="submitForm()"/>
+                </form>
             </div>
             <div class="modal-photo-greed-container">
                 <div class="modal-row">
-                    <div th:each="post : ${posts}" class="photo-div">
-                        <img src="../../document/img/home-post-photo.jpg" />
+                    <div th:each="post : ${posts}" class="photo-div" th:data-post-id="${post.post_id}">
+<!--                        <img src="../../document/img/home-post-photo.jpg" />-->
+                        <img th:src="${post.src_url}" width="138px" height="180px" />
                         <p th:text="${post.nickname}"></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="post-modal">
-            <div class="post-modal-top">
-                <div>
-                    <img
-                            src="../../document/img/etc.png"
-                            height="25px"
-                            alt="etc이미지"
-                            class="etc-img"
-                    />
-                    <div class="dropdown-content">
-                        <span class="post-report-btn" style="color: red">신고</span>
-                        <span class="post-edit-btn">수정</span>
-                        <span class="post-delete-btn">삭제</span>
+
+        <!-- 여기서부터 모달 -->
+        <div class="modal-bg">
+            <div class="post-modal">
+                <div class="post-modal-top">
+                    <div class="etc-dropdown">
+                        <img
+                                src="../../document/img/etc.png"
+                                height="25px"
+                                alt="etc이미지"
+                                class="etc-img"
+                        />
+                        <div class="dropdown-content">
+                            <span class="post-report-btn" style="color: red">신고</span>
+                            <span class="post-edit-btn">수정</span>
+                            <span class="post-delete-btn">삭제</span>
+                        </div>
                     </div>
-                </div>
-                <button
-                        class="post-modal-close-btn"
-                        style="
+                    <button
+                            class="post-modal-close-btn"
+                            style="
               background-color: rgba(0, 0, 0, 0);
               border: none;
               font-size: 40px;
               color: grey;
               cursor: pointer;
             "
-                >
-                    &times;
-                </button>
-            </div>
-            <!-- post modal content -->
-            <div class="post-modal-content" style="display: flex">
-                <!-- post modal 왼쪽 -->
-                <div class="post-modal-left">
-                    <div style="margin: 0 32px 20px 32px">
-                        <div style="margin-bottom: 15px">
-                            <button class="category-btn active">여행</button>
-                            <button class="category-btn active">연인</button>
+                    >
+                        &times;
+                    </button>
+                </div>
+                <!-- post modal content -->
+                <div class="post-modal-content" style="display: flex">
+                    <!-- post modal 왼쪽 -->
+                    <div class="post-modal-left">
+                        <div style="margin: 0 32px 20px 32px">
+                            <div style="margin-bottom: 15px">
+                                <button id="priTheme" class="category-btn active"></button>
+                                <button id="subTheme" class="category-btn active"></button>
+                                <button id="companion" class="category-btn active"></button>
+                            </div>
+                            <p id="missionContent" style="font-size: 24px; font-weight: bold">
+                            </p>
                         </div>
-                        <p style="font-size: 24px; font-weight: bold">
-                            미미들이 생각하는 여름 낭만은?
-                        </p>
-                    </div>
 
-                    <div class="post-modal-board-img">
-                        <span class="arrow arrow-left hidden">&lt;</span>
-                        <img
-                                src="../../document/img/home-post-photo.jpg"
-                                alt="게시물이미지"
-                                class="modal-image"
-                        />
-                        <img
-                                src="../../document/img/home-post-photo.jpg"
-                                alt="게시물이미지"
-                                class="modal-image"
-                        />
-                        <img
-                                src="../../document/img/home-post-photo.jpg"
-                                alt="게시물이미지"
-                                class="modal-image"
-                        />
-                        <span class="arrow arrow-right">&gt;</span>
-                    </div>
-
-                    <div class="post-modal-user-info">
-                        <div class="post-modal-profile">
+                        <div class="post-modal-board-img">
+                            <span class="arrow arrow-left hidden">&lt;</span>
                             <img
-                                    src="../../document/img/stone.jpg"
-                                    alt="프로필이미지"
-                                    width="35px"
-                                    height="35px"
+                                    src="../../document/img/home-post-photo.jpg"
+                                    alt="게시물이미지"
+                                    class="modal-image"
+                            />
+                            <img
+                                    src="../../document/img/home-post-photo.jpg"
+                                    alt="게시물이미지"
+                                    class="modal-image"
+                            />
+                            <img
+                                    src="../../document/img/home-post-photo.jpg"
+                                    alt="게시물이미지"
+                                    class="modal-image"
+                            />
+                            <span class="arrow arrow-right">&gt;</span>
+                        </div>
+
+                        <div class="post-modal-user-info">
+                            <div class="post-modal-profile">
+                                <img
+                                        src="../../document/img/stone.jpg"
+                                        alt="프로필이미지"
+                                        width="35px"
+                                        height="35px"
+                                        style="border-radius: 50%"
+                                />
+                                <p id="nickname"></p>
+                            </div>
+                            <div class="post-modal-like-box">
+                                <p id="likeCount"></p>
+                                <img
+                                        src="../../document/img/heart.png"
+                                        alt="좋아요"
+                                        width="30px"
+                                        height="30px"
+                                        class="post-like-btn"
+                                        style="cursor: pointer"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- ================================== -->
+                    </div>
+
+                    <!-- post modal 오른쪽 -->
+                    <div class="post-modal-right">
+                        <div class="post-modal-right-info">
+                            <p id="writtenDate"></p>
+                            <img
+                                    id="emotionImg"
+                                    src="../../document/img/colored_happy.png"
+                                    alt="감정이미지"
+                                    width="25px"
+                                    height="25px"
                                     style="border-radius: 50%"
                             />
-                            <p>돌멩이</p>
                         </div>
-                        <div class="post-modal-like-box">
-                            <p>779</p>
-                            <img
-                                    src="../../document/img/heart.png"
-                                    alt="좋아요"
-                                    width="30px"
-                                    height="30px"
-                                    class="post-like-btn"
-                                    style="cursor: pointer"
-                            />
-                        </div>
+                        <div id="content"></div>
                     </div>
-
-                    <!-- ================================== -->
-                </div>
-
-                <!-- post modal 오른쪽 -->
-                <div class="post-modal-right">
-                    <div class="post-modal-right-info">
-                        <p>작성일: 24.06.22</p>
-                        <img
-                                src="../../document/img/colored_happy.png"
-                                alt="감정이미지"
-                                width="25px"
-                                height="25px"
-                                style="border-radius: 50%"
-                        />
-                    </div>
-                    <div>
-                        꽁꽁얼어붙은한강위로고양이가걸어다닙니다.꽁꽁얼어붙은한강위로고양이가걸어다닙니다.
-                    </div>
+                    <!-- post modal content 끝 -->
                 </div>
             </div>
         </div>
+
+        <!-- 신고 모달 -->
+        <div class="report-modal-bg">
+            <div class="report-modal">
+                <div class="report-modal-top">
+                </div>
+                <div class="report-modal-content">
+                    <form id="reportForm" action="/post/report" method="post">
+                        <label for="editMissionContent">신고 내용:</label>
+                        <textarea id="editMissionContent" name="missionContent"></textarea>
+                        <input type="hidden" id="editPostId" name="postId">
+                        <button type="submit">신고</button>
+                        <button type="button" class="report-modal-close-btn">취소</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- 신고 모달 끝 -->
+
     </div>
 </main>
 
 <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 
-<script src="../../document/js/missionPost.js"></script>
 <script src="../../document/js/allviewModal.js"></script>
 </body>
 </html>

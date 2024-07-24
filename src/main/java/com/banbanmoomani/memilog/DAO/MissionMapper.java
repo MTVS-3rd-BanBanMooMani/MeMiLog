@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,4 +35,8 @@ public interface MissionMapper {
     int countMissions();
 
     String getMissionTitle();
+
+    List<MissionDTO> findMissionsByWord(String wordTypes);
+
+    List<MissionDTO> findMissionByCriteria(MissionSearhCriteria missionSearhCriteria);
 }

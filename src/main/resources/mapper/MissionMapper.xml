@@ -72,6 +72,7 @@
         WHERE
             theme_id = #{priThemeId}
     </select>
+
     <select id="findSubThemeName" parameterType="int" resultType="string">
         SELECT
             theme_name
@@ -80,6 +81,7 @@
         WHERE
             theme_id = #{subThemeId}
     </select>
+
     <select id="findMissionById" parameterType="int" resultMap="missionResultMap">
         SELECT *
         FROM MISSION
@@ -118,8 +120,6 @@
 <!--        LEFT JOIN-->
 <!--        USER u ON p.user_id = u.user_id-->
 <!--    </select>-->
-
-    <!-- 선택한 날짜(미션)에 작성된 글 조회 SQL문 -->
 
     <insert id="createMission" useGeneratedKeys="true"
             parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">
@@ -171,4 +171,27 @@
         </if>
     </select>
 
+    <!-- 검색어에 따른 미션 조회 -->
+    <select id="findMissionByCriteria" parameterType="com.banbanmoomani.memilog.DTO.MissionSearhCriteria" resultMap="missionResultMap">
+        SELECT
+            *
+         FROM MISSION
+        WHERE 1 = 1
+        <if test= "word != null and word != ''">
+            AND mission_content LIKE CONCAT('%', #{word}, '%')
+        </if>
+        <if test="themeIds != null and !themeIds.isEmpty()">
+            AND (
+            pri_theme_id IN
+            <foreach item="themeId" index="index" collection="themeIds" open="(" separator="," close=")">
+                #{themeId}
+            </foreach>
+            OR
+            sub_theme_id IN
+            <foreach item="themeId" index="index" collection="themeIds" open="(" separator="," close=")">
+                #{themeId}
+            </foreach>
+            )
+        </if>
+    </select>
 </mapper>

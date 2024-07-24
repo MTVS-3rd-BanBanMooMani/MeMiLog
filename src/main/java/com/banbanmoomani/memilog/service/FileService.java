@@ -11,12 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+
 @Service
 public class FileService {
 
     @Value("${spring.cloud.gcp.storage.bucket}")
+
     private String bucketName;
     private final Storage storage;
+
     private final FileMapper fileMapper;
 
     public FileService(FileMapper fileMapper) throws IOException {
@@ -93,3 +96,4 @@ public class FileService {
         }
     }
 }
+

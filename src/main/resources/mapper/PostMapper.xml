@@ -17,6 +17,22 @@
         <result property="hidden_YN" column="hidden_YN"/>
     </resultMap>
 
+    <resultMap id="postRequestMap" type="com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO">
+        <id property="post_id" column="post_id"/>
+        <result property="mission_content" column="mission_content"/>
+        <result property="content" column="content"/>
+        <result property="like_count" column="like_count"/>
+        <result property="mission_id" column="mission_id"/>
+        <result property="written_datetime" column="written_datetime"/>
+        <result property="nickname" column="nickname"/>
+        <result property="mission_date" column="mission_date"/>
+        <result property="pri_theme_name" column="pri_theme_name"/>
+        <result property="sub_theme_name" column="sub_theme_name"/>
+        <result property="emotion_name" column="emotion_name"/>
+        <result property="companion_type" column="companion_type"/>
+        <result property="src_url" column="src_url"/>
+    </resultMap>
+
     <select id="findAllPost" resultMap="postResultMap">
         SELECT
             p.post_id,
@@ -109,54 +125,72 @@
     </delete>
 
 
-    <select id="findAllPostOnMissionByDate" resultMap="postResultMap">
+    <select id="findAllPostOnMissionByDate" resultMap="postRequestMap">
         SELECT
         p.post_id,
+        m.mission_content,
         p.content,
         p.like_count,
-        m.mission_id,
-        DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
-        e.emotion_id,
-        p.user_id,
-        c.companion_id,
-        p.report_count,
-        p.hidden_YN
+        p.mission_id,
+        p.written_datetime,
+        u.nickname,
+        m.mission_date,
+        mt.theme_name AS pri_theme_name,
+        st.theme_name AS sub_theme_name,
+        e.emotion_name,
+        c.companion_type,
+        f.src_url
         FROM
         POST p
         LEFT JOIN
         MISSION m ON p.mission_id = m.mission_id
         LEFT JOIN
+        USER u ON p.user_id = u.user_id
+        LEFT JOIN
+        THEME mt ON m.pri_theme_id = mt.theme_id
+        LEFT JOIN
+        THEME st ON m.sub_theme_id = st.theme_id
+        LEFT JOIN
         EMOTION e ON p.emotion_id = e.emotion_id
         LEFT JOIN
         COMPANION c ON p.companion_id = c.companion_id
         LEFT JOIN
-        USER u ON p.user_id = u.user_id
+        FILE f ON p.post_id = f.post_id
         WHERE
-        DATE(m.mission_date) = CURDATE()
+        p.hidden_YN = 0
     </select>
 
-    <select id="findPostsByCompanion" resultMap="postResultMap">
+    <select id="findPostsByCompanion" resultMap="postRequestMap">
         SELECT
         p.post_id,
+        m.mission_content,
         p.content,
         p.like_count,
-        m.mission_id,
-        DATE_FORMAT(m.mission_date, '%m월 %d일') AS missionDate,
-        e.emotion_id,
-        p.user_id,
-        c.companion_id,
-        p.report_count,
-        p.hidden_YN
+        p.mission_id,
+        p.written_datetime,
+        u.nickname,
+        m.mission_date,
+        mt.theme_name AS pri_theme_name,
+        st.theme_name AS sub_theme_name,
+        e.emotion_name,
+        c.companion_type,
+        f.src_url
         FROM
         POST p
         LEFT JOIN
         MISSION m ON p.mission_id = m.mission_id
         LEFT JOIN
+        USER u ON p.user_id = u.user_id
+        LEFT JOIN
+        THEME mt ON m.pri_theme_id = mt.theme_id
+        LEFT JOIN
+        THEME st ON m.sub_theme_id = st.theme_id
+        LEFT JOIN
         EMOTION e ON p.emotion_id = e.emotion_id
         LEFT JOIN
         COMPANION c ON p.companion_id = c.companion_id
         LEFT JOIN
-        USER u ON p.user_id = u.user_id
+        FILE f ON p.post_id = f.post_id
         WHERE
         p.companion_id IN
         <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
@@ -164,6 +198,42 @@
         </foreach>
         AND DAY(m.mission_date) = 1
     </select>
+
+    <select id="showPostDetail" parameterType="long" resultMap="postRequestMap">
+        SELECT
+        p.post_id,
+        m.mission_content,
+        p.content,
+        p.like_count,
+        p.mission_id,
+        p.written_datetime,
+        u.nickname,
+        m.mission_date,
+        mt.theme_name AS pri_theme_name,
+        st.theme_name AS sub_theme_name,
+        e.emotion_name,
+        c.companion_type,
+        f.src_url
+        FROM
+        POST p
+        LEFT JOIN
+        MISSION m ON p.mission_id = m.mission_id
+        LEFT JOIN
+        USER u ON p.user_id = u.user_id
+        LEFT JOIN
+        THEME mt ON m.pri_theme_id = mt.theme_id
+        LEFT JOIN
+        THEME st ON m.sub_theme_id = st.theme_id
+        LEFT JOIN
+        EMOTION e ON p.emotion_id = e.emotion_id
+        LEFT JOIN
+        COMPANION c ON p.companion_id = c.companion_id
+        LEFT JOIN
+        FILE f ON p.post_id = f.post_id
+        WHERE
+        p.post_id = #{post_id}
+    </select>
+
     <select id="findTodayPost" resultType="com.banbanmoomani.memilog.DTO.todayPostDTO">
         SELECT
             p.post_id AS postId,
