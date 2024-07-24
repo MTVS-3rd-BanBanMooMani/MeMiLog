@@ -135,11 +135,8 @@
             <button class="tablinks" onclick="openPage(event, 'calendar-container')">일자별 보기</button>
         </div>
 
-        <div id="post-card-container" class="tabcontent" style="display: flex;">
-            <div th:each="post : ${posts}" class="post-card">
-                <img th:src="@{|${post.src_url}|}" alt="Post Image">
-            </div>
-        </div>
+        <div id="post-card-container" class="tabcontent" style="display: flex;"></div>
+        <div id="posts-data" th:utext="${postsJson}" style="display:none;"></div>
 
         <div id="calendar-container" class="tabcontent">
             <div class="date-selector">
@@ -152,7 +149,6 @@
             </div>
 
             <div class="calendar-contents">
-
             </div>
         </div>
     </div>
@@ -168,6 +164,40 @@
         const firstTabLink = document.querySelector(".tablinks");
         const dateSelector = document.querySelector(".date-selector ul");
 
+        const allPosts = JSON.parse(document.getElementById("posts-data").textContent);
+
+        let currentIndex = 0;
+        const batchSize = 10;
+
+        const postCardContainer = document.getElementById("post-card-container");
+
+        loadMorePosts();
+
+        postCardContainer.addEventListener('scroll', function () {
+            if (postCardContainer.scrollTop + postCardContainer.clientHeight >= postCardContainer.scrollHeight) {
+                loadMorePosts();
+            }
+        });
+
+        function loadMorePosts() {
+            const postsToLoad = allPosts.slice(currentIndex, currentIndex + batchSize);
+            displayPosts(postsToLoad);
+            currentIndex += batchSize;
+        }
+
+        function displayPosts(posts) {
+            posts.forEach(post => {
+                const postCard = document.createElement("div");
+                postCard.className = "post-card";
+
+                const postImage = document.createElement("img");
+                postImage.src = post.src_url;
+                postImage.alt = "post image";
+
+                postCard.appendChild(postImage);
+                postCardContainer.appendChild(postCard);
+            });
+        }
 
         if (firstTabLink) {
             firstTabLink.click();
@@ -329,26 +359,6 @@
         const selectedDate = day;
         fetchPostsForDate(selecteDate);
     }
-
-    (() => {
-        const container = document.getElementById('post-card-container');
-        let count = container.children.length;
-
-        document.addEventListener('srcoll', () => {
-            if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                const newCard = document.createElement('div');
-                newCard.className = 'post-card';
-                newCard.style.width = '175px';
-                newCard.style.height = '190px';
-
-                const img = document.createElement('img');
-
-                newCard.appendChild(img);
-                container.appendChild(newCard);
-                count++;
-            }
-        });
-    })();
 
     function fetchPostsForDate(date) {
         fetch("/selectedDate", {
