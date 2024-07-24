@@ -119,7 +119,6 @@
 
 .today-container .today-photo-container {
     display: flex;
-    justify-content: space-around;
     align-items: center;
     padding: 1vw;
     height: 200px;
@@ -155,11 +154,26 @@
     object-fit: cover;
     overflow: hidden;
 }
-
+.today-photo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw;
+    height: 200px;
+    position: relative;/* 추가 */
+}
 .arrow-button {
     background: none;
     border: none;
     cursor: pointer;
+    position: sticky; /* 추가 */
+    top: 50%; /* 추가 */
+    transform: translateY(-50%); /* 추가 */
+    z-index: 1; /* 추가 */
+}
+.arrow-button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 .photo-div p {
     margin: 0;

@@ -1,21 +1,103 @@
-function changeIconColor(icon, id) {
-    document.getElementById('selectedEmotion').value = id;
-    var icons = document.querySelectorAll('.icon1');
-    icons.forEach(function(item) {
-        item.src = item.getAttribute('data-original');
+document.addEventListener('DOMContentLoaded', function() {
+    // 감정 아이콘의 색상을 페이지 로드 시 변경
+    let selectedEmotionId = document.getElementById('selectedEmotion').value;
+    if (selectedEmotionId) {
+        let selectedEmotionElement = document.querySelector('.icon-box li[data-id="' + selectedEmotionId + '"]');
+        if (selectedEmotionElement) {
+            changeIconColor(selectedEmotionElement.id, selectedEmotionId);
+        }
+    }
+
+    // 동반자 버튼을 페이지 로드 시 강조
+    let selectedCompanionId = document.getElementById('companionId').value;
+    if (selectedCompanionId) {
+        let selectedCompanionElement = document.querySelector('.answers button[data-id="' + selectedCompanionId + '"]');
+        if (selectedCompanionElement) {
+            selectCompanion(selectedCompanionElement);
+        }
+    }
+
+    // 이미지 순서 로드
+    loadImageOrder();
+});
+
+function changeIconColor(iconName, emotionId) {
+    document.getElementById('selectedEmotion').value = emotionId;
+    let icons = document.querySelectorAll('.icon-box li img');
+    icons.forEach(icon => {
+        let originalSrc = icon.getAttribute('data-original');
+        icon.setAttribute('src', originalSrc);
     });
-    document.getElementById(icon).querySelector('.icon1').src = document.getElementById(icon).querySelector('.icon1').getAttribute('data-colored');
+    let selectedIcon = document.querySelector('.icon-box li[data-id="' + emotionId + '"] img');
+    if (selectedIcon) {
+        let coloredSrc = selectedIcon.getAttribute('data-colored');
+        selectedIcon.setAttribute('src', coloredSrc);
+    }
 }
 
-function selectCompanion(button) {
-    document.getElementById('companionId').value = button.getAttribute('data-id');
-    var buttons = document.querySelectorAll('.answer');
-    buttons.forEach(function(item) {
-        item.classList.remove('selected');
-    });
-    button.classList.add('selected');
+function selectCompanion(element) {
+    let companionId = element.getAttribute('data-id');
+    document.getElementById('companionId').value = companionId;
+    let buttons = document.querySelectorAll('.answers button');
+    buttons.forEach(button => button.classList.remove('selected'));
+    element.classList.add('selected');
 }
 
+// Drag and Drop Functions
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    let mainImageContainer = document.getElementById("mainImageContainer");
+    let draggedImage = document.getElementById(data);
+    let mainImage = document.getElementById("main-image");
+
+    // Swap the images
+    let tempSrc = mainImage.src;
+    mainImage.src = draggedImage.src;
+    draggedImage.src = tempSrc;
+
+    // Update image order in local storage
+    updateImageOrder();
+}
+
+function updateImageOrder() {
+    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
+    let newOrder = [];
+    thumbnails.forEach((thumbnail, index) => {
+        newOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
+    });
+    localStorage.setItem('imageOrder', JSON.stringify(newOrder));
+}
+
+function loadImageOrder() {
+    let storedOrder = localStorage.getItem('imageOrder');
+    if (storedOrder) {
+        let newOrder = JSON.parse(storedOrder);
+        let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
+        newOrder.forEach((item, index) => {
+            if (thumbnails[index]) {
+                thumbnails[index].src = item.srcUrl;
+            }
+        });
+    }
+}
+
+function prepareImageOrder() {
+    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
+    let imageOrder = [];
+    thumbnails.forEach((thumbnail, index) => {
+        imageOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
+    });
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder);
+}
 function toggleSelection(element) {
     var buttons = document.querySelectorAll('.answers .answer');
     buttons.forEach(function(button) {
