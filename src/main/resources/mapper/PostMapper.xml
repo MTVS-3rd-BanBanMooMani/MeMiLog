@@ -110,7 +110,6 @@
             POST
         SET
             content = #{content},
-            mission_id = #{mission_id},
             emotion_id = #{emotion_id},
             companion_id = #{companion_id}
         WHERE
@@ -234,6 +233,7 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.post_id = #{post_id}
+        LIMIT 1
     </select>
 
     <select id="findTodayPost" resultType="com.banbanmoomani.memilog.DTO.todayPostDTO">
