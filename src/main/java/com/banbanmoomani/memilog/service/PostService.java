@@ -2,9 +2,12 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.archivePostDTO;
+import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,13 +74,18 @@ public class PostService {
         return postMapper.findPostById(postId);
     }
 
-    public List<PostDTO> findAllPostOnMissionByDate() {
+    public List<PostRequestDTO> findAllPostOnMissionByDate() {
 
         return postMapper.findAllPostOnMissionByDate();
     }
 
-    public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
+    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
         return postMapper.findPostsByCompanion(companionIds);
+    }
+
+
+    public PostRequestDTO showPostDetail(Long postId) {
+        return postMapper.showPostDetail(postId);
     }
 
     @Transactional
@@ -93,9 +101,20 @@ public class PostService {
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
     }
-
     @Transactional
     public void updateHidden() {
         postMapper.updateHidden();
+    } 
+    public List<todayPostDTO> getTodayPostDTOList() {
+        return postMapper.findTodayPost();
+    }
+
+    public List<archivePostDTO> getArchivePostDTOList() {
+        return postMapper.findArchivePost();
+    }
+
+    public int getTodayPostCount() {
+        Integer count = postMapper.findTodayPostCount();
+        return count == null ? 0 : count;
     }
 }

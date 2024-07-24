@@ -6,118 +6,141 @@
     <title>Me Mission Log</title>
     <link th:href="@{/document/css/home.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
     <link rel="stylesheet" href="../../document/css/layout.css" />
     <link href="../../static/document/css/home.css" rel="stylesheet" />
+    <style>
+        .photo-div {
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+        .photo-div.hidden {
+            opacity: 0;
+            display: none;
+        }
+        .photo-div.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div th:replace="~{/fragments/mainHeader :: header}"></div>
-        <!-- 이 밑으로 작성 -->
-        <div class="middle-container">
-            <div class="search-bar-container">
-                <form action="/mission" method="get">
-                    <input type="text" name="word">
-                    <button type="submit">
-                        <img th:src="@{/document/img/material-symbols-light.png}">
-                    </button>
-                </form>
+<div class="container">
+    <div th:replace="~{/fragments/mainHeader :: header}"></div>
+    <div class="middle-container">
+        <div class="search-bar-container">
+            <form action="/mission" method="get">
+                <input type="text" name="word">
+                <button type="submit">
+                    <img th:src="@{/document/img/material-symbols-light.png}">
+                </button>
+            </form>
+        </div>
+        <div class="mission-container">
+            <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
+            <div th:text="'6월 20일의 미션'"></div>
+            <div th:text="${missionTitle}"></div>
+            <button onclick="location.href='/post/create'">나도 남기러 가기</button>
+        </div>
+        <div class="today-container">
+            <div class="today-label">
+                <p th:text="${todayPostCount} + ' 명의 미미들의 오늘📷'"></p>
             </div>
-            <div class="mission-container">
-                <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
-                <div>6월 20일의 미션</div>
-                <div>미미들이 생각하는 여름 낭만은?</div>
-                <button onclick="location.href='/post/create'">나도 남기러 가기</button>
-            </div>
-            <div class="today-container">
-                <div class="today-label">
-                    <p>000,000 명의 미미들의 오늘📷</p>
+            <div class="today-photo-container" id="today-photo-container">
+                <img th:src="@{/document/img/home-left-arrow.png}" id="left-arrow" onclick="scrollTodayPhotos(-1)" alt="left arrow">
+                <div th:each="post, iterStat : ${todayPostDTOList}" class="photo-div hidden" th:classappend="${iterStat.index < 8} ? 'visible' : 'hidden'">
+                    <img th:src="${post.picture}">
+                    <p th:text="${post.nickname}"></p>
                 </div>
-                <div class="today-photo-container">
-                    <img th:src="@{/document/img/home-left-arrow.png.png}">
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <img th:src="@{/document/img/home-right-arrow.png.png}">
-                </div>
-            </div>
-            <div class="random-container">
-                <div class="random-label">
-                    <p>미미로그 아카이브🍰</p>
-                </div>
-                <div class="random-photo-container">
-                    <img th:src="@{/document/img/home-left-arrow.png.png}">
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <div class="photo-div">
-                        <img th:src="@{/document/img/home-post-photo.jpg}">
-                        <p>잠실2동 불주먹</p>
-                    </div>
-                    <img th:src="@{/document/img/home-right-arrow.png.png}">
-                </div>
+                <img th:src="@{/document/img/home-right-arrow.png}" id="right-arrow" onclick="scrollTodayPhotos(1)" alt="right arrow">
             </div>
         </div>
-
-        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+        <div class="random-container">
+            <div class="random-label">
+                <p>미미로그 아카이브🍰</p>
+            </div>
+            <div class="random-photo-container" id="archive-photo-container">
+                <img th:src="@{/document/img/home-left-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="left arrow">
+                <div th:each="archive : ${archivePostDTOList}" class="photo-div hidden">
+                    <img th:src="${archive.picture}">
+                    <p th:text="${archive.nickname}"></p>
+                </div>
+                <img th:src="@{/document/img/home-right-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="right arrow">
+            </div>
+        </div>
     </div>
+    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+</div>
 <script>
-    var successMessage=`[[${successMessage}]]`
-    if (successMessage) alert(successMessage)
+    let todayIndex = 0;
+    const maxPhotos = 8;
+    let todayPhotos;
+    let archivePhotos;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded event fired');
+        todayPhotos = Array.from(document.querySelectorAll('#today-photo-container .photo-div'));
+        archivePhotos = Array.from(document.querySelectorAll('#archive-photo-container .photo-div'));
+        console.log('Today Photos:', todayPhotos);
+        console.log('Archive Photos:', archivePhotos);
+        showPhotos(todayPhotos, todayIndex);
+        shuffleAndShowArchivePhotos();
+        updateArrows(todayIndex, todayPhotos, maxPhotos);
+    });
+
+    function showPhotos(photos, index) {
+        console.log('showPhotos called with index:', index);
+        photos.forEach((photo, i) => {
+            if (i >= index * maxPhotos && i < (index + 1) * maxPhotos) {
+                photo.classList.remove('hidden');
+                photo.classList.add('visible');
+            } else {
+                photo.classList.remove('visible');
+                photo.classList.add('hidden');
+            }
+        });
+    }
+
+    function updateArrows(index, photos, maxPhotos) {
+        const maxIndex = Math.ceil(photos.length / maxPhotos) - 1;
+        const leftArrow = document.getElementById('left-arrow');
+        const rightArrow = document.getElementById('right-arrow');
+        if (index <= 0) {
+            leftArrow.classList.add('disabled');
+        } else {
+            leftArrow.classList.remove('disabled');
+        }
+        if (index >= maxIndex) {
+            rightArrow.classList.add('disabled');
+        } else {
+            rightArrow.classList.remove('disabled');
+        }
+    }
+
+    window.scrollTodayPhotos = (direction) => {
+        console.log('scrollTodayPhotos called with direction:', direction);
+        const maxIndex = Math.ceil(todayPhotos.length / maxPhotos) - 1;
+        todayIndex += direction;
+        if (todayIndex < 0) todayIndex = 0;
+        if (todayIndex > maxIndex) todayIndex = maxIndex;
+        showPhotos(todayPhotos, todayIndex);
+        updateArrows(todayIndex, todayPhotos, maxPhotos);
+    };
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function shuffleAndShowArchivePhotos() {
+        console.log('shuffleAndShowArchivePhotos called');
+        shuffleArray(archivePhotos);
+        showPhotos(archivePhotos, 0);
+    }
 </script>
 </body>
 </html>

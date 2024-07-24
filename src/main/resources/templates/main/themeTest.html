@@ -27,7 +27,9 @@
 
         function addValue(button, value) {
             if (!selectedValues.includes(value)) {
+                const inputTag = document.getElementById('themeType')
                 selectedValues.push(value);
+                inputTag.value = selectedValues.toString();
                 button.classList.add('selected');
                 addRemoveButton(button);
                 console.log(`Selected Values: ${selectedValues}`);
@@ -88,7 +90,7 @@
         function submitForm() {
             const themeTypeField = document.getElementById('themeType');
             themeTypeField.value = selectedValues.join(',');
-            const form = document.getElementById('themeForm');
+            const form = document.getElementById('themeWordForm');
             form.submit();
         }
 
@@ -109,15 +111,19 @@
 </head>
 <body>
 <h3>테마 카테고리 선택</h3>
-<form id="themeForm" action="/theme" method="get">
+<form id="themeWordForm" action="/theme" method="get">
+    <input type="text" name="word"/>
+    <button type="submit">검색</button>
     <input type="hidden" id="themeType" name="type">
+</form>
+<div>
     <button type="button" value="1" onclick="addValue(this, this.value)">1</button>
     <button type="button" value="2" onclick="addValue(this, this.value)">2</button>
     <button type="button" value="3" onclick="addValue(this, this.value)">3</button>
     <button type="button" value="4" onclick="addValue(this, this.value)">4</button>
     <button type="button" value="5" onclick="addValue(this, this.value)">5</button>
-    <input type="button" value="조회" onclick="submitForm()" />
-</form>
+    <button type="button" onclick="submitForm()"></button>
+</div>
 <h3>게시물 목록</h3>
 <table>
     <tr>

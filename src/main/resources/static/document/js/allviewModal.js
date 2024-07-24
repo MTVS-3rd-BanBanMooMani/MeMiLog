@@ -1,16 +1,129 @@
-document.addEventListener("DOMContentLoaded", function () {
+
+// document.addEventListener("DOMContentLoaded", function () {
+
+const selectedCategories = [];
+
+function addValue(button, value) {
+  if(!selectedCategories.includes(value)) {
+    selectedCategories.push(value);
+    button.classList.add("active");
+    addCancelButton(button);
+    console.log(`selectedCategories: ${selectedCategories}`);
+  }
+}
+
+function addCancelButton(button) {
+  // 취소 버튼 생성
+  const cancelBtn = document.createElement("span");
+  cancelBtn.classList.add("cancel-btn");
+  cancelBtn.innerHTML = "&#10006;";
+  cancelBtn.onclick = function (event) {
+    event.stopPropagation();
+    removeValue(button);
+  };
+  button.appendChild(cancelBtn);
+}
+
+function removeCancelButton(button) {
+  const cancelBtn = button.querySelector('.cancel-btn');
+  if(cancelBtn) {
+    button.removeChild(cancelBtn);
+  }
+}
+
+function removeValue(button) {
+  const value = button.value;
+  const index = selectedCategories.indexOf(value);
+  if (index !== -1) {
+    selectedCategories.splice(index, 1);
+    button.classList.remove('active');
+    removeCancelButton(button);
+    console.log(`selectedCategories: ${selectedCategories}`);
+  }
+}
+
+async function submitForm() {
+  const companionTypeField = document.getElementById('companionType');
+  companionTypeField.value = selectedCategories.join(',');
+  const form = document.getElementById('companionForm');
+  form.submit();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const companionTypes = params.get('type');
+  if (companionTypes) {
+    const typesArray = companionTypes.split(',');
+    typesArray.forEach(type => {
+      const button = document.querySelector(`button[value="${type}"]`);
+      if (button) {
+        addValue(button, type);
+      }
+    })
+  }
+})
+
+// ====================================================================================
   // 미션 주제 모달 관련
   const modalBg = document.querySelector(".modal-bg");
-  const closeBtn = document.querySelector(".modal-close-btn");
-  const notes = document.querySelectorAll(".note");
+  const photoDivs = document.querySelectorAll(".photo-div");
+  const postModal = document.querySelector(".post-modal");
+  const closePostModalBtn = document.querySelector(".post-modal-close-btn");
 
-  notes.forEach((note) => {
-    note.addEventListener("click", function () {
-      modalBg.style.display = "flex";
+  photoDivs.forEach((photoDiv) => {
+    photoDiv.addEventListener("click", function () {
+      modalBg.style.display = 'flex';
+      postModal.style.display = 'block';
+      updateArrows();
+      const postId = photoDiv.getAttribute('data-post-id');
+      console.log(postId);
+      fetch("/post/bymission", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({postId: postId})
+      })
+          .then(res => res.json())
+          .then(data => {
+            console.log("post detail: ", data);
+
+            document.getElementById("priTheme").innerText = data.pri_theme_name;
+            document.getElementById("subTheme").innerText = data.sub_theme_name;
+            document.getElementById("companion").innerText = data.companion_type;
+            document.getElementById("missionContent").innerText = data.mission_content;
+            document.getElementById("likeCount").innerText = data.like_count;
+            document.getElementById("nickname").innerText = data.nickname;
+            document.getElementById("writtenDate").innerText = data.written_datetime;
+            document.getElementById("content").innerText = data.content;
+
+            const emotionImg = document.getElementById("emotionImg");
+            switch (data.emotion_name) {
+              case "Happy":
+                emotionImg.src = "../../document/img/colored_happy.png";
+                break;
+              case "Cool":
+                emotionImg.src = "../../document/img/colored_cool.png";
+                break;
+              case "Surprised":
+                emotionImg.src = "../../document/img/colored_surprised.png";
+                break;
+              case "Soso":
+                emotionImg.src = "../../document/img/colored_soso.png";
+                break;
+              case "Sad":
+                emotionImg.src = "../../document/img/colored_sad.png";
+                break;
+              default:
+                emotionImg.src = "";
+            }
+
+          })
+          .catch(error => console.error("post detail error: ", error));
     });
   });
 
-  closeBtn.addEventListener("click", function () {
+  closePostModalBtn.addEventListener("click", function () {
     modalBg.style.display = "none";
   });
 
@@ -23,11 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
       postModal.style.display = "none";
     }
   });
-
-  // 새로운 모달 관련
-  const photoDivs = document.querySelectorAll(".photo-div");
-  const postModal = document.querySelector(".post-modal");
-  const closePostModalBtn = document.querySelector(".post-modal-close-btn");
 
   // post img
   const modalImages = document.querySelectorAll(".modal-image");
@@ -48,12 +156,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  photoDivs.forEach((photoDiv) => {
-    photoDiv.addEventListener("click", function () {
-      postModal.style.display = "block";
-      updateArrows();
-    });
-  });
+  // photoDivs.forEach((photoDiv) => {
+  //   photoDiv.addEventListener("click", function () {
+  //     postModal.style.display = "block";
+  //     updateArrows();
+  //   });
+  // });
 
   closePostModalBtn.addEventListener("click", function () {
     postModal.style.display = "none";
@@ -99,6 +207,45 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+// 신고 모달 관련
+const reportModalBg = document.querySelector(".report-modal-bg");
+const reportModal = document.querySelector(".report-modal");
+const reportModalCloseBtn = document.querySelector(".report-modal-close-btn");
+
+document.querySelector(".post-report-btn").addEventListener("click", function() {
+  console.log("신고버튼 클릭함");
+  reportModalBg.style.display = "flex";
+  reportModal.style.display = "block";
+
+  // 기존 게시물 정보 가져오기
+  const postId = document.querySelector(".photo-div[data-post-id]").getAttribute('data-post-id');
+  // fetch("/post/bymission", {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({postId: postId})
+  // })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       document.getElementById("editMissionContent").innerText = data.mission_content;
+  //       document.getElementById("editPostId").value = data.post_id;
+  //     })
+  //     .catch(error => console.error("edit detail error: ", error));
+});
+
+reportModalCloseBtn.addEventListener("click", function () {
+  reportModalBg.style.display = "none";
+  reportModal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+  if (event.target === reportModalBg) {
+    reportModalBg.style.display = "none";
+    reportModal.style.display = "none";
+  }
+});
+
   // 좋아요 기능
   const likeBtn = document.querySelector(".post-like-btn");
 
@@ -135,24 +282,24 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 신고 버튼 클릭 시 alert
-  const reportAlert = document.querySelector(".post-report-btn");
-
-  reportAlert.addEventListener("click", () => {
-    Swal.fire({
-      title: "신고 하시겠습니까?",
-      icon: "warning",
-      input: "select",
-      inputOptions: {
-        option1: "음란물",
-        option2: "광고",
-        option3: "종교권유",
-      },
-      inputPlaceholder: "신고 사유 선택",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "gray",
-      confirmButtonText: "네, 신고하겠습니다.",
-      cancelButtonText: "취소",
-    });
-  });
-});
+  // const reportAlert = document.querySelector(".post-report-btn");
+  //
+  // reportAlert.addEventListener("click", () => {
+  //   Swal.fire({
+  //     title: "신고 하시겠습니까?",
+  //     icon: "warning",
+  //     input: "select",
+  //     inputOptions: {
+  //       option1: "음란물",
+  //       option2: "광고",
+  //       option3: "종교권유",
+  //     },
+  //     inputPlaceholder: "신고 사유 선택",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "gray",
+  //     confirmButtonText: "네, 신고하겠습니다.",
+  //     cancelButtonText: "취소",
+  //   });
+  // });
+// });

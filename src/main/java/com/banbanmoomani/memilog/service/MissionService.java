@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
@@ -70,6 +71,16 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+    public List<MissionDTO> findMissionsByWord(String wordTypes) {
+        return missionMapper.findMissionsByWord(wordTypes);
+    }
+
+    public List<MissionDTO> findMissionsBySearchCriteria(MissionSearhCriteria missionSearhCriteria) {
+        return missionMapper.findMissionByCriteria(missionSearhCriteria);
+    }
+    public String getMissionTitle() {
+        return missionMapper.getMissionTitle();
+    }
     // mission 전체조회 paging
     public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
