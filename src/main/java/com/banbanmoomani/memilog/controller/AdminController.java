@@ -14,12 +14,13 @@ import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
 import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.PublicKey;
 import java.util.List;
 
 @Controller
@@ -286,25 +287,24 @@ public class AdminController {
     }
 
     @PostMapping("/dailyTopicBoard")
-    public String createMission(@RequestBody MissionDTO missionDTO,
-                                RedirectAttributes rttr) {
+    public ResponseEntity createMission(@RequestBody MissionDTO missionDTO) {
         try {
             missionService.createMission(missionDTO);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            rttr.addFlashAttribute("failMessage", "선택한 날짜에 이미 등록 된 미션이 있습니다.");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return "redirect:/admin/dailyTopicBoard";
+
     }
 
     @PostMapping("/updateMission")
-    public String updateMission(@RequestBody MissionDTO missionDTO,
-                                RedirectAttributes rttr) {
+    public ResponseEntity updateMission(@RequestBody MissionDTO missionDTO) {
         try {
             missionService.updateMission(missionDTO);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            rttr.addFlashAttribute("failMessage", "선택한 날짜에 이미 등록 된 미션이 있습니다.");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return "redirect:/admin/dailyTopicBoard";
     }
 
     @GetMapping("/logout")

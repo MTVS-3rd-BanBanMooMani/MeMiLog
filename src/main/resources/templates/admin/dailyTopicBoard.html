@@ -245,7 +245,6 @@
         </div>
 
         <div th:replace="~{/fragments/mainFooter :: footer}"></div>
-
     </div>
 
 </div>
@@ -335,8 +334,7 @@
                 location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
             },
             error: function(error) {
-                alert('미션 등록에 실패했습니다.');
-                console.error(error);
+                alert('미션 등록에 실패했습니다. 다시 입력해주세요');
             }
         });
     }
@@ -352,6 +350,7 @@
         console.log(selectedTopic.topicId,selectedTopic.topic, selectedTopic.tag1, selectedTopic.tag2, selectedTopic.date)
         // 수정할 주제 ID를 숨겨진 필드에 저장합니다.
     }
+
 
 
     function uploadModifiedTopic() {
@@ -387,25 +386,11 @@
                 location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
             },
             error: function (error) {
-                alert('미션 수정에 실패했습니다.');
+                alert('미션 수정에 실패했습니다. 다시 입력해주세요');
                 console.error(error);
             }
         });
     }
-    // function uploadModifiedTopic() {
-    //     let title = document.getElementById('modifyTopicTitle').value;
-    //     let date = document.getElementById('modifyTopicDate').value;
-    //
-    //     if (!title || !date) {
-    //         alert("모든 필드를 입력해주세요.");
-    //         return;
-    //     }
-    //
-    //     // 서버에 데이터 전송하는 코드 추가 예정
-    //
-    //     alert("오늘의 미션이 수정되었습니다.");
-    //     closeModal('modifyTopicModal');
-    // }
 </script>
 
 </body>
