@@ -164,13 +164,13 @@ public class PostController {
 //    }
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
+                                   HttpSession session,
                                    RedirectAttributes rttr) {
-        // 하드코딩된 값 설정
-        post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
-        post.setPost_id(35); // post_id를 하드코딩합니다.
+
+        Object user_id = session.getAttribute("user_id");
 
         try {
-            postService.updatePost(post);
+            postService.updatePost(post, (Integer) user_id);
             rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
         } catch (IllegalArgumentException e) {
             rttr.addFlashAttribute("failMessage", e.getMessage());
@@ -196,11 +196,9 @@ public class PostController {
     public String deletePost(@RequestParam("postId") int postId,
                              HttpSession session,
                              RedirectAttributes rttr) {
+
         Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-            return "redirect:/user/login";
-        }
+
         try {
             postService.deletePost(postId, (int) user_id);
             rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 삭제되었습니다");
