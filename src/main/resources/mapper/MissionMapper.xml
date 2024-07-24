@@ -147,8 +147,8 @@
             mission_content
         FROM
             MISSION
-        ORDER BY
-            mission_date DESC
+        WHERE
+            DATE_FORMAT(mission_date, '%Y-%m-%d') = CURDATE()
         LIMIT 1
     </select>
 

@@ -1,10 +1,10 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.CompanionDTO;
 import com.banbanmoomani.memilog.DTO.EmotionDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
@@ -17,14 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -126,6 +121,8 @@ public class PostController {
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
+        List<UpdateFileDTO> updateFileDTOList = postService.updatefiles(postId);
+        String mainFile = postService.findMainFile(postId);
 
         model.addAttribute("post", post);
         model.addAttribute("mission", mission);
@@ -133,6 +130,8 @@ public class PostController {
         model.addAttribute("subThemeName", subThemeName);
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
+        model.addAttribute("imageUrls", updateFileDTOList);
+        model.addAttribute("mainImageUrl", mainFile);
 
         return "main/postupdate";
     }

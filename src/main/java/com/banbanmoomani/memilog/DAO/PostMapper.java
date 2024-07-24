@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
@@ -39,4 +40,9 @@ public interface PostMapper {
     Integer findTodayPostCount();
 
     void updateHidden();
+
+    List<UpdateFileDTO> updateFile(@Param("postId") int postId);
+
+
+    String findMainFile(@Param("postId") int postId);
 }
