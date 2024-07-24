@@ -37,4 +37,5 @@ public interface PostMapper {
     List<archivePostDTO> findArchivePost();
 
     Integer findTodayPostCount();
-}
+  
+    void updateHidden();
