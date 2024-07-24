@@ -78,8 +78,6 @@ public class PostService {
     public List<PostDTO> findPostsByCompanion(List<Integer> companionIds) {
         return postMapper.findPostsByCompanion(companionIds);
     }
-<<<<<<< HEAD
-=======
 
     public List<todayPostDTO> getTodayPostDTOList() {
         return postMapper.findTodayPost();
@@ -93,5 +91,4 @@ public class PostService {
         Integer count = postMapper.findTodayPostCount();
         return count == null ? 0 : count;
     }
->>>>>>> a5b776b (Feat: post 다중 사진 추가, 메인페이지 타임리프 연동)
 }
