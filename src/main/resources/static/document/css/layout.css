@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 
 body {
   margin: 0 auto;
@@ -18,14 +19,16 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
-  font-family: "Yeon Sung";
+  font-family: "Gowun Batang";
 }
+
+
 
 /* 메뉴바 */
 .header .logo {
   color: #000;
   font-size: 1.8rem;
-  font-family: "Yeon Sung";
+  font-family: "Gowun Batang";
   font-weight: 500;
   word-wrap: break-word;
   width: 27vw;
@@ -42,7 +45,7 @@ body {
 .header .menu-bar .menu-btn {
   color: #000;
   font-size: 1.6rem;
-  font-family: "Yeon Sung";
+  font-family: "Gowun Batang";
   font-weight: 500;
   line-height: 30px;
   word-wrap: break-word;
@@ -61,7 +64,7 @@ body {
   display: flex;
   color: white;
   font-size: 1.4rem;
-  font-family: "Yeon Sung";
+  font-family: "Gowun Batang";
   font-weight: 500;
   line-height: 24px;
   word-wrap: break-word;
@@ -78,7 +81,7 @@ body {
 .container {
   padding: 20px;
   margin: 5vh auto 0;
-  text-align: center
+  text-align: center;
 }
 
 main {
