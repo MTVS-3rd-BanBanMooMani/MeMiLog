@@ -83,4 +83,12 @@ public class UserService {
 
         return new ModifyRequestDTO(email, modify_nickname, modify_password);
     }
+
+    public void updateTemporary(int rptedUserId) {
+        userMapper.updateTemporary(rptedUserId);
+    }
+
+    public void addCaution_Weights(int rptWeight) {
+        userMapper.addCautionWeights(rptWeight);
+    }
 }

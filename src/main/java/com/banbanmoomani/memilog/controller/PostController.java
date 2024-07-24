@@ -110,7 +110,7 @@ public class PostController {
             }
         }
 
-        return "redirect:/post/all";
+        return "redirect:/post/bymission";
     }
 
     @GetMapping("/update")
@@ -175,7 +175,7 @@ public class PostController {
         } catch (IllegalArgumentException e) {
             rttr.addFlashAttribute("failMessage", e.getMessage());
         }
-        return "redirect:/post/all";
+        return "redirect:/post/bymission";
     }
 
     @GetMapping("like")

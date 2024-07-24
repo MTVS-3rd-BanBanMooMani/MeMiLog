@@ -158,6 +158,8 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.hidden_YN = 0
+        AND
+        f.picture_order = 1
     </select>
 
     <select id="findPostsByCompanion" resultMap="postRequestMap">
@@ -264,6 +266,15 @@
         WHERE
             post_id = #{post_id}
     </update>
+    <update id="updateHidden">
+        UPDATE your_table_name
+        SET hidden_YN =
+            CASE
+                WHEN hidden_YN = 0 THEN 1
+                WHEN hidden_YN = 1 THEN 0
+            END
+        WHERE hidden_YN IN (0, 1);
+    </update>
     <select id="findArchivePost" resultType="com.banbanmoomani.memilog.DTO.archivePostDTO">
         SELECT
             p.post_id AS archiveId,
@@ -290,5 +301,4 @@
         WHERE
              DATE(written_datetime) = CURDATE()
     </select>
-
 </mapper>

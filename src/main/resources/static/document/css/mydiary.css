@@ -393,6 +393,8 @@ form {
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 1000px;
+    height: 400px;
+    overflow-y: auto;
 }
 
 .posts .tabcontent{
