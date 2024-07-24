@@ -9,11 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+
 
 @Service
 public class FileService {

@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import org.springframework.stereotype.Service;
 
@@ -67,4 +68,11 @@ public class MissionService {
         return missionMapper.findMissionById(missionId);
     }
 
+    public List<MissionDTO> findMissionsByWord(String wordTypes) {
+        return missionMapper.findMissionsByWord(wordTypes);
+    }
+
+    public List<MissionDTO> findMissionsBySearchCriteria(MissionSearhCriteria missionSearhCriteria) {
+        return missionMapper.findMissionByCriteria(missionSearhCriteria);
+    }
 }

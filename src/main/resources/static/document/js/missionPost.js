@@ -44,11 +44,23 @@
     }
   }
 
-  function submitForm() {
+  async function submitForm() {
     const themeTypeField = document.getElementById('themeType');
     themeTypeField.value = selectedCategories.join(',');
     const form = document.getElementById('themeForm');
-    form.submit();
+
+    const queryString = new URLSearchParams(new FormData(form)).toString();
+    const url = `/theme?${queryString}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      notesData = data; // notesData를 업데이트
+      renderNotes(1);
+      renderPagination();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
