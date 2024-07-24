@@ -6,8 +6,8 @@
 
     <select id="getEmotionCounts" parameterType="map" resultType="map">
         SELECT emotion_id, COUNT(*) as count
-        FROM POST
-        WHERE user_id = #{user_id}
+          FROM POST
+         WHERE user_id = #{user_id}
         <if test="emotion_ids != null and !emotion_ids.isEmpty()">
             AND emotion_id IN
             <foreach item="item" index="index" collection="emotion_ids" open="(" separator="," close=")">
@@ -15,6 +15,28 @@
             </foreach>
         </if>
         GROUP BY emotion_id
+    </select>
+
+    <select id="getMonthlyEmotionCounts" parameterType="map" resultType="map">
+        SELECT  emotion_id
+              , EXTRACT(MONTH FROM written_datetime) AS month
+              , COUNT(*) as count
+          FROM POST
+         WHERE user_id = #{user_id}
+        <if test="emotion_ids != null and !emotion_ids.isEmpty()">
+            AND emotion_id IN
+            <foreach item="item" index="index" collection="emotion_ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="months != null and !months.isEmpty()">
+            AND EXTRACT(MONTH FROM written_datetime) IN
+            <foreach item="item" index="index" collection="months" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND EXTRACT(YEAR FROM written_datetime) = YEAR(CURDATE())
+        GROUP BY emotion_id, month
     </select>
 
 </mapper>

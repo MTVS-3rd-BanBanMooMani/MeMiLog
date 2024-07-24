@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,6 +40,28 @@ public class ChartController {
                 .collect(Collectors.toList());
         Map<Integer, Integer> emotionCounts = chartService.getEmotionCounts(user_id, emotionIdList);
         return ResponseEntity.ok(emotionCounts);
+    }
+
+    @GetMapping("/monthlyemotions")
+    public ResponseEntity<Map<Integer, Map<Integer, Integer>>> getMonthlyEmotionCounts(
+            HttpSession session,
+            @RequestParam("emotion_ids") List<Integer> emotion_ids,
+            @RequestParam("months") List<Integer> months) {
+
+        Integer user_id = (Integer) session.getAttribute("user_id");
+
+        if (user_id == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (months.size() != 12) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        Map<Integer, Map<Integer, Integer>> monthlyEmotionCounts = chartService.getMonthlyData(user_id, emotion_ids, months);
+
+        System.out.println(monthlyEmotionCounts);
+        return ResponseEntity.ok(monthlyEmotionCounts);
     }
 
 
