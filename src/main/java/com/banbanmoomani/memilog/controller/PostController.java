@@ -1,12 +1,12 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.CompanionDTO;
 import com.banbanmoomani.memilog.DTO.EmotionDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.ReportDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
@@ -19,13 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,15 +85,11 @@ public class PostController {
                              @RequestParam(name = "file3", required = false) MultipartFile file3,
                              @RequestParam(name = "file4", required = false) MultipartFile file4,
                              @RequestParam(name = "file5", required = false) MultipartFile file5,
-                             HttpSession session,
-                             RedirectAttributes rttr) throws IOException {
+                             HttpSession session) throws IOException {
         System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
-        if (user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
-            return "redirect:/user/login";
-        }
+
         createRequestDTO.setUser_id((int) user_id);
         EmotionDTO emotion = emotionService.findEmotionById(createRequestDTO.getEmotion_id());
         System.out.println(emotion);
@@ -120,12 +113,11 @@ public class PostController {
     }
 
     @GetMapping("/update")
-    public String updatePost(
+    public String updatePost(@RequestParam("postId") int postId,
                              Model model,
                              HttpSession session,
                              RedirectAttributes rttr) {
-        int postId = 35;  // postId를 하드코딩합니다.
-        int user_id = 1;
+        Object user_id = session.getAttribute("user_id");
         PostDTO post = postService.findPostById(postId);
 
         if(post == null || post.getUser_id() != (int)user_id) {
@@ -137,6 +129,8 @@ public class PostController {
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
+        List<UpdateFileDTO> updateFileDTOList = postService.updatefiles(postId);
+        String mainFile = postService.findMainFile(postId);
 
         model.addAttribute("post", post);
         model.addAttribute("mission", mission);
@@ -144,37 +138,18 @@ public class PostController {
         model.addAttribute("subThemeName", subThemeName);
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
+        model.addAttribute("imageUrls", updateFileDTOList);
+        model.addAttribute("mainImageUrl", mainFile);
 
         return "main/postupdate";
     }
 
-//    @PostMapping("/update")
-//    public String updatePost(@ModelAttribute PostDTO post,
-//                             HttpSession session,
-//                             RedirectAttributes rttr) {
-//        Object user_id = session.getAttribute("user_id");
-//        if(user_id == null) {
-//            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-//            return "redirect:/user/login";
-//        }
-//        post.setUser_id((int) user_id);
-//        try {
-//            postService.updatePost(post);
-//            rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 업데이트되었습니다");
-//        } catch (IllegalArgumentException e) {
-//            rttr.addFlashAttribute("failMessage", "업데이트 권한이 없습니다.");
-//        } catch (Exception e) {
-//            rttr.addFlashAttribute("failMessage", "포스트 업데이트 중 오류가 발생했습니다.");
-//        }
-//        return "redirect:/post/all";
-//    }
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
+                                   HttpSession session,
                                    RedirectAttributes rttr) {
-        // 하드코딩된 값 설정
-        post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
-        post.setPost_id(35); // post_id를 하드코딩합니다.
-
+        Object user_id = session.getAttribute("user_id");
+        post.setUser_id((int) user_id);
         try {
             postService.updatePost(post);
             rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
@@ -198,15 +173,13 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public String deletePost(@RequestParam("postId") int postId,
                              HttpSession session,
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-            return "redirect:/user/login";
-        }
+        System.out.println("postId = " + postId);
+
         try {
             postService.deletePost(postId, (int) user_id);
             rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 삭제되었습니다");

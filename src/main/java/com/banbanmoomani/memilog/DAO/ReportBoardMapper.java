@@ -20,5 +20,5 @@ public interface ReportBoardMapper {
 
     void updateUserBans(@Param("postIdList") List<String> postIdList);
 
-    void insertStopRecord(@Param("postIdList") List<String> postIdList, @Param("adminId") int adminId);
+    void insertStopRecord(@Param("postIdList") List<String> postIdList, @Param("adminId") int adminId, @Param("suspDaysNum") int suspDaysNum);
 }

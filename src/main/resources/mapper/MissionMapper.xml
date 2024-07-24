@@ -138,26 +138,29 @@
             , #{missionContent}
             , #{missionDate}
             , #{priThemeId}
-            , #{priThemeId}
+            , #{subThemeId}
         )
     </insert>
-    
+
     <select id="getMissionTitle" resultType="string">
         SELECT
             mission_content
         FROM
             MISSION
-        ORDER BY
-            mission_date DESC
+        WHERE
+            DATE_FORMAT(mission_date, '%Y-%m-%d') = CURDATE()
         LIMIT 1
     </select>
 
 
-
-    <select id="countMissions" resultType="int">
+    <select id="countMissions" resultType="int" parameterType="String">
         SELECT
         COUNT(*)
-        FROM NOTICE
+        FROM MISSION
+        WHERE TRUE
+        <if test="content != null and content != ''">
+            AND mission_content LIKE CONCAT('%', #{content}, '%')
+        </if>
     </select>
 
     <select id="findAllMissionPaging" resultMap="missionResultMap" parameterType="String">
@@ -169,6 +172,22 @@
         <if test="content != null and content != ''">
             AND mission_content LIKE CONCAT('%', #{content}, '%')
         </if>
+    </select>
+
+    <update id="updateMission" parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">
+        update MISSION
+        set
+        mission_content = #{missionContent},
+        mission_date = #{missionDate},
+        sub_theme_id = #{priThemeId},
+        pri_theme_id = #{subThemeId}
+        where mission_id = #{missionId}
+    </update>
+
+    <select id="findMissionByDate" resultMap="missionResultMap" parameterType="String">
+        SELECT *
+          FROM MISSION
+         WHERE mission_date = #{missionDate}
     </select>
 
     <!-- 검색어에 따른 미션 조회 -->

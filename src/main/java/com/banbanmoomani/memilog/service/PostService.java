@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
@@ -44,17 +45,11 @@ public class PostService {
     @Transactional
     public void updatePost(PostDTO updateRequestDTO) {
     // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
-        int postId = 35;
-        int userId = 1;
-        PostDTO post = postMapper.findPostById(postId);
-        System.out.println("Post: " + post);
-        System.out.println("UpdateRequest User ID: " + userId);
-
-        if (post != null && post.getUser_id() == userId) {
-        // 하드코딩된 post_id와 user_id를 설정
-            updateRequestDTO.setPost_id(postId);
-            updateRequestDTO.setUser_id(userId);
+        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
+        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
+            System.out.println("updateRequestDTO = " + updateRequestDTO);
             postMapper.updatePost(updateRequestDTO);
+
         } else {
             throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
         }
@@ -104,7 +99,7 @@ public class PostService {
     @Transactional
     public void updateHidden() {
         postMapper.updateHidden();
-    } 
+    }
     public List<todayPostDTO> getTodayPostDTOList() {
         return postMapper.findTodayPost();
     }
@@ -117,4 +112,13 @@ public class PostService {
         Integer count = postMapper.findTodayPostCount();
         return count == null ? 0 : count;
     }
+
+    public List<UpdateFileDTO> updatefiles(int postId) {
+        return postMapper.updateFile(postId);
+    }
+
+    public String findMainFile(int postId) {
+        return postMapper.findMainFile(postId);
+    }
+
 }

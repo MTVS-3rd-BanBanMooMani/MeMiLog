@@ -1,23 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
-
-.container {
-}
-
 .middle-container{
     text-align: center;
 }
 
 .search-bar-container {
-    margin-top: 130px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 55px auto 5px;
     height: 40px;
-    width: 600px;
+    width: 570px;
     border: solid 1px;
     border-radius: 40px;
-    padding: 10px;
+    padding: 12px 20px;
 }
-
 
 .search-bar-container > form > input {
     border: none;
@@ -46,65 +38,66 @@
 }
 
 .mission-container {
+    position: relative;
     text-align: center;
     vertical-align: middle;
 }
 
 .mission-container .mission-img {
+    width: 80.5%;
+    height: 200px;
     margin-top: 30px;
-    width: 90vw; height: 200px;
+    overflow: hidden;
 }
 
 .mission-container div:nth-of-type(1) {
-    left: 11%; 
-    top: 240px; 
-    position: absolute; 
-    color: white; 
-    font-size: 1.2rem; 
-    font-family: "Yeon Sung"; 
-    font-weight: 400; 
-    line-height: 36px; 
+    left: 12.5%;
+    top: 25%;
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    font-family: "Yeon Sung";
+    font-weight: 400;
+    line-height: 36px;
     word-wrap: break-word
 }
 
 .mission-container div:nth-of-type(2) {
-    width: 50%; 
-    left: 25%; 
-    top: 290px; 
-    position: absolute; 
-    text-align: center; 
-    color: white; 
-    font-size: 3rem; 
-    font-family: "Yeon Sung"; 
-    font-weight: 400; 
+    left: 25%;
+    top: 50%;
+    width: 50%;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-family: "Yeon Sung";
+    font-weight: 400;
     word-wrap: break-word
 }
 
 .mission-container > button {
     font-family: "Yeon Sung";
-    font-size: 16px;
-    width: 120px;
+    font-size: 20px;
+    width: 135px;
     position: absolute;
     background: white;
     border-radius: 20px;
-    right: 120px;
-    top: 380px;
+    right: 12.5%;
+    top: 75%;
 }
 
 .today-container {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto;
     width: 90%;
     display: flex;
     flex-direction: column;
 }
 
 .today-container .today-label {
-    padding: 1vw 1vw 0 1vw;
+    padding: 1.1vw 1.1vw 0;
     display: flex;
     flex-direction: row;
-    width: 82vw;
+    width: 68vw;
     margin: auto;
 }
 
@@ -114,6 +107,7 @@
     flex-grow: 1;
     margin-top: 1vh;
     font-family: "Yeon Sung";
+    font-size: 20px;
 }
 
 .today-container .today-label button{
@@ -154,12 +148,14 @@
 .photo-div.visible {
     opacity: 1;
 }
+
 .photo-div img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    flex-grow: 1;
+    overflow: hidden;
 }
+
 .arrow-button {
     background: none;
     border: none;
@@ -180,17 +176,14 @@
 
 
 .random-container {
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 100px;
+    margin: 10px auto 90px;
     width: 90%;
     display: flex;
     flex-direction: column;
 }
 
 .random-container .random-label {
-    padding: 1vw;
+    padding: 1.1vw 1.1vw;
     display: flex;
     flex-direction: row;
     width: 82vw;
@@ -199,10 +192,10 @@
 
 .random-container .random-label p {
     text-align: left;
-    margin-left: 5px;
+    margin-left: 50px;
     flex-grow: 1;
-    margin-top: 1vh;
     font-family: "Yeon Sung";
+    font-size: 20px;
 }
 
 .random-container .random-photo-container {
@@ -210,7 +203,7 @@
     justify-content: space-around;
     align-items: center;
     padding: 1vw;
-    height: 150px;
+    height: 155px;
 }
 
 .random-container .random-photo-container > img {

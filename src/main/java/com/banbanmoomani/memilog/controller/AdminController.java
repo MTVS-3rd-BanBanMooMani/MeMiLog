@@ -3,19 +3,19 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
+import com.banbanmoomani.memilog.DTO.ThemeDTO;
 import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
-import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.*;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
-import com.banbanmoomani.memilog.service.AdminService;
-import com.banbanmoomani.memilog.service.MissionService;
-import com.banbanmoomani.memilog.service.NoticeService;
-import com.banbanmoomani.memilog.service.RPTCategoryService;
+import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +31,14 @@ public class AdminController {
     private final NoticeService noticeService;
     private final MissionService missionService;
     private final RPTCategoryService rptCategoryService;
+    private final ThemeService themeService;
 
-    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService) {
+    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService, ThemeService themeService) {
         this.adminService = adminService;
         this.noticeService = noticeService;
         this.missionService = missionService;
         this.rptCategoryService = rptCategoryService;
+        this.themeService = themeService;
     }
 
     @GetMapping("/login")
@@ -202,7 +204,12 @@ public class AdminController {
     }
 
     @GetMapping("/point")
-    public void point(Model model) {
+    public void point(Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
         List<RPTCategoryDTO> rpt_categorise = rptCategoryService.findAllCategorise();
         model.addAttribute("rpt_categorise", rpt_categorise);
     }
@@ -229,7 +236,12 @@ public class AdminController {
     public void noticeBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
                             @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
                             @RequestParam(defaultValue = "", value = "content") String content,
-                            Model model) {
+                            Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize, content);
         model.addAttribute("noticeList", pagedResult.getData());
@@ -239,8 +251,16 @@ public class AdminController {
     }
 
     @PostMapping("/noticeBoard")
-    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
-        noticeService.createNotice(noticeRequestDTO);
+    public String createNotice(@RequestBody NoticeRequestDTO noticeRequestDTO,
+                               HttpSession httpSession) {
+        int adminId = (int) httpSession.getAttribute("admin_id");
+        noticeService.createNotice(noticeRequestDTO, adminId);
+        return "redirect:/admin/noticeBoard";
+    }
+
+    @PostMapping("/notice-update")
+    public String updateNotice(@RequestBody NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        noticeService.updateNotice(noticeUpdateRequestDTO);
         return "redirect:/admin/noticeBoard";
     }
 
@@ -248,7 +268,12 @@ public class AdminController {
     public void dailyTopicBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
                                 @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
                                 @RequestParam(defaultValue = "", value = "content") String content,
-                                Model model) {
+                                Model model, HttpSession httpSession) {
+
+        Object admin_id = httpSession.getAttribute("admin_id");
+
+        AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
+        model.addAttribute("adminInfo", adminInfo);
 
         PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
         model.addAttribute("missionList", pagedResult.getData());
@@ -256,16 +281,35 @@ public class AdminController {
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("content", content);
 
+        List<ThemeDTO> themeList = themeService.getTheme();
+        model.addAttribute("themeList", themeList);
+
     }
 
     @PostMapping("/dailyTopicBoard")
-    public String createMission(@RequestBody DailyMissionRequestDTO dailyMissionRequestDTO) {
-        missionService.createMission(dailyMissionRequestDTO);
-        return "redirect:/admin/dailyTopicBoard";
+    public ResponseEntity createMission(@RequestBody MissionDTO missionDTO) {
+        try {
+            missionService.createMission(missionDTO);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("/updateMission")
+    public ResponseEntity updateMission(@RequestBody MissionDTO missionDTO) {
+        try {
+            missionService.updateMission(missionDTO);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
+
         httpSession.invalidate();
         return "redirect:/admin/login";
     }

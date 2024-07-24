@@ -5,6 +5,8 @@ import com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import com.banbanmoomani.memilog.service.MydiaryService;
 import com.banbanmoomani.memilog.service.user.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +31,7 @@ public class MydiaryController {
     }
 
     @GetMapping("/mydiary")
-    public String mydiary(HttpSession session, Model model) {
+    public String mydiary(HttpSession session, Model model) throws JsonProcessingException {
 
         int user_id = (Integer) session.getAttribute("user_id");
         System.out.println("user_id: " + user_id);
@@ -40,9 +43,11 @@ public class MydiaryController {
 
         UserProfileDTO user = mydiaryService.findUserInfoById(params);
 
-        model.addAttribute("posts", postList);
-        model.addAttribute("user", user);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String postsJson = objectMapper.writeValueAsString(postList);
 
+        model.addAttribute("postsJson", postsJson);
+        model.addAttribute("user", user);
         return "main/mydiary";
     }
 
@@ -69,4 +74,5 @@ public class MydiaryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 }
