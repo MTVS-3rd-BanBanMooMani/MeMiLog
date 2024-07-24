@@ -31,5 +31,8 @@ public interface MissionMapper {
 
     List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
 
-    int countMissions();
+    int countMissions(String content);
+    void updateMission(MissionDTO missionDTO);
+
+    MissionDTO findMissionByDate(String missionDate);
 }

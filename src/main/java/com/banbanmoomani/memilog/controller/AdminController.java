@@ -3,19 +3,16 @@ package com.banbanmoomani.memilog.controller;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
+import com.banbanmoomani.memilog.DTO.ThemeDTO;
 import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
-import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.dashboard.*;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.*;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
-import com.banbanmoomani.memilog.service.AdminService;
-import com.banbanmoomani.memilog.service.MissionService;
-import com.banbanmoomani.memilog.service.NoticeService;
-import com.banbanmoomani.memilog.service.RPTCategoryService;
+import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,12 +30,14 @@ public class AdminController {
     private final NoticeService noticeService;
     private final MissionService missionService;
     private final RPTCategoryService rptCategoryService;
+    private final ThemeService themeService;
 
-    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService) {
+    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService, ThemeService themeService) {
         this.adminService = adminService;
         this.noticeService = noticeService;
         this.missionService = missionService;
         this.rptCategoryService = rptCategoryService;
+        this.themeService = themeService;
     }
 
     @GetMapping("/login")
@@ -281,16 +280,36 @@ public class AdminController {
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("content", content);
 
+        List<ThemeDTO> themeList = themeService.getTheme();
+        model.addAttribute("themeList", themeList);
+
     }
 
     @PostMapping("/dailyTopicBoard")
-    public String createMission(@RequestBody DailyMissionRequestDTO dailyMissionRequestDTO) {
-        missionService.createMission(dailyMissionRequestDTO);
+    public String createMission(@RequestBody MissionDTO missionDTO,
+                                RedirectAttributes rttr) {
+        try {
+            missionService.createMission(missionDTO);
+        } catch (IllegalArgumentException e) {
+            rttr.addFlashAttribute("failMessage", "선택한 날짜에 이미 등록 된 미션이 있습니다.");
+        }
+        return "redirect:/admin/dailyTopicBoard";
+    }
+
+    @PostMapping("/updateMission")
+    public String updateMission(@RequestBody MissionDTO missionDTO,
+                                RedirectAttributes rttr) {
+        try {
+            missionService.updateMission(missionDTO);
+        } catch (IllegalArgumentException e) {
+            rttr.addFlashAttribute("failMessage", "선택한 날짜에 이미 등록 된 미션이 있습니다.");
+        }
         return "redirect:/admin/dailyTopicBoard";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
+
         httpSession.invalidate();
         return "redirect:/admin/login";
     }

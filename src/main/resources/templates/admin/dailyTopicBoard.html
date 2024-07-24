@@ -101,7 +101,8 @@
                         <tr>
                             <th scope="col">번호</th>
                             <th scope="col">주제</th>
-                            <th scope="col">태그</th>
+                            <th scope="col">주태그</th>
+                            <th scope="col">부태그</th>
                             <th scope="col">노출일</th>
                         </tr>
                         </thead>
@@ -110,6 +111,7 @@
                             <td th:text="${mission.missionId}"></td>
                             <td th:text="${mission.missionContent}"></td>
                             <td th:text="${mission.priThemeId}"></td>
+                            <td th:text="${mission.subThemeId}"></td>
                             <td th:text="${mission.missionDate}"></td>
                         </tr>
                         </tbody>
@@ -127,27 +129,23 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="topic">주제</label>
+                                    <label for="topicTitle">주제</label>
                                     <input type="text" class="form-control" id="topicTitle" placeholder="주제를 입력해주세요.">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="topicTag1">주 태그</label>
-                                    <select class="form-control w" id="topicTag1">
-                                        <option value="일상">일상</option>
-                                        <option value="취미">취미</option>
-                                        <option value="여행">여행</option>
-                                        <option value="음식">음식</option>
+                                    <label for="topicTag1">주태그</label>
+                                    <select class="form-control" id="topicTag1">
+                                        <option value="" disabled selected>주태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="topicTag2">부 태그</label>
+                                    <label for="topicTag2">부태그</label>
                                     <select class="form-control" id="topicTag2">
-                                        <option value="일상">일상</option>
-                                        <option value="취미">취미</option>
-                                        <option value="여행">여행</option>
-                                        <option value="음식">음식</option>
+                                        <option value="" disabled selected>태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
 
@@ -187,24 +185,31 @@
                 <div id="modifyTopicModal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title" id="createTopicModal"><span id="topicDetailTitle"></span>의 미션 수정</h2>
+                            <h2 class="modal-title" id="createTopicModal"><span id="modifyTopicModalDate"></span>의 미션 수정</h2>
                             <span class="close" onclick="closeModal('modifyTopicModal')">&times;</span>
                         </div>
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
                                     <label for="modifyTopic">주제</label>
-                                    <input type="text" class="form-control" id="modifyTopicTitle">
+                                    <input type="text" class="form-control" id="modifyTopic">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="modifyTopicTag1">주태그</label>
+                                    <select class="form-control" id="modifyTopicTag1">
+                                        <option value="" disabled selected>주태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="modifyTopicTag">태그</label>
-                                    <div id="modifyTagButtons" class="mb-3">
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '일상')">일상</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '취미')">취미</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '여행')">여행</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="selectTag(this, '음식')">음식</button>
-                                    </div>
+                                    <label for="modifyTopicTag2">부태그</label>
+                                    <select class="form-control" id="modifyTopicTag2">
+                                        <option value="" disabled selected>주태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -213,7 +218,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="modifyTopicImg" style="font-size: smaller;">배너 이미지</label>
+                                    <label for="modifyBannerImage" style="font-size: smaller;">배너 이미지</label>
                                     <input type="file" class="form-control-file" id="modifyBannerImage">
                                 </div>
                             </form>
@@ -250,6 +255,7 @@
 <script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
 <script th:src="@{/assets/libs/js/main-js.js}"></script>
 <script>
+    let selectedTopic = {};
 
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
@@ -266,54 +272,43 @@
     $("#topicTable").on('click', 'tbody tr', function () {
         const topicId = $(this).find("td:eq(0)").text();
         const topic = $(this).find("td:eq(1)").text();
-        const tag = $(this).find("td:eq(2)").text();
-        const date = $(this).find("td:eq(3)").text();
+        const tag1 = $(this).find("td:eq(2)").text();
+        const tag2 = $(this).find("td:eq(3)").text();
+        const date = $(this).find("td:eq(4)").text();
         const image = $(this).find("서버에서 이미지 가져오기").text();
 
         const [year, month, day] = date.split('-');
         const displayDate = `${month}월 ${day}일의 미션`;
+        const displayDate2 = `${month}월 ${day}일`;
+
 
         document.getElementById("topicDetailTitle").innerText = displayDate;
+        document.getElementById("modifyTopicModalDate").innerText = displayDate2;
+
 
         const topicDetailContent = `
             <p><strong>주제 번호:</strong> ${topicId}</p>
             <p><strong>주제:</strong> ${topic}</p>
-            <p><strong>태그:</strong> ${tag}</p>
+            <p><strong>태그:</strong> ${tag1}</p>
+            <p><strong>태그:</strong> ${tag2}</p>
             <strong>배너 이미지:</strong><br>
             <p>${image}</p>
         `;
 
         document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
 
+        selectedTopic = { topicId, topic, tag1, tag2, date, image };
         openModal('topicDetailModal');
     });
 
-    let selectedTags = [];
-    function selectTag(button, tag) {
-
-        if(button.classList.contains('btn-outline-primary')) {
-
-            button.classList.remove('btn-outline-primary');
-            button.classList.add('btn-primary');
-            selectedTags.push(tag);
-
-        } else {
-
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-outline-primary');
-
-            const index = selectedTags.indexOf(tag);
-            if(index > -1) {
-                selectedTags.splice(index, 1);
-            }
-        }
-    }
 
     function uploadTopic() {
         let title = document.getElementById('topicTitle').value;
         let date = document.getElementById('topicDate').value;
+        let topicTag1 = document.getElementById('topicTag1').value;
+        let topicTag2 = document.getElementById('topicTag2').value;
 
-        if(!title || selectedTags.length === 0 || !date) {
+        if(!title || !date) {
             alert("모든 필드를 입력해주세요.");
             return;
         }
@@ -322,9 +317,10 @@
         var missionData = {
             missionContent: title,
             missionDate: date,
-            priThemeId :selectedTags[0],
-            subThemeId :selectedTags[1]
+            priThemeId: parseInt(topicTag1),
+            subThemeId :parseInt(topicTag2)
         };
+        console.log(title,date,parseInt(topicTag1),parseInt(topicTag2))
 
 
         // AJAX 요청을 통해 서버로 데이터를 전송합니다.
@@ -349,40 +345,67 @@
         closeModal('topicDetailModal');
         openModal('modifyTopicModal');
 
-        const title = document.getElementById('topicDetailTitle').innerText.split(' ')[0];
-        const content = document.querySelector('#topicDetailContent p:nth-child(2)').innerText.split(': ')[1];
-        const date = document.querySelector('#topicDetailContent p:nth-child(3)').innerText.split(': ')[1];
-        const tags = document.querySelector('#topicDetailContent p:nth-child(4)').innerText.split(': ')[1].split(', ');
-
-        document.getElementById('modifyTopicTitle').value = content;
-        document.getElementById('modifyTopicDate').value = date;
-
-        selectedTags = tags;
-        document.querySelectorAll('#modifyTagButtons button').forEach(button => {
-            if (tags.includes(button.innerText)) {
-                button.classList.remove('btn-outline-primary');
-                button.classList.add('btn-primary');
-            } else {
-                button.classList.remove('btn-primary');
-                button.classList.add('btn-outline-primary');
-            }
-        });
+        document.getElementById('modifyTopic').value = selectedTopic.topic;
+        document.getElementById('modifyTopicTag1').value = selectedTopic.tag1;
+        document.getElementById('modifyTopicTag2').value = selectedTopic.tag2;
+        document.getElementById('modifyTopicDate').value = selectedTopic.date;
+        console.log(selectedTopic.topicId,selectedTopic.topic, selectedTopic.tag1, selectedTopic.tag2, selectedTopic.date)
+        // 수정할 주제 ID를 숨겨진 필드에 저장합니다.
     }
 
-    function uploadModifiedTopic() {
-        let title = document.getElementById('modifyTopicTitle').value;
-        let date = document.getElementById('modifyTopicDate').value;
 
-        if (!title || selectedTags.length === 0 || !date) {
+    function uploadModifiedTopic() {
+        let title = document.getElementById('modifyTopic').value;
+        let date = document.getElementById('modifyTopicDate').value;
+        let topicTag1 = document.getElementById('modifyTopicTag1').value;
+        let topicTag2 = document.getElementById('modifyTopicTag2').value;
+        let topicId = selectedTopic.topicId;
+
+        if (!title || !date) {
             alert("모든 필드를 입력해주세요.");
             return;
         }
 
-        // 서버에 데이터 전송하는 코드 추가 예정
+        // 서버로 보낼 데이터를 구성합니다.
+        var modifiedMissionData = {
+            missionId: parseInt(topicId),
+            missionContent: title,
+            missionDate: date,
+            priThemeId: parseInt(topicTag1),
+            subThemeId: parseInt(topicTag2)
+        };
 
-        alert("오늘의 미션이 수정되었습니다.");
-        closeModal('modifyTopicModal');
+        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        $.ajax({
+            type: 'POST',
+            url: '/admin/updateMission',
+            contentType: 'application/json',
+            data: JSON.stringify(modifiedMissionData),
+            success: function (response) {
+                alert('오늘의 미션이 수정되었습니다.');
+                closeModal('modifyTopicModal');
+                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            },
+            error: function (error) {
+                alert('미션 수정에 실패했습니다.');
+                console.error(error);
+            }
+        });
     }
+    // function uploadModifiedTopic() {
+    //     let title = document.getElementById('modifyTopicTitle').value;
+    //     let date = document.getElementById('modifyTopicDate').value;
+    //
+    //     if (!title || !date) {
+    //         alert("모든 필드를 입력해주세요.");
+    //         return;
+    //     }
+    //
+    //     // 서버에 데이터 전송하는 코드 추가 예정
+    //
+    //     alert("오늘의 미션이 수정되었습니다.");
+    //     closeModal('modifyTopicModal');
+    // }
 </script>
 
 </body>
