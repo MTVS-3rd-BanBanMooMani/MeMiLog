@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
@@ -13,4 +14,6 @@ public interface NoticeMapper {
     void createNotice(NoticeDTO noticeDTO);
 
     int countNotices(@Param("content") String content);
+
+    void updateNotice(NoticeUpdateRequestDTO noticeUpdateRequestDTO);
 }
