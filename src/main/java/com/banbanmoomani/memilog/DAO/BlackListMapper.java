@@ -17,4 +17,6 @@ public interface BlackListMapper {
     void blackUser(@Param("userIdList") List<String> userIdList);
 
     void releaseUser(@Param("userIdList") List<String> userIdList);
+
+    void releaseToday();
 }

@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
+import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
@@ -39,8 +40,12 @@ public class AdminController {
     }
 
     @GetMapping("/login")
-    public void login() {
-
+    public String login(HttpSession session, Model model) {
+        if(session.getAttribute("failMessage") != null) {
+            model.addAttribute("failMessage", session.getAttribute("failMessage"));
+            session.removeAttribute("failMessage");
+        }
+        return "admin/login";
     }
 
     @PostMapping("/login")
@@ -63,9 +68,6 @@ public class AdminController {
     public String dashBoard(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -109,9 +111,6 @@ public class AdminController {
     public String userBlackList(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -129,9 +128,6 @@ public class AdminController {
     public String blackUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -150,9 +146,6 @@ public class AdminController {
     public String releaseUser(@RequestParam("userIdList") List<String> userIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (userIdList == null || userIdList.isEmpty()) {
             System.out.println("userIdList is null or empty");
@@ -172,9 +165,6 @@ public class AdminController {
     public String reportTotal(Model model, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
@@ -196,22 +186,19 @@ public class AdminController {
     public String processReport(@RequestParam("postIdList") List<String> postIdList, HttpSession httpSession) {
 
         Object admin_id = httpSession.getAttribute("admin_id");
-        if(admin_id == null) {
-            return "redirect:/admin/login";
-        }
 
         if (postIdList == null || postIdList.isEmpty()) {
             System.out.println("postIdList is null or empty");
-            return "redirect:/admin/userBlackList";
+            return "redirect:/admin/reportTotal";
         }
 
         for (String postId : postIdList) {
             System.out.println(postId);
         }
 
-        adminService.processReport(postIdList);
+        adminService.processReport(postIdList, (int) admin_id);
 
-        return "redirect:/admin/userBlackList";
+        return "redirect:/admin/reportTotal";
     }
 
     @GetMapping("/point")
@@ -239,9 +226,16 @@ public class AdminController {
     }
 
     @GetMapping("/noticeBoard")
-    public void noticeBoard(Model model) {
-        List<NoticeDTO> noticeList = noticeService.findAllNotice();
-        model.addAttribute("noticeList", noticeList);
+    public void noticeBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
+                            @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
+                            @RequestParam(defaultValue = "", value = "content") String content,
+                            Model model) {
+
+        PageResult<NoticeDTO> pagedResult = noticeService.findAllNotice(pageNum, pageSize, content);
+        model.addAttribute("noticeList", pagedResult.getData());
+        model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("content", content);
     }
 
     @PostMapping("/noticeBoard")
@@ -251,9 +245,17 @@ public class AdminController {
     }
 
     @GetMapping("/dailyTopicBoard")
-    public void dailyTopicBoard(Model model) {
-        List<MissionDTO> missionList = missionService.findAllMission();
-        model.addAttribute("missionList", missionList);
+    public void dailyTopicBoard(@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
+                                @RequestParam(defaultValue = "10", value = "pageSize") int pageSize,
+                                @RequestParam(defaultValue = "", value = "content") String content,
+                                Model model) {
+
+        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
+        model.addAttribute("missionList", pagedResult.getData());
+        model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("content", content);
+
     }
 
     @PostMapping("/dailyTopicBoard")
@@ -262,7 +264,7 @@ public class AdminController {
         return "redirect:/admin/dailyTopicBoard";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/admin/login";

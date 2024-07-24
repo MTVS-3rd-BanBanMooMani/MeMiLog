@@ -42,12 +42,17 @@ public class UserController {
     public String loginUser(LoginRequestDTO loginRequestDTO, RedirectAttributes rttr,
                             HttpSession httpSession) {
         UserDTO userInfo = userService.findByEmail(loginRequestDTO.getEmail());
+
         if(userInfo != null && userInfo.getPassword().equals(loginRequestDTO.getPassword())) {
             // session에 user_id 추가
             httpSession.setAttribute("user_id", userInfo.getUser_id());
             rttr.addFlashAttribute("successMessage", userInfo.getNickname() + "님, 환영합니다.");
             return "redirect:/";
         } else {
+            if(userInfo != null && userInfo.getTemporary_YN().equals("Y")) {
+                rttr.addFlashAttribute("failMessage", "정지 회원입니다.");
+            }
+
             rttr.addFlashAttribute("failMessage", "로그인에 실패하셨습니다.");
             return "redirect:/user/login";
         }
@@ -123,4 +128,33 @@ public class UserController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<String> withdraw(@RequestBody String deletePassword, HttpSession session) {
+        Integer user_id = (Integer) session.getAttribute("user_id");
+        if (user_id == null) {
+            return new ResponseEntity<>("세션이 만료되었거나 잘못된 요청입니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        UserDTO user = userService.findUserById(user_id);
+        if (user == null) {
+            return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getPassword().equals(deletePassword)) {
+            System.out.println(user.getPassword());
+            System.out.println(deletePassword);
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            userService.deleteUser(user);
+            session.invalidate();
+            return new ResponseEntity<>("회원 탈퇴가 완료되었습니다.", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("회원 탈퇴 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

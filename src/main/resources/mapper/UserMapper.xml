@@ -22,8 +22,7 @@
         FROM
         USER
         WHERE
-<!--        TODO: email -> user_id 수정 -->
-        email = #{user_id}
+        user_id = #{user_id}
     </select>
     <select id="findUserByEmail" parameterType="String" resultMap="userResultMap">
         SELECT
@@ -68,6 +67,20 @@
             #{susp_period, jdbcType=DATE}
         )
     </insert>
+
+    <insert id="setDefaultProfile" parameterType="com.banbanmoomani.memilog.DTO.FileDTO">
+        INSERT INTO FILE
+        (
+            user_id
+          , type
+        )
+        VALUE
+        (
+              #{user_id}
+            , #{type}
+        )
+    </insert>
+
     <update id="updateUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
         UPDATE USER
         <trim prefix="SET" suffixOverrides=",">
@@ -99,8 +112,9 @@
         WHERE email = #{email}
     </update>
 
-    <delete id="deleteUserByEmail" parameterType="com.banbanmoomani.memilog.DTO.user.UserDTO">
+    <delete id="deleteUserById" parameterType="int">
         DELETE FROM USER
-        WHERE email = #{email}
+        WHERE user_id = #{user_id}
     </delete>
+
 </mapper>

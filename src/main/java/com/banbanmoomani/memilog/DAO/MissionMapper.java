@@ -2,8 +2,10 @@ package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
+import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -27,6 +29,12 @@ public interface MissionMapper {
     String findPriThemeName(int priThemeId);
 
     String findSubThemeName(int subThemeId);
+
+    List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
+
+    int countMissions();
+
+    String getMissionTitle();
 
     List<MissionDTO> findMissionsByWord(String wordTypes);
 

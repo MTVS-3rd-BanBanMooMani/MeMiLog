@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.FileDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,5 +14,7 @@ public interface UserMapper {
     List<UserDTO> findAllUser();
     void insertUser(UserDTO userDTO);
     void updateUserByEmail(UserDTO userDTO);
-    void deleteUserByEmail(UserDTO userDTO);
+    void deleteUserById(int user_id);
+
+    void setDefaultProfile(FileDTO fileDTO);
 }

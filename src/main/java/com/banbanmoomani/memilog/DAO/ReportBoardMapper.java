@@ -16,5 +16,9 @@ public interface ReportBoardMapper {
 
     List<RPTCategoryListDTO> getRPTCategoryDTOList();
 
-    void processReport(@Param("postIdList") List<String> postIdList);
+    void hidePosts(@Param("postIdList") List<String> postIdList);
+
+    void updateUserBans(@Param("postIdList") List<String> postIdList);
+
+    void insertStopRecord(@Param("postIdList") List<String> postIdList, @Param("adminId") int adminId);
 }

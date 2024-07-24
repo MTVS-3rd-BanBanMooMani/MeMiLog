@@ -68,9 +68,12 @@ public class FileService {
 
         storage.create(blobInfo, file.getInputStream());
 
-        String newImageUrl = "https://storage.googleapis.com/"+bucketName+"/"+fileName;
+        return "https://storage.googleapis.com/" + bucketName + "/" + fileName;
+    }
 
-        return newImageUrl;
+    public void saveFileUrl(String srcUrl, String type, int postId, int userId, int pictureOrder) {
+        FileDTO fileDTO = new FileDTO(srcUrl, type, postId, userId, pictureOrder);
+        fileMapper.insertFile(fileDTO);
     }
 
     public void deleteFile(String fileName) {
@@ -86,7 +89,7 @@ public class FileService {
 
         String fileUrl = fileMapper.getFileUrl(user_id, type);
 
-        if(fileUrl != null && !fileUrl.isEmpty()) {
+        if (fileUrl != null && !fileUrl.isEmpty()) {
             String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
             deleteFile(fileName);
             fileMapper.deleteFileUrl(fileDTO);

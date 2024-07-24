@@ -175,3 +175,23 @@
   renderNotes(1);
   renderPagination();
 // });
+
+function likeFetch() {
+  // const postIdValue = document.getElementById('id').value; 나중에 여기에 값 넣어서 주석 제거하고 사용하시면 됩니다.
+  const postIdValue = 49
+  fetch("/post/like?post_id="+postIdValue)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+}
+
+function dislikeFetch() {
+  // const postIdValue = document.getElementById('id').value; 나중에 여기에 값 넣어서 주석 제거하고 사용하시면 됩니다.
+  const postIdValue = 49
+  fetch("/post/dislike?post_id="+postIdValue)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+}

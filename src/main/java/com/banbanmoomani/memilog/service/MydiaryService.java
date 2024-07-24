@@ -5,7 +5,9 @@ import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.UserProfileDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MydiaryService {
@@ -15,11 +17,11 @@ public class MydiaryService {
         this.mydiaryMapper = mydiaryMapper;
     }
 
-    public UserProfileDTO findUserById() {
-        return mydiaryMapper.findUserById();
+    public UserProfileDTO findUserInfoById(HashMap<String, Object> params) {
+        return mydiaryMapper.findUserInfoById(params);
     }
 
-    public List<PostRequestDTO> findPosts(String selectedDate) {
-        return mydiaryMapper.findPosts(selectedDate);
+    public List<PostRequestDTO> findPosts(HashMap<String, Object> params) {
+        return mydiaryMapper.findPosts(params);
     }
 }

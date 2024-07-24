@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.service.user;
 
 import com.banbanmoomani.memilog.DAO.UserMapper;
+import com.banbanmoomani.memilog.DTO.FileDTO;
 import com.banbanmoomani.memilog.DTO.user.ModifyRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.SignUpRequestDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
@@ -44,6 +45,11 @@ public class UserService {
         userDTO.setCaution_weights(0);
         userDTO.setSignup_date(new java.sql.Date(System.currentTimeMillis())); // 가입일 설정
         userMapper.insertUser(userDTO);
+
+        FileDTO fileDTO = new FileDTO();
+        fileDTO.setUser_id(userDTO.getUser_id());
+        fileDTO.setType("profile");
+        userMapper.setDefaultProfile(fileDTO);
     }
 
     public UserDTO findUserById(int user_id) {
@@ -63,7 +69,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(UserDTO userDTO) {
-        userMapper.deleteUserByEmail(userDTO);
+        userMapper.deleteUserById(userDTO.getUser_id());
     }
 
     private static ModifyRequestDTO convertToModifyRequestDTO(UserDTO userDTO) {

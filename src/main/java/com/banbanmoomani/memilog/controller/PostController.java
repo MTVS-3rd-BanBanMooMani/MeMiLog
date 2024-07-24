@@ -8,18 +8,19 @@ import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
-import com.banbanmoomani.memilog.service.ComPanionService;
-import com.banbanmoomani.memilog.service.EmotionService;
-import com.banbanmoomani.memilog.service.MissionService;
-import com.banbanmoomani.memilog.service.PostService;
+import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -35,13 +36,15 @@ public class PostController {
     private final MissionService missionService;
     private final EmotionService emotionService;
     private final ComPanionService comPanionService;
+    private final FileService fileService;
     private final PostMapper postMapper;
 
-    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, PostMapper postMapper) {
+    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper) {
         this.postService = postService;
         this.missionService = missionService;
         this.emotionService = emotionService;
         this.comPanionService = comPanionService;
+        this.fileService = fileService;
         this.postMapper = postMapper;
     }
 
@@ -74,12 +77,17 @@ public class PostController {
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute CreateRequestDTO createRequestDTO,
+                             @RequestParam(name = "file1", required = true) MultipartFile file1,
+                             @RequestParam(name = "file2", required = false) MultipartFile file2,
+                             @RequestParam(name = "file3", required = false) MultipartFile file3,
+                             @RequestParam(name = "file4", required = false) MultipartFile file4,
+                             @RequestParam(name = "file5", required = false) MultipartFile file5,
                              HttpSession session,
-                             RedirectAttributes rttr) {
+                             RedirectAttributes rttr) throws IOException {
         System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
+        if (user_id == null) {
             rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
             return "redirect:/user/login";
         }
@@ -90,10 +98,21 @@ public class PostController {
         System.out.println(companion);
         createRequestDTO.setEmotion_id(emotion.getEmotionId());
         createRequestDTO.setCompanion_id(companion.getCompanion_id());
+
         postService.createPost(createRequestDTO);
+
+        MultipartFile[] files = {file1, file2, file3, file4, file5};
+        int pictureOrder = 1;
+        for (MultipartFile file : files) {
+            if (file != null && !file.isEmpty()) {
+                String fileUrl = fileService.uploadFile(file, (int) user_id);
+                fileService.saveFileUrl(fileUrl, "post", createRequestDTO.getPostId(), (int) user_id, pictureOrder++);
+            }
+        }
 
         return "redirect:/post/all";
     }
+
     @GetMapping("/update")
     public String updatePost(
                              Model model,
@@ -143,21 +162,35 @@ public class PostController {
 //        }
 //        return "redirect:/post/all";
 //    }
-@PostMapping("/update")
-public String updatePostSubmit(@ModelAttribute PostDTO post,
-                               RedirectAttributes rttr) {
-    // 하드코딩된 값 설정
-    post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
-    post.setPost_id(35); // post_id를 하드코딩합니다.
+    @PostMapping("/update")
+    public String updatePostSubmit(@ModelAttribute PostDTO post,
+                                   RedirectAttributes rttr) {
+        // 하드코딩된 값 설정
+        post.setUser_id(1);  // 사용자 ID를 하드코딩합니다.
+        post.setPost_id(35); // post_id를 하드코딩합니다.
 
-    try {
-        postService.updatePost(post);
-        rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-    } catch (IllegalArgumentException e) {
-        rttr.addFlashAttribute("failMessage", e.getMessage());
+        try {
+            postService.updatePost(post);
+            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
+        } catch (IllegalArgumentException e) {
+            rttr.addFlashAttribute("failMessage", e.getMessage());
+        }
+        return "redirect:/post/all";
     }
-    return "redirect:/post/all";
-}
+
+    @GetMapping("like")
+    @ResponseBody
+    public ResponseEntity likePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+        postService.increaseLikeCount(post_id, user_id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("dislike")
+    @ResponseBody
+    public ResponseEntity dislikePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+        postService.decreaseLikeCount(post_id, user_id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @PostMapping("/delete")
     public String deletePost(@RequestParam("postId") int postId,

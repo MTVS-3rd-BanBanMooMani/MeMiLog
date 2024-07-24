@@ -141,6 +141,35 @@
             , #{priThemeId}
         )
     </insert>
+    
+    <select id="getMissionTitle" resultType="string">
+        SELECT
+            mission_content
+        FROM
+            MISSION
+        ORDER BY
+            mission_date DESC
+        LIMIT 1
+    </select>
+
+
+
+    <select id="countMissions" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM NOTICE
+    </select>
+
+    <select id="findAllMissionPaging" resultMap="missionResultMap" parameterType="String">
+        SELECT
+        *
+        FROM
+        MISSION
+        WHERE TRUE
+        <if test="content != null and content != ''">
+            AND mission_content LIKE CONCAT('%', #{content}, '%')
+        </if>
+    </select>
 
     <!-- 검색어에 따른 미션 조회 -->
     <select id="findMissionByCriteria" parameterType="com.banbanmoomani.memilog.DTO.MissionSearhCriteria" resultMap="missionResultMap">

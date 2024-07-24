@@ -15,10 +15,13 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(stopWatchInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/")
+                .excludePathPatterns("/error")
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/user/**")
                 .excludePathPatterns("/document/css/**")
                 .excludePathPatterns("/document/js/**")
-                .excludePathPatterns("/document/img/**");
+                .excludePathPatterns("/document/img/**")
+                .excludePathPatterns("/static/**", "/public/**", "/resources/**", "/META-INF/resources/**")
+                .excludePathPatterns("/assets/**");
     }
 }
