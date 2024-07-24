@@ -106,7 +106,7 @@
         INSERT INTO STOP (stop_start_date, stop_end_date, admin_id, user_id, stop_category_id)
         SELECT
         CURDATE(),
-        DATE_ADD(CURDATE(), INTERVAL 7 DAY),
+        DATE_ADD(CURDATE(), INTERVAL #{suspDaysNum} DAY),
         #{adminId},
         p.user_id,
         r.rpt_category_id

@@ -1,11 +1,11 @@
 package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
+import com.banbanmoomani.memilog.DAO.ThemeMapper;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
-import com.banbanmoomani.memilog.DTO.admin.daily.DailyMissionRequestDTO;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class MissionService {
 
     private final MissionMapper missionMapper;
 
-    public MissionService(MissionMapper missionMapper) {
+    public MissionService(MissionMapper missionMapper, ThemeMapper themeMapper) {
         this.missionMapper = missionMapper;
     }
 
@@ -36,18 +36,6 @@ public class MissionService {
 
 //    public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
 
-    public void createMission(DailyMissionRequestDTO dailyMissionRequestDTO) {
-        String priThemeId = dailyMissionRequestDTO.getPriThemeId();
-        String subThemeId = dailyMissionRequestDTO.getSubThemeId();
-        MissionDTO missionDTO = new MissionDTO();
-        missionDTO.setMissionId(dailyMissionRequestDTO.getMissionId());
-        missionDTO.setMissionContent(dailyMissionRequestDTO.getMissionContent());
-        missionDTO.setMissionDate(dailyMissionRequestDTO.getMissionDate());
-        // 테마 아이디 적용 필요
-        missionDTO.setPriThemeId(0);
-        missionDTO.setSubThemeId(1);
-        missionMapper.createMission(missionDTO);
-    }
     public List<MissionDTO> missionDetailByDate() { return missionMapper.missionDetailByDate(); }
 
     public MissionDTO findTodayMission() {
@@ -64,6 +52,7 @@ public class MissionService {
     public String findPriThemeName(int priThemeId) {
         return missionMapper.findPriThemeName(priThemeId);
     }
+
     public String findSubThemeName(int subThemeId) {
         return missionMapper.findSubThemeName(subThemeId);
     }
@@ -82,10 +71,31 @@ public class MissionService {
         return missionMapper.getMissionTitle();
     }
     // mission 전체조회 paging
+
     public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
         RowBounds rowBounds = new RowBounds((pageNum - 1) * pageSize, pageSize);
         List<MissionDTO> missionList = missionMapper.findAllMissionPaging(content, rowBounds);
-        int total = missionMapper.countMissions();
+        int total = missionMapper.countMissions(content);
         return new PageResult<>(missionList, total);
+    }
+    public void createMission(MissionDTO missionDTO) {
+        String missionDate = missionDTO.getMissionDate();
+        MissionDTO findMission = missionMapper.findMissionByDate(missionDate);
+        if (findMission == null) {
+            missionMapper.createMission(missionDTO);
+        } else {
+            throw new IllegalArgumentException("mission already exists");
+        }
+    }
+
+    public void updateMission(MissionDTO missionDTO) {
+        String missionDate = missionDTO.getMissionDate();
+        MissionDTO findMission = missionMapper.findMissionByDate(missionDate);
+        if (findMission == null) {
+            missionMapper.updateMission(missionDTO);
+        } else {
+            throw new IllegalArgumentException("mission already exists");
+        }
+
     }
 }

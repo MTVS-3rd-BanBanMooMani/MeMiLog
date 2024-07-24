@@ -28,13 +28,15 @@ public interface PostMapper {
 
     void deletePostById(int postId);
 
-    void increaseLikeCount(@Param("post_id")int post_id);
+    void increaseLikeCount(@Param("post_id") int post_id);
 
-    void decreaseLikeCount(@Param("post_id")int post_id);
+    void decreaseLikeCount(@Param("post_id") int post_id);
 
     List<todayPostDTO> findTodayPost();
 
     List<archivePostDTO> findArchivePost();
 
     Integer findTodayPostCount();
+
+    void updateHidden();
 }

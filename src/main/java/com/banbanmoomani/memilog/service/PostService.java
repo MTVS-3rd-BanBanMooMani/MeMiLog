@@ -11,6 +11,7 @@ import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class PostService {
         if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
             System.out.println("updateRequestDTO = " + updateRequestDTO);
             postMapper.updatePost(updateRequestDTO);
-            
+
         } else {
             throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
         }
@@ -94,6 +95,10 @@ public class PostService {
         postMapper.decreaseLikeCount(post_id);
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
+    }
+    @Transactional
+    public void updateHidden() {
+        postMapper.updateHidden();
     }
     public List<todayPostDTO> getTodayPostDTOList() {
         return postMapper.findTodayPost();

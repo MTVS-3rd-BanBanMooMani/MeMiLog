@@ -172,9 +172,9 @@ public class PostController {
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         System.out.println("postId = " + postId);
+
         try {
             postService.deletePost(postId, (int) user_id);
-            System.out.println(1);
             rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 삭제되었습니다");
         } catch (IllegalArgumentException e) {
             rttr.addFlashAttribute("failMessage", "삭제 권한이 없습니다.");

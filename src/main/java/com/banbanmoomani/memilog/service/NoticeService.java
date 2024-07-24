@@ -4,6 +4,7 @@ import com.banbanmoomani.memilog.DAO.NoticeMapper;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
 import com.banbanmoomani.memilog.DTO.PageResult;
 import com.banbanmoomani.memilog.DTO.admin.notice.NoticeRequestDTO;
+import com.banbanmoomani.memilog.DTO.admin.notice.NoticeUpdateRequestDTO;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,14 @@ public class NoticeService {
         return new PageResult<>(noticeList, total);
     }
 
-    public void createNotice(NoticeRequestDTO noticeRequestDTO) {
+    public void createNotice(NoticeRequestDTO noticeRequestDTO, int adminId) {
 
         Date date = java.sql.Date.valueOf(LocalDate.now());
 
         NoticeDTO noticeDTO = new NoticeDTO();
         noticeDTO.setNotice_title(noticeRequestDTO.getTitle());
         noticeDTO.setNotice_content(noticeRequestDTO.getContent());
-        noticeDTO.setAdmin_id(1);
+        noticeDTO.setAdmin_id(adminId);
         noticeDTO.setWritten_date(date);
         noticeDTO.setNotice_file_url("temp");
         noticeDTO.setVisible_YN("Y");
@@ -41,4 +42,7 @@ public class NoticeService {
         noticeMapper.createNotice(noticeDTO);
     }
 
+    public void updateNotice(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        noticeMapper.updateNotice(noticeUpdateRequestDTO);
+    }
 }
