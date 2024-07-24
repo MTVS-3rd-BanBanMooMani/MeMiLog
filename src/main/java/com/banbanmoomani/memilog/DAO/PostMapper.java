@@ -20,7 +20,7 @@ public interface PostMapper {
 
     PostDTO findPostById(int postId);
 
-    List<PostRequestDTO> findAllPostOnMissionByDate();
+    List<PostRequestDTO> findAllPostOnMissionByDate(String date);
 
     List<PostRequestDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 
@@ -28,14 +28,15 @@ public interface PostMapper {
 
     void deletePostById(int postId);
 
-    void increaseLikeCount(@Param("post_id")int post_id);
+    void increaseLikeCount(@Param("post_id") int post_id);
 
-    void decreaseLikeCount(@Param("post_id")int post_id);
+    void decreaseLikeCount(@Param("post_id") int post_id);
 
     List<todayPostDTO> findTodayPost();
 
     List<archivePostDTO> findArchivePost();
 
     Integer findTodayPostCount();
-  
+
     void updateHidden();
+}

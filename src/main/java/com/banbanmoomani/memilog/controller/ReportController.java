@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.ReportDTO;
+import com.banbanmoomani.memilog.DTO.ReportRequestDTO;
 import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.user.UserDTO;
 import com.banbanmoomani.memilog.service.PostService;
@@ -35,34 +36,31 @@ public class ReportController {
         return "main/report";
     }
 
-    @PostMapping("/report")
-    public String createReport(@RequestParam("rpt_category_id") int rptCategoryId,
-                               @RequestParam("rpt_content") String rptContent,
-                               @RequestParam("post_id") int postId,
-                               @RequestParam("rpted_user_id") int rptedUserId,
+    @PostMapping("/post/report")
+    public String createReport(ReportRequestDTO reportRequestDTO,
                                @SessionAttribute(name = "user_id") int rpterUserId) {
+
+        System.out.println("createReport 동작함");
+        System.out.println("rptCategoryId = " + reportRequestDTO.getRptCategoryId());
+        System.out.println("rptContent = " + reportRequestDTO.getRptContent());
+        System.out.println("postId = " + reportRequestDTO.getPostId());
+        System.out.println("rpterUserId = " + rpterUserId);
+        System.out.println("rptedUserId = " + reportRequestDTO.getRptedUserId());
+
         Timestamp currentTimestamp = Timestamp.from(Instant.now());
-        ReportDTO reportDTO = new ReportDTO(rptCategoryId, rptContent, postId, rpterUserId, rptedUserId, new Date(currentTimestamp.getTime()));
+        ReportDTO reportDTO = new ReportDTO(reportRequestDTO.getRptCategoryId(), reportRequestDTO.getRptContent(), reportRequestDTO.getPostId(), rpterUserId, reportRequestDTO.getRptedUserId(), new Date(currentTimestamp.getTime()));
         reportService.createReport(reportDTO);
 
-        UserDTO userDTO = userService.findUserById(rptedUserId); // user 경고 점수 조회
+        UserDTO userDTO = userService.findUserById(reportRequestDTO.getRptedUserId()); // user 경고 점수 조회
         if(userDTO.getCaution_weights() > 30) {
             // user 경고 점수가 일정 이상이면 temporary_YN = Y
-            userService.updateTemporary(rptedUserId);
+            userService.updateTemporary(reportRequestDTO.getRptedUserId());
         } else {
-            RPTCategoryDTO rptCategoryDTO = rptCategoryService.findRPTWeightById(rptCategoryId);
+            RPTCategoryDTO rptCategoryDTO = rptCategoryService.findRPTWeightById(reportRequestDTO.getRptCategoryId());
             // user 경고 점수가 일정 이하면 caution_weights 값에 추가로 더해주기
             userService.addCaution_Weights(rptCategoryDTO.getRpt_weight());
         }
 
-        System.out.println("동작함");
-        System.out.println("rptCategoryId = " + rptCategoryId);
-        System.out.println("rptContent = " + rptContent);
-        System.out.println("postId = " + postId);
-        System.out.println("rpterUserId = " + rpterUserId);
-        System.out.println("rptedUserId = " + rptedUserId);
-
-
-        return "redirect:/report";
+        return "redirect:/post/bymission";
     }
 }

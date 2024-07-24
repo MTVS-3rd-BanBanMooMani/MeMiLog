@@ -24,6 +24,7 @@
         <result property="like_count" column="like_count"/>
         <result property="mission_id" column="mission_id"/>
         <result property="written_datetime" column="written_datetime"/>
+        <result property="user_id" column="user_id"/>
         <result property="nickname" column="nickname"/>
         <result property="mission_date" column="mission_date"/>
         <result property="pri_theme_name" column="pri_theme_name"/>
@@ -125,7 +126,7 @@
     </delete>
 
 
-    <select id="findAllPostOnMissionByDate" resultMap="postRequestMap">
+    <select id="findAllPostOnMissionByDate" parameterType="String" resultMap="postRequestMap">
         SELECT
         p.post_id,
         m.mission_content,
@@ -160,6 +161,8 @@
         p.hidden_YN = 0
         AND
         f.picture_order = 1
+        AND
+        m.mission_date = #{date}
     </select>
 
     <select id="findPostsByCompanion" resultMap="postRequestMap">
@@ -198,7 +201,6 @@
         <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
             #{companionId}
         </foreach>
-        AND DAY(m.mission_date) = 1
     </select>
 
     <select id="showPostDetail" parameterType="long" resultMap="postRequestMap">
@@ -209,6 +211,7 @@
         p.like_count,
         p.mission_id,
         p.written_datetime,
+        u.user_id,
         u.nickname,
         m.mission_date,
         mt.theme_name AS pri_theme_name,

@@ -3,6 +3,9 @@
 /* 카테고리 */
 /* 테마 */
 .category-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px auto;
 }
 
@@ -18,7 +21,7 @@
     padding: 0.25rem 0.5rem;
     background: white;
     border-radius: 10px;
-    margin-right: 3px;
+    margin: 0 3px;
 }
 
 .cancel-btn {
@@ -157,6 +160,17 @@
     font-family: "Yeon Sung";
     font-weight: 400;
     word-wrap: break-word;
+}
+
+.searchBtn {
+    background-image: url(../../document/img/search.png);
+    background-color: #ffffff;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
 }
 
 .modal-photo-greed-container {
@@ -360,4 +374,28 @@
     background-color: #fefefe;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.repCate-box, .repContent-box {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.repContent-box > textarea {
+    resize: none;
+    height: 55px;
+}
+
+.repBtn-box > button{
+    border: 1px solid black;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    margin: 0 5px;
+    font-weight: bold;
 }

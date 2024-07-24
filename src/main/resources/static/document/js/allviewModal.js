@@ -215,23 +215,24 @@ const reportModalCloseBtn = document.querySelector(".report-modal-close-btn");
 document.querySelector(".post-report-btn").addEventListener("click", function() {
   console.log("신고버튼 클릭함");
   reportModalBg.style.display = "flex";
-  reportModal.style.display = "block";
+  reportModal.style.display = "flex";
 
   // 기존 게시물 정보 가져오기
   const postId = document.querySelector(".photo-div[data-post-id]").getAttribute('data-post-id');
-  // fetch("/post/bymission", {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({postId: postId})
-  // })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       document.getElementById("editMissionContent").innerText = data.mission_content;
-  //       document.getElementById("editPostId").value = data.post_id;
-  //     })
-  //     .catch(error => console.error("edit detail error: ", error));
+  fetch("/post/bymission", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({postId: postId})
+  })
+      .then(res => res.json())
+      .then(data => {
+        console.log("신고 데이터: ", data);
+        document.getElementById("reportPostId").value = data.post_id;
+        document.getElementById("reportedUserId").value = data.user_id;
+      })
+      .catch(error => console.error("report detail error: ", error));
 });
 
 reportModalCloseBtn.addEventListener("click", function () {

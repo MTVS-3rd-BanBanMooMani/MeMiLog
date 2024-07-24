@@ -7,11 +7,15 @@
 
   function addValue(button, value) {
     if(!selectedCategories.includes(value)) {
+      const inputTag = document.getElementById('themeType');
       selectedCategories.push(value);
+      inputTag.value = selectedCategories.toString();
       button.classList.add("active");
       addCancelButton(button);
-      console.log(`selectedCategories: ${selectedCategories}`);
+    } else {
+      removeValue(button);
     }
+    console.log(`selectedCategories: ${selectedCategories}`);
   }
 
   function addCancelButton(button) {
@@ -45,23 +49,41 @@
   }
 
   async function submitForm() {
+    // 숨은 필드에 선택한 카테고리 값을 설정
     const themeTypeField = document.getElementById('themeType');
     themeTypeField.value = selectedCategories.join(',');
-    const form = document.getElementById('themeForm');
 
+    // 폼 데이터를 준비하고 비동기 요청을 보냄
+    const form = document.getElementById('themeWordForm');
     const queryString = new URLSearchParams(new FormData(form)).toString();
     const url = `/theme?${queryString}`;
 
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      notesData = data; // notesData를 업데이트
-      renderNotes(1);
-      renderPagination();
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.headers.get('content-type')?.includes('application/json')) {
+        const data = await response.json();
+        console.log("검색 mission: ", data);
+        notesData = data; // notesData를 업데이트
+        renderNotes(1);
+        renderPagination();
+      } else {
+        console.error("Expected JSON response, got:", await response.text());
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
+
+// 폼 제출 이벤트 리스너 추가
+document.getElementById('themeWordForm').addEventListener('submit', (event) => {
+  event.preventDefault(); // 기본 폼 제출 동작을 막음
+  submitForm(); // 비동기 요청을 보내는 submitForm 호출
+});
 
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -119,7 +141,7 @@
 
     // 각 메모지들을 화면에 렌더링 함
     notesToDisplay.forEach(note => {
-      console.log("Rendering note:", note);
+      // console.log("Rendering note:", note);
 
       // 날짜 변환
       const [year, month, day] = note.missionDate.split('-');
@@ -140,7 +162,8 @@
       noteElement.style.backgroundColor = selectedNoteColor;
       noteElement.querySelector(".masking-tape").style.backgroundColor = selectedTapeColor;
       noteElement.addEventListener("click", () => {
-        location.href = "/allmission?post_id="+note["missionId"]
+        // location.href = "/allmission?post_id="+note["missionId"]
+        location.href = "/post/bymission?date="+note["missionDate"]
       })
       noteContainer.appendChild(noteElement);
 

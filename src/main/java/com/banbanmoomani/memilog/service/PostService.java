@@ -74,9 +74,9 @@ public class PostService {
         return postMapper.findPostById(postId);
     }
 
-    public List<PostRequestDTO> findAllPostOnMissionByDate() {
+    public List<PostRequestDTO> findAllPostOnMissionByDate(String date) {
 
-        return postMapper.findAllPostOnMissionByDate();
+        return postMapper.findAllPostOnMissionByDate(date);
     }
 
     public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
