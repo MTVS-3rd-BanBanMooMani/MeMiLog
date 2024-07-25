@@ -107,11 +107,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="mission : ${missionList}">
+                        <tr th:each="mission, iterStat : ${missionList}">
                             <td th:text="${mission.missionId}"></td>
                             <td th:text="${mission.missionContent}"></td>
-                            <td th:text="${mission.priThemeId}"></td>
-                            <td th:text="${mission.subThemeId}"></td>
+                            <td th:text="${mission.priThemeName}"></td>
+                            <td th:text="${mission.subThemeName}"></td>
                             <td th:text="${mission.missionDate}"></td>
                         </tr>
                         </tbody>
@@ -243,7 +243,7 @@
             </div>
         </div>
 
-        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+        <div th:replace="~{fragments/mainFooter :: footer}"></div>
     </div>
 
 </div>
@@ -313,8 +313,8 @@
         var missionData = {
             missionContent: title,
             missionDate: date,
-            priThemeId: parseInt(topicTag1),
-            subThemeId: parseInt(topicTag2)
+            priThemeId: topicTag1,
+            subThemeId: topicTag2
         };
 
         // 첫 번째 API로 데이터 전송

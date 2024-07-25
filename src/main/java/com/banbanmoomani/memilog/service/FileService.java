@@ -2,6 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DTO.FileDTO;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.MissionImgFileDTO;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.io.InputStream;
 
 
 @Service
@@ -26,8 +28,9 @@ public class FileService {
 
     public FileService(FileMapper fileMapper) throws IOException {
         this.fileMapper = fileMapper;
+        InputStream inputStream = getClass().getResourceAsStream("/memilog-4ed085e451cd.json");
         this.storage = StorageOptions.newBuilder()
-                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
+                .setCredentials(ServiceAccountCredentials.fromStream(inputStream))
                 .build()
                 .getService();
     }
@@ -105,6 +108,19 @@ public class FileService {
     public void updateMissionImage(MissionImgFileDTO missionImgFileDTO) {
         fileMapper.updateMissionImage(missionImgFileDTO);
     }
+
+    public List<FileDTO> findAllByPostId(int postId) {
+        return fileMapper.findAllByPostId(postId);
+    }
+//    public void updateOrSaveFiles(List<UpdateFileDTO> files, Integer postId) {
+//        for (UpdateFileDTO file : files) {
+//            if (file.getPictureId() != null) {
+//                fileMapper.updateFileUrl(file);
+//            }else {
+//                f
+//            }
+//        }
+//    }
 
     public String getProfileUrl(Long post_id) {
         return fileMapper.getProfileUrl(post_id);

@@ -8,6 +8,7 @@ public class FileDTO {
     private int user_id;
     private int picture_order;
     private int notice_id;
+    private int mission_id;
 
     public FileDTO() {}
 
@@ -17,6 +18,20 @@ public class FileDTO {
         this.post_id = post_id;
         this.user_id = user_id;
         this.picture_order = picture_order;
+    }
+
+    @Override
+    public String toString() {
+        return "FileDTO{" +
+                "picture_id=" + picture_id +
+                ", src_url='" + src_url + '\'' +
+                ", type='" + type + '\'' +
+                ", post_id=" + post_id +
+                ", user_id=" + user_id +
+                ", picture_order=" + picture_order +
+                ", notice_id=" + notice_id +
+                ", mission_id=" + mission_id +
+                '}';
     }
 
     public int getPicture_id() {
@@ -75,16 +90,22 @@ public class FileDTO {
         this.notice_id = notice_id;
     }
 
-    @Override
-    public String toString() {
-        return "FileDTO{" +
-                "picture_id=" + picture_id +
-                ", src_url='" + src_url + '\'' +
-                ", type='" + type + '\'' +
-                ", post_id=" + post_id +
-                ", user_id=" + user_id +
-                ", picture_order=" + picture_order +
-                ", notice_id=" + notice_id +
-                '}';
+    public int getMission_id() {
+        return mission_id;
+    }
+
+    public void setMission_id(int mission_id) {
+        this.mission_id = mission_id;
+    }
+
+    public FileDTO(int picture_id, String src_url, String type, int post_id, int user_id, int picture_order, int notice_id, int mission_id) {
+        this.picture_id = picture_id;
+        this.src_url = src_url;
+        this.type = type;
+        this.post_id = post_id;
+        this.user_id = user_id;
+        this.picture_order = picture_order;
+        this.notice_id = notice_id;
+        this.mission_id = mission_id;
     }
 }

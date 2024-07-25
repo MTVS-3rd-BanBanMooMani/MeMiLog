@@ -16,7 +16,10 @@ public interface FileMapper {
     void insertMissionImage(MissionImgFileDTO missionImgFileDTO);
     void updateMissionImage(MissionImgFileDTO missionImgFileDTO);
 
+    List<FileDTO> findAllByPostId(int postId);
+
     String getProfileUrl(@Param("post_id") Long post_id);
 
     List<String> getPostUrl(@Param("post_id") Long postId);
+
 }

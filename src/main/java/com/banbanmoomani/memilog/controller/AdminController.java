@@ -277,8 +277,9 @@ public class AdminController {
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
 
-        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
-        model.addAttribute("missionList", pagedResult.getData());
+        PageResult<MissionViewDataDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
+        List<MissionViewDataDTO> data = pagedResult.getData();
+        model.addAttribute("missionList", data);
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("content", content);

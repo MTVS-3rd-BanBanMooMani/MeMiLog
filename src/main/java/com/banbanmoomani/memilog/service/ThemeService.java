@@ -17,4 +17,8 @@ public class ThemeService {
     public List<ThemeDTO> getTheme() {
         return themeMapper.findAllTheme();
     }
+
+    public String findById(int id) {
+        return themeMapper.findThemeById(id);
+    }
 }

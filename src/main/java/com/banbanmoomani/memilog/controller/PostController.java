@@ -79,6 +79,7 @@ public class PostController {
                              @RequestParam(name = "file3", required = false) MultipartFile file3,
                              @RequestParam(name = "file4", required = false) MultipartFile file4,
                              @RequestParam(name = "file5", required = false) MultipartFile file5,
+                             Model model,
                              HttpSession session) throws IOException {
         System.out.println(createRequestDTO);
 
@@ -94,15 +95,18 @@ public class PostController {
 
         postService.createPost(createRequestDTO);
 
+        int postId = createRequestDTO.getPostId();
+
+        model.addAttribute("postId", postId);
+
         MultipartFile[] files = {file1, file2, file3, file4, file5};
         int pictureOrder = 1;
         for (MultipartFile file : files) {
             if (file != null && !file.isEmpty()) {
                 String fileUrl = fileService.uploadFile(file, (int) user_id);
-                fileService.saveFileUrl(fileUrl, "post", createRequestDTO.getPostId(), (int) user_id, pictureOrder++);
+                fileService.saveFileUrl(fileUrl, "post", postId, (int) user_id, pictureOrder++);
             }
         }
-
         return "redirect:/post/bymission";
     }
 
@@ -138,18 +142,47 @@ public class PostController {
         return "main/postupdate";
     }
 
+    @GetMapping("/oldFile")
+    public ResponseEntity oldFile(@RequestParam("postId") int postId) {
+        List<FileDTO> fileListDTO = fileService.findAllByPostId(postId);
+        System.out.println("fileListDTO = " + fileListDTO);
+        return ResponseEntity.ok(fileListDTO);
+    }
+
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
+                                   @RequestParam(name = "oldFile1", required = false) Integer oldFile1,
+                                   @RequestParam(name = "oldFile2", required = false) Integer oldFile2,
+                                   @RequestParam(name = "oldFile3", required = false) Integer oldFile3,
+                                   @RequestParam(name = "oldFile4", required = false) Integer oldFile4,
+                                   @RequestParam(name = "oldFile5", required = false) Integer oldFile5,
+                                   @RequestParam(name = "newFile1", required = false) MultipartFile newFile1,
+                                   @RequestParam(name = "newFile2", required = false) MultipartFile newFile2,
+                                   @RequestParam(name = "newFile3", required = false) MultipartFile newFile3,
+                                   @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
+                                   @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
                                    HttpSession session,
                                    RedirectAttributes rttr) {
-        Object user_id = session.getAttribute("user_id");
-        post.setUser_id((int) user_id);
-        try {
-            postService.updatePost(post);
-            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-        } catch (IllegalArgumentException e) {
-            rttr.addFlashAttribute("failMessage", e.getMessage());
-        }
+        System.out.println("oldFile1 = " + oldFile1); // oldFile에는 FILE 테이블의 picture_id가 담겨 있음
+        System.out.println("oldFile2 = " + oldFile2); // 기존의 FILE 테이블에서 해당 post_id로 저장된 사진들을 모두 가져온 뒤
+        System.out.println("oldFile3 = " + oldFile3); // 여기 oldFile에 없는 것들을 삭제
+        System.out.println("oldFile4 = " + oldFile4);
+        System.out.println("oldFile5 = " + oldFile5);
+        System.out.println("file1 = " + newFile1); // newFile들은 싹다 insert(null이 아니면)
+        System.out.println("file2 = " + newFile2);
+        System.out.println("file3 = " + newFile3);
+        System.out.println("file4 = " + newFile4);
+        System.out.println("file5 = " + newFile5);
+
+
+//        Object user_id = session.getAttribute("user_id");
+//        post.setUser_id((int) user_id);
+//        try {
+//            postService.updatePost(post);
+//            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
+//        } catch (IllegalArgumentException e) {
+//            rttr.addFlashAttribute("failMessage", e.getMessage());
+//        }
         return "redirect:/post/bymission";
     }
 

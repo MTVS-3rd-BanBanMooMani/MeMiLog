@@ -349,9 +349,11 @@
         UPDATE
             FILE
         SET
-            picture_order = #{picture_order}
+            src_url = {src_url}
         WHERE
-            post_id = #{post_id} AND src_url = #{src_url}
+            picture_id = {}
+
+
     </update>
     <delete id="deleteImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
         DELETE
@@ -360,6 +362,29 @@
         WHERE
             post_id = #{post_id} AND src_url = #{src_url}
     </delete>
+    <update id="updateFileUrl" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        UPDATE
+            FILE
+        SET
+            src_url = #{src_url}
+        WHERE
+            picture_id = #{pictureId}
+    </update>
+
+    <insert id="insertFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        INSERT INTO
+        FILE
+        (
+            post_id,
+            src_url
+        )
+        VALUES
+        (
+            #{postId},
+            #{src_url}
+        )
+    </insert>
+
 
     <select id="showBanner" parameterType="String" resultMap="bannerRequestMap">
         SELECT

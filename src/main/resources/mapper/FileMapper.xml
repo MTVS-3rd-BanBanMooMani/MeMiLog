@@ -3,6 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.banbanmoomani.memilog.DAO.FileMapper">
+    <resultMap id="fileResultMap" type="com.banbanmoomani.memilog.DTO.FileDTO">
+        <id property="picture_id" column="picture_id"/>
+        <result property="src_url" column="src_url"/>
+        <result property="type" column="type"/>
+        <result property="post_id" column="post_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="picture_order" column="picture_order"/>
+        <result property="notice_id" column="notice_id"/>
+        <result property="mission_id" column="mission_id"/>
+    </resultMap>
+    <select id="findAllByPostId" parameterType="int" resultMap="fileResultMap">
+        SELECT *
+        FROM FILE
+        WHERE type = 'post'
+        AND post_id = #{postId}
+    </select>
     <update id="updateFile">
         UPDATE FILE
         SET src_url = #{src_url}
