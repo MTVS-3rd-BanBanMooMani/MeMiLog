@@ -1,146 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me Mission Log</title>
-    <link th:href="@{/document/css/home.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="../../document/css/layout.css" />
-    <link href="../../static/document/css/home.css" rel="stylesheet" />
-    <style>
-        .photo-div {
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-        }
-        .photo-div.hidden {
-            opacity: 0;
-            display: none;
-        }
-        .photo-div.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Me Mission Log</title>
+<link th:href="@{/document/css/home.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="../../document/css/layout.css" />
+<link href="../../static/document/css/home.css" rel="stylesheet" />
+<link
+        href="../../document/css/postview.css"
+        rel="stylesheet"
+/>
+<!-- sweetalert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<style>
+    .photo-div {
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    }
+    .photo-div.hidden {
+        opacity: 0;
+        display: none;
+    }
+    .photo-div.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+    .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
 </head>
 <body>
 <div class="container">
-    <div th:replace="~{/fragments/mainHeader :: header}"></div>
-    <div class="middle-container">
-        <div class="search-bar-container">
-            <form action="/mission" method="get">
-                <input type="text" name="word">
-                <button type="submit">
-                    <img th:src="@{/document/img/material-symbols-light.png}">
+<div th:replace="~{/fragments/mainHeader :: header}"></div>
+<div class="middle-container">
+    <div class="search-bar-container">
+        <form action="/mission" method="get">
+            <input type="text" name="word">
+            <button type="submit">
+                <img th:src="@{/document/img/material-symbols-light.png}">
+            </button>
+        </form>
+    </div>
+    <div class="mission-container">
+        <img class="mission-img" th:src="${mainTitleDTO.src_url != null ? mainTitleDTO.src_url : '/document/img/banner.jpg'}" />
+        <div th:text="${missionDate}"></div>
+        <div th:text="${mainTitleDTO.mission_content}"></div>
+        <button onclick="location.href='/post/create'">나도 남기러 가기</button>
+    </div>
+    <div class="today-container">
+        <div class="today-label">
+            <p th:text="${todayPostCount} + ' 명의 미미들의 오늘📷'"></p>
+        </div>
+        <div class="today-photo-container" id="today-photo-container">
+            <img th:src="@{/document/img/home-left-arrow.png}" id="left-arrow" onclick="scrollTodayPhotos(-1)" alt="left arrow">
+            <div th:each="post, iterStat : ${todayPostDTOList}" class="photo-div hidden" th:classappend="${iterStat.index < 8} ? 'visible' : 'hidden'" th:data-post-id="${post.postId}">
+                <img th:src="${post.picture}" th:alt="${post.nickname}">
+                <p th:text="${post.nickname}"></p>
+            </div>
+            <img th:src="@{/document/img/home-right-arrow.png}" id="right-arrow" onclick="scrollTodayPhotos(1)" alt="right arrow">
+        </div>
+    </div>
+    <div class="random-container">
+        <div class="random-label">
+            <p>미미로그 아카이브🍰</p>
+        </div>
+        <div class="random-photo-container" id="archive-photo-container">
+            <img th:src="@{/document/img/home-left-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="left arrow">
+            <div th:each="archive : ${archivePostDTOList}" class="photo-div hidden" th:data-post-id="${archive.archiveId}">
+                <img th:src="${archive.picture}" th:alt="${archive.nickname}">
+                <p th:text="${archive.nickname}"></p>
+            </div>
+            <img th:src="@{/document/img/home-right-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="right arrow">
+        </div>
+    </div>
+    <!-- 여기서부터 모달 -->
+    <div class="modal-bg">
+        <div class="post-modal">
+            <div class="post-modal-top">
+                <div class="etc-dropdown">
+                    <img
+                            src="../../document/img/etc.png"
+                            height="25px"
+                            alt="etc이미지"
+                            class="etc-img"
+                    />
+                    <div class="dropdown-content">
+                        <span class="post-report-btn" style="color: red">신고</span>
+                        <span class="post-edit-btn">수정</span>
+                        <span class="post-delete-btn">삭제</span>
+                    </div>
+                </div>
+                <button
+                        class="post-modal-close-btn"
+                        style="
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+          font-size: 40px;
+          color: grey;
+          cursor: pointer;
+        "
+                >
+                    &times;
                 </button>
-            </form>
-        </div>
-        <div class="mission-container">
-            <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
-            <div th:text="'6월 20일의 미션'"></div>
-            <div th:text="${missionTitle}"></div>
-            <button onclick="location.href='/post/create'">나도 남기러 가기</button>
-        </div>
-        <div class="today-container">
-            <div class="today-label">
-                <p th:text="${todayPostCount} + ' 명의 미미들의 오늘📷'"></p>
             </div>
-            <div class="today-photo-container" id="today-photo-container">
-                <img th:src="@{/document/img/home-left-arrow.png}" id="left-arrow" onclick="scrollTodayPhotos(-1)" alt="left arrow">
-                <div th:each="post, iterStat : ${todayPostDTOList}" class="photo-div hidden" th:classappend="${iterStat.index < 8} ? 'visible' : 'hidden'">
-                    <img th:src="${post.picture}">
-                    <p th:text="${post.nickname}"></p>
+            <!-- post modal content -->
+            <div class="post-modal-content" style="display: flex">
+                <!-- post modal 왼쪽 -->
+                <div class="post-modal-left">
+                    <div style="margin: 0 32px 20px 32px">
+                        <div style="margin-bottom: 15px">
+                            <button id="priTheme" class="category-btn active"></button>
+                            <button id="subTheme" class="category-btn active"></button>
+                            <button id="companion" class="category-btn active"></button>
+                        </div>
+                        <p id="missionContent" style="font-size: 24px; font-weight: bold">
+                        </p>
+                    </div>
+
+                    <div class="post-modal-board-img">
+                        <span class="arrow arrow-left hidden">&lt;</span>
+                        <img
+                                src="../../document/img/home-post-photo.jpg"
+                                alt="게시물이미지"
+                                class="modal-image"
+                        />
+                        <img
+                                src="../../document/img/home-post-photo.jpg"
+                                alt="게시물이미지"
+                                class="modal-image"
+                        />
+                        <img
+                                src="../../document/img/home-post-photo.jpg"
+                                alt="게시물이미지"
+                                class="modal-image"
+                        />
+                        <span class="arrow arrow-right">&gt;</span>
+                    </div>
+
+                    <div class="post-modal-user-info">
+                        <div class="post-modal-profile">
+                            <img
+                                    src="../../document/img/stone.jpg"
+                                    alt="프로필이미지"
+                                    width="35px"
+                                    height="35px"
+                                    style="border-radius: 50%"
+                            />
+                            <p id="nickname"></p>
+                        </div>
+                        <div class="post-modal-like-box">
+                            <p id="likeCount"></p>
+                            <img
+                                    src="../../document/img/heart.png"
+                                    alt="좋아요"
+                                    width="30px"
+                                    height="30px"
+                                    class="post-like-btn"
+                                    style="cursor: pointer"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- ================================== -->
                 </div>
-                <img th:src="@{/document/img/home-right-arrow.png}" id="right-arrow" onclick="scrollTodayPhotos(1)" alt="right arrow">
-            </div>
-        </div>
-        <div class="random-container">
-            <div class="random-label">
-                <p>미미로그 아카이브🍰</p>
-            </div>
-            <div class="random-photo-container" id="archive-photo-container">
-                <img th:src="@{/document/img/home-left-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="left arrow">
-                <div th:each="archive : ${archivePostDTOList}" class="photo-div hidden">
-                    <img th:src="${archive.picture}">
-                    <p th:text="${archive.nickname}"></p>
+
+                <!-- post modal 오른쪽 -->
+                <div class="post-modal-right">
+                    <div class="post-modal-right-info">
+                        <p id="writtenDate"></p>
+                        <img
+                                id="emotionImg"
+                                src=""
+                                alt="감정이미지"
+                                width="25px"
+                                height="25px"
+                                style="border-radius: 50%"
+                        />
+                    </div>
+                    <div id="content"></div>
                 </div>
-                <img th:src="@{/document/img/home-right-arrow.png}" onclick="shuffleAndShowArchivePhotos()" alt="right arrow">
+                <!-- post modal content 끝 -->
             </div>
         </div>
     </div>
+
+    <div class="report-modal-bg">
+        <div class="report-modal">
+            <div class="report-modal-content" style="width: 300px">
+                <form id="reportForm" action="/post/report" method="post">
+                    <div class="repCate-box" style="height: 50px">
+                        <label for="reportCategory">신고 분류</label>
+                        <select id="reportCategory" name="rptCategoryId">
+                            <option th:each="repCate: ${reportCategory}" th:text="${xrepCate.category_name}" th:value="${repCate.rpt_category_id}"></option>
+                        </select>
+                    </div>
+                    <div class="repContent-box" style="height: 95px">
+                        <label for="reportMissionContent">상세 내용</label>
+                        <textarea id="reportMissionContent" name="rptContent" placeholder="상세한 신고 사유를 입력해주세요."></textarea>
+                    </div>
+                    <input type="hidden" id="reportPostId" name="postId"/>
+                    <input type="hidden" id="reportedUserId" name="rptedUserId"/>
+                    <div class="repBtn-box" style="padding: 0 90px">
+                        <button type="submit" style="color: white; background: black">신고</button>
+                        <button type="button" class="report-modal-close-btn" style="color: black; background: white">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 신고 모달 끝 -->
+</div>
+
     <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 </div>
+<div id="postModal" class="modal">
+<div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="postTitle"></h2>
+    <img id="postImage" src="" alt="Post Image">
+    <p id="postContent"></p>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    let todayIndex = 0;
-    const maxPhotos = 8;
-    let todayPhotos;
-    let archivePhotos;
+let todayIndex = 0;
+const maxPhotos = 8;
+let todayPhotos;
+let archivePhotos;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded event fired');
-        todayPhotos = Array.from(document.querySelectorAll('#today-photo-container .photo-div'));
-        archivePhotos = Array.from(document.querySelectorAll('#archive-photo-container .photo-div'));
-        console.log('Today Photos:', todayPhotos);
-        console.log('Archive Photos:', archivePhotos);
-        showPhotos(todayPhotos, todayIndex);
-        shuffleAndShowArchivePhotos();
-        updateArrows(todayIndex, todayPhotos, maxPhotos);
+document.addEventListener('DOMContentLoaded', () => {
+    todayPhotos = Array.from(document.querySelectorAll('#today-photo-container .photo-div'));
+    archivePhotos = Array.from(document.querySelectorAll('#archive-photo-container .photo-div'));
+    showPhotos(todayPhotos, todayIndex);
+    shuffleAndShowArchivePhotos();
+    updateArrows(todayIndex, todayPhotos, maxPhotos);
+});
+
+function showPhotos(photos, index) {
+    photos.forEach((photo, i) => {
+        if (i >= index * maxPhotos && i < (index + 1) * maxPhotos) {
+            photo.classList.remove('hidden');
+            photo.classList.add('visible');
+        } else {
+            photo.classList.remove('visible');
+            photo.classList.add('hidden');
+        }
     });
+}
 
-    function showPhotos(photos, index) {
-        console.log('showPhotos called with index:', index);
-        photos.forEach((photo, i) => {
-            if (i >= index * maxPhotos && i < (index + 1) * maxPhotos) {
-                photo.classList.remove('hidden');
-                photo.classList.add('visible');
-            } else {
-                photo.classList.remove('visible');
-                photo.classList.add('hidden');
-            }
+function updateArrows(index, photos, maxPhotos) {
+    const maxIndex = Math.ceil(photos.length / maxPhotos) - 1;
+    const leftArrow = document.getElementById('left-arrow');
+    const rightArrow = document.getElementById('right-arrow');
+    if (index <= 0) {
+        leftArrow.classList.add('disabled');
+    } else {
+        leftArrow.classList.remove('disabled');
+    }
+    if (index >= maxIndex) {
+        rightArrow.classList.add('disabled');
+    } else {
+        rightArrow.classList.remove('disabled');
+    }
+}
+
+window.scrollTodayPhotos = (direction) => {
+    const maxIndex = Math.ceil(todayPhotos.length / maxPhotos) - 1;
+    todayIndex += direction;
+    if (todayIndex < 0) todayIndex = 0;
+    if (todayIndex > maxIndex) todayIndex = maxIndex;
+    showPhotos(todayPhotos, todayIndex);
+    updateArrows(todayIndex, todayPhotos, maxPhotos);
+};
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function shuffleAndShowArchivePhotos() {
+    shuffleArray(archivePhotos);
+    showPhotos(archivePhotos, 0);
+}
+
+const modalBg = document.querySelector(".modal-bg");
+const photoDivs = document.querySelectorAll(".photo-div");
+const postModal = document.querySelector(".post-modal");
+const closePostModalBtn = document.querySelector(".post-modal-close-btn");
+
+photoDivs.forEach((photoDiv) => {
+    photoDiv.addEventListener("click", function () {
+        modalBg.style.display = 'flex';
+        postModal.style.display = 'block';
+        updateArrows();
+        const postId = photoDiv.getAttribute('data-post-id');
+        fetch("/post/bymission", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({postId: postId})
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("priTheme").innerText = data.pri_theme_name;
+                document.getElementById("subTheme").innerText = data.sub_theme_name;
+                document.getElementById("companion").innerText = data.companion_type;
+                document.getElementById("missionContent").innerText = data.mission_content;
+                document.getElementById("likeCount").innerText = data.like_count;
+                document.getElementById("nickname").innerText = data.nickname;
+                document.getElementById("writtenDate").innerText = data.written_datetime;
+                document.getElementById("content").innerText = data.content;
+
+                const emotionImg = document.getElementById("emotionImg");
+                switch (data.emotion_name) {
+                    case "Happy":
+                        emotionImg.src = "../../document/img/colored_happy.png";
+                        break;
+                    case "Cool":
+                        emotionImg.src = "../../document/img/colored_cool.png";
+                        break;
+                    case "Surprised":
+                        emotionImg.src = "../../document/img/colored_surprised.png";
+                        break;
+                    case "Soso":
+                        emotionImg.src = "../../document/img/colored_soso.png";
+                        break;
+                    case "Sad":
+                        emotionImg.src = "../../document/img/colored_sad.png";
+                        break;
+                    default:
+                        emotionImg.src = "";
+                }
+
+            })
+            .catch(error => console.error("post detail error: ", error));
+
+        const modifyBtn = document.querySelector(".post-edit-btn")
+
+        modifyBtn.addEventListener("click", () => {
+            location.href="/post/update?postId="+postId
+        })
+
+        const deleteAlert = document.querySelector(".post-delete-btn");
+
+        deleteAlert.addEventListener("click", () => {
+            Swal.fire({
+                title: "정말로 삭제하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "gray",
+                confirmButtonText: "네, 삭제하겠습니다.",
+                cancelButtonText: "취소",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch("/post/delete?postId=" + postId)
+                        .then(res => {
+                            if(res.ok) {
+                                location.href = "/post/bymission"
+                            } else {
+                                Swal.fire({
+                                    title: "삭제 실패하였습니다!",
+                                    icon: "Fail",
+                                });
+                            }
+                        })
+                }
+            });
         });
-    }
+    });
+});
 
-    function updateArrows(index, photos, maxPhotos) {
-        const maxIndex = Math.ceil(photos.length / maxPhotos) - 1;
-        const leftArrow = document.getElementById('left-arrow');
-        const rightArrow = document.getElementById('right-arrow');
-        if (index <= 0) {
-            leftArrow.classList.add('disabled');
-        } else {
-            leftArrow.classList.remove('disabled');
+
+closePostModalBtn.addEventListener("click", function () {
+    modalBg.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target === modalBg) {
+        modalBg.style.display = "none";
+        postModal.style.display = "none";
+    }
+    if (event.target === postModal) {
+        postModal.style.display = "none";
+    }
+});
+
+// post img
+const modalImages = document.querySelectorAll(".modal-image");
+const arrowLeft = document.querySelector(".arrow-left");
+const arrowRight = document.querySelector(".arrow-right");
+let currentIndex = 0;
+
+function updateArrows() {
+    if (modalImages.length <= 1) {
+        arrowLeft.classList.add("hidden");
+        arrowRight.classList.add("hidden");
+    } else {
+        arrowLeft.classList.toggle("hidden", currentIndex === 0);
+        arrowRight.classList.toggle(
+            "hidden",
+            currentIndex === modalImages.length - 1
+        );
+    }
+}
+
+// photoDivs.forEach((photoDiv) => {
+//   photoDiv.addEventListener("click", function () {
+//     postModal.style.display = "block";
+//     updateArrows();
+//   });
+// });
+
+closePostModalBtn.addEventListener("click", function () {
+    postModal.style.display = "none";
+});
+
+arrowLeft.addEventListener("click", function () {
+    if (currentIndex > 0) {
+        modalImages[currentIndex].style.display = "none";
+        currentIndex--;
+        modalImages[currentIndex].style.display = "block";
+        updateArrows();
+    }
+});
+
+arrowRight.addEventListener("click", function () {
+    if (currentIndex < modalImages.length - 1) {
+        modalImages[currentIndex].style.display = "none";
+        currentIndex++;
+        modalImages[currentIndex].style.display = "block";
+        updateArrows();
+    }
+});
+
+modalImages.forEach((img, index) => {
+    img.style.display = index === currentIndex ? "block" : "none";
+});
+updateArrows();
+
+// etc dropdown
+const etcImg = document.querySelector(".etc-img");
+const dropdownContent = document.querySelector(".dropdown-content");
+
+etcImg.addEventListener("click", function () {
+    dropdownContent.classList.toggle("show");
+});
+
+// 다른 곳 클릭 시 dropdown 닫기
+window.addEventListener("click", function (event) {
+    if (!event.target.matches(".etc-img")) {
+        if (dropdownContent.classList.contains("show")) {
+            dropdownContent.classList.remove("show");
         }
-        if (index >= maxIndex) {
-            rightArrow.classList.add('disabled');
-        } else {
-            rightArrow.classList.remove('disabled');
+    }
+});
+
+// 신고 모달 관련
+const reportModalBg = document.querySelector(".report-modal-bg");
+const reportModal = document.querySelector(".report-modal");
+const reportModalCloseBtn = document.querySelector(".report-modal-close-btn");
+
+document.querySelector(".post-report-btn").addEventListener("click", function() {
+    console.log("신고버튼 클릭함");
+    reportModalBg.style.display = "flex";
+    reportModal.style.display = "flex";
+
+    // 기존 게시물 정보 가져오기
+    const postId = document.querySelector(".photo-div[data-post-id]").getAttribute('data-post-id');
+    fetch("/post/bymission", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({postId: postId})
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log("신고 데이터: ", data);
+            document.getElementById("reportPostId").value = data.post_id;
+            document.getElementById("reportedUserId").value = data.user_id;
+        })
+        .catch(error => console.error("report detail error: ", error));
+});
+
+reportModalCloseBtn.addEventListener("click", function () {
+    reportModalBg.style.display = "none";
+    reportModal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target === reportModalBg) {
+        reportModalBg.style.display = "none";
+        reportModal.style.display = "none";
+    }
+});
+
+// 좋아요 기능
+const likeBtn = document.querySelector(".post-like-btn");
+
+likeBtn.addEventListener("click", function () {
+    if (likeBtn.src.includes("heart.png")) {
+        likeBtn.src = "../documentation/img/fullHeart.png";
+    } else {
+        likeBtn.src = "../documentation/img/heart.png";
+    }
+});
+
+// 삭제 버튼 클릭 시 alert
+const deleteAlert = document.querySelector(".post-delete-btn");
+
+deleteAlert.addEventListener("click", () => {
+    Swal.fire({
+        title: "정말로 삭제하시겠습니까?",
+        // text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "gray",
+        confirmButtonText: "네, 삭제하겠습니다.",
+        cancelButtonText: "취소",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "삭제되었습니다!",
+                // text: "Your file has been deleted.",
+                icon: "success",
+            });
         }
-    }
+    });
+});
 
-    window.scrollTodayPhotos = (direction) => {
-        console.log('scrollTodayPhotos called with direction:', direction);
-        const maxIndex = Math.ceil(todayPhotos.length / maxPhotos) - 1;
-        todayIndex += direction;
-        if (todayIndex < 0) todayIndex = 0;
-        if (todayIndex > maxIndex) todayIndex = maxIndex;
-        showPhotos(todayPhotos, todayIndex);
-        updateArrows(todayIndex, todayPhotos, maxPhotos);
-    };
+// 신고 버튼 클릭 시 alert
+// const reportAlert = document.querySelector(".post-report-btn");
+//
+// reportAlert.addEventListener("click", () => {
+//   Swal.fire({
+//     title: "신고 하시겠습니까?",
+//     icon: "warning",
+//     input: "select",
+//     inputOptions: {
+//       option1: "음란물",
+//       option2: "광고",
+//       option3: "종교권유",
+//     },
+//     inputPlaceholder: "신고 사유 선택",
+//     showCancelButton: true,
+//     confirmButtonColor: "#d33",
+//     cancelButtonColor: "gray",
+//     confirmButtonText: "네, 신고하겠습니다.",
+//     cancelButtonText: "취소",
+//   });
+// });
+// });
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    function shuffleAndShowArchivePhotos() {
-        console.log('shuffleAndShowArchivePhotos called');
-        shuffleArray(archivePhotos);
-        showPhotos(archivePhotos, 0);
-    }
 </script>
 </body>
 </html>

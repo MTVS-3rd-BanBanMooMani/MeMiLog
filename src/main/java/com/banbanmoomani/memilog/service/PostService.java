@@ -2,16 +2,13 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
+import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
-import com.banbanmoomani.memilog.DTO.LikeDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
-import com.banbanmoomani.memilog.DTO.archivePostDTO;
-import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -43,24 +40,13 @@ public class PostService {
 //        }
 //    }
     @Transactional
-    public void updatePost(PostDTO updateRequestDTO, int userId) {
-
-        int postId = updateRequestDTO.getPost_id();
-
-        PostDTO post = postMapper.findPostById(postId);
-        System.out.println("Post: " + post);
-        System.out.println("UpdateRequest User ID: " + userId);
-
-        LocalDate localDate = LocalDate.from(post.getWritten_datetime().toLocalDateTime());
-        if(!localDate.equals(LocalDate.now())) {
-            throw new IllegalArgumentException("The post date is not today.");
-        }
-
-        if (post.getUser_id() == userId) {
-        // 하드코딩된 post_id와 user_id를 설정
-            updateRequestDTO.setPost_id(postId);
-            updateRequestDTO.setUser_id(userId);
+    public void updatePost(PostDTO updateRequestDTO) {
+    // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
+        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
+        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
+            System.out.println("updateRequestDTO = " + updateRequestDTO);
             postMapper.updatePost(updateRequestDTO);
+
         } else {
             throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
         }
@@ -80,9 +66,9 @@ public class PostService {
         return postMapper.findPostById(postId);
     }
 
-    public List<PostRequestDTO> findAllPostOnMissionByDate() {
+    public List<PostRequestDTO> findAllPostOnMissionByDate(String date) {
 
-        return postMapper.findAllPostOnMissionByDate();
+        return postMapper.findAllPostOnMissionByDate(date);
     }
 
     public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
@@ -110,7 +96,7 @@ public class PostService {
     @Transactional
     public void updateHidden() {
         postMapper.updateHidden();
-    } 
+    }
     public List<todayPostDTO> getTodayPostDTOList() {
         return postMapper.findTodayPost();
     }
@@ -122,5 +108,23 @@ public class PostService {
     public int getTodayPostCount() {
         Integer count = postMapper.findTodayPostCount();
         return count == null ? 0 : count;
+    }
+
+    public List<UpdateFileDTO> updatefiles(int postId) {
+        return postMapper.updateFile(postId);
+    }
+
+    public String findMainFile(int postId) {
+        return postMapper.findMainFile(postId);
+    }
+
+    public void updateImageOrder(ImageOrderDTO imageOrderDTO) {
+        postMapper.updateImageOrder(imageOrderDTO);
+    }
+    public void deleteImageOrder(ImageOrderDTO imageOrderDTO) {
+        postMapper.deleteImageOrder(imageOrderDTO);
+    }
+    public void addImage(ImageOrderDTO imageOrderDTO) {
+        postMapper.addImage(imageOrderDTO);
     }
 }

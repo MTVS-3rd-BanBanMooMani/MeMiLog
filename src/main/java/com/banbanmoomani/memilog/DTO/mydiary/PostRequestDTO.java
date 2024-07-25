@@ -8,6 +8,7 @@ public class PostRequestDTO {
     private int like_count;
     private int mission_id;
     private String written_datetime;
+    private int user_id;
     private String nickname;
     private String mission_date;
     private String pri_theme_name;
@@ -18,13 +19,14 @@ public class PostRequestDTO {
 
     PostRequestDTO(){}
 
-    public PostRequestDTO(int post_id, String mission_content, String content, int like_count, int mission_id, String written_datetime, String nickname, String mission_date, String pri_theme_name, String sub_theme_name, String emotion_name, String companion_type, String src_url) {
+    public PostRequestDTO(int post_id, String mission_content, String content, int like_count, int mission_id, String written_datetime, int user_id, String nickname, String mission_date, String pri_theme_name, String sub_theme_name, String emotion_name, String companion_type, String src_url) {
         this.post_id = post_id;
         this.mission_content = mission_content;
         this.content = content;
         this.like_count = like_count;
         this.mission_id = mission_id;
         this.written_datetime = written_datetime;
+        this.user_id = user_id;
         this.nickname = nickname;
         this.mission_date = mission_date;
         this.pri_theme_name = pri_theme_name;
@@ -80,6 +82,14 @@ public class PostRequestDTO {
 
     public void setWritten_datetime(String written_datetime) {
         this.written_datetime = written_datetime;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getNickname() {
@@ -147,6 +157,7 @@ public class PostRequestDTO {
                 ", like_count=" + like_count +
                 ", mission_id=" + mission_id +
                 ", written_datetime='" + written_datetime + '\'' +
+                ", user_id=" + user_id +
                 ", nickname='" + nickname + '\'' +
                 ", mission_date='" + mission_date + '\'' +
                 ", pri_theme_name='" + pri_theme_name + '\'' +

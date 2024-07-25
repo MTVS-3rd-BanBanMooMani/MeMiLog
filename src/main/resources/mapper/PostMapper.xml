@@ -24,6 +24,7 @@
         <result property="like_count" column="like_count"/>
         <result property="mission_id" column="mission_id"/>
         <result property="written_datetime" column="written_datetime"/>
+        <result property="user_id" column="user_id"/>
         <result property="nickname" column="nickname"/>
         <result property="mission_date" column="mission_date"/>
         <result property="pri_theme_name" column="pri_theme_name"/>
@@ -110,7 +111,6 @@
             POST
         SET
             content = #{content},
-            mission_id = #{mission_id},
             emotion_id = #{emotion_id},
             companion_id = #{companion_id}
         WHERE
@@ -125,7 +125,7 @@
     </delete>
 
 
-    <select id="findAllPostOnMissionByDate" resultMap="postRequestMap">
+    <select id="findAllPostOnMissionByDate" parameterType="String" resultMap="postRequestMap">
         SELECT
         p.post_id,
         m.mission_content,
@@ -160,6 +160,8 @@
         p.hidden_YN = 0
         AND
         f.picture_order = 1
+        AND
+        m.mission_date = #{date}
     </select>
 
     <select id="findPostsByCompanion" resultMap="postRequestMap">
@@ -198,7 +200,6 @@
         <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
             #{companionId}
         </foreach>
-        AND DAY(m.mission_date) = 1
     </select>
 
     <select id="showPostDetail" parameterType="long" resultMap="postRequestMap">
@@ -209,6 +210,7 @@
         p.like_count,
         p.mission_id,
         p.written_datetime,
+        u.user_id,
         u.nickname,
         m.mission_date,
         mt.theme_name AS pri_theme_name,
@@ -234,6 +236,7 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.post_id = #{post_id}
+        LIMIT 1
     </select>
 
     <select id="findTodayPost" resultType="com.banbanmoomani.memilog.DTO.todayPostDTO">
@@ -301,4 +304,53 @@
         WHERE
              DATE(written_datetime) = CURDATE()
     </select>
+    <select id="updateFile" parameterType="_int" resultType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        SELECT
+            src_url
+        FROM
+            FILE
+        WHERE
+            post_id = #{postId}
+    </select>
+    <select id="findMainFile" parameterType="int" resultType="string">
+        SELECT
+        src_url
+        FROM
+        FILE
+        WHERE
+        post_id = #{postId}
+        AND picture_order = 1
+    </select>
+    <insert id="addImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        INSERT
+        INTO
+        FILE (
+            post_id,
+            src_url,
+            picture_order
+        )
+        VALUES
+        (
+            #{post_id},
+            #{src_url},
+            #{picture_order}
+        )
+    </insert>
+
+    <update id="updateImageOrder" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        UPDATE
+            FILE
+        SET
+            picture_order = #{picture_order}
+        WHERE
+            post_id = #{post_id} AND src_url = #{src_url}
+    </update>
+    <delete id="deleteImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
+        DELETE
+        FROM
+            FILE
+        WHERE
+            post_id = #{post_id} AND src_url = #{src_url}
+    </delete>
+
 </mapper>

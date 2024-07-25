@@ -1,15 +1,13 @@
-.container {
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 5vh;
-}
-
 .user-container {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     margin: 20px;
+}
+
+.user-container * {
+    font-family: 'Yeon Sung', sans-serif;
 }
 
 .user-profile {
@@ -35,10 +33,9 @@
 }
 
 .user-profile p {
-    margin-top: 10px;
     position: absolute;
-    bottom: 15px;
-    left: 20px;
+    bottom: -5px;
+    left: 30px;
     font-size: 20px;
 }
 
@@ -74,6 +71,28 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     border-radius: 10px;
     text-align: center;
+    font-size: larger;
+}
+
+#profilePicModal .modal-content {
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    }
+
+#profilePicModal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 20px;
 }
 
 #deleteModal .modal-content {
@@ -153,7 +172,7 @@
 .modal-content p {
     text-align: left;
     margin-left: 20px;
-    line-height: 2.0;
+    line-height: 1.5;
 }
 
 .modal-content input {
@@ -221,6 +240,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: medium;
 }
 
 .change-profile-button:hover {
@@ -242,6 +262,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: medium;
 }
 
 .modal-footer button:hover {
@@ -263,6 +284,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: medium;
 }
 
 .form-footer button:hover {
@@ -351,8 +373,8 @@ form {
 
 .posts {
     display: flex;
-    margin: 0 auto 80px;
-    width: 1300px;
+    margin: 20px 129px;
+    width: auto;
     justify-content: center;
 }
 
@@ -374,9 +396,10 @@ form {
     border: none;
     outline: none;
     text-align: left;
-    font-size: large;
+    font-size: larger;
     cursor: pointer;
     transition: 0.3s;
+    font-family: "Yeon Sung";
 }
 
 .posts .mydiary-menu-bar button:hover {
@@ -388,13 +411,19 @@ form {
 }
 
 .posts #post-card-container {
-    padding: 20px;
+    padding: 16px;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 1000px;
     height: 400px;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.posts #post-card-container ::-webkit-scrollbar {
+    display: none;
 }
 
 .posts .tabcontent{
@@ -443,6 +472,7 @@ form {
 .date-selector {
     width: 50px;
     height: 360px;
+    overflow: hidden;
     overflow-y: scroll;
     margin-left: 20px;
     background-color: #f9f9f9;
@@ -455,6 +485,17 @@ form {
     list-style: none;
     padding: 0;
     margin: 10px;
+    font-size: larger;
+    font-family: "Yeon Sung";
+}
+
+.date-selector ::-webkit-scrollbar {
+    display: none;
+}
+
+.date-selector {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .date-selector ul li {

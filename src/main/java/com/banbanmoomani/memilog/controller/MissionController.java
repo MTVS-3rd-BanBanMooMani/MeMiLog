@@ -4,9 +4,11 @@ import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.PostService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,6 +46,7 @@ public class MissionController {
     // 모든 미션 보기
     @GetMapping("/mission")
     public String allMission() {
+        System.out.println("=======모든미션");
         return "/main/allview";
     }
 
@@ -70,14 +73,16 @@ public class MissionController {
         List<MissionDTO> missions = missionService.findAllMission();
         model.addAttribute("missions", missions);
 
+        System.out.println("==============모든 미션");
         missions.forEach(System.out::println);
         return "main/themeTest";
     }
 
-    @GetMapping("/theme")
-    public String findMissionsByTheme(@RequestParam(name = "word", required = false) String word,
-                                      @RequestParam(name = "type", required = false) String type,
-                                      Model model) {
+    @GetMapping( "/theme")
+    @ResponseBody
+    public ResponseEntity<?> findMissionsByTheme(@RequestParam(name = "word", required = false) String word,
+                                                 @RequestParam(name = "type", required = false) String type,
+                                                 Model model) {
 
         System.out.println("keyword = " + word);
         System.out.println("themeTypes = " + type);
@@ -95,10 +100,12 @@ public class MissionController {
         List<MissionDTO> missions;
 
         missions = missionService.findMissionsBySearchCriteria(missionSearhCriteria);
-        model.addAttribute("missions", missions);
+//        model.addAttribute("missions", missions);
 
+        System.out.println("=======미션 조회=======");
         missions.forEach(System.out::println);
 
-        return "/main/themeTest";
+        return  ResponseEntity.ok(missions);
     }
+
 }
