@@ -53,13 +53,16 @@
                         class="modal-mission-img"
                         src="../../document/img/banner.jpg"
                 />
-                <div th:text="${formattedDate}"></div>
-                <div th:text="${posts[0].mission_content}"></div>
+<!--                <div th:text="${formattedDate}"></div>-->
+<!--                <div th:text="${posts[0].mission_content}"></div>-->
+                <div>날짜</div>
+                <div>미션</div>
             </div>
             <div class="modal-mission-filter-container">
-                <form id="companionForm" action="/post/companion" method="get" class="category-box">
+                <form id="companionForm" action="/post/bymission" method="get" class="category-box">
                     <span class="category-title">누구와</span>
-                    <input type="hidden" id="companionType" name="type">
+                    <input type="hidden" id="companionType" name="type"/>
+                    <input type="hidden" id="date" name="date" th:value="${date}"/>
                     <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">친구</button>
                     <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">가족</button>
                     <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">학교</button>

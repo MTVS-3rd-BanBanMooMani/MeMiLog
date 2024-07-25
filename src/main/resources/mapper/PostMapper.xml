@@ -164,7 +164,7 @@
         m.mission_date = #{date}
     </select>
 
-    <select id="findPostsByCompanion" resultMap="postRequestMap">
+    <select id="findPostsByCompanion" parameterType="com.banbanmoomani.memilog.DTO.post.PostSearchCriteria" resultMap="postRequestMap">
         SELECT
         p.post_id,
         m.mission_content,
@@ -197,9 +197,11 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.companion_id IN
-        <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
+        <foreach item="companionId" collection="companionTypes" open="(" separator="," close=")">
             #{companionId}
         </foreach>
+        AND
+        m.mission_date = #{date}
     </select>
 
     <select id="showPostDetail" parameterType="long" resultMap="postRequestMap">

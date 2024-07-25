@@ -52,7 +52,8 @@ async function submitForm() {
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const companionTypes = params.get('type');
-  if (companionTypes) {
+  const date = params.get('date');
+  if (companionTypes && date) {
     const typesArray = companionTypes.split(',');
     typesArray.forEach(type => {
       const button = document.querySelector(`button[value="${type}"]`);
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addValue(button, type);
       }
     })
+    document.getElementById('date').value = date;
   }
 })
 
@@ -155,13 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
   }
-
-  // photoDivs.forEach((photoDiv) => {
-  //   photoDiv.addEventListener("click", function () {
-  //     postModal.style.display = "block";
-  //     updateArrows();
-  //   });
-  // });
 
   closePostModalBtn.addEventListener("click", function () {
     postModal.style.display = "none";
