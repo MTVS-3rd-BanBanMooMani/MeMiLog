@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="~{/fragments/mainHeader :: header}"></div>
+    <div th:replace="~{fragments/mainHeader :: header}"></div>
     <form action="/post/create" method="post" enctype="multipart/form-data">
         <input type="hidden" name="post_id" th:value="${postId}"/>
         <div class="middle-container">
@@ -91,7 +91,7 @@
         </div>
         <div class="file-inputs" style="display: none;"></div>
     </form>
-    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+    <div th:replace="~{fragments/mainFooter :: footer}"></div>
 </div>
 <script src="../../static/document/js/post.js" th:src="@{/document/js/post.js}"></script>
 </body>
