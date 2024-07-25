@@ -18,6 +18,7 @@
         FROM FILE
         WHERE type = 'post'
         AND post_id = #{post_id}
+
     </select>
     <update id="updateFile">
         UPDATE FILE
@@ -39,23 +40,9 @@
         WHERE user_id = #{user_id}
         AND type = #{type}
     </update>
-    <insert id="insertFile">
-        INSERT INTO FILE
-        (
-            src_url,
-            type,
-            post_id,
-            user_id,
-            picture_order
-        )
-        VALUES
-        (
-            #{src_url},
-            #{type},
-            #{post_id},
-            #{user_id},
-            #{picture_order}
-        )
+    <insert id="insertFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        INSERT INTO FILE (src_url, post_id, picture_order, user_id, type)
+        VALUES (#{src_url}, #{post_id}, #{picture_order}, #{user_id}, #{type})
     </insert>
 
     <insert id="insertMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
@@ -78,6 +65,11 @@
         SET src_url = #{src_url}
         WHERE mission_id = #{mission_id}
     </update>
+    <delete id="deleteFileByIdAndUserId" parameterType="map">
+        DELETE FROM FILE
+        WHERE picture_id = #{picture_id}
+        AND user_id = #{user_id}
+    </delete>
 
     <select id="selectFileIdsByPostId" parameterType="int" resultType="int">
         SELECT picture_id
@@ -87,12 +79,40 @@
 
     <delete id="deleteFileById" parameterType="int">
         DELETE FROM FILE
-        WHERE picture_id = #{picture_id}
+        WHERE picture_id = #{fileId}
     </delete>
-
+    <select id="selectFileIdsByPostIdAndUserId" parameterType="map" resultType="int">
+    SELECT picture_id
+    FROM FILE
+    WHERE post_id = #{post_id}
+    AND user_id = #{user_id}
+    </select>
     <insert id="getFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
-        INSERT INTO FILE (src_url, post_id, picture_order)
-        VALUES (#{src_url}, #{post_id}, #{picture_order})
+        INSERT
+        INTO
+        FILE
+        (
+            src_url,
+            post_id,
+            picture_order,
+            type,user_id
+        )
+        VALUES
+        (
+            #{src_url},
+            #{post_id},
+            #{picture_order},
+            #{type},
+            #{user_id}
+        )
     </insert>
+    <update id="updatePictureOrder" parameterType="map">
+        UPDATE FILE
+        SET picture_order = #{order}
+        WHERE src_url = #{srcUrl}
+        AND user_id = #{userId}
+        AND post_id = #{postId}
+        AND type = 'post'
+    </update>
 </mapper>
 

@@ -1,36 +1,29 @@
 package com.banbanmoomani.memilog.service;
 
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.IOException;
 
 @Service
 public class FileStorageService {
 
-    private final Path fileStorageLocation;
+    private final Storage storage = StorageOptions.getDefaultInstance().getService();
 
-    public FileStorageService() {
-        this.fileStorageLocation = Paths.get("path/to/your/upload/dir")
-                .toAbsolutePath().normalize();
-        try {
-            Files.createDirectories(this.fileStorageLocation);
-        } catch (Exception ex) {
-            throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
-        }
+    public String saveFile(MultipartFile file, Integer postId) throws IOException {
+        String fileExtension = getFileExtension(file.getOriginalFilename());
+        String fileName = postId + "-" + System.currentTimeMillis() + "." + fileExtension;
+        BlobId blobId = BlobId.of("memilog", fileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(file.getContentType()).build();
+        storage.create(blobInfo, file.getInputStream());
+        return "https://storage.googleapis.com/memilog/" + fileName;
     }
 
-    public String saveFile(MultipartFile file) {
-        try {
-            String fileName = file.getOriginalFilename();
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return targetLocation.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException("Could not store file " + file.getOriginalFilename() + ". Please try again!", ex);
-        }
+    private String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

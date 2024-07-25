@@ -7,6 +7,7 @@ import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.service.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -164,39 +165,54 @@ public class PostController {
                                    @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
                                    @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
                                    @RequestParam(name = "post_id") Integer post_id,
+                                   @RequestParam(name = "imageOrder", required = false) String imageOrder, // 새로운 순서값
                                    HttpSession session,
-                                   RedirectAttributes rttr) {
+                                   RedirectAttributes rttr) throws IOException {
         System.out.println("Received postId: " + post_id);
         System.out.println("Received oldFile1: " + oldFile1);
         System.out.println("Received newFile1: " + newFile1);
+        System.out.println("imageOrder = " + imageOrder);
+
+        Object user_id = session.getAttribute("user_id");
+        if (user_id == null) {
+            rttr.addFlashAttribute("failMessage", "사용자 정보가 없습니다.");
+            return "redirect:/post/bymission";
+        }
+
+        Integer userId = (Integer) user_id;
+        post.setUser_id(userId);
 
         Integer[] oldFiles = {oldFile1, oldFile2, oldFile3, oldFile4, oldFile5};
         MultipartFile[] newFiles = {newFile1, newFile2, newFile3, newFile4, newFile5};
 
+
         // 기존 파일 삭제 로직
-        List<Integer> currentFileIds = postService.getFileIdsByPostId(post_id);
+        List<Integer> currentFileIds = postService.getFileIdsByPostId(post_id, userId);
         for (Integer fileId : currentFileIds) {
             if (!Arrays.asList(oldFiles).contains(fileId)) {
-                postService.deleteFileById(fileId);
+                postService.deleteFileById(fileId, userId);
             }
         }
 
         // 새로운 파일 추가 로직
+        int existingFileCount = currentFileIds.size();
         for (int i = 0; i < newFiles.length; i++) {
             MultipartFile newFile = newFiles[i];
             if (newFile != null && !newFile.isEmpty()) {
-                String newFileUrl = fileStorageService.saveFile(newFile);
+                String newFileUrl = fileStorageService.saveFile(newFile, post_id); // URL 생성 및 파일 저장
                 UpdateFileDTO newFileDTO = new UpdateFileDTO();
                 newFileDTO.setSrc_url(newFileUrl);
                 newFileDTO.setPost_id(post_id);
-                newFileDTO.setPicture_id(i + 1);
+                newFileDTO.setPicture_order(existingFileCount + i + 1); // 기존 파일 수에 따른 순서 지정
+                newFileDTO.setUser_id(userId); // 사용자 ID 설정
+                System.out.println(userId);
+                newFileDTO.setType("post"); // type 필드 설정
+                System.out.println(post);
                 postService.saveFile(newFileDTO);
             }
         }
 
         // 업데이트된 포스트 저장
-        Object user_id = session.getAttribute("user_id");
-        post.setUser_id((int) user_id);
         try {
             postService.updatePost(post);
             rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
@@ -206,7 +222,6 @@ public class PostController {
 
         return "redirect:/post/bymission";
     }
-
 
     @GetMapping("like")
     @ResponseBody

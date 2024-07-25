@@ -132,7 +132,7 @@ public class PostService {
         postMapper.addImage(imageOrderDTO);
     }
 
-    public List<Integer> getFileIdsByPostId(int postId) {
+    public List<Integer> getFileIdsByPostId(int postId, Integer userId) {
         System.out.println("getFileIdsByPostId = " + postId);
         List<Integer> integerList = fileMapper.selectFileIdsByPostId(postId);
         for (Integer fileId : integerList) {
@@ -141,11 +141,15 @@ public class PostService {
         return integerList;
     }
 
-    public void deleteFileById(int fileId) {
+    public void deleteFileById(int fileId, Integer userId) {
         fileMapper.deleteFileById(fileId);
     }
 
     public void saveFile(UpdateFileDTO updateFileDTO) {
         fileMapper.getFile(updateFileDTO);
+    }
+
+    public void updatePictureOrderBySrcUrl(String srcUrl, Integer order, Integer userId, Integer postId) {
+        fileMapper.updatePictureOrder(srcUrl, order, userId, postId);
     }
 }

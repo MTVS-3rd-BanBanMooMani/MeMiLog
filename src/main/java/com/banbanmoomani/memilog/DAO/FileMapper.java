@@ -22,4 +22,6 @@ public interface FileMapper {
     void deleteFileById(@Param("fileId") int fileId);
 
     void getFile(UpdateFileDTO updateFileDTO);
+
+    void updatePictureOrder(@Param("srcUrl") String srcUrl, @Param("order") int order, @Param("userId") int userId, @Param("postId") int postId);
 }
