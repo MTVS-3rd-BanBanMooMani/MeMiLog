@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <label for="topicTag2">부태그</label>
                                     <select class="form-control" id="topicTag2">
-                                        <option value="" disabled selected>태그를 선택하세요</option>
+                                        <option value="" disabled selected>부태그를 선택하세요</option>
                                         <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
@@ -199,15 +199,15 @@
                                     <label for="modifyTopicTag1">주태그</label>
                                     <select class="form-control" id="modifyTopicTag1">
                                         <option value="" disabled selected>주태그를 선택하세요</option>
-                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeName}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="modifyTopicTag2">부태그</label>
                                     <select class="form-control" id="modifyTopicTag2">
-                                        <option value="" disabled selected>주태그를 선택하세요</option>
-                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                        <option value="" disabled selected>부태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeName}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
 
