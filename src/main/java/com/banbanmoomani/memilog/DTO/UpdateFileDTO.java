@@ -1,12 +1,22 @@
 package com.banbanmoomani.memilog.DTO;
 
 public class UpdateFileDTO {
+    private int pictureId;
     private String src_url;
 
     public UpdateFileDTO() {}
 
-    public UpdateFileDTO(String src_url) {
+    public UpdateFileDTO(int pictureId, String src_url) {
+        this.pictureId = pictureId;
         this.src_url = src_url;
+    }
+
+    public int getPictureId() {
+        return pictureId;
+    }
+
+    public void setPictureId(int pictureId) {
+        this.pictureId = pictureId;
     }
 
     public String getSrc_url() {
@@ -20,7 +30,8 @@ public class UpdateFileDTO {
     @Override
     public String toString() {
         return "UpdateFileDTO{" +
-                "src_url='" + src_url + '\'' +
+                "pictureId=" + pictureId +
+                ", src_url='" + src_url + '\'' +
                 '}';
     }
 }

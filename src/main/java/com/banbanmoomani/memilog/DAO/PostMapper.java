@@ -51,4 +51,6 @@ public interface PostMapper {
     void deleteImageOrder(ImageOrderDTO imageOrderDTO);
 
     void addImage(ImageOrderDTO imageOrderDTO);
+
+
 }
