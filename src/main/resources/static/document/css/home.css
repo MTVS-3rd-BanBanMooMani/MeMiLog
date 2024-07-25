@@ -5,7 +5,7 @@
 }
 
 .search-bar-container {
-    margin: 55px auto 5px;
+    margin: 20px auto;
     height: 40px;
     width: 570px;
     border: solid 1px;
@@ -46,22 +46,24 @@
 }
 
 .mission-container .mission-img {
-    width: 80.5%;
+    width: 82.5%;
     height: 200px;
     margin-top: 30px;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .mission-container div:nth-of-type(1) {
-    left: 12.5%;
+    left: 11%;
     top: 25%;
     position: absolute;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-family: "Yeon Sung";
     font-weight: 400;
     line-height: 36px;
     word-wrap: break-word;
+    overflow: hidden;
     text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
 }
 
@@ -73,7 +75,7 @@
     text-align: center;
     color: white;
     font-size: 3rem;
-    font-family: "Black Han Sans";
+    font-family: "EF_jejudoldam";
     font-weight: 400;
     word-wrap: break-word;
     text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
@@ -91,25 +93,25 @@
 }
 
 .today-container {
-    margin: 20px auto;
+    margin: 30px auto 50px;
     width: 90%;
     display: flex;
     flex-direction: column;
 }
 
 .today-container .today-label {
-    padding: 1.1vw 1.1vw 0;
+    padding: 1.1vw 1.1vw;
     display: flex;
     flex-direction: row;
-    width: 68vw;
+    width: 82vw;
     margin: auto;
 }
 
 .today-container .today-label p{
     text-align: left;
-    margin-left: 5px;
+    margin-left: 45px;
+    margin-bottom: 5px;
     flex-grow: 1;
-    margin-top: 1vh;
     font-family: "Yeon Sung";
     font-size: 20px;
 }
@@ -125,7 +127,7 @@
     display: flex;
     align-items: center;
     padding: 1vw;
-    height: 200px;
+    height: 155px;
 }
 
 .today-container .today-photo-container > img {
@@ -138,8 +140,8 @@
     box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
     padding: 5px;
     border: 1px rgba(0, 0, 0, 0.15);
-    height: 200px;
-    width: 138px;
+    height: 152px;
+    width: 117px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,7 +196,7 @@
 
 
 .random-container {
-    margin: 10px auto 90px;
+    margin: 0 auto 100px;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -210,7 +212,8 @@
 
 .random-container .random-label p {
     text-align: left;
-    margin-left: 50px;
+    margin-left: 45px;
+    margin-bottom: 5px;
     flex-grow: 1;
     font-family: "Yeon Sung";
     font-size: 20px;
