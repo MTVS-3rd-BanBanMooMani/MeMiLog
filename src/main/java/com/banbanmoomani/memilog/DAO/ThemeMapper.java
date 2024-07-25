@@ -11,4 +11,5 @@ public interface ThemeMapper {
 
     List<ThemeDTO> findAllTheme();
 
+    String findThemeById(int id);
 }
