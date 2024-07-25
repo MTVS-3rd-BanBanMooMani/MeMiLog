@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.controller;
 
+import com.banbanmoomani.memilog.DTO.MainTitleDTO;
 import com.banbanmoomani.memilog.DTO.archivePostDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.DTO.todayPostDTO;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -28,8 +31,14 @@ public class MainController {
     public String home(Model model) {
 
         // mission title
-        String missionTitle = missionService.getMissionTitle();
-        model.addAttribute("missionTitle", missionTitle);
+        MainTitleDTO mainTitleDTO = missionService.getMainTitle();
+        model.addAttribute("mainTitleDTO", mainTitleDTO);
+
+        // LocalDate
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월 dd일");
+        String missionDate = today.format(formatter) + "의 미션";
+        model.addAttribute("missionDate", missionDate);
 
         // today post
         List<todayPostDTO> todayPostDTOList = postService.getTodayPostDTOList();
