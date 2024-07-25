@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+
 .middle-container{
     text-align: center;
 }
@@ -59,7 +61,8 @@
     font-family: "Yeon Sung";
     font-weight: 400;
     line-height: 36px;
-    word-wrap: break-word
+    word-wrap: break-word;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
 }
 
 .mission-container div:nth-of-type(2) {
@@ -70,9 +73,10 @@
     text-align: center;
     color: white;
     font-size: 3rem;
-    font-family: "Yeon Sung";
+    font-family: "Black Han Sans";
     font-weight: 400;
-    word-wrap: break-word
+    word-wrap: break-word;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
 }
 
 .mission-container > button {
@@ -243,7 +247,7 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background-color: rgb(165, 165, 165);
-  }
+}
 
 .modal-container .modal-function button {
     background-color: rgba(0, 0, 0, 0);
