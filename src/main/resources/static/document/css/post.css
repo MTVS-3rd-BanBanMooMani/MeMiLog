@@ -1,30 +1,22 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
+@font-face {
+    font-family: 'OwnglyphMoogungChae';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/OwnglyphMoogungChae.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 li {
     list-style: none;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
 .middle-container {
     display: flex;
     justify-content: space-around;
-    padding-top: 12vh;
-    padding-left: 5vw;
-    padding-right: 5vw;
     flex: 1;
     max-width: 1400px;
     width: 100%;
     position: relative;
-    margin: 0 auto;
+    margin: 0 auto 60px;
 }
 
 .left-container {
@@ -47,6 +39,7 @@ li {
 .date {
     color: gray;
     font-size: 1.5rem;
+    font-family: "Yeon Sung";
 }
 
 .category {
@@ -54,12 +47,14 @@ li {
     background: lightgreen;
     border-radius: 4px;
     padding: 0 5px;
+    font-family: "Yeon Sung";
 }
 
 .title {
     font-size: 2.5rem;
-    margin: 20px 0;
+    margin: 20px -55px;
     width: 535px;
+    font-family: "Yeon Sung";
 }
 
 .image-container {
@@ -67,6 +62,8 @@ li {
     width: 522px;
     height: 497px;
     margin-right: 30%;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .image-container img {
@@ -147,12 +144,17 @@ li {
     font-size: 2rem;
     color: gray;
     cursor: pointer;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .note {
     font-weight: bold;
+    font-family: "Gowun Batang";
     color: black;
     font-size: 0.8rem;
+    margin-right: 45px;
+    text-align: right;
 }
 
 .text-area textarea {
@@ -162,7 +164,8 @@ li {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 2rem;
+    font-family: "OwnglyphMoogungChae";
     box-sizing: border-box;
 }
 
@@ -174,20 +177,21 @@ li {
 
 .question {
     margin: 20px 0;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    font-family: "Yeon Sung";
+    text-align: left;
 }
 
 .main-box .icon-box {
     display: flex;
     justify-content: space-between;
     width: 70%;
-    margin: 0 10px;
-    margin-top: 1rem;
+    margin-left: -36px;
 }
 
 .icon1 {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .answers {
@@ -219,12 +223,9 @@ li {
     border-radius: 0 10px 10px 0;
 }
 
-.answer {
-    padding: 10px 20px;
-    background: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    cursor: pointer;
+.answers button{
+    font-family: "Yeon Sung";
+    font-size: large;
 }
 
 .answer:hover{
@@ -245,6 +246,11 @@ li {
     margin-top: 55px;
     width: 100%;
     justify-content: flex-end;
+}
+
+.buttons button{
+    font-family: "Yeon Sung";
+    font-size: large;
 }
 
 .submit-btn {
