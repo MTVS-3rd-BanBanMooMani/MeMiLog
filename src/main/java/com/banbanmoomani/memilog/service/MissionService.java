@@ -83,14 +83,7 @@ public class MissionService {
     }
 
     public void updateMission(MissionDTO missionDTO) {
-        String missionDate = missionDTO.getMissionDate();
-        MissionDTO findMission = missionMapper.findMissionByDate(missionDate);
-        if (findMission == null) {
-            missionMapper.updateMission(missionDTO);
-        } else {
-            throw new IllegalArgumentException("mission already exists");
-        }
-
+        missionMapper.updateMission(missionDTO);
     }
 
     public MainTitleDTO getMainTitle() {

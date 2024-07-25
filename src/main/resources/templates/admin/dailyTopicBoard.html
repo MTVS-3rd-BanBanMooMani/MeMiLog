@@ -122,7 +122,7 @@
                 <div id="createTopicModal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title" id="createTopicModal">데일리미션 작성</h2>
+                            <h2 class="modal-title">데일리미션 작성</h2>
                             <span class="close" onclick="closeModal('createTopicModal')">&times;</span>
                         </div>
 
@@ -155,12 +155,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="topicImg" style="font-size: smaller;">배너 이미지</label>
+                                    <label for="bannerImage" style="font-size: smaller;">배너 이미지</label>
                                     <input type="file" class="form-control-file" id="bannerImage">
                                 </div>
                             </form>
                         </div>
-
                         <div class="modal-footer">
                             <button class="btn btn-primary mb-2" onclick="uploadTopic()">저장</button>
                         </div>
@@ -185,7 +184,7 @@
                 <div id="modifyTopicModal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title" id="createTopicModal"><span id="modifyTopicModalDate"></span>의 미션 수정</h2>
+                            <h2 class="modal-title"><span id="modifyTopicModalDate"></span>의 미션 수정</h2>
                             <span class="close" onclick="closeModal('modifyTopicModal')">&times;</span>
                         </div>
                         <div class="modal-body">
@@ -212,10 +211,10 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="modifyTopicDate">게시일</label>
-                                    <input type="date" class="form-control" id="modifyTopicDate">
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label for="modifyTopicDate">게시일</label>-->
+<!--                                    <input type="date" class="form-control" id="modifyTopicDate">-->
+<!--                                </div>-->
 
                                 <div class="form-group">
                                     <label for="modifyBannerImage" style="font-size: smaller;">배너 이미지</label>
@@ -274,7 +273,6 @@
         const tag1 = $(this).find("td:eq(2)").text();
         const tag2 = $(this).find("td:eq(3)").text();
         const date = $(this).find("td:eq(4)").text();
-        const image = $(this).find("서버에서 이미지 가져오기").text();
 
         const [year, month, day] = date.split('-');
         const displayDate = `${month}월 ${day}일의 미션`;
@@ -290,13 +288,11 @@
             <p><strong>주제:</strong> ${topic}</p>
             <p><strong>태그:</strong> ${tag1}</p>
             <p><strong>태그:</strong> ${tag2}</p>
-            <strong>배너 이미지:</strong><br>
-            <p>${image}</p>
         `;
 
         document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
 
-        selectedTopic = { topicId, topic, tag1, tag2, date, image };
+        selectedTopic = { topicId, topic, tag1, tag2, date };
         openModal('topicDetailModal');
     });
 
@@ -306,6 +302,7 @@
         let date = document.getElementById('topicDate').value;
         let topicTag1 = document.getElementById('topicTag1').value;
         let topicTag2 = document.getElementById('topicTag2').value;
+        let bannerImage = document.getElementById('bannerImage').files[0];
 
         if(!title || !date) {
             alert("모든 필드를 입력해주세요.");
@@ -317,21 +314,40 @@
             missionContent: title,
             missionDate: date,
             priThemeId: parseInt(topicTag1),
-            subThemeId :parseInt(topicTag2)
+            subThemeId: parseInt(topicTag2)
         };
-        console.log(title,date,parseInt(topicTag1),parseInt(topicTag2))
 
-
-        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        // 첫 번째 API로 데이터 전송
         $.ajax({
             type: 'POST',
             url: '/admin/dailyTopicBoard',
             contentType: 'application/json',
             data: JSON.stringify(missionData),
             success: function(response) {
-                alert('오늘의 미션이 등록되었습니다.');
-                closeModal('createTopicModal');
-                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                // 첫 번째 요청이 성공하면 mission_id를 얻습니다.
+                let missionId = response
+
+                // FormData 객체를 생성하고 데이터 추가
+                let formData = new FormData();
+                formData.append('mission_id', missionId);
+                formData.append('file', bannerImage);
+
+                // 두 번째 API로 파일 업로드
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/missionImage',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(response) {
+                        alert('오늘의 미션이 등록되었습니다.');
+                        closeModal('createTopicModal');
+                        location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                    },
+                    error: function(error) {
+                        alert('이미지 업로드에 실패했습니다.');
+                    }
+                });
             },
             error: function(error) {
                 alert('미션 등록에 실패했습니다. 다시 입력해주세요');
@@ -346,18 +362,17 @@
         document.getElementById('modifyTopic').value = selectedTopic.topic;
         document.getElementById('modifyTopicTag1').value = selectedTopic.tag1;
         document.getElementById('modifyTopicTag2').value = selectedTopic.tag2;
-        document.getElementById('modifyTopicDate').value = selectedTopic.date;
-        console.log(selectedTopic.topicId,selectedTopic.topic, selectedTopic.tag1, selectedTopic.tag2, selectedTopic.date)
-        // 수정할 주제 ID를 숨겨진 필드에 저장합니다.
+
     }
 
 
 
     function uploadModifiedTopic() {
         let title = document.getElementById('modifyTopic').value;
-        let date = document.getElementById('modifyTopicDate').value;
+        let date = selectedTopic.date;
         let topicTag1 = document.getElementById('modifyTopicTag1').value;
         let topicTag2 = document.getElementById('modifyTopicTag2').value;
+        let bannerImage = document.getElementById('modifyBannerImage').files[0];
         let topicId = selectedTopic.topicId;
 
         if (!title || !date) {
@@ -374,20 +389,40 @@
             subThemeId: parseInt(topicTag2)
         };
 
-        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+        // 첫 번째 API로 데이터 전송
         $.ajax({
             type: 'POST',
             url: '/admin/updateMission',
             contentType: 'application/json',
             data: JSON.stringify(modifiedMissionData),
-            success: function (response) {
-                alert('오늘의 미션이 수정되었습니다.');
-                closeModal('modifyTopicModal');
-                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+            success: function(response) {
+                // 첫 번째 요청이 성공하면 mission_id를 얻습니다.
+                // let missionId = response
+
+                // FormData 객체를 생성하고 데이터 추가
+                let formData = new FormData();
+                formData.append('mission_id', topicId);
+                formData.append('file', bannerImage);
+
+                // 두 번째 API로 파일 업로드
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/updateMissionImage',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(response) {
+                        alert('오늘의 미션이 수정되었습니다.');
+                        closeModal('modifyTopicModal');
+                        location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
+                    },
+                    error: function(error) {
+                        alert('이미지 업로드에 실패했습니다.');
+                    }
+                });
             },
-            error: function (error) {
+            error: function(error) {
                 alert('미션 수정에 실패했습니다. 다시 입력해주세요');
-                console.error(error);
             }
         });
     }
