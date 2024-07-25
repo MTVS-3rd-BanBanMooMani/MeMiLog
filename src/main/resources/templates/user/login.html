@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/document/css/layout.css}">
 </head>
 <body>
-<div th:replace="~{/fragments/mainHeader :: header}"></div>
+<div th:replace="~{fragments/mainHeader :: header}"></div>
 <div class="container">
     <div class="middle-container">
         <div class="form-container">
@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div th:replace="~{/fragments/mainFooter :: footer}"></div>
+<div th:replace="~{fragments/mainFooter :: footer}"></div>
 <script>
     var failMessage=`[[${failMessage}]]`;
     if(failMessage) alert(failMessage);
