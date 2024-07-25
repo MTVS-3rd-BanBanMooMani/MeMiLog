@@ -148,17 +148,6 @@
         )
     </insert>
 
-    <select id="getMissionTitle" resultType="string">
-        SELECT
-            mission_content
-        FROM
-            MISSION
-        WHERE
-            DATE_FORMAT(mission_date, '%Y-%m-%d') = CURDATE()
-        LIMIT 1
-    </select>
-
-
     <select id="countMissions" resultType="int" parameterType="String">
         SELECT
         COUNT(*)

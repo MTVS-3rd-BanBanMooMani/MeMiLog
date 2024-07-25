@@ -38,8 +38,6 @@ public interface MissionMapper {
 
     MissionDTO findMissionByDate(String missionDate);
 
-    String getMissionTitle();
-
     List<MissionDTO> findMissionsByWord(String wordTypes);
 
     List<MissionDTO> findMissionByCriteria(MissionSearhCriteria missionSearhCriteria);

@@ -64,9 +64,6 @@ public class MissionService {
     public List<MissionDTO> findMissionsBySearchCriteria(MissionSearhCriteria missionSearhCriteria) {
         return missionMapper.findMissionByCriteria(missionSearhCriteria);
     }
-    public String getMissionTitle() {
-        return missionMapper.getMissionTitle();
-    }
     // mission 전체조회 paging
 
     public PageResult<MissionDTO> findAllMissionPaging(int pageNum, int pageSize, String content) {
