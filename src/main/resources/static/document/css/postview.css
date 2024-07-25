@@ -131,6 +131,8 @@
 }
 
 .modal-mission-container .modal-mission-img {
+    /*margin-left: 95px;*/
+    /*margin-right: 95px;*/
     width: 1200px;
     height: 200px;
 }

@@ -34,6 +34,12 @@
         <result property="src_url" column="src_url"/>
     </resultMap>
 
+    <resultMap id="bannerRequestMap" type="com.banbanmoomani.memilog.DTO.MainTitleDTO">
+        <id property="mission_id" column="mission_id" />
+        <result property="mission_content" column="mission_content" />
+        <result property="src_url" column="src_url"/>
+    </resultMap>
+
     <select id="findAllPost" resultMap="postResultMap">
         SELECT
             p.post_id,
@@ -164,7 +170,7 @@
         m.mission_date = #{date}
     </select>
 
-    <select id="findPostsByCompanion" resultMap="postRequestMap">
+    <select id="findPostsByCompanion" parameterType="com.banbanmoomani.memilog.DTO.post.PostSearchCriteria" resultMap="postRequestMap">
         SELECT
         p.post_id,
         m.mission_content,
@@ -197,9 +203,11 @@
         FILE f ON p.post_id = f.post_id
         WHERE
         p.companion_id IN
-        <foreach item="companionId" collection="companionIds" open="(" separator="," close=")">
+        <foreach item="companionId" collection="companionTypes" open="(" separator="," close=")">
             #{companionId}
         </foreach>
+        AND
+        m.mission_date = #{date}
     </select>
 
     <select id="showPostDetail" parameterType="long" resultMap="postRequestMap">
@@ -378,4 +386,14 @@
     </insert>
 
 
+    <select id="showBanner" parameterType="String" resultMap="bannerRequestMap">
+        SELECT
+        m.mission_id
+        , mission_content
+        , f.src_url
+        FROM MISSION m
+        LEFT JOIN FILE f ON m.mission_id = f.mission_id
+        WHERE
+        m.mission_date = #{date}
+    </select>
 </mapper>

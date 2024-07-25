@@ -78,5 +78,25 @@
         SET src_url = #{src_url}
         WHERE mission_id = #{mission_id}
     </update>
+
+    <select id="getProfileUrl" parameterType="long" resultType="string">
+        SELECT src_url
+        FROM FILE
+        WHERE user_id = (
+        SELECT user_id
+        FROM FILE
+        WHERE post_id = #{post_id}
+        LIMIT 1
+        )
+        AND type = 'profile'
+    </select>
+
+    <select id="getPostUrl" parameterType="long" resultType="string">
+        SELECT src_url
+        FROM FILE
+        WHERE post_id = #{post_id}
+        AND type = 'post'
+    </select>
+
 </mapper>
 

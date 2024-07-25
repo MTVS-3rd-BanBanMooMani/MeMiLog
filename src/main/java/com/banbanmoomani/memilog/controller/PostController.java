@@ -6,6 +6,7 @@ import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/post")
@@ -229,15 +227,51 @@ public class PostController {
         return "main/allview";
     }
 
-    // 오늘 mission에 해당하는 post 보기
+    @PostMapping(value = "/bymission", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req) {
+        Long post_id = req.get("postId");
+        System.out.println("post_id = " + post_id);
+
+        PostRequestDTO postDetail = postService.showPostDetail(post_id);
+        System.out.println("=============포스트 디테일=============");
+        System.out.println(postDetail);
+
+        String profile_img = fileService.getProfileUrl(post_id);
+        System.out.println("========프로필 img===============");
+        System.out.println("profile_img = " + profile_img);
+
+        List<String> postUrl = fileService.getPostUrl(post_id);
+        System.out.println("=======포스트 img=======");
+        System.out.println("postUrl = " + postUrl);
+
+        postDetail.setProfile_img(profile_img);
+        postDetail.setPostUrl(postUrl);
+
+        return postDetail;
+
+    }
+
     @GetMapping("/bymission")
     public String findAllPostOnMissionByDate(Model model,
-                                             @RequestParam(name = "date",required = false)String date) {
-        if(date != null) {
-            System.out.println(date);
+                                             @RequestParam(name = "date",required = false)String date,
+                                             @RequestParam(name = "type", required = false) String companionTypes) {
 
-            List<PostRequestDTO> posts = postService.findAllPostOnMissionByDate(date);
+        System.out.println("date = " + date);
+        System.out.println("companionTypes = " + companionTypes);
+
+        List<PostRequestDTO> posts = new ArrayList<>();
+
+        if (date != null) {
+
+            MainTitleDTO mainTitleDTO = postService.showBanner(date);
+            System.out.println("===============banner 정보");
+            System.out.println("mainTitleDTO = " + mainTitleDTO);
+            model.addAttribute("bannerInfo", mainTitleDTO);
+
+            posts = postService.findAllPostOnMissionByDate(date);
             model.addAttribute("posts", posts);
+            model.addAttribute("date", date);
             System.out.println("=======날짜별 post 조회");
             posts.forEach(System.out::println);
 
@@ -252,6 +286,20 @@ public class PostController {
                 model.addAttribute("formattedDate", "Invalid date format");
             }
 
+            if (companionTypes != null && !companionTypes.isEmpty()) {
+
+                List<Integer> companionIds = Arrays.stream(companionTypes.split(","))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
+
+                PostSearchCriteria postSearchCriteria = new PostSearchCriteria(date, companionIds);
+
+                posts = postService.findPostsByCompanion(postSearchCriteria);
+                model.addAttribute("posts", posts);
+
+                System.out.println("========누구와 필터 적용 결과");
+                posts.forEach(System.out::println);
+            }
         }
 
         List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
@@ -259,71 +307,8 @@ public class PostController {
         System.out.println("==========report 종류");
         reportCategory.forEach(System.out::println);
 
-//        @RequestParam(name = "post_id", required = false) int post_id
-//        List<PostDTO> postDetail = postService.showPostDetail(post_id);
-//        System.out.println("=======포스트 디테일=============");
-//        System.out.println(postDetail);
-//        System.out.println("post_id = " + post_id);
-
         return "main/postview";
     }
 
-    @PostMapping(value = "/bymission", produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req) {
-        Long post_id = req.get("postId");
-        System.out.println("post_id = " + post_id);
-
-        PostRequestDTO postDetail = postService.showPostDetail(post_id);
-        System.out.println("=============포스트 디테일=============");
-        System.out.println(postDetail);
-
-
-        return postDetail;
-
-    }
-
-
-//    ============================ 연습
-
-    // 오늘 mission에 해당하는 post 보기
-//    @GetMapping("/bymission")
-//    public String findAllPostOnMissionByDate(Model model) {
-//
-//        List<PostDTO> posts = postService.findAllPostOnMissionByDate();
-//        model.addAttribute("post", posts);
-//
-//        System.out.println("====================post");
-//        posts.forEach(System.out::println);
-//
-//        return "main/cateTest";
-//    }
-
-    // 누구와 카테고리 필터 적용
-    @GetMapping("/companion")
-    public String findPostsByCompanion(@RequestParam("type") String companionTypes, Model model) {
-
-        System.out.println("companionTypes = " + companionTypes);
-
-        List<PostRequestDTO> posts;
-
-        if (companionTypes != null && !companionTypes.isEmpty()) {
-            List<Integer> companionIds = Arrays.stream(companionTypes.split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            posts = postService.findPostsByCompanion(companionIds);
-        } else {
-            // 선택한 타입이 없는 경우에는 어떤 걸로 할지
-//            posts = postService.findAllPostOnMissionByDate();
-            return "redirect:/post/bymission";
-        }
-
-        model.addAttribute("posts", posts);
-
-        posts.forEach(System.out::println);
-
-        return "main/postview";
-
-    }
 
 }

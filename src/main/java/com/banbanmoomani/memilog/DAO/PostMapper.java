@@ -1,12 +1,10 @@
 package com.banbanmoomani.memilog.DAO;
 
-import com.banbanmoomani.memilog.DTO.ImageOrderDTO;
-import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
+import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
-import com.banbanmoomani.memilog.DTO.archivePostDTO;
-import com.banbanmoomani.memilog.DTO.todayPostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,7 +22,7 @@ public interface PostMapper {
 
     List<PostRequestDTO> findAllPostOnMissionByDate(String date);
 
-    List<PostRequestDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
+    List<PostRequestDTO> findPostsByCompanion(PostSearchCriteria postSearchCriteria);
 
     PostRequestDTO showPostDetail(Long postId);
 
@@ -52,5 +50,5 @@ public interface PostMapper {
 
     void addImage(ImageOrderDTO imageOrderDTO);
 
-
+    MainTitleDTO showBanner(@Param("date") String date);
 }
