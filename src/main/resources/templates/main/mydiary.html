@@ -9,9 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div th:replace="~{/fragments/mainHeader :: header}"></div>
 <div class="container">
-    <div th:replace="~{/fragments/mainHeader :: header}"></div>
-
     <div class="user-container">
         <div class="user-profile">
             <img th:src="${user.src_url != null && !user.src_url.isEmpty() ? user.src_url : '/document/img/default_profile.png'}"
