@@ -46,23 +46,23 @@
                     <input type="hidden" id="selectedEmotion" name="emotion_id" value="">
                     <div class="main-box">
                         <ul class="icon-box">
-                            <li id="happy" onclick="changeIconColor1('happy', 1)">
+                            <li id="happy" onclick="changeIconColor('happy', 1)">
                                 <img src="/document/img/happy.png" alt="happy" class="icon1" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
                                 <span th:text="${emotions == 'happy' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="cool" onclick="changeIconColor1('cool', 2)">
+                            <li id="cool" onclick="changeIconColor('cool', 2)">
                                 <img src="/document/img/cool.png" alt="cool" class="icon1" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
                                 <span th:text="${emotions == 'cool' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="surprised" onclick="changeIconColor1('surprised', 3)">
+                            <li id="surprised" onclick="changeIconColor('surprised', 3)">
                                 <img src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
                                 <span th:text="${emotions == 'surprised' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="soso" onclick="changeIconColor1('soso', 4)">
+                            <li id="soso" onclick="changeIconColor('soso', 4)">
                                 <img src="/document/img/soso.png" alt="soso" class="icon1" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
                                 <span th:text="${emotions == 'soso' ? '선택됨' : ''}"></span>
                             </li>
-                            <li id="sad" onclick="changeIconColor1('sad', 5)">
+                            <li id="sad" onclick="changeIconColor('sad', 5)">
                                 <img src="/document/img/sad.png" alt="sad" class="icon1" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
                                 <span th:text="${emotions == 'sad' ? '선택됨' : ''}"></span>
                             </li>
