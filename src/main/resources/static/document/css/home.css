@@ -54,11 +54,11 @@
 }
 
 .mission-container div:nth-of-type(1) {
-    left: 12.5%;
+    left: 11%;
     top: 25%;
     position: absolute;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-family: "Yeon Sung";
     font-weight: 400;
     line-height: 36px;
