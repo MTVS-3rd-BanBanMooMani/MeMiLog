@@ -17,7 +17,7 @@
         SELECT *
         FROM FILE
         WHERE type = 'post'
-        AND post_id = #{postId}
+        AND post_id = #{post_id}
     </select>
     <update id="updateFile">
         UPDATE FILE
@@ -78,5 +78,21 @@
         SET src_url = #{src_url}
         WHERE mission_id = #{mission_id}
     </update>
+
+    <select id="selectFileIdsByPostId" parameterType="int" resultType="int">
+        SELECT picture_id
+        FROM FILE
+        WHERE post_id = #{post_id}
+    </select>
+
+    <delete id="deleteFileById" parameterType="int">
+        DELETE FROM FILE
+        WHERE picture_id = #{picture_id}
+    </delete>
+
+    <insert id="getFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
+        INSERT INTO FILE (src_url, post_id, picture_order)
+        VALUES (#{src_url}, #{post_id}, #{picture_order})
+    </insert>
 </mapper>
 

@@ -18,11 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/post")
@@ -35,8 +32,9 @@ public class PostController {
     private final PostMapper postMapper;
     private final ReportService reportService;
     private final RPTCategoryService rptCategoryService;
+    private final FileStorageService fileStorageService;
 
-    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper, ReportService reportService, RPTCategoryService rptCategoryService) {
+    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper, ReportService reportService, RPTCategoryService rptCategoryService, FileStorageService fileStorageService) {
         this.postService = postService;
         this.missionService = missionService;
         this.emotionService = emotionService;
@@ -45,6 +43,7 @@ public class PostController {
         this.postMapper = postMapper;
         this.reportService = reportService;
         this.rptCategoryService = rptCategoryService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/create")
@@ -113,12 +112,13 @@ public class PostController {
     }
 
     @GetMapping("/update")
-    public String updatePost(@RequestParam("postId") int postId,
+    public String updatePost(@RequestParam(value = "postId", required = false) Integer postId,
                              Model model,
                              HttpSession session,
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         PostDTO post = postService.findPostById(postId);
+        System.out.println("post 1= " + post);
 
         if(post == null || post.getUser_id() != (int)user_id) {
             rttr.addFlashAttribute("failMessage", "수정 권한이 없습니다.");
@@ -163,30 +163,50 @@ public class PostController {
                                    @RequestParam(name = "newFile3", required = false) MultipartFile newFile3,
                                    @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
                                    @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
+                                   @RequestParam(name = "postId") Integer postId,
                                    HttpSession session,
                                    RedirectAttributes rttr) {
-        System.out.println("oldFile1 = " + oldFile1); // oldFile에는 FILE 테이블의 picture_id가 담겨 있음
-        System.out.println("oldFile2 = " + oldFile2); // 기존의 FILE 테이블에서 해당 post_id로 저장된 사진들을 모두 가져온 뒤
-        System.out.println("oldFile3 = " + oldFile3); // 여기 oldFile에 없는 것들을 삭제
-        System.out.println("oldFile4 = " + oldFile4);
-        System.out.println("oldFile5 = " + oldFile5);
-        System.out.println("file1 = " + newFile1); // newFile들은 싹다 insert(null이 아니면)
-        System.out.println("file2 = " + newFile2);
-        System.out.println("file3 = " + newFile3);
-        System.out.println("file4 = " + newFile4);
-        System.out.println("file5 = " + newFile5);
+        System.out.println("Received postId: " + postId);
+        System.out.println("Received oldFile1: " + oldFile1);
+        System.out.println("Received newFile1: " + newFile1);
 
+        Integer[] oldFiles = {oldFile1, oldFile2, oldFile3, oldFile4, oldFile5};
+        MultipartFile[] newFiles = {newFile1, newFile2, newFile3, newFile4, newFile5};
 
-//        Object user_id = session.getAttribute("user_id");
-//        post.setUser_id((int) user_id);
-//        try {
-//            postService.updatePost(post);
-//            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-//        } catch (IllegalArgumentException e) {
-//            rttr.addFlashAttribute("failMessage", e.getMessage());
-//        }
+        // 기존 파일 삭제 로직
+        List<Integer> currentFileIds = postService.getFileIdsByPostId(postId);
+        for (Integer fileId : currentFileIds) {
+            if (!Arrays.asList(oldFiles).contains(fileId)) {
+                postService.deleteFileById(fileId);
+            }
+        }
+
+        // 새로운 파일 추가 로직
+        for (int i = 0; i < newFiles.length; i++) {
+            MultipartFile newFile = newFiles[i];
+            if (newFile != null && !newFile.isEmpty()) {
+                String newFileUrl = fileStorageService.saveFile(newFile);
+                UpdateFileDTO newFileDTO = new UpdateFileDTO();
+                newFileDTO.setSrc_url(newFileUrl);
+                newFileDTO.setPost_id(postId);
+                newFileDTO.setPicture_id(i + 1);
+                postService.saveFile(newFileDTO);
+            }
+        }
+
+        // 업데이트된 포스트 저장
+        Object user_id = session.getAttribute("user_id");
+        post.setUser_id((int) user_id);
+        try {
+            postService.updatePost(post);
+            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
+        } catch (IllegalArgumentException e) {
+            rttr.addFlashAttribute("failMessage", e.getMessage());
+        }
+
         return "redirect:/post/bymission";
     }
+
 
     @GetMapping("like")
     @ResponseBody

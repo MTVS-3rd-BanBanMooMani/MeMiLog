@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.*;
@@ -17,9 +18,12 @@ public class PostService {
 
     private final LikeMapper likeMapper;
 
-    public PostService(PostMapper postMapper, LikeMapper likeMapper) {
+    private final FileMapper fileMapper;
+
+    public PostService(PostMapper postMapper, LikeMapper likeMapper, FileMapper fileMapper) {
         this.postMapper = postMapper;
         this.likeMapper = likeMapper;
+        this.fileMapper = fileMapper;
     }
 
     public List<PostDTO> findAllPosts() {
@@ -126,5 +130,17 @@ public class PostService {
     }
     public void addImage(ImageOrderDTO imageOrderDTO) {
         postMapper.addImage(imageOrderDTO);
+    }
+
+    public List<Integer> getFileIdsByPostId(int postId) {
+        return fileMapper.selectFileIdsByPostId(postId);
+    }
+
+    public void deleteFileById(int fileId) {
+        fileMapper.deleteFileById(fileId);
+    }
+
+    public void saveFile(UpdateFileDTO updateFileDTO) {
+        fileMapper.getFile(updateFileDTO);
     }
 }
