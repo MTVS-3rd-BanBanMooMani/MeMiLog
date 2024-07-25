@@ -23,12 +23,10 @@ body {
   justify-content: space-between;
   align-items: center;
   display: flex;
-  margin: 25px auto 0;
+  margin: 40px auto 0;
   z-index: 1000;
   font-family: "Gowun Batang";
 }
-
-
 
 /* 메뉴바 */
 .header .logo {
@@ -85,7 +83,7 @@ body {
 /* ------------------------------------ */
 
 .container {
-  margin: 5vh 0;
+  margin: 6vh 0;
   text-align: center;
 }
 
