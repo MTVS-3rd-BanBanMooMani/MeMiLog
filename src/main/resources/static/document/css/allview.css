@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap");
-
 /* 카테고리 */
 /* 테마 */
 .category-box {
@@ -7,7 +5,9 @@
 }
 
 .category-title {
-  font-weight: bold;
+  font-weight: 600;
+  font-family: "Gowun Batang";
+  font-size: larger;
   margin: 0 10px;
 }
 
@@ -19,6 +19,8 @@
   background: white;
   border-radius: 10px;
   margin-right: 3px;
+  font-size: large;
+  font-family: "Gowun Batang";
 }
 
 .cancel-btn {
@@ -76,6 +78,9 @@
   gap: 20px;
   margin: 20px 80px;
   justify-content: center;
+  font-family: "Yeon Sung";
+  font-size: larger;
+  line-height: 32.0px;
 }
 
 .note {
