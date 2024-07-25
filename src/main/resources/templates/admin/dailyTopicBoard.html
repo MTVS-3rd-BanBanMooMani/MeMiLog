@@ -274,7 +274,6 @@
         const tag1 = $(this).find("td:eq(2)").text();
         const tag2 = $(this).find("td:eq(3)").text();
         const date = $(this).find("td:eq(4)").text();
-        const image = $(this).find("서버에서 이미지 가져오기").text();
 
         const [year, month, day] = date.split('-');
         const displayDate = `${month}월 ${day}일의 미션`;
@@ -290,13 +289,11 @@
             <p><strong>주제:</strong> ${topic}</p>
             <p><strong>태그:</strong> ${tag1}</p>
             <p><strong>태그:</strong> ${tag2}</p>
-            <strong>배너 이미지:</strong><br>
-            <p>${image}</p>
         `;
 
         document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
 
-        selectedTopic = { topicId, topic, tag1, tag2, date, image };
+        selectedTopic = { topicId, topic, tag1, tag2, date };
         openModal('topicDetailModal');
     });
 
