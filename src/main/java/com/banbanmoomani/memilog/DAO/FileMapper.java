@@ -12,4 +12,5 @@ public interface FileMapper {
     void deleteFileUrl(FileDTO fileDTO);
     void insertFile(FileDTO fileDTO);
     void insertMissionImage(MissionImgFileDTO missionImgFileDTO);
+    void updateMissionImage(MissionImgFileDTO missionImgFileDTO);
 }

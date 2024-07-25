@@ -212,10 +212,10 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="modifyTopicDate">게시일</label>
-                                    <input type="date" class="form-control" id="modifyTopicDate">
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label for="modifyTopicDate">게시일</label>-->
+<!--                                    <input type="date" class="form-control" id="modifyTopicDate">-->
+<!--                                </div>-->
 
                                 <div class="form-group">
                                     <label for="modifyBannerImage" style="font-size: smaller;">배너 이미지</label>
@@ -366,19 +366,17 @@
         document.getElementById('modifyTopic').value = selectedTopic.topic;
         document.getElementById('modifyTopicTag1').value = selectedTopic.tag1;
         document.getElementById('modifyTopicTag2').value = selectedTopic.tag2;
-        document.getElementById('modifyTopicDate').value = selectedTopic.date;
 
-        // 수정할 주제 ID를 숨겨진 필드에 저장합니다.
     }
 
 
 
     function uploadModifiedTopic() {
         let title = document.getElementById('modifyTopic').value;
-        let date = document.getElementById('modifyTopicDate').value;
+        let date = selectedTopic.date;
         let topicTag1 = document.getElementById('modifyTopicTag1').value;
         let topicTag2 = document.getElementById('modifyTopicTag2').value;
-        let bannerImage = document.getElementById('modifyBannerImage').value;
+        let bannerImage = document.getElementById('modifyBannerImage').files[0];
         let topicId = selectedTopic.topicId;
 
         if (!title || !date) {
@@ -429,23 +427,6 @@
             },
             error: function(error) {
                 alert('미션 수정에 실패했습니다. 다시 입력해주세요');
-            }
-        });
-
-        // AJAX 요청을 통해 서버로 데이터를 전송합니다.
-        $.ajax({
-            type: 'POST',
-            url: '/admin/updateMission',
-            contentType: 'application/json',
-            data: JSON.stringify(modifiedMissionData),
-            success: function (response) {
-                alert('오늘의 미션이 수정되었습니다.');
-                closeModal('modifyTopicModal');
-                location.reload(); // 페이지를 새로고침하여 변경사항을 반영합니다.
-            },
-            error: function (error) {
-                alert('미션 수정에 실패했습니다. 다시 입력해주세요');
-                console.error(error);
             }
         });
     }

@@ -301,12 +301,8 @@ public class AdminController {
 
     @PostMapping("/updateMission")
     public ResponseEntity updateMission(@RequestBody MissionDTO missionDTO) {
-        try {
-            missionService.updateMission(missionDTO);
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        missionService.updateMission(missionDTO);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/missionImage")
@@ -324,6 +320,9 @@ public class AdminController {
     public ResponseEntity updateMissionImg(@RequestParam("file") MultipartFile file,
                                            @RequestParam("mission_id") int missionId) throws IOException {
         String url = fileService.uploadFile(file, 19);
+        MissionImgFileDTO imgFileDTO = new MissionImgFileDTO(url, missionId);
+        fileService.updateMissionImage(imgFileDTO);
+
         return ResponseEntity.ok("Image update successfully");
     }
 

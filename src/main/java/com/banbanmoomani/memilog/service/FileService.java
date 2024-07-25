@@ -100,5 +100,9 @@ public class FileService {
     public void insertMissionImage(MissionImgFileDTO missionImgFileDTO) {
         fileMapper.insertMissionImage(missionImgFileDTO);
     }
+
+    public void updateMissionImage(MissionImgFileDTO missionImgFileDTO) {
+        fileMapper.updateMissionImage(missionImgFileDTO);
+    }
 }
 

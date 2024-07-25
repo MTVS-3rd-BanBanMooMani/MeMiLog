@@ -56,5 +56,11 @@
         #{mission_id}
         )
     </insert>
+
+    <update id="updateMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
+        UPDATE FILE
+        SET src_url = #{src_url}
+        WHERE mission_id = #{mission_id}
+    </update>
 </mapper>
 
