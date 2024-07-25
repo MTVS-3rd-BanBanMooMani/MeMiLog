@@ -1,10 +1,12 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.CompanionDTO;
 import com.banbanmoomani.memilog.DTO.EmotionDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
+import com.banbanmoomani.memilog.DTO.ReportDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
@@ -17,13 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +37,18 @@ public class PostController {
     private final ComPanionService comPanionService;
     private final FileService fileService;
     private final PostMapper postMapper;
+    private final ReportService reportService;
+    private final RPTCategoryService rptCategoryService;
 
-    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper) {
+    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper, ReportService reportService, RPTCategoryService rptCategoryService) {
         this.postService = postService;
         this.missionService = missionService;
         this.emotionService = emotionService;
         this.comPanionService = comPanionService;
         this.fileService = fileService;
         this.postMapper = postMapper;
+        this.reportService = reportService;
+        this.rptCategoryService = rptCategoryService;
     }
 
     @GetMapping("/create")
@@ -82,15 +85,11 @@ public class PostController {
                              @RequestParam(name = "file3", required = false) MultipartFile file3,
                              @RequestParam(name = "file4", required = false) MultipartFile file4,
                              @RequestParam(name = "file5", required = false) MultipartFile file5,
-                             HttpSession session,
-                             RedirectAttributes rttr) throws IOException {
+                             HttpSession session) throws IOException {
         System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
-        if (user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
-            return "redirect:/user/login";
-        }
+
         createRequestDTO.setUser_id((int) user_id);
         EmotionDTO emotion = emotionService.findEmotionById(createRequestDTO.getEmotion_id());
         System.out.println(emotion);
@@ -114,12 +113,11 @@ public class PostController {
     }
 
     @GetMapping("/update")
-    public String updatePost(
+    public String updatePost(@RequestParam("postId") int postId,
                              Model model,
                              HttpSession session,
                              RedirectAttributes rttr) {
-        int postId = 35;  // postId를 하드코딩합니다.
-        int user_id = 1;
+        Object user_id = session.getAttribute("user_id");
         PostDTO post = postService.findPostById(postId);
 
         if(post == null || post.getUser_id() != (int)user_id) {
@@ -131,6 +129,8 @@ public class PostController {
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
+        List<UpdateFileDTO> updateFileDTOList = postService.updatefiles(postId);
+        String mainFile = postService.findMainFile(postId);
 
         model.addAttribute("post", post);
         model.addAttribute("mission", mission);
@@ -138,39 +138,20 @@ public class PostController {
         model.addAttribute("subThemeName", subThemeName);
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
+        model.addAttribute("imageUrls", updateFileDTOList);
+        model.addAttribute("mainImageUrl", mainFile);
 
         return "main/postupdate";
     }
 
-//    @PostMapping("/update")
-//    public String updatePost(@ModelAttribute PostDTO post,
-//                             HttpSession session,
-//                             RedirectAttributes rttr) {
-//        Object user_id = session.getAttribute("user_id");
-//        if(user_id == null) {
-//            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요.");
-//            return "redirect:/user/login";
-//        }
-//        post.setUser_id((int) user_id);
-//        try {
-//            postService.updatePost(post);
-//            rttr.addFlashAttribute("successMessage", "포스트가 성공적으로 업데이트되었습니다");
-//        } catch (IllegalArgumentException e) {
-//            rttr.addFlashAttribute("failMessage", "업데이트 권한이 없습니다.");
-//        } catch (Exception e) {
-//            rttr.addFlashAttribute("failMessage", "포스트 업데이트 중 오류가 발생했습니다.");
-//        }
-//        return "redirect:/post/all";
-//    }
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
                                    HttpSession session,
                                    RedirectAttributes rttr) {
-
         Object user_id = session.getAttribute("user_id");
-
+        post.setUser_id((int) user_id);
         try {
-            postService.updatePost(post, (Integer) user_id);
+            postService.updatePost(post);
             rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
         } catch (IllegalArgumentException e) {
             rttr.addFlashAttribute("failMessage", e.getMessage());
@@ -192,12 +173,12 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public String deletePost(@RequestParam("postId") int postId,
                              HttpSession session,
                              RedirectAttributes rttr) {
-
         Object user_id = session.getAttribute("user_id");
+        System.out.println("postId = " + postId);
 
         try {
             postService.deletePost(postId, (int) user_id);
@@ -221,14 +202,33 @@ public class PostController {
 
     // 오늘 mission에 해당하는 post 보기
     @GetMapping("/bymission")
-    public String findAllPostOnMissionByDate(Model model) {
+    public String findAllPostOnMissionByDate(Model model,
+                                             @RequestParam(name = "date",required = false)String date) {
+        if(date != null) {
+            System.out.println(date);
 
-        List<PostRequestDTO> posts = postService.findAllPostOnMissionByDate();
+            List<PostRequestDTO> posts = postService.findAllPostOnMissionByDate(date);
+            model.addAttribute("posts", posts);
+            System.out.println("=======날짜별 post 조회");
+            posts.forEach(System.out::println);
 
-        model.addAttribute("posts", posts);
+            // 날짜 형식 변환
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("M월 d일의 미션");
+            try {
+                Date parsedDate = inputFormat.parse(date);
+                String formattedDate = outputFormat.format(parsedDate);
+                model.addAttribute("formattedDate", formattedDate);
+            } catch (Exception e) {
+                model.addAttribute("formattedDate", "Invalid date format");
+            }
 
-        System.out.println("findAllPostOnMissionByDate");
-        posts.forEach(System.out::println);
+        }
+
+        List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
+        model.addAttribute("reportCategory", reportCategory);
+        System.out.println("==========report 종류");
+        reportCategory.forEach(System.out::println);
 
 //        @RequestParam(name = "post_id", required = false) int post_id
 //        List<PostDTO> postDetail = postService.showPostDetail(post_id);
@@ -246,7 +246,7 @@ public class PostController {
         System.out.println("post_id = " + post_id);
 
         PostRequestDTO postDetail = postService.showPostDetail(post_id);
-        System.out.println("=======포스트 디테일=============");
+        System.out.println("=============포스트 디테일=============");
         System.out.println(postDetail);
 
 
@@ -285,8 +285,8 @@ public class PostController {
             posts = postService.findPostsByCompanion(companionIds);
         } else {
             // 선택한 타입이 없는 경우에는 어떤 걸로 할지
-            posts = postService.findAllPostOnMissionByDate();
-//            return "redirect:/post/bymission";
+//            posts = postService.findAllPostOnMissionByDate();
+            return "redirect:/post/bymission";
         }
 
         model.addAttribute("posts", posts);

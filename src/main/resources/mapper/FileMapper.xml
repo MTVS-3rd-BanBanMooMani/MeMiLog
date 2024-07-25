@@ -41,5 +41,26 @@
             #{picture_order}
         )
     </insert>
+
+    <insert id="insertMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
+        INSERT INTO FILE
+        (
+        src_url,
+        type,
+        mission_id
+        )
+        VALUES
+        (
+        #{src_url},
+        'mission',
+        #{mission_id}
+        )
+    </insert>
+
+    <update id="updateMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
+        UPDATE FILE
+        SET src_url = #{src_url}
+        WHERE mission_id = #{mission_id}
+    </update>
 </mapper>
 

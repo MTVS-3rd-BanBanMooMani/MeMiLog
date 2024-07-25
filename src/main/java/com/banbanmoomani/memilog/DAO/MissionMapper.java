@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.MainTitleDTO;
 import com.banbanmoomani.memilog.DTO.MissionDTO;
 import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
 import com.banbanmoomani.memilog.DTO.NoticeDTO;
@@ -32,11 +33,14 @@ public interface MissionMapper {
 
     List<MissionDTO> findAllMissionPaging(String content, RowBounds rowBounds);
 
-    int countMissions();
+    int countMissions(String content);
+    void updateMission(MissionDTO missionDTO);
 
-    String getMissionTitle();
+    MissionDTO findMissionByDate(String missionDate);
 
     List<MissionDTO> findMissionsByWord(String wordTypes);
 
     List<MissionDTO> findMissionByCriteria(MissionSearhCriteria missionSearhCriteria);
+
+    MainTitleDTO getMainTitle();
 }

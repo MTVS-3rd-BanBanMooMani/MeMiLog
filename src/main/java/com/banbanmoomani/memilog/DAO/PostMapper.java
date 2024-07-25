@@ -1,5 +1,7 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.ImageOrderDTO;
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
@@ -20,7 +22,7 @@ public interface PostMapper {
 
     PostDTO findPostById(int postId);
 
-    List<PostRequestDTO> findAllPostOnMissionByDate();
+    List<PostRequestDTO> findAllPostOnMissionByDate(String date);
 
     List<PostRequestDTO> findPostsByCompanion(@Param("companionIds") List<Integer> companionIds);
 
@@ -39,4 +41,14 @@ public interface PostMapper {
     Integer findTodayPostCount();
 
     void updateHidden();
+
+    List<UpdateFileDTO> updateFile(@Param("postId") int postId);
+
+    String findMainFile(@Param("postId") int postId);
+
+    void updateImageOrder(ImageOrderDTO imageOrderDTO);
+
+    void deleteImageOrder(ImageOrderDTO imageOrderDTO);
+
+    void addImage(ImageOrderDTO imageOrderDTO);
 }

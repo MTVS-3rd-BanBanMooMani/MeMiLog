@@ -27,6 +27,12 @@
         <result property="companionType" column="companion_type" />
     </resultMap>
 
+    <resultMap id="mainTitleResultMap" type="com.banbanmoomani.memilog.DTO.MainTitleDTO">
+        <id property="mission_id" column="mission_id" />
+        <result property="mission_content" column="mission_content" />
+        <result property="src_url" column="src_url"/>
+    </resultMap>
+
     <!-- 미션 전체 조회 SQL문 -->
     <select id="findAllMission" resultMap="missionResultMap">
         SELECT
@@ -138,26 +144,18 @@
             , #{missionContent}
             , #{missionDate}
             , #{priThemeId}
-            , #{priThemeId}
+            , #{subThemeId}
         )
     </insert>
-    
-    <select id="getMissionTitle" resultType="string">
-        SELECT
-            mission_content
-        FROM
-            MISSION
-        ORDER BY
-            mission_date DESC
-        LIMIT 1
-    </select>
 
-
-
-    <select id="countMissions" resultType="int">
+    <select id="countMissions" resultType="int" parameterType="String">
         SELECT
         COUNT(*)
-        FROM NOTICE
+        FROM MISSION
+        WHERE TRUE
+        <if test="content != null and content != ''">
+            AND mission_content LIKE CONCAT('%', #{content}, '%')
+        </if>
     </select>
 
     <select id="findAllMissionPaging" resultMap="missionResultMap" parameterType="String">
@@ -169,6 +167,22 @@
         <if test="content != null and content != ''">
             AND mission_content LIKE CONCAT('%', #{content}, '%')
         </if>
+    </select>
+
+    <update id="updateMission" parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">
+        update MISSION
+        set
+        mission_content = #{missionContent},
+        mission_date = #{missionDate},
+        sub_theme_id = #{priThemeId},
+        pri_theme_id = #{subThemeId}
+        where mission_id = #{missionId}
+    </update>
+
+    <select id="findMissionByDate" resultMap="missionResultMap" parameterType="String">
+        SELECT *
+          FROM MISSION
+         WHERE mission_date = #{missionDate}
     </select>
 
     <!-- 검색어에 따른 미션 조회 -->
@@ -193,5 +207,16 @@
             </foreach>
             )
         </if>
+    </select>
+
+    <select id="getMainTitle" resultMap="mainTitleResultMap">
+        SELECT
+              m.mission_id
+            , mission_content
+            , f.src_url
+        FROM MISSION m
+        LEFT JOIN FILE f ON m.mission_id = f.mission_id
+        WHERE DATE_FORMAT(m.mission_date, '%Y-%m-%d') = CURDATE()
+        LIMIT 1
     </select>
 </mapper>

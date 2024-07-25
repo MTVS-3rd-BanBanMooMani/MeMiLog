@@ -53,8 +53,8 @@
                         class="modal-mission-img"
                         src="../../document/img/banner.jpg"
                 />
-                <div>6월 20일의 미션</div>
-                <div>미미들이 생각하는 여름 낭만은?</div>
+                <div th:text="${formattedDate}"></div>
+                <div th:text="${posts[0].mission_content}"></div>
             </div>
             <div class="modal-mission-filter-container">
                 <form id="companionForm" action="/post/companion" method="get" class="category-box">
@@ -65,7 +65,7 @@
                     <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">학교</button>
                     <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">동료</button>
                     <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">반려동물</button>
-                    <input type="button" value="조회" onclick="submitForm()"/>
+                    <button type="button" onclick="submitForm()" class="searchBtn"></button>
                 </form>
             </div>
             <div class="modal-photo-greed-container">
@@ -176,7 +176,7 @@
                             <p id="writtenDate"></p>
                             <img
                                     id="emotionImg"
-                                    src="../../document/img/colored_happy.png"
+                                    src=""
                                     alt="감정이미지"
                                     width="25px"
                                     height="25px"
@@ -193,15 +193,24 @@
         <!-- 신고 모달 -->
         <div class="report-modal-bg">
             <div class="report-modal">
-                <div class="report-modal-top">
-                </div>
-                <div class="report-modal-content">
+                <div class="report-modal-content" style="width: 300px">
                     <form id="reportForm" action="/post/report" method="post">
-                        <label for="editMissionContent">신고 내용:</label>
-                        <textarea id="editMissionContent" name="missionContent"></textarea>
-                        <input type="hidden" id="editPostId" name="postId">
-                        <button type="submit">신고</button>
-                        <button type="button" class="report-modal-close-btn">취소</button>
+                        <div class="repCate-box" style="height: 50px">
+                            <label for="reportCategory">신고 분류</label>
+                            <select id="reportCategory" name="rptCategoryId">
+                                <option th:each="repCate: ${reportCategory}" th:text="${repCate.category_name}" th:value="${repCate.rpt_category_id}"></option>
+                            </select>
+                        </div>
+                        <div class="repContent-box" style="height: 95px">
+                            <label for="reportMissionContent">상세 내용</label>
+                            <textarea id="reportMissionContent" name="rptContent" placeholder="상세한 신고 사유를 입력해주세요."></textarea>
+                        </div>
+                        <input type="hidden" id="reportPostId" name="postId"/>
+                        <input type="hidden" id="reportedUserId" name="rptedUserId"/>
+                        <div class="repBtn-box" style="padding: 0 90px">
+                            <button type="submit" style="color: white; background: black">신고</button>
+                            <button type="button" class="report-modal-close-btn" style="color: black; background: white">취소</button>
+                        </div>
                     </form>
                 </div>
             </div>

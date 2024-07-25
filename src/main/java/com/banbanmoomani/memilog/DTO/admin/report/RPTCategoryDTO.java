@@ -47,4 +47,14 @@ public class RPTCategoryDTO {
     public void setStop_day(int stop_day) {
         this.stop_day = stop_day;
     }
+
+    @Override
+    public String toString() {
+        return "RPTCategoryDTO{" +
+                "rpt_category_id=" + rpt_category_id +
+                ", category_name='" + category_name + '\'' +
+                ", rpt_weight=" + rpt_weight +
+                ", stop_day=" + stop_day +
+                '}';
+    }
 }

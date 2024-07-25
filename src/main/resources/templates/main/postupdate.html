@@ -1,93 +1,107 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Me Mission Log</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  <link href="../../static/document/css/post.css" th:href="@{/document/css/post.css}" rel="stylesheet" />
-  <link rel="stylesheet" href="../../static/document/css/layout.css" th:href="@{/document/css/layout.css}" />
-</head>
-<body>
-<div class="container">
-  <div th:replace="~{/fragments/mainHeader :: header}"></div>
-  <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="postId" th:value="35"/>
-    <div class="middle-container">
-      <div class="left-container">
-        <div class="date-category">
-          <span class="date" th:text="${#dates.format(post.written_datetime, 'yyyy-MM-dd')}">06월 22일</span>
-          <span class="category" th:text="${priThemeName}">자연</span>
-          <span class="category" th:text="${subThemeName}"></span>
-        </div>
-        <div class="title" th:text="${mission.missionContent}">미미들이 생각하는 여름 낭만은?</div>
-        <div class="image-container">
-          <img id="main-image" class="main-image" th:src="@{/images/default.png}" src="/images/default.png">
-        </div>
-        <div class="image-thumbnails-container">
-          <div class="image-thumbnails" id="plus-thumbnail">
-            <div class="thumbnail add-thumbnail" id="addBtn">
-              +
-              <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Mission Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link href="../../static/document/css/post.css" th:href="@{/document/css/post.css}" rel="stylesheet" />
+    <!DOCTYPE html>
+    <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Me Mission Log</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+        <link href="../../static/document/css/post.css" th:href="@{/document/css/post.css}" rel="stylesheet" />
+        <link rel="stylesheet" href="../../static/document/css/layout.css" th:href="@{/document/css/layout.css}" />
+    </head>
+    <body>
+    <div class="container">
+        <div th:replace="~{/fragments/mainHeader :: header}"></div>
+        <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="post_id" th:value="${post.post_id}"/>
+            <input type="hidden" name="user_id" th:value="${post.user_id}"/>
+            <input type="hidden" name="mission_id" th:value="${post.mission_id}"/>
+            <input type="hidden" id="imageOrder" name="imageOrder" />
+            <input type="file" id="newImages" name="newImages" multiple accept="image/*" style="display: none;">
+            <div class="middle-container">
+                <div class="left-container">
+                    <div class="date-category">
+                        <span class="date" th:text="${#dates.format(post.written_datetime, 'yyyy-MM-dd')}">06월 22일</span>
+                        <span class="category" th:text="${priThemeName}">자연</span>
+                        <span class="category" th:text="${subThemeName}"></span>
+                    </div>
+                    <div class="title" th:text="${mission.missionContent}">미미들이 생각하는 여름 낭만은?</div>
+                    <div class="image-container" id="mainImageContainer" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img id="main-image" class="main-image" th:src="${mainImageUrl}" src="/images/default.png">
+                    </div>
+                    <div class="image-thumbnails-container">
+                        <div class="image-thumbnails" id="plus-thumbnail">
+                            <div th:each="file, iterStat : ${imageUrls}" class="thumbnail" data-index="${iterStat.index}" draggable="true" ondragstart="drag(event)">
+                                <img th:src="@{${file.src_url}}" alt="thumbnail" th:onclick="showImageInContainer('${file.src_url}')">
+                                <button type="button" class="image-close-btn" onclick="removeThumbnail(this)"></button>
+                            </div>
+                            <div class="thumbnail add-thumbnail" id="addBtn">
+                                +
+                                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="note">* 최대 5장까지 등록 가능합니다.</p>
+                </div>
+                <div class="right-container">
+                    <div th:if="${failMessage != null}" class="alert alert-danger">
+                        <p th:text="${failMessage}"></p>
+                    </div>
+                    <div class="text-area">
+                        <textarea placeholder="내용을 입력하세요" th:field="*{content}"></textarea>
+                    </div>
+                    <div class="question">어떤 기분이었나요?</div>
+                    <div class="emotion-box">
+                        <input type="hidden" id="selectedEmotion" th:field="*{emotion_id}" value="${post.emotion_id}">
+                        <div class="main-box">
+                            <ul class="icon-box">
+                                <li id="happy" th:classappend="${post.emotion_id == 1} ? 'selected' : ''" data-id="1" onclick="changeIconColor('happy', 1)">
+                                    <img src="/document/img/happy.png" alt="happy" class="icon1" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
+                                </li>
+                                <li id="cool" th:classappend="${post.emotion_id == 2} ? 'selected' : ''" data-id="2" onclick="changeIconColor('cool', 2)">
+                                    <img src="/document/img/cool.png" alt="cool" class="icon1" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
+                                </li>
+                                <li id="surprised" th:classappend="${post.emotion_id == 3} ? 'selected' : ''" data-id="3" onclick="changeIconColor('surprised', 3)">
+                                    <img src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
+                                </li>
+                                <li id="soso" th:classappend="${post.emotion_id == 4} ? 'selected' : ''" data-id="4" onclick="changeIconColor('soso', 4)">
+                                    <img src="/document/img/soso.png" alt="soso" class="icon1" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
+                                </li>
+                                <li id="sad" th:classappend="${post.emotion_id == 5} ? 'selected' : ''" data-id="5" onclick="changeIconColor('sad', 5)">
+                                    <img src="/document/img/sad.png" alt="sad" class="icon1" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="questions">
+                        <div class="question">누구와 함께 했나요?</div>
+                        <input type="hidden" id="companionId" th:field="*{companion_id}" value="${post.companion_id}">
+                        <div class="answers">
+                            <button class="answer-left answer" type="button" data-id="1" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 1} ? 'selected' : ''">나</button>
+                            <button class="answer-middle answer" type="button" data-id="2" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 2} ? 'selected' : ''">친구</button>
+                            <button class="answer-middle answer" type="button" data-id="3" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 3} ? 'selected' : ''">가족</button>
+                            <button class="answer-middle answer" type="button" data-id="4" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 4} ? 'selected' : ''">연인</button>
+                            <button class="answer-middle answer" type="button" data-id="5" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 5} ? 'selected' : ''">동료</button>
+                            <button class="answer-right answer" type="button" data-id="6" onclick="selectCompanion(this)" th:classappend="${post.companion_id == 6} ? 'selected' : ''">반려동물</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="mission_content" th:value="${post.content}">
+                    <div class="buttons">
+                        <button class="submit-btn" type="submit" name="submit" onclick="prepareImageOrder()">수정 완료</button>
+                        <button class="back-btn" type="button" onclick="window.history.back()">돌아가기</button>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <p class="note">* 최대 5장까지 등록 가능합니다.</p>
-      </div>
-      <div class="right-container">
-        <div th:if="${failMessage != null}" class="alert alert-danger">
-          <p th:text="${failMessage}"></p>
-        </div>
-        <div class="text-area">
-          <textarea placeholder="내용을 입력하세요" th:field="*{content}"></textarea>
-        </div>
-        <div class="question">어떤 기분이었나요?</div>
-        <div class="emotion-box">
-          <input type="hidden" id="selectedEmotion" th:field="*{emotion_id}" value="">
-          <div class="main-box">
-            <ul class="icon-box">
-              <li id="happy" onclick="changeIconColor('happy', 1)">
-                <img src="/document/img/happy.png" alt="happy" class="icon1" th:data-original="@{/document/img/happy.png}" th:data-colored="@{/document/img/colored_happy.png}">
-              </li>
-              <li id="cool" onclick="changeIconColor('cool', 2)">
-                <img src="/document/img/cool.png" alt="cool" class="icon1" th:data-original="@{/document/img/cool.png}" th:data-colored="@{/document/img/colored_cool.png}">
-              </li>
-              <li id="surprised" onclick="changeIconColor('surprised', 3)">
-                <img th:if="${post.emotion_id != 3}" src="/document/img/surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/surprised.png}" th:data-colored="@{/document/img/colored_surprised.png}">
-                <img th:if="${post.emotion_id == 3}" src="/document/img/colored_surprised.png" alt="surprised" class="icon1" th:data-original="@{/document/img/colored_surprised.png}" th:data-colored="@{/document/img/surprised.png}">
-              </li>
-              <li id="soso" onclick="changeIconColor('soso', 4)">
-                <img src="/document/img/soso.png" alt="soso" class="icon1" th:data-original="@{/document/img/soso.png}" th:data-colored="@{/document/img/colored_soso.png}">
-              </li>
-              <li id="sad" onclick="changeIconColor('sad', 5)">
-                <img src="/document/img/sad.png" alt="sad" class="icon1" th:data-original="@{/document/img/sad.png}" th:data-colored="@{/document/img/colored_sad.png}">
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="questions">
-          <div class="question">누구와 함께 했나요?</div>
-          <input type="hidden" id="companionId" th:field="*{companion_id}" value="">
-          <div class="answers">
-            <button class="answer-left answer" type="button" data-id="1" data-type="나" onclick="selectCompanion(this)" th:text="'나' + (post.companion_id == 1 ? ' (선택됨)' : '')">나</button>
-            <button class="answer-middle answer" type="button" data-id="2" data-type="친구" onclick="selectCompanion(this)" th:text="'친구' + (post.companion_id == 2 ? ' (선택됨)' : '')">친구</button>
-            <button class="answer-middle answer" type="button" data-id="3" data-type="가족" onclick="selectCompanion(this)" th:text="'가족' + (post.companion_id == 3 ? ' (선택됨)' : '')">가족</button>
-            <button class="answer-middle answer" type="button" data-id="4" data-type="연인" onclick="selectCompanion(this)" th:text="'연인' + (post.companion_id == 4 ? ' (선택됨)' : '')">연인</button>
-            <button class="answer-middle answer" type="button" data-id="5" data-type="동료" onclick="selectCompanion(this)" th:text="'동료' + (post.companion_id == 5 ? ' (선택됨)' : '')">동료</button>
-            <button class="answer-right answer" type="button" data-id="6" data-type="반려동물" onclick="selectCompanion(this)" th:text="'반려동물' + (post.companion_id == 6 ? ' (선택됨)' : '')">반려동물</button>
-          </div>
-        </div>
-        <input type="hidden" name="mission_content" th:value="${post.content}">
-        <input type="hidden" name="user_id" th:value="${post.user_id}">
-        <div class="buttons">
-          <button class="submit-btn" type="submit" name="submit">수정 완료</button>
-          <button class="back-btn" type="button" onclick="window.history.back()">돌아가기</button>
-        </div>
-      </div>
+        </form>
+        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
     </div>
-  </form>
-  <div th:replace="~{/fragments/mainFooter :: footer}"></div>
-</div>
 <script src="../../static/document/js/post.js" th:src="@{/document/js/post.js}"></script>
 </body>
 </html>
