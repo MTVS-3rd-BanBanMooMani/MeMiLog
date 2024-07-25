@@ -32,6 +32,7 @@ public class MainController {
 
         // mission title
         MainTitleDTO mainTitleDTO = missionService.getMainTitle();
+        System.out.println("mainTitleDTO = " + mainTitleDTO);
         model.addAttribute("mainTitleDTO", mainTitleDTO);
 
         // LocalDate

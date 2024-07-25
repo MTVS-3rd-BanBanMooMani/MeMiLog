@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     photoDiv.addEventListener("click", function () {
       modalBg.style.display = 'flex';
       postModal.style.display = 'block';
-      updateArrows();
+      // updateArrows();
       const postId = photoDiv.getAttribute('data-post-id');
       console.log(postId);
       fetch("/post/bymission", {
@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById("nickname").innerText = data.nickname;
             document.getElementById("writtenDate").innerText = data.written_datetime;
             document.getElementById("content").innerText = data.content;
+            document.getElementById("profileImg").src = data.profile_img;
 
             const emotionImg = document.getElementById("emotionImg");
             switch (data.emotion_name) {
@@ -120,6 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 emotionImg.src = "";
             }
 
+            // Post 이미지 설정
+            const postModalBoardImg = document.querySelector(".post-modal-board-img");
+            const existingImages = postModalBoardImg.querySelectorAll(".modal-image");
+            existingImages.forEach(img => img.remove()); // 기존 이미지를 초기화
+            data.postUrl.forEach(url => {
+              const img = document.createElement("img");
+              img.src = url;
+              img.className = 'modal-image';
+              postModalBoardImg.insertBefore(img, arrowRight); // 화살표 사이에 이미지를 추가
+            });
+
+            // 슬라이드 초기화
+            initializeSlideShow();
+
           })
           .catch(error => console.error("post detail error: ", error));
     });
@@ -127,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closePostModalBtn.addEventListener("click", function () {
     modalBg.style.display = "none";
+    postModal.style.display = "none";
   });
 
   window.addEventListener("click", function (event) {
@@ -140,50 +156,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // post img
-  const modalImages = document.querySelectorAll(".modal-image");
-  const arrowLeft = document.querySelector(".arrow-left");
-  const arrowRight = document.querySelector(".arrow-right");
-  let currentIndex = 0;
+let modalImages = [];
+let currentIndex = 0;
+const arrowLeft = document.querySelector(".arrow-left");
+const arrowRight = document.querySelector(".arrow-right");
 
-  function updateArrows() {
-    if (modalImages.length <= 1) {
-      arrowLeft.classList.add("hidden");
-      arrowRight.classList.add("hidden");
-    } else {
-      arrowLeft.classList.toggle("hidden", currentIndex === 0);
-      arrowRight.classList.toggle(
-        "hidden",
-        currentIndex === modalImages.length - 1
-      );
-    }
-  }
+// 슬라이드쇼 초기화 함수
+function initializeSlideShow() {
+  modalImages = document.querySelectorAll(".modal-image");
+  currentIndex = 0;
 
-  closePostModalBtn.addEventListener("click", function () {
-    postModal.style.display = "none";
-  });
-
-  arrowLeft.addEventListener("click", function () {
-    if (currentIndex > 0) {
-      modalImages[currentIndex].style.display = "none";
-      currentIndex--;
-      modalImages[currentIndex].style.display = "block";
-      updateArrows();
-    }
-  });
-
-  arrowRight.addEventListener("click", function () {
-    if (currentIndex < modalImages.length - 1) {
-      modalImages[currentIndex].style.display = "none";
-      currentIndex++;
-      modalImages[currentIndex].style.display = "block";
-      updateArrows();
-    }
-  });
+  arrowLeft.addEventListener("click", showPreviousImage);
+  arrowRight.addEventListener("click", showNextImage);
 
   modalImages.forEach((img, index) => {
     img.style.display = index === currentIndex ? "block" : "none";
   });
   updateArrows();
+}
+
+// 화살표 업데이트 함수
+function updateArrows() {
+  if (modalImages.length <= 1) {
+    arrowLeft.classList.add("hidden");
+    arrowRight.classList.add("hidden");
+  } else {
+    arrowLeft.classList.toggle("hidden", currentIndex === 0);
+    arrowRight.classList.toggle("hidden", currentIndex === modalImages.length - 1);
+  }
+}
+
+// 이전 이미지 표시 함수
+function showPreviousImage() {
+  if (currentIndex > 0) {
+    modalImages[currentIndex].style.display = "none";
+    currentIndex--;
+    modalImages[currentIndex].style.display = "block";
+    updateArrows();
+  }
+}
+
+// 다음 이미지 표시 함수
+function showNextImage() {
+  if (currentIndex < modalImages.length - 1) {
+    modalImages[currentIndex].style.display = "none";
+    currentIndex++;
+    modalImages[currentIndex].style.display = "block";
+    updateArrows();
+  }
+}
 
   // etc dropdown
   const etcImg = document.querySelector(".etc-img");
@@ -278,24 +299,24 @@ window.addEventListener("click", function (event) {
   });
 
   // 신고 버튼 클릭 시 alert
-  // const reportAlert = document.querySelector(".post-report-btn");
-  //
-  // reportAlert.addEventListener("click", () => {
-  //   Swal.fire({
-  //     title: "신고 하시겠습니까?",
-  //     icon: "warning",
-  //     input: "select",
-  //     inputOptions: {
-  //       option1: "음란물",
-  //       option2: "광고",
-  //       option3: "종교권유",
-  //     },
-  //     inputPlaceholder: "신고 사유 선택",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "gray",
-  //     confirmButtonText: "네, 신고하겠습니다.",
-  //     cancelButtonText: "취소",
-  //   });
-  // });
+  const reportAlert = document.querySelector(".post-report-btn");
+
+  reportAlert.addEventListener("click", () => {
+    Swal.fire({
+      title: "신고 하시겠습니까?",
+      icon: "warning",
+      input: "select",
+      inputOptions: {
+        option1: "음란물",
+        option2: "광고",
+        option3: "종교권유",
+      },
+      inputPlaceholder: "신고 사유 선택",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "gray",
+      confirmButtonText: "네, 신고하겠습니다.",
+      cancelButtonText: "취소",
+    });
+  });
 // });

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 
 @Service
@@ -103,6 +104,14 @@ public class FileService {
 
     public void updateMissionImage(MissionImgFileDTO missionImgFileDTO) {
         fileMapper.updateMissionImage(missionImgFileDTO);
+    }
+
+    public String getProfileUrl(Long post_id) {
+        return fileMapper.getProfileUrl(post_id);
+    }
+
+    public List<String> getPostUrl(Long postId) {
+        return fileMapper.getPostUrl(postId);
     }
 }
 

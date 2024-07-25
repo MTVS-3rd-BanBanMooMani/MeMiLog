@@ -132,4 +132,6 @@ public class PostService {
     public void addImage(ImageOrderDTO imageOrderDTO) {
         postMapper.addImage(imageOrderDTO);
     }
+
+    public MainTitleDTO showBanner(String date) { return postMapper.showBanner(date); }
 }

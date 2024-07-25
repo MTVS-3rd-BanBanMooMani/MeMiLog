@@ -38,4 +38,13 @@ public class MainTitleDTO {
     public void setSrc_url(String src_url) {
         this.src_url = src_url;
     }
+
+    @Override
+    public String toString() {
+        return "MainTitleDTO{" +
+                "mission_id=" + mission_id +
+                ", mission_content='" + mission_content + '\'' +
+                ", src_url='" + src_url + '\'' +
+                '}';
+    }
 }

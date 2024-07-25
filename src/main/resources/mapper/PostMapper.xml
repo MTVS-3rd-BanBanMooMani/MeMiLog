@@ -34,6 +34,12 @@
         <result property="src_url" column="src_url"/>
     </resultMap>
 
+    <resultMap id="bannerRequestMap" type="com.banbanmoomani.memilog.DTO.MainTitleDTO">
+        <id property="mission_id" column="mission_id" />
+        <result property="mission_content" column="mission_content" />
+        <result property="src_url" column="src_url"/>
+    </resultMap>
+
     <select id="findAllPost" resultMap="postResultMap">
         SELECT
             p.post_id,
@@ -355,4 +361,14 @@
             post_id = #{post_id} AND src_url = #{src_url}
     </delete>
 
+    <select id="showBanner" parameterType="String" resultMap="bannerRequestMap">
+        SELECT
+        m.mission_id
+        , mission_content
+        , f.src_url
+        FROM MISSION m
+        LEFT JOIN FILE f ON m.mission_id = f.mission_id
+        WHERE
+        m.mission_date = #{date}
+    </select>
 </mapper>
