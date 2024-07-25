@@ -2,10 +2,7 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.MissionMapper;
 import com.banbanmoomani.memilog.DAO.ThemeMapper;
-import com.banbanmoomani.memilog.DTO.MissionDTO;
-import com.banbanmoomani.memilog.DTO.MissionSearhCriteria;
-import com.banbanmoomani.memilog.DTO.NoticeDTO;
-import com.banbanmoomani.memilog.DTO.PageResult;
+import com.banbanmoomani.memilog.DTO.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -97,5 +94,9 @@ public class MissionService {
             throw new IllegalArgumentException("mission already exists");
         }
 
+    }
+
+    public MainTitleDTO getMainTitle() {
+        return missionMapper.getMainTitle();
     }
 }
