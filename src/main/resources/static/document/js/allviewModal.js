@@ -297,26 +297,4 @@ window.addEventListener("click", function (event) {
       }
     });
   });
-
-  // 신고 버튼 클릭 시 alert
-  const reportAlert = document.querySelector(".post-report-btn");
-
-  reportAlert.addEventListener("click", () => {
-    Swal.fire({
-      title: "신고 하시겠습니까?",
-      icon: "warning",
-      input: "select",
-      inputOptions: {
-        option1: "음란물",
-        option2: "광고",
-        option3: "종교권유",
-      },
-      inputPlaceholder: "신고 사유 선택",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "gray",
-      confirmButtonText: "네, 신고하겠습니다.",
-      cancelButtonText: "취소",
-    });
-  });
 // });
