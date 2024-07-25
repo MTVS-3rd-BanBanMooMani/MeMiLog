@@ -1,23 +1,10 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-}
-
 .middle-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1;
+    margin-bottom: 120px;
 }
 
 .form-container {
@@ -30,7 +17,7 @@ body, html {
 
 .form-container h1 {
     font-size: 2rem;
-    font-family: Inter;
+    font-family: "Gowun Batang";
     font-weight: 700;
     margin-bottom: 4rem;
     margin-left: 60px;
@@ -54,8 +41,9 @@ body, html {
 
 .input-container label {
     margin-bottom: 0.5rem;
-    font-size: 0.7rem;
+    font-size: 1.1rem;
     font-weight: bold;
+    font-family: "Gowun Batang";
 }
 
 .input-container input {
@@ -84,28 +72,32 @@ body, html {
 }
 
 .submit-btn-container {
-    margin-left: 103px;
+    margin: 129px 0 0 45px;
 }
 
 .submit-btn-container1 button {
-    padding: 15px 108px;
+    padding: 10px 60px;
     background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
+    font-family: "Gowun Batang";
     margin-left: 103px;
+    width: 220px;
 }
 
 .submit-btn-container button {
-    padding: 15px 115px;
+    padding: 10px 60px;
     background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
+    font-family: "Gowun Batang";
+    width: 220px;
 }
 
 .submit-btn-container button:hover {
@@ -114,7 +106,7 @@ body, html {
 
 .input-group label {
     font-size: 0.9rem;
-    font-family: Inter;
+    font-family: "Gowun Batang";
     font-weight: 700;
     min-width: 100px;
 }
@@ -152,6 +144,7 @@ body, html {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    font-family: "Gowun Batang";
 }
 
 .submit-btn {
@@ -161,7 +154,7 @@ body, html {
     border: none;
     border-radius: 50px;
     font-size: 1.2rem;
-    font-family: Inter;
+    font-family: "Gowun Batang";
     font-weight: 500;
     cursor: pointer;
     margin: 40px 0 40px 100px;
@@ -170,7 +163,7 @@ body, html {
 }
 
 input::placeholder {
-    font-family: Inter;
+    font-family: "Gowun Batang";
     font-size: 1rem;
 }
 
@@ -219,6 +212,8 @@ input::placeholder {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
+    font-family: "Gowun Batang";
+    font-size: larger;
 }
 
 .tab-container div {
@@ -281,6 +276,7 @@ input::placeholder {
     flex-direction: column;
     justify-content: center;
     position: relative;
+    align-items: center;
 }
 
 

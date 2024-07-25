@@ -8,8 +8,8 @@
     <link rel="stylesheet" th:href="@{/document/css/layout.css}">
 </head>
 <body>
+<div th:replace="~{/fragments/mainHeader :: header}"></div>
 <div class="container">
-    <div th:replace="~{/fragments/mainHeader :: header}"></div>
     <div class="middle-container">
         <div class="form-container">
             <h1>로그인</h1>
@@ -34,8 +34,8 @@
             </form>
         </div>
     </div>
-    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
 </div>
+<div th:replace="~{/fragments/mainFooter :: footer}"></div>
 <script>
     var failMessage=`[[${failMessage}]]`;
     if(failMessage) alert(failMessage);
