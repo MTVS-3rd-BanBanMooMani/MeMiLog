@@ -94,29 +94,28 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
-    ev.preventDefault();
-    let data = ev.dataTransfer.getData("text");
-    let mainImageContainer = document.getElementById("mainImageContainer");
-    let draggedImage = document.getElementById(data);
-    let mainImage = document.getElementById("main-image");
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var draggedElement = document.getElementById(data);
+    var dropTarget = event.target;
 
-    // Swap the images
-    let tempSrc = mainImage.src;
-    mainImage.src = draggedImage.src;
-    draggedImage.src = tempSrc;
-
-    // Update image order in local storage
-    updateImageOrder();
+    if (dropTarget.classList.contains("thumbnail")) {
+        var parent = dropTarget.parentNode;
+        parent.insertBefore(draggedElement, dropTarget.nextSibling);
+        updateImageOrder();
+    }
 }
 
 function updateImageOrder() {
-    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
-    let newOrder = [];
-    thumbnails.forEach((thumbnail, index) => {
-        newOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
+    var thumbnails = document.querySelectorAll(".image-thumbnails .thumbnail");
+    var imageOrder = [];
+    thumbnails.forEach(function(thumbnail, index) {
+        if (thumbnail.id !== "addBtn") {
+            imageOrder.push(thumbnail.id + ":" + (index + 1));
+        }
     });
-    localStorage.setItem('imageOrder', JSON.stringify(newOrder));
+    document.getElementById("imageOrder").value = imageOrder.join(",");
 }
 
 function loadImageOrder() {
