@@ -6,6 +6,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 50MB
 
+
   cloud:
     gcp:
       project-id: memilog
@@ -22,6 +23,8 @@ spring:
 
   thymeleaf:
     prefix: classpath:/templates/
+    suffix: .html
+    cache: false
 
 mybatis:
   mapper-locations: mapper/**/*.xml
