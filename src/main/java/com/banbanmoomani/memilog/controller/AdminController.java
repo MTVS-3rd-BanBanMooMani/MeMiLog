@@ -1,9 +1,6 @@
 package com.banbanmoomani.memilog.controller;
 
-import com.banbanmoomani.memilog.DTO.MissionDTO;
-import com.banbanmoomani.memilog.DTO.NoticeDTO;
-import com.banbanmoomani.memilog.DTO.PageResult;
-import com.banbanmoomani.memilog.DTO.ThemeDTO;
+import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.admin.AdminDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BanListDTO;
 import com.banbanmoomani.memilog.DTO.admin.blacklist.BlackListDTO;
@@ -15,12 +12,15 @@ import com.banbanmoomani.memilog.DTO.user.LoginRequestDTO;
 import com.banbanmoomani.memilog.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -32,13 +32,15 @@ public class AdminController {
     private final MissionService missionService;
     private final RPTCategoryService rptCategoryService;
     private final ThemeService themeService;
+    private final FileService fileService;
 
-    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService, ThemeService themeService) {
+    public AdminController(AdminService adminService, NoticeService noticeService, MissionService missionService, RPTCategoryService rptCategoryService, ThemeService themeService, FileService fileService) {
         this.adminService = adminService;
         this.noticeService = noticeService;
         this.missionService = missionService;
         this.rptCategoryService = rptCategoryService;
         this.themeService = themeService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/login")
@@ -275,8 +277,9 @@ public class AdminController {
         AdminDTO adminInfo = adminService.findAdminById((int) admin_id);
         model.addAttribute("adminInfo", adminInfo);
 
-        PageResult<MissionDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
-        model.addAttribute("missionList", pagedResult.getData());
+        PageResult<MissionViewDataDTO> pagedResult = missionService.findAllMissionPaging(pageNum, pageSize, content);
+        List<MissionViewDataDTO> data = pagedResult.getData();
+        model.addAttribute("missionList", data);
         model.addAttribute("totalPages", (int) Math.ceil((double) pagedResult.getTotal() / pageSize));
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("content", content);
@@ -290,7 +293,7 @@ public class AdminController {
     public ResponseEntity createMission(@RequestBody MissionDTO missionDTO) {
         try {
             missionService.createMission(missionDTO);
-            return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.ok(missionDTO.getMissionId());
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -299,12 +302,29 @@ public class AdminController {
 
     @PostMapping("/updateMission")
     public ResponseEntity updateMission(@RequestBody MissionDTO missionDTO) {
-        try {
-            missionService.updateMission(missionDTO);
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        missionService.updateMission(missionDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/missionImage")
+    public ResponseEntity saveMissionImg(@RequestParam("file") MultipartFile file,
+                               @RequestParam("mission_id") int missionId) throws IOException {
+        // user_id -> admin 이름의 user_id 값으로 하드코딩
+        String url = fileService.uploadFile(file, 19);
+        MissionImgFileDTO imgFileDTO = new MissionImgFileDTO(url, missionId);
+        fileService.insertMissionImage(imgFileDTO);
+
+        return ResponseEntity.ok("Image uploaded successfully");
+    }
+
+    @PostMapping("/updateMissionImage")
+    public ResponseEntity updateMissionImg(@RequestParam("file") MultipartFile file,
+                                           @RequestParam("mission_id") int missionId) throws IOException {
+        String url = fileService.uploadFile(file, 19);
+        MissionImgFileDTO imgFileDTO = new MissionImgFileDTO(url, missionId);
+        fileService.updateMissionImage(imgFileDTO);
+
+        return ResponseEntity.ok("Image update successfully");
     }
 
     @GetMapping("/logout")

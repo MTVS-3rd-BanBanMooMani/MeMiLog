@@ -33,8 +33,8 @@
 </style>
 </head>
 <body>
-<div class="container">
 <div th:replace="~{/fragments/mainHeader :: header}"></div>
+<div class="container">
 <div class="middle-container">
     <div class="search-bar-container">
         <form action="/mission" method="get">
@@ -45,9 +45,9 @@
         </form>
     </div>
     <div class="mission-container">
-        <img class="mission-img" th:src="@{/document/img/banner.jpg}" />
-        <div th:text="'6월 20일의 미션'"></div>
-        <div th:text="${missionTitle}"></div>
+        <img class="mission-img" th:src="${mainTitleDTO.src_url != null ? mainTitleDTO.src_url : '/document/img/banner.jpg'}" />
+        <div th:text="${missionDate}"></div>
+        <div th:text="${mainTitleDTO.mission_content}"></div>
         <button onclick="location.href='/post/create'">나도 남기러 가기</button>
     </div>
     <div class="today-container">

@@ -3,6 +3,7 @@ package com.banbanmoomani.memilog.service;
 import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DTO.FileDTO;
 import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
+import com.banbanmoomani.memilog.DTO.MissionImgFileDTO;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,6 +97,14 @@ public class FileService {
             deleteFile(fileName);
             fileMapper.deleteFileUrl(fileDTO);
         }
+    }
+
+    public void insertMissionImage(MissionImgFileDTO missionImgFileDTO) {
+        fileMapper.insertMissionImage(missionImgFileDTO);
+    }
+
+    public void updateMissionImage(MissionImgFileDTO missionImgFileDTO) {
+        fileMapper.updateMissionImage(missionImgFileDTO);
     }
 
     public List<FileDTO> findAllByPostId(int postId) {

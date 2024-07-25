@@ -1,6 +1,7 @@
 package com.banbanmoomani.memilog.DAO;
 
 import com.banbanmoomani.memilog.DTO.FileDTO;
+import com.banbanmoomani.memilog.DTO.MissionImgFileDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,5 +13,7 @@ public interface FileMapper {
     void updateFile(FileDTO fileDTO);
     void deleteFileUrl(FileDTO fileDTO);
     void insertFile(FileDTO fileDTO);
+    void insertMissionImage(MissionImgFileDTO missionImgFileDTO);
+    void updateMissionImage(MissionImgFileDTO missionImgFileDTO);
     List<FileDTO> findAllByPostId(int postId);
 }
