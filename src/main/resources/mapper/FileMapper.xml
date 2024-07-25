@@ -41,5 +41,20 @@
             #{picture_order}
         )
     </insert>
+
+    <insert id="insertMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
+        INSERT INTO FILE
+        (
+        src_url,
+        type,
+        mission_id
+        )
+        VALUES
+        (
+        #{src_url},
+        'mission',
+        #{mission_id}
+        )
+    </insert>
 </mapper>
 
