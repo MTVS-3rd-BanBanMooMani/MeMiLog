@@ -163,10 +163,10 @@ public class PostController {
                                    @RequestParam(name = "newFile3", required = false) MultipartFile newFile3,
                                    @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
                                    @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
-                                   @RequestParam(name = "postId") Integer postId,
+                                   @RequestParam(name = "post_id") Integer post_id,
                                    HttpSession session,
                                    RedirectAttributes rttr) {
-        System.out.println("Received postId: " + postId);
+        System.out.println("Received postId: " + post_id);
         System.out.println("Received oldFile1: " + oldFile1);
         System.out.println("Received newFile1: " + newFile1);
 
@@ -174,7 +174,7 @@ public class PostController {
         MultipartFile[] newFiles = {newFile1, newFile2, newFile3, newFile4, newFile5};
 
         // 기존 파일 삭제 로직
-        List<Integer> currentFileIds = postService.getFileIdsByPostId(postId);
+        List<Integer> currentFileIds = postService.getFileIdsByPostId(post_id);
         for (Integer fileId : currentFileIds) {
             if (!Arrays.asList(oldFiles).contains(fileId)) {
                 postService.deleteFileById(fileId);
@@ -188,7 +188,7 @@ public class PostController {
                 String newFileUrl = fileStorageService.saveFile(newFile);
                 UpdateFileDTO newFileDTO = new UpdateFileDTO();
                 newFileDTO.setSrc_url(newFileUrl);
-                newFileDTO.setPost_id(postId);
+                newFileDTO.setPost_id(post_id);
                 newFileDTO.setPicture_id(i + 1);
                 postService.saveFile(newFileDTO);
             }

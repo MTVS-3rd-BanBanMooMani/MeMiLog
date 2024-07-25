@@ -133,7 +133,12 @@ public class PostService {
     }
 
     public List<Integer> getFileIdsByPostId(int postId) {
-        return fileMapper.selectFileIdsByPostId(postId);
+        System.out.println("getFileIdsByPostId = " + postId);
+        List<Integer> integerList = fileMapper.selectFileIdsByPostId(postId);
+        for (Integer fileId : integerList) {
+            System.out.println("fileId = " + fileId);
+        }
+        return integerList;
     }
 
     public void deleteFileById(int fileId) {

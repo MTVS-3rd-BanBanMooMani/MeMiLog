@@ -82,7 +82,7 @@
     <select id="selectFileIdsByPostId" parameterType="int" resultType="int">
         SELECT picture_id
         FROM FILE
-        WHERE post_id = #{post_id}
+        WHERE post_id = #{postId}
     </select>
 
     <delete id="deleteFileById" parameterType="int">
