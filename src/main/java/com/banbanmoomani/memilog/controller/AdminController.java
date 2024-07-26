@@ -301,8 +301,8 @@ public class AdminController {
     }
 
     @PostMapping("/updateMission")
-    public ResponseEntity updateMission(@RequestBody MissionDTO missionDTO) {
-        missionService.updateMission(missionDTO);
+    public ResponseEntity updateMission(@RequestBody MissionViewDataDTO missionViewDataDTO) {
+        missionService.updateMission(missionViewDataDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 
