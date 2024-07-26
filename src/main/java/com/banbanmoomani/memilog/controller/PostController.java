@@ -84,7 +84,8 @@ public class PostController {
                              @RequestParam(name = "file4", required = false) MultipartFile file4,
                              @RequestParam(name = "file5", required = false) MultipartFile file5,
                              Model model,
-                             HttpSession session) throws IOException {
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) throws IOException {
         System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
@@ -111,8 +112,17 @@ public class PostController {
                 fileService.saveFileUrl(fileUrl, "post", postId, (int) user_id, pictureOrder++);
             }
         }
+
+        // mission_date를 가져오기
+        MissionDTO mission = missionService.findTodayMission();
+        String missionDate = mission.getMissionDate();
+
+        // RedirectAttributes를 사용하여 date 매개변수를 전달
+        redirectAttributes.addAttribute("date", missionDate);
+
         return "redirect:/post/bymission";
     }
+
 
     @GetMapping("/update")
     public String updatePost(@RequestParam(value = "postId", required = false) Integer postId,
