@@ -154,6 +154,7 @@
         FROM FILE
         WHERE post_id = #{post_id}
         AND type = 'post'
+        ORDER BY picture_order asc
     </select>
 
 </mapper>
