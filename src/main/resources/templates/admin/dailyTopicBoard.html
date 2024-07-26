@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <label for="topicTag2">부태그</label>
                                     <select class="form-control" id="topicTag2">
-                                        <option value="" disabled selected>태그를 선택하세요</option>
+                                        <option value="" disabled selected>부태그를 선택하세요</option>
                                         <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
@@ -197,17 +197,18 @@
 
                                 <div class="form-group">
                                     <label for="modifyTopicTag1">주태그</label>
-                                    <select class="form-control" id="modifyTopicTag1">
+                                    <select class="form-control" id="modifyTopicTag1" name="themeId">
                                         <option value="" disabled selected>주태그를 선택하세요</option>
-                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeName}" th:text="${theme.themeName}"></option>
                                     </select>
+                                    <input type="hidden" id="selectedThemeName" name="themeName" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="modifyTopicTag2">부태그</label>
                                     <select class="form-control" id="modifyTopicTag2">
-                                        <option value="" disabled selected>주태그를 선택하세요</option>
-                                        <option th:each="theme : ${themeList}" th:value="${theme.themeId}" th:text="${theme.themeName}"></option>
+                                        <option value="" disabled selected>부태그를 선택하세요</option>
+                                        <option th:each="theme : ${themeList}" th:value="${theme.themeName}" th:text="${theme.themeName}"></option>
                                     </select>
                                 </div>
 
@@ -286,8 +287,8 @@
         const topicDetailContent = `
             <p><strong>주제 번호:</strong> ${topicId}</p>
             <p><strong>주제:</strong> ${topic}</p>
-            <p><strong>태그:</strong> ${tag1}</p>
-            <p><strong>태그:</strong> ${tag2}</p>
+            <p><strong>주태그:</strong> ${tag1}</p>
+            <p><strong>부태그:</strong> ${tag2}</p>
         `;
 
         document.getElementById("topicDetailContent").innerHTML = topicDetailContent;
@@ -375,6 +376,7 @@
         let bannerImage = document.getElementById('modifyBannerImage').files[0];
         let topicId = selectedTopic.topicId;
 
+        console.log(topicTag1, topicTag2)
         if (!title || !date) {
             alert("모든 필드를 입력해주세요.");
             return;
@@ -385,8 +387,8 @@
             missionId: parseInt(topicId),
             missionContent: title,
             missionDate: date,
-            priThemeId: parseInt(topicTag1),
-            subThemeId: parseInt(topicTag2)
+            priThemeName: topicTag1,
+            subThemeName: topicTag2
         };
 
         // 첫 번째 API로 데이터 전송

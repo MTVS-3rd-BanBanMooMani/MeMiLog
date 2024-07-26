@@ -2,7 +2,6 @@ package com.banbanmoomani.memilog.service;
 
 import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DTO.FileDTO;
-import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.MissionImgFileDTO;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
@@ -12,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
+import java.io.InputStream;
 
 
 @Service
@@ -121,5 +120,13 @@ public class FileService {
 //            }
 //        }
 //    }
+
+    public String getProfileUrl(Long post_id) {
+        return fileMapper.getProfileUrl(post_id);
+    }
+
+    public List<String> getPostUrl(Long postId) {
+        return fileMapper.getPostUrl(postId);
+    }
 }
 

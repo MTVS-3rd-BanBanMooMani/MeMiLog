@@ -167,6 +167,7 @@
         <if test="content != null and content != ''">
             AND mission_content LIKE CONCAT('%', #{content}, '%')
         </if>
+        order by mission_date desc
     </select>
 
     <update id="updateMission" parameterType="com.banbanmoomani.memilog.DTO.MissionDTO" keyProperty="missionId">

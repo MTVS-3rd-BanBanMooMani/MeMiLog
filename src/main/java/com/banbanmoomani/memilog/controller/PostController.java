@@ -6,7 +6,10 @@ import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import com.banbanmoomani.memilog.service.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/post")
@@ -35,8 +35,9 @@ public class PostController {
     private final PostMapper postMapper;
     private final ReportService reportService;
     private final RPTCategoryService rptCategoryService;
+    private final FileStorageService fileStorageService;
 
-    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper, ReportService reportService, RPTCategoryService rptCategoryService) {
+    public PostController(PostService postService, MissionService missionService, EmotionService emotionService, ComPanionService comPanionService, FileService fileService, PostMapper postMapper, ReportService reportService, RPTCategoryService rptCategoryService, FileStorageService fileStorageService) {
         this.postService = postService;
         this.missionService = missionService;
         this.emotionService = emotionService;
@@ -45,6 +46,7 @@ public class PostController {
         this.postMapper = postMapper;
         this.reportService = reportService;
         this.rptCategoryService = rptCategoryService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/create")
@@ -113,12 +115,13 @@ public class PostController {
     }
 
     @GetMapping("/update")
-    public String updatePost(@RequestParam("postId") int postId,
+    public String updatePost(@RequestParam(value = "postId", required = false) Integer postId,
                              Model model,
                              HttpSession session,
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         PostDTO post = postService.findPostById(postId);
+        System.out.println("post 1= " + post);
 
         if(post == null || post.getUser_id() != (int)user_id) {
             rttr.addFlashAttribute("failMessage", "수정 권한이 없습니다.");
@@ -130,6 +133,9 @@ public class PostController {
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
         List<UpdateFileDTO> updateFileDTOList = postService.updatefiles(postId);
+        for(UpdateFileDTO updateFileDTO : updateFileDTOList) {
+            System.out.println("updateFileDTO.getP = " + updateFileDTO.getPicture_id() + " " + updateFileDTO.getPicture_order());
+        }
         String mainFile = postService.findMainFile(postId);
 
         model.addAttribute("post", post);
@@ -139,7 +145,10 @@ public class PostController {
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
         model.addAttribute("imageUrls", updateFileDTOList);
+        System.out.println("updateFileDTOList = " + updateFileDTOList);
         model.addAttribute("mainImageUrl", mainFile);
+
+        System.out.println("mainFile = " + mainFile);
 
         return "main/postupdate";
     }
@@ -150,6 +159,7 @@ public class PostController {
         System.out.println("fileListDTO = " + fileListDTO);
         return ResponseEntity.ok(fileListDTO);
     }
+
 
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
@@ -163,28 +173,62 @@ public class PostController {
                                    @RequestParam(name = "newFile3", required = false) MultipartFile newFile3,
                                    @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
                                    @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
+                                   @RequestParam(name = "post_id") Integer post_id,
+                                   @RequestParam(name = "imageOrder") String imageOrder, // 새로운 순서값 JSON
                                    HttpSession session,
-                                   RedirectAttributes rttr) {
-        System.out.println("oldFile1 = " + oldFile1); // oldFile에는 FILE 테이블의 picture_id가 담겨 있음
-        System.out.println("oldFile2 = " + oldFile2); // 기존의 FILE 테이블에서 해당 post_id로 저장된 사진들을 모두 가져온 뒤
-        System.out.println("oldFile3 = " + oldFile3); // 여기 oldFile에 없는 것들을 삭제
-        System.out.println("oldFile4 = " + oldFile4);
-        System.out.println("oldFile5 = " + oldFile5);
-        System.out.println("file1 = " + newFile1); // newFile들은 싹다 insert(null이 아니면)
-        System.out.println("file2 = " + newFile2);
-        System.out.println("file3 = " + newFile3);
-        System.out.println("file4 = " + newFile4);
-        System.out.println("file5 = " + newFile5);
+                                   RedirectAttributes rttr) throws IOException {
+        System.out.println("Received postId: " + post_id);
+        System.out.println("Received oldFile1: " + oldFile1);
+        System.out.println("Received newFile1: " + newFile1);
+        System.out.println("imageOrder = " + imageOrder);
 
+        Object user_id = session.getAttribute("user_id");
+        if (user_id == null) {
+            rttr.addFlashAttribute("failMessage", "사용자 정보가 없습니다.");
+            return "redirect:/post/bymission";
+        }
 
-//        Object user_id = session.getAttribute("user_id");
-//        post.setUser_id((int) user_id);
-//        try {
-//            postService.updatePost(post);
-//            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-//        } catch (IllegalArgumentException e) {
-//            rttr.addFlashAttribute("failMessage", e.getMessage());
-//        }
+        Integer userId = (Integer) user_id;
+        post.setUser_id(userId);
+
+        Integer[] oldFiles = {oldFile1, oldFile2, oldFile3, oldFile4, oldFile5};
+        MultipartFile[] newFiles = {newFile1, newFile2, newFile3, newFile4, newFile5};
+        // 기존 파일 삭제 로직
+        List<Integer> currentFileIds = postService.getFileIdsByPostId(post_id, userId);
+        for (Integer fileId : currentFileIds) {
+            if (!Arrays.asList(oldFiles).contains(fileId)) {
+                postService.deleteFileById(fileId, userId);
+            }
+        }
+
+        // 새로운 파일 추가 로직
+        int existingFileCount = currentFileIds.size();
+        String cleanedImageOrder = imageOrder.replaceAll("[\\[\\]\"]", "");
+        String[] fileList = cleanedImageOrder.split(",");
+        for (int i = 0; i < fileList.length; i++) {
+            System.out.println("fileList = " + fileList[i]);
+            if (fileList[i].startsWith("oldFile")) {
+                String number = fileList[i].replaceAll("[^0-9]", "");
+                int index = Integer.parseInt(number) - 1;
+
+                postService.updateOldFile(oldFiles[index], i + 1);
+            } else {
+                String number = fileList[i].replaceAll("[^0-9]", "");
+                int index = Integer.parseInt(number) - 1;
+
+                String newFileUrl = fileStorageService.saveFile(newFiles[index], post_id);
+                UpdateFileDTO newFileDTO = new UpdateFileDTO();
+                newFileDTO.setSrc_url(newFileUrl);
+                newFileDTO.setPost_id(post_id);
+                newFileDTO.setPicture_order(i+1); // 기존 파일 수에 따른 순서 지정
+                newFileDTO.setUser_id(userId); // 사용자 ID 설정
+                System.out.println(userId);
+                newFileDTO.setType("post"); // type 필드 설정
+                System.out.println(post);
+                postService.saveFile(newFileDTO);
+            }
+        }
+
         return "redirect:/post/bymission";
     }
 
@@ -229,15 +273,51 @@ public class PostController {
         return "main/allview";
     }
 
-    // 오늘 mission에 해당하는 post 보기
+    @PostMapping(value = "/bymission", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req) {
+        Long post_id = req.get("postId");
+        System.out.println("post_id = " + post_id);
+
+        PostRequestDTO postDetail = postService.showPostDetail(post_id);
+        System.out.println("=============포스트 디테일=============");
+        System.out.println(postDetail);
+
+        String profile_img = fileService.getProfileUrl(post_id);
+        System.out.println("========프로필 img===============");
+        System.out.println("profile_img = " + profile_img);
+
+        List<String> postUrl = fileService.getPostUrl(post_id);
+        System.out.println("=======포스트 img=======");
+        System.out.println("postUrl = " + postUrl);
+
+        postDetail.setProfile_img(profile_img);
+        postDetail.setPostUrl(postUrl);
+
+        return postDetail;
+
+    }
+
     @GetMapping("/bymission")
     public String findAllPostOnMissionByDate(Model model,
-                                             @RequestParam(name = "date",required = false)String date) {
-        if(date != null) {
-            System.out.println(date);
+                                             @RequestParam(name = "date",required = false)String date,
+                                             @RequestParam(name = "type", required = false) String companionTypes) {
 
-            List<PostRequestDTO> posts = postService.findAllPostOnMissionByDate(date);
+        System.out.println("date = " + date);
+        System.out.println("companionTypes = " + companionTypes);
+
+        List<PostRequestDTO> posts = new ArrayList<>();
+
+        if (date != null) {
+
+            MainTitleDTO mainTitleDTO = postService.showBanner(date);
+            System.out.println("===============banner 정보");
+            System.out.println("mainTitleDTO = " + mainTitleDTO);
+            model.addAttribute("bannerInfo", mainTitleDTO);
+
+            posts = postService.findAllPostOnMissionByDate(date);
             model.addAttribute("posts", posts);
+            model.addAttribute("date", date);
             System.out.println("=======날짜별 post 조회");
             posts.forEach(System.out::println);
 
@@ -252,6 +332,20 @@ public class PostController {
                 model.addAttribute("formattedDate", "Invalid date format");
             }
 
+            if (companionTypes != null && !companionTypes.isEmpty()) {
+
+                List<Integer> companionIds = Arrays.stream(companionTypes.split(","))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
+
+                PostSearchCriteria postSearchCriteria = new PostSearchCriteria(date, companionIds);
+
+                posts = postService.findPostsByCompanion(postSearchCriteria);
+                model.addAttribute("posts", posts);
+
+                System.out.println("========누구와 필터 적용 결과");
+                posts.forEach(System.out::println);
+            }
         }
 
         List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
@@ -259,71 +353,8 @@ public class PostController {
         System.out.println("==========report 종류");
         reportCategory.forEach(System.out::println);
 
-//        @RequestParam(name = "post_id", required = false) int post_id
-//        List<PostDTO> postDetail = postService.showPostDetail(post_id);
-//        System.out.println("=======포스트 디테일=============");
-//        System.out.println(postDetail);
-//        System.out.println("post_id = " + post_id);
-
         return "main/postview";
     }
 
-    @PostMapping(value = "/bymission", produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req) {
-        Long post_id = req.get("postId");
-        System.out.println("post_id = " + post_id);
-
-        PostRequestDTO postDetail = postService.showPostDetail(post_id);
-        System.out.println("=============포스트 디테일=============");
-        System.out.println(postDetail);
-
-
-        return postDetail;
-
-    }
-
-
-//    ============================ 연습
-
-    // 오늘 mission에 해당하는 post 보기
-//    @GetMapping("/bymission")
-//    public String findAllPostOnMissionByDate(Model model) {
-//
-//        List<PostDTO> posts = postService.findAllPostOnMissionByDate();
-//        model.addAttribute("post", posts);
-//
-//        System.out.println("====================post");
-//        posts.forEach(System.out::println);
-//
-//        return "main/cateTest";
-//    }
-
-    // 누구와 카테고리 필터 적용
-    @GetMapping("/companion")
-    public String findPostsByCompanion(@RequestParam("type") String companionTypes, Model model) {
-
-        System.out.println("companionTypes = " + companionTypes);
-
-        List<PostRequestDTO> posts;
-
-        if (companionTypes != null && !companionTypes.isEmpty()) {
-            List<Integer> companionIds = Arrays.stream(companionTypes.split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            posts = postService.findPostsByCompanion(companionIds);
-        } else {
-            // 선택한 타입이 없는 경우에는 어떤 걸로 할지
-//            posts = postService.findAllPostOnMissionByDate();
-            return "redirect:/post/bymission";
-        }
-
-        model.addAttribute("posts", posts);
-
-        posts.forEach(System.out::println);
-
-        return "main/postview";
-
-    }
 
 }

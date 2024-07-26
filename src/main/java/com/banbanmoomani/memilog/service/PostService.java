@@ -1,11 +1,13 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +19,12 @@ public class PostService {
 
     private final LikeMapper likeMapper;
 
-    public PostService(PostMapper postMapper, LikeMapper likeMapper) {
+    private final FileMapper fileMapper;
+
+    public PostService(PostMapper postMapper, LikeMapper likeMapper, FileMapper fileMapper) {
         this.postMapper = postMapper;
         this.likeMapper = likeMapper;
+        this.fileMapper = fileMapper;
     }
 
     public List<PostDTO> findAllPosts() {
@@ -71,8 +76,12 @@ public class PostService {
         return postMapper.findAllPostOnMissionByDate(date);
     }
 
-    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
-        return postMapper.findPostsByCompanion(companionIds);
+//    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
+//        return postMapper.findPostsByCompanion(companionIds);
+//    }
+
+    public List<PostRequestDTO> findPostsByCompanion(PostSearchCriteria postSearchCriteria) {
+        return postMapper.findPostsByCompanion(postSearchCriteria);
     }
 
 
@@ -111,6 +120,7 @@ public class PostService {
     }
 
     public List<UpdateFileDTO> updatefiles(int postId) {
+        System.out.println("postId = " + postId);
         return postMapper.updateFile(postId);
     }
 
@@ -118,13 +128,28 @@ public class PostService {
         return postMapper.findMainFile(postId);
     }
 
-    public void updateImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.updateImageOrder(imageOrderDTO);
+
+    public List<Integer> getFileIdsByPostId(int postId, Integer userId) {
+        System.out.println("getFileIdsByPostId = " + postId);
+        List<Integer> integerList = fileMapper.selectFileIdsByPostId(postId);
+        for (Integer fileId : integerList) {
+            System.out.println("fileId = " + fileId);
+        }
+        return integerList;
     }
-    public void deleteImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.deleteImageOrder(imageOrderDTO);
+
+    public void deleteFileById(int fileId, Integer userId) {
+        fileMapper.deleteFileById(fileId);
     }
-    public void addImage(ImageOrderDTO imageOrderDTO) {
-        postMapper.addImage(imageOrderDTO);
+
+    public void saveFile(UpdateFileDTO updateFileDTO) {
+        fileMapper.getFile(updateFileDTO);
     }
+
+    @Transactional
+    public void updateOldFile(Integer oldFile, int order) {
+        fileMapper.updateOldFile(oldFile, order);
+    }
+
+    public MainTitleDTO showBanner(String date) { return postMapper.showBanner(date); }
 }
