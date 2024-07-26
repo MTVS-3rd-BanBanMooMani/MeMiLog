@@ -1,6 +1,6 @@
 # Me Mission Log
 <p align="center">
-   <img src="https://github.com/user-attachments/assets/97ac2926-4c36-4613-aa26-bae16bcedb78">
+   <img src="https://github.com/user-attachments/assets/3a3716cb-4368-482e-9a36-a38afa20a1da">
 </p>
 
 ## 서비스 특징
