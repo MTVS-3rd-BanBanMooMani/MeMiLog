@@ -176,7 +176,6 @@
             </div>
         </div>
     </div>
-    <!-- 여기서부터 모달 -->
     <div class="modal-bg">
         <div class="post-modal">
             <div class="post-modal-top">
@@ -205,11 +204,9 @@
                     &times;
                 </button>
             </div>
-            <!-- post modal content -->
             <div class="post-modal-content" style="display: flex">
-                <!-- post modal 왼쪽 -->
                 <div class="post-modal-left">
-                    <div style="margin: 0 32px 20px; text-align: left">
+                    <div style="margin: 0 32px 20px 32px">
                         <div style="margin-bottom: 15px">
                             <button id="priTheme" class="category-btn active"></button>
                             <button id="subTheme" class="category-btn active"></button>
@@ -221,7 +218,6 @@
 
                     <div class="post-modal-board-img">
                         <span class="arrow arrow-left hidden">&lt;</span>
-                        <!-- 여기에 포스트 이미지 -->
                         <span class="arrow arrow-right">&gt;</span>
                     </div>
 
@@ -234,7 +230,7 @@
                                     height="50px"
                                     style="border-radius: 50%; overflow: hidden; object-fit: cover"
                             />
-                            <p id="modal-nickname"></p>
+                            <p id="modalNickname"></p>
                         </div>
                         <div class="post-modal-like-box">
                             <p id="likeCount"></p>
@@ -243,16 +239,14 @@
                                     alt="좋아요"
                                     width="30px"
                                     height="30px"
-                                    class="post-like-btn"
+                                    id="post-like-btn"
                                     style="cursor: pointer"
                             />
                         </div>
                     </div>
 
-                    <!-- ================================== -->
                 </div>
 
-                <!-- post modal 오른쪽 -->
                 <div class="post-modal-right">
                     <div class="post-modal-right-info">
                         <p id="writtenDate"></p>
@@ -265,9 +259,8 @@
                                 style="border-radius: 50%"
                         />
                     </div>
-                    <div id="content" style="text-align: left"></div>
+                    <div id="content"></div>
                 </div>
-                <!-- post modal content 끝 -->
             </div>
         </div>
     </div>
