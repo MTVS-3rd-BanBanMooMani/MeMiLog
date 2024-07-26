@@ -1,5 +1,7 @@
 package com.banbanmoomani.memilog.DTO.mydiary;
 
+import java.util.List;
+
 public class PostRequestDTO {
 
     private int post_id;
@@ -16,6 +18,25 @@ public class PostRequestDTO {
     private String emotion_name;
     private String companion_type;
     private String src_url;
+
+    private String profile_img;
+    private List<String> postUrl;
+
+    public String getProfile_img() {
+        return profile_img;
+    }
+
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
+    }
+
+    public List<String> getPostUrl() {
+        return postUrl;
+    }
+
+    public void setPostUrl(List<String> postUrl) {
+        this.postUrl = postUrl;
+    }
 
     PostRequestDTO(){}
 

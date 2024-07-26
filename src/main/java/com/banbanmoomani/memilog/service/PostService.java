@@ -7,6 +7,7 @@ import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
+import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,8 +76,12 @@ public class PostService {
         return postMapper.findAllPostOnMissionByDate(date);
     }
 
-    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
-        return postMapper.findPostsByCompanion(companionIds);
+//    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
+//        return postMapper.findPostsByCompanion(companionIds);
+//    }
+
+    public List<PostRequestDTO> findPostsByCompanion(PostSearchCriteria postSearchCriteria) {
+        return postMapper.findPostsByCompanion(postSearchCriteria);
     }
 
 
@@ -145,4 +150,6 @@ public class PostService {
     public void updateOldFile(Integer oldFile, int order) {
         fileMapper.updateOldFile(oldFile, order);
     }
+
+    public MainTitleDTO showBanner(String date) { return postMapper.showBanner(date); }
 }

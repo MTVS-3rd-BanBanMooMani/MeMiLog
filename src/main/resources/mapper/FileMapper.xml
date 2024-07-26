@@ -42,8 +42,24 @@
         AND type = #{type}
     </update>
     <insert id="insertFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
-        INSERT INTO FILE (src_url, post_id, picture_order, user_id, type)
-        VALUES (#{src_url}, #{post_id}, #{picture_order}, #{user_id}, #{type})
+        INSERT
+        INTO
+            FILE
+        (
+            src_url,
+            post_id,
+            picture_order,
+            user_id,
+            type
+        )
+        VALUES
+        (
+            #{src_url},
+            #{post_id},
+            #{picture_order},
+            #{user_id},
+            #{type}
+        )
     </insert>
 
     <insert id="insertMissionImage" parameterType="com.banbanmoomani.memilog.DTO.MissionImgFileDTO">
@@ -120,5 +136,25 @@
         SET picture_order = #{order}
         WHERE picture_id = #{oldFile}
     </update>
+
+    <select id="getProfileUrl" parameterType="long" resultType="string">
+        SELECT src_url
+        FROM FILE
+        WHERE user_id = (
+        SELECT user_id
+        FROM FILE
+        WHERE post_id = #{post_id}
+        LIMIT 1
+        )
+        AND type = 'profile'
+    </select>
+
+    <select id="getPostUrl" parameterType="long" resultType="string">
+        SELECT src_url
+        FROM FILE
+        WHERE post_id = #{post_id}
+        AND type = 'post'
+    </select>
+
 </mapper>
 

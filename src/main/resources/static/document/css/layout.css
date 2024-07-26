@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+@font-face {
+  font-family: 'EF_jejudoldam';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url('//fonts.googleapis.com/earlyaccess/nanumpenscript.css');
 
 body {
   margin: 0 auto;
@@ -16,12 +23,10 @@ body {
   justify-content: space-between;
   align-items: center;
   display: flex;
-  margin: 25px auto 0;
+  margin: 40px auto 0;
   z-index: 1000;
   font-family: "Gowun Batang";
 }
-
-
 
 /* 메뉴바 */
 .header .logo {
@@ -78,8 +83,7 @@ body {
 /* ------------------------------------ */
 
 .container {
-  padding: 20px;
-  margin: 5vh auto 0;
+  margin: 6vh 0;
   text-align: center;
 }
 

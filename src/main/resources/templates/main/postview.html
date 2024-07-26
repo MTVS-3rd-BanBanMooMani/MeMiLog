@@ -41,25 +41,26 @@
     />
 </head>
 <body>
-<div th:replace="~{/fragments/mainHeader :: header}"></div>
+<div th:replace="~{fragments/mainHeader :: header}"></div>
 <main>
     <div class="content">
         <div class="modal-container">
-<!--            <div class="modal-function">-->
-<!--                <button class="modal-close-btn">&times;</button>-->
-<!--            </div>-->
+            <!--            <div class="modal-function">-->
+            <!--                <button class="modal-close-btn">&times;</button>-->
+            <!--            </div>-->
             <div class="modal-mission-container">
                 <img
                         class="modal-mission-img"
-                        src="../../document/img/banner.jpg"
+                        th:src="${bannerInfo.src_url != null ? bannerInfo.src_url : '/document/img/banner.jpg'}"
                 />
                 <div th:text="${formattedDate}"></div>
-                <div th:text="${posts[0].mission_content}"></div>
+                <div th:text="${bannerInfo.mission_content}">미션</div>
             </div>
             <div class="modal-mission-filter-container">
-                <form id="companionForm" action="/post/companion" method="get" class="category-box">
+                <form id="companionForm" action="/post/bymission" method="get" class="category-box">
                     <span class="category-title">누구와</span>
-                    <input type="hidden" id="companionType" name="type">
+                    <input type="hidden" id="companionType" name="type"/>
+                    <input type="hidden" id="date" name="date" th:value="${date}"/>
                     <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">친구</button>
                     <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">가족</button>
                     <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">학교</button>
@@ -71,7 +72,7 @@
             <div class="modal-photo-greed-container">
                 <div class="modal-row">
                     <div th:each="post : ${posts}" class="photo-div" th:data-post-id="${post.post_id}">
-<!--                        <img src="../../document/img/home-post-photo.jpg" />-->
+                        <!--                        <img src="../../document/img/home-post-photo.jpg" />-->
                         <img th:src="${post.src_url}" width="138px" height="180px" />
                         <p th:text="${post.nickname}"></p>
                     </div>
@@ -119,38 +120,24 @@
                                 <button id="subTheme" class="category-btn active"></button>
                                 <button id="companion" class="category-btn active"></button>
                             </div>
-                            <p id="missionContent" style="font-size: 24px; font-weight: bold">
+                            <p id="missionContent" style="font-size: 32px; font-weight: 500">
                             </p>
                         </div>
 
                         <div class="post-modal-board-img">
                             <span class="arrow arrow-left hidden">&lt;</span>
-                            <img
-                                    src="../../document/img/home-post-photo.jpg"
-                                    alt="게시물이미지"
-                                    class="modal-image"
-                            />
-                            <img
-                                    src="../../document/img/home-post-photo.jpg"
-                                    alt="게시물이미지"
-                                    class="modal-image"
-                            />
-                            <img
-                                    src="../../document/img/home-post-photo.jpg"
-                                    alt="게시물이미지"
-                                    class="modal-image"
-                            />
+                            <!-- 여기에 포스트 이미지 -->
                             <span class="arrow arrow-right">&gt;</span>
                         </div>
 
                         <div class="post-modal-user-info">
                             <div class="post-modal-profile">
                                 <img
-                                        src="../../document/img/stone.jpg"
+                                        id="profileImg"
                                         alt="프로필이미지"
-                                        width="35px"
-                                        height="35px"
-                                        style="border-radius: 50%"
+                                        width="50px"
+                                        height="50px"
+                                        style="border-radius: 50%; overflow: hidden; object-fit: cover"
                                 />
                                 <p id="nickname"></p>
                             </div>
@@ -178,8 +165,8 @@
                                     id="emotionImg"
                                     src=""
                                     alt="감정이미지"
-                                    width="25px"
-                                    height="25px"
+                                    width="30px"
+                                    height="30px"
                                     style="border-radius: 50%"
                             />
                         </div>
@@ -220,7 +207,7 @@
     </div>
 </main>
 
-<div th:replace="~{/fragments/mainFooter :: footer}"></div>
+<div th:replace="~{fragments/mainFooter :: footer}"></div>
 
 <script src="../../document/js/allviewModal.js"></script>
 </body>

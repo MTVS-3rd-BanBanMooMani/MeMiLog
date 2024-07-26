@@ -18,7 +18,7 @@
     </head>
     <body>
     <div class="container">
-        <div th:replace="~{/fragments/mainHeader :: header}"></div>
+        <div th:replace="~{fragments/mainHeader :: header}"></div>
         <form th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="post_id" name="post_id" th:value="${post.post_id}"/>
             <input type="hidden" name="user_id" th:value="${post.user_id}"/>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </form>
-        <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+        <div th:replace="~{fragments/mainFooter :: footer}"></div>
     </div>
 <script src="../../static/document/js/updatepost.js" th:src="@{/document/js/updatepost.js}"></script>
 </body>

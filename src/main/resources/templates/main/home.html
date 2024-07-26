@@ -33,7 +33,7 @@
 </style>
 </head>
 <body>
-<div th:replace="~{/fragments/mainHeader :: header}"></div>
+<div th:replace="~{fragments/mainHeader :: header}"></div>
 <div class="container">
 <div class="middle-container">
     <div class="search-bar-container">
@@ -52,7 +52,7 @@
     </div>
     <div class="today-container">
         <div class="today-label">
-            <p th:text="${todayPostCount} + ' 명의 미미들의 오늘📷'"></p>
+            <p th:text="${todayPostCount} + '명의 미미들의 오늘📷'"></p>
         </div>
         <div class="today-photo-container" id="today-photo-container">
             <img th:src="@{/document/img/home-left-arrow.png}" id="left-arrow" onclick="scrollTodayPhotos(-1)" alt="left arrow">
@@ -213,8 +213,7 @@
     </div>
     <!-- 신고 모달 끝 -->
 </div>
-
-    <div th:replace="~{/fragments/mainFooter :: footer}"></div>
+    <div th:replace="~{fragments/mainFooter :: footer}"></div>
 </div>
 <div id="postModal" class="modal">
 <div class="modal-content">
@@ -227,7 +226,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 let todayIndex = 0;
-const maxPhotos = 8;
+const maxPhotos =7;
 let todayPhotos;
 let archivePhotos;
 

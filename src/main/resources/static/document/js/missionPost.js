@@ -103,7 +103,7 @@ document.getElementById('themeWordForm').addEventListener('submit', (event) => {
   // mission note(메모지) 관련
   // 메모지와 마스킹테이프 색깔
   const noteColors = [
-    "#FBD5D5", "#F6FDFF", "#FFFFF5", "#FBF9FF", "#F3FFFD", "#FFF7FC", "#F7FFF3", "#FFF8F2",
+    "#fffafa", "#F6FDFF", "#FFFFF5", "#FBF9FF", "#F3FFFD", "#FFF7FC", "#F7FFF3", "#FFF8F2",
   ];
   const tapeColors = [
     "#FBD5D5", "#D5F4FB", "#FBFAD5", "#EDD5FB", "#D5FBF4", "#FBD5EE", "#E1FBD5", "#FFC692",

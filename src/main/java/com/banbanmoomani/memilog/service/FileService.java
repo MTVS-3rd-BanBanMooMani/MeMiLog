@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.io.InputStream;
 
 
 @Service
@@ -26,8 +27,9 @@ public class FileService {
 
     public FileService(FileMapper fileMapper) throws IOException {
         this.fileMapper = fileMapper;
+        InputStream inputStream = getClass().getResourceAsStream("/memilog-4ed085e451cd.json");
         this.storage = StorageOptions.newBuilder()
-                .setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream("src/main/resources/memilog-4ed085e451cd.json")))
+                .setCredentials(ServiceAccountCredentials.fromStream(inputStream))
                 .build()
                 .getService();
     }
@@ -118,5 +120,13 @@ public class FileService {
 //            }
 //        }
 //    }
+
+    public String getProfileUrl(Long post_id) {
+        return fileMapper.getProfileUrl(post_id);
+    }
+
+    public List<String> getPostUrl(Long postId) {
+        return fileMapper.getPostUrl(postId);
+    }
 }
 
