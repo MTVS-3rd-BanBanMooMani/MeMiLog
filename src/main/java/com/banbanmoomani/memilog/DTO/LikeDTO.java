@@ -2,11 +2,11 @@ package com.banbanmoomani.memilog.DTO;
 
 public class LikeDTO {
     private int user_id;
-    private int post_id;
+    private Long post_id;
 
     public LikeDTO() {}
 
-    public LikeDTO(int user_id, int post_id) {
+    public LikeDTO(int user_id, Long post_id) {
         this.user_id = user_id;
         this.post_id = post_id;
     }
@@ -19,11 +19,11 @@ public class LikeDTO {
         this.user_id = user_id;
     }
 
-    public int getPost_id() {
+    public Long getPost_id() {
         return post_id;
     }
 
-    public void setPost_id(int post_id) {
+    public void setPost_id(Long post_id) {
         this.post_id = post_id;
     }
 

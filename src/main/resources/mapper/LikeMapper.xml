@@ -15,4 +15,14 @@
             user_id = #{user_id} AND
             post_id = #{post_id}
     </delete>
+    <select id="getLikeInfo" parameterType="com.banbanmoomani.memilog.DTO.LikeDTO" resultType="_int">
+        SELECT
+            COUNT(*)
+        FROM
+            `LIKE`
+        WHERE
+            user_id = #{user_id}
+         AND
+            post_id = #{post_id}
+    </select>
 </mapper>

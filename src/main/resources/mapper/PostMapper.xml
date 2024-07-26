@@ -265,18 +265,24 @@
             p.post_id DESC
     </select>
 
-    <update id="increaseLikeCount" parameterType="int">
+    <update id="increaseLikeCount" parameterType="long">
         UPDATE POST SET
-            `like_count` = `like_count` + 1
+            like_count = like_count + 1
         WHERE
             post_id = #{post_id}
     </update>
-    <update id="decreaseLikeCount" parameterType="int">
+
+    <update id="decreaseLikeCount" parameterType="long">
         UPDATE POST SET
-            `like_count` = `like_count` - 1
+            like_count = like_count - 1
         WHERE
             post_id = #{post_id}
     </update>
+
+    <select id="getLikeCount" parameterType="long" resultType="int">
+        SELECT like_count FROM POST WHERE post_id = #{post_id}
+    </select>
+
     <update id="updateHidden">
         UPDATE your_table_name
         SET hidden_YN =
