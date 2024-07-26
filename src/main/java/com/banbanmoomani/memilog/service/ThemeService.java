@@ -21,4 +21,8 @@ public class ThemeService {
     public String findById(int id) {
         return themeMapper.findThemeById(id);
     }
+
+    public int findByName(String themeName) {
+        return themeMapper.findThemeByName(themeName).getThemeId();
+    }
 }

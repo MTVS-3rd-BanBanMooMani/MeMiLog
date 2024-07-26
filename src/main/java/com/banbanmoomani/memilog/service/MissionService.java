@@ -98,7 +98,15 @@ public class MissionService {
         }
     }
 
-    public void updateMission(MissionDTO missionDTO) {
+    public void updateMission(MissionViewDataDTO missionViewDataDTO) {
+        int priThemeId = themeService.findByName(missionViewDataDTO.getPriThemeName());
+        int subThemeId = themeService.findByName(missionViewDataDTO.getSubThemeName());
+        MissionDTO missionDTO = new MissionDTO();
+        missionDTO.setMissionId(missionViewDataDTO.getMissionId());
+        missionDTO.setMissionContent(missionViewDataDTO.getMissionContent());
+        missionDTO.setMissionDate(missionViewDataDTO.getMissionDate());
+        missionDTO.setPriThemeId(priThemeId);
+        missionDTO.setSubThemeId(subThemeId);
         missionMapper.updateMission(missionDTO);
     }
 
