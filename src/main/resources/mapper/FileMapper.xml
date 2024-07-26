@@ -18,7 +18,8 @@
         FROM FILE
         WHERE type = 'post'
         AND post_id = #{post_id}
-
+        ORDER BY
+        picture_order asc
     </select>
     <update id="updateFile">
         UPDATE FILE

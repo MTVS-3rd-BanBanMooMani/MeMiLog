@@ -115,6 +115,7 @@ public class PostService {
     }
 
     public List<UpdateFileDTO> updatefiles(int postId) {
+        System.out.println("postId = " + postId);
         return postMapper.updateFile(postId);
     }
 
