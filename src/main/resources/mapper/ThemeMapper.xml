@@ -17,4 +17,10 @@
         from THEME
         where theme_id = #{id}
     </select>
+
+    <select id="findThemeByName" resultMap="themeResultMap" parameterType="String">
+        select *
+        from THEME
+        where theme_name = #{name}
+    </select>
 </mapper>
