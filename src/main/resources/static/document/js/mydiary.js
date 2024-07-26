@@ -266,7 +266,7 @@ function showPostModal(postId){
             document.getElementById("companion").innerText = data.companion_type;
             document.getElementById("missionContent").innerText = data.mission_content;
             document.getElementById("likeCount").innerText = data.like_count;
-            document.getElementById("nickname").innerText = data.nickname;
+            document.getElementById("modal-nickname").innerText = data.nickname;
             document.getElementById("writtenDate").innerText = data.written_datetime;
             document.getElementById("content").innerText = data.content;
             document.getElementById("profileImg").src = data.profile_img;

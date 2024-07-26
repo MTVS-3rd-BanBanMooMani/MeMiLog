@@ -188,7 +188,6 @@
                             class="etc-img"
                     />
                     <div class="dropdown-content">
-                        <span class="post-report-btn" style="color: red">신고</span>
                         <span class="post-edit-btn">수정</span>
                         <span class="post-delete-btn">삭제</span>
                     </div>
@@ -235,7 +234,7 @@
                                     height="50px"
                                     style="border-radius: 50%; overflow: hidden; object-fit: cover"
                             />
-                            <p id="nickname"></p>
+                            <p id="modal-nickname"></p>
                         </div>
                         <div class="post-modal-like-box">
                             <p id="likeCount"></p>
@@ -272,33 +271,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 신고 모달 -->
-    <div class="report-modal-bg">
-        <div class="report-modal">
-            <div class="report-modal-content" style="width: 300px">
-                <form id="reportForm" action="/post/report" method="post">
-                    <div class="repCate-box" style="height: 50px">
-                        <label for="reportCategory">신고 분류</label>
-                        <select id="reportCategory" name="rptCategoryId">
-                            <option th:each="repCate: ${reportCategory}" th:text="${repCate.category_name}" th:value="${repCate.rpt_category_id}"></option>
-                        </select>
-                    </div>
-                    <div class="repContent-box" style="height: 95px">
-                        <label for="reportMissionContent">상세 내용</label>
-                        <textarea id="reportMissionContent" name="rptContent" placeholder="상세한 신고 사유를 입력해주세요."></textarea>
-                    </div>
-                    <input type="hidden" id="reportPostId" name="postId"/>
-                    <input type="hidden" id="reportedUserId" name="rptedUserId"/>
-                    <div class="repBtn-box" style="padding: 0 90px">
-                        <button type="submit" style="color: white; background: black">신고</button>
-                        <button type="button" class="report-modal-close-btn" style="color: black; background: white">취소</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 신고 모달 끝 -->
 </div>
 <div th:replace="~{fragments/mainFooter :: footer}"></div>
 <script src="../../document/js/allviewModal.js"></script>
