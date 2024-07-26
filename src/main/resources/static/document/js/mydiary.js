@@ -305,6 +305,40 @@ function showPostModal(postId){
             initializeSlideShow(); // Initialize slideshow for images
         })
         .catch(error => console.error("post detail error: ", error));
+
+    const modifyBtn = document.querySelector(".post-edit-btn")
+
+    modifyBtn.addEventListener("click", () => {
+        location.href="/post/update?postId="+postId
+    })
+
+    const deleteAlert = document.querySelector(".post-delete-btn");
+
+    deleteAlert.addEventListener("click", () => {
+        Swal.fire({
+            title: "정말로 삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "gray",
+            confirmButtonText: "네, 삭제하겠습니다.",
+            cancelButtonText: "취소",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/post/delete?postId=" + postId)
+                    .then(res => {
+                        if(res.ok) {
+                            location.href = "/post/bymission"
+                        } else {
+                            Swal.fire({
+                                title: "삭제 실패하였습니다!",
+                                icon: "Fail",
+                            });
+                        }
+                    })
+            }
+        });
+    });
 }
 
 async function fetchEmotionCounts() {
