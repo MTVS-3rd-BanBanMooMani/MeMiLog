@@ -84,7 +84,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    }
+}
 
 #profilePicModal .close {
     position: absolute;
@@ -417,7 +417,7 @@ form {
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 1000px;
-    height: 450px;
+    height: 400px;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
