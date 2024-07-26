@@ -64,6 +64,7 @@
         WHERE
             u.user_id = #{user_id}
           AND f.type = 'post'
+          AND f.picture_order = 1
         <if test="selectedDate != null and selectedDate != ''">
         AND DATE_FORMAT( m.mission_date, '%e' ) = #{selectedDate}
         </if>

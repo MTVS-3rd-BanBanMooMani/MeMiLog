@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me Mission Log</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
     <link rel="stylesheet" href="../../document/css/layout.css" />
     <link rel="stylesheet" href="../../document/css/mydiary.css" />
+    <link href="../../document/css/allview.css" rel="stylesheet" />
+    <link href="../../document/css/postview.css" rel="stylesheet" />
+
+    <!-- sweetalert2 -->
+    <link
+            href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.min.css
+    "
+            rel="stylesheet"
+    />
+    <script src="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js
+    "></script>
+
+    <!-- animate -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="../../document/js/mydiary.js"></script>
 </head>
 <body>
 <div th:replace="~{fragments/mainHeader :: header}"></div>
@@ -151,505 +176,132 @@
             </div>
         </div>
     </div>
-    <div th:replace="~{fragments/mainFooter :: footer}"></div>
+    <!-- 여기서부터 모달 -->
+    <div class="modal-bg">
+        <div class="post-modal">
+            <div class="post-modal-top">
+                <div class="etc-dropdown">
+                    <img
+                            src="../../document/img/etc.png"
+                            height="25px"
+                            alt="etc이미지"
+                            class="etc-img"
+                    />
+                    <div class="dropdown-content">
+                        <span class="post-report-btn" style="color: red">신고</span>
+                        <span class="post-edit-btn">수정</span>
+                        <span class="post-delete-btn">삭제</span>
+                    </div>
+                </div>
+                <button
+                        class="post-modal-close-btn"
+                        style="
+              background-color: rgba(0, 0, 0, 0);
+              border: none;
+              font-size: 40px;
+              color: grey;
+              cursor: pointer;
+            "
+                >
+                    &times;
+                </button>
+            </div>
+            <!-- post modal content -->
+            <div class="post-modal-content" style="display: flex">
+                <!-- post modal 왼쪽 -->
+                <div class="post-modal-left">
+                    <div style="margin: 0 32px 20px; text-align: left">
+                        <div style="margin-bottom: 15px">
+                            <button id="priTheme" class="category-btn active"></button>
+                            <button id="subTheme" class="category-btn active"></button>
+                            <button id="companion" class="category-btn active"></button>
+                        </div>
+                        <p id="missionContent" style="font-size: 32px; font-weight: 500">
+                        </p>
+                    </div>
+
+                    <div class="post-modal-board-img">
+                        <span class="arrow arrow-left hidden">&lt;</span>
+                        <!-- 여기에 포스트 이미지 -->
+                        <span class="arrow arrow-right">&gt;</span>
+                    </div>
+
+                    <div class="post-modal-user-info">
+                        <div class="post-modal-profile">
+                            <img
+                                    id="profileImg"
+                                    alt="프로필이미지"
+                                    width="50px"
+                                    height="50px"
+                                    style="border-radius: 50%; overflow: hidden; object-fit: cover"
+                            />
+                            <p id="nickname"></p>
+                        </div>
+                        <div class="post-modal-like-box">
+                            <p id="likeCount"></p>
+                            <img
+                                    src="../../document/img/heart.png"
+                                    alt="좋아요"
+                                    width="30px"
+                                    height="30px"
+                                    class="post-like-btn"
+                                    style="cursor: pointer"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- ================================== -->
+                </div>
+
+                <!-- post modal 오른쪽 -->
+                <div class="post-modal-right">
+                    <div class="post-modal-right-info">
+                        <p id="writtenDate"></p>
+                        <img
+                                id="emotionImg"
+                                src=""
+                                alt="감정이미지"
+                                width="30px"
+                                height="30px"
+                                style="border-radius: 50%"
+                        />
+                    </div>
+                    <div id="content" style="text-align: left"></div>
+                </div>
+                <!-- post modal content 끝 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 신고 모달 -->
+    <div class="report-modal-bg">
+        <div class="report-modal">
+            <div class="report-modal-content" style="width: 300px">
+                <form id="reportForm" action="/post/report" method="post">
+                    <div class="repCate-box" style="height: 50px">
+                        <label for="reportCategory">신고 분류</label>
+                        <select id="reportCategory" name="rptCategoryId">
+                            <option th:each="repCate: ${reportCategory}" th:text="${repCate.category_name}" th:value="${repCate.rpt_category_id}"></option>
+                        </select>
+                    </div>
+                    <div class="repContent-box" style="height: 95px">
+                        <label for="reportMissionContent">상세 내용</label>
+                        <textarea id="reportMissionContent" name="rptContent" placeholder="상세한 신고 사유를 입력해주세요."></textarea>
+                    </div>
+                    <input type="hidden" id="reportPostId" name="postId"/>
+                    <input type="hidden" id="reportedUserId" name="rptedUserId"/>
+                    <div class="repBtn-box" style="padding: 0 90px">
+                        <button type="submit" style="color: white; background: black">신고</button>
+                        <button type="button" class="report-modal-close-btn" style="color: black; background: white">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 신고 모달 끝 -->
 </div>
-<script>
-    console.log("Script Loaded");
+<div th:replace="~{fragments/mainFooter :: footer}"></div>
+<script src="../../document/js/allviewModal.js"></script>
 
-    var barChart;
-    var lineChart;
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const firstTabLink = document.querySelector(".tablinks");
-        const dateSelector = document.querySelector(".date-selector ul");
-
-        const allPosts = JSON.parse(document.getElementById("posts-data").textContent);
-
-        let currentIndex = 0;
-        const batchSize = 10;
-
-        const postCardContainer = document.getElementById("post-card-container");
-
-        loadMorePosts();
-
-        postCardContainer.addEventListener('scroll', function () {
-            if (postCardContainer.scrollTop + postCardContainer.clientHeight >= postCardContainer.scrollHeight) {
-                loadMorePosts();
-            }
-        });
-
-        function loadMorePosts() {
-            const postsToLoad = allPosts.slice(currentIndex, currentIndex + batchSize);
-            displayPosts(postsToLoad);
-            currentIndex += batchSize;
-        }
-
-        function displayPosts(posts) {
-            posts.forEach(post => {
-                const postCard = document.createElement("div");
-                postCard.className = "post-card";
-
-                const postImage = document.createElement("img");
-                postImage.src = post.src_url;
-                postImage.alt = "post image";
-
-                postCard.appendChild(postImage);
-                postCardContainer.appendChild(postCard);
-            });
-        }
-
-        if (firstTabLink) {
-            firstTabLink.click();
-        }
-
-        dateSelector.addEventListener("click", function (event) {
-            if (event.target.tagName === "LI") {
-                const selectedDate = event.target.textContent;
-                fetchPostsForDate(selectedDate);
-            }
-        });
-    });
-
-    function openPage(evt, pageName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(pageName).style.display = "flex";
-        evt.currentTarget.className += " active";
-        if (pageName === 'post-card-container') {
-            document.querySelector('.total-mood').style.display = 'block';
-            document.querySelector('.user-mood-chart').style.display = 'none';
-            displayBarChart();
-        } else if (pageName === 'calendar-container') {
-            document.querySelector('.total-mood').style.display = 'none';
-            document.querySelector('.user-mood-chart').style.display = 'block';
-            document.querySelector('.calendar-contents').style.display = 'flex';
-            displayLineChart();
-        }
-    }
-
-    function openModal(modalId) {
-        document.getElementById(modalId).style.display = "block";
-    }
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = "none";
-    }
-
-    document.getElementById('profilePicForm').onsubmit = function (event) {
-        event.preventDefault();
-
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: '/file/upload',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                var userConfirmed = confirm("프로필 사진이 성공적으로 변경되었습니다.");
-                if (userConfirmed) {
-                    location.reload();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: " + error);
-                alert("프로필 사진 변경에 실패했습니다.");
-            }
-        });
-    }
-
-    function deleteProfilePic() {
-        var user_id = document.querySelector('input[name="user_id"]').value;
-        var type = "profile";
-        $.ajax({
-            url: 'file/resetPic',
-            type: 'POST',
-            data: {
-                user_id: user_id,
-                type: type
-            },
-            success: function (response){
-                var defaultSrc = document.querySelector('.profile-pic').getAttribute('data-default-src');
-                document.querySelector('.profile-pic').src = defaultSrc;
-                var userConfirmed = confirm("프로필 사진이 성공적으로 삭제되었습니다.");
-                if (userConfirmed) {
-                    location.reload();
-                }
-            },
-            error: function(xhr, status, error){
-                alert("프로필 사진 삭제에 실패했습니다. 다시 시도해주세요.")
-            }
-        });
-    }
-
-    window.onclick = function (event) {
-        var modals = document.getElementsByClassName('modal');
-        for (var i = 0; i < modals.length; i++) {
-            if (event.target == modals[i]) {
-                modals[i].style.display = "none";
-            }
-        }
-    }
-
-    document.getElementById('editForm').onsubmit = function(event) {
-        event.preventDefault();
-        const password = document.getElementById('password').value;
-        const password2 = document.getElementById('password2').value;
-        if (password !== password2) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-        var formData = $(this).serialize();
-        $.ajax({
-            url: '/editUserInfo',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                $('#userModal #userEmail').text(response.email);
-                $('#userModal #userNickname').text(response.nickname);
-                $('#userNickname').text(response.nickname);
-                alert("회원 정보가 성공적으로 수정되었습니다.");
-                closeModal('editModal');
-            },
-            error: function(xhr, status, error) {
-                console.log("Error: " + error);
-            }
-        });
-    };
-
-    document.getElementById('deleteForm').onsubmit = function(event) {
-        event.preventDefault();
-
-        const password = document.getElementById('deletePassword').value;
-
-        fetch('/user/withdraw', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: password
-        })
-            .then(response => {
-                return response.text().then(text => {
-                    if (response.ok) {
-                        alert(text);
-                        closeModal('deleteModal');
-                        location.href = '/';
-                    } else {
-                        throw new Error(text);
-                    }
-                });
-            })
-            .catch(error => {
-                alert(error.message);
-                closeModal('deleteModal');
-            });
-    };
-
-    function sendDate(day) {
-        const selectedDate = day;
-        fetchPostsForDate(selecteDate);
-    }
-
-    function fetchPostsForDate(date) {
-        fetch("/selectedDate", {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({ selectedDate: date })
-        })
-            .then(response => response.json())
-            .then(data => {
-                displayPosts(data);
-            })
-            .catch(error => console.error("Error fetching posts: " , error));
-    }
-
-    function displayPosts(posts) {
-        const calendarContents = document.querySelector(".calendar-contents");
-        calendarContents.innerHTML = "";
-
-        posts.forEach(post => {
-            const postElement = document.createElement("div");
-            postElement.className = "calendar-card";
-
-            const postImage = document.createElement("img");
-            postImage.src = `${post.src_url}`;
-            postImage.width = 150;
-            postImage.height = 180;
-
-            postElement.appendChild(postImage);
-            calendarContents.appendChild(postElement);
-        });
-    }
-
-    async function fetchEmotionCounts() {
-        try {
-            const response = await fetch('/emotions?emotion_ids=1,2,3,4,5');
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch emotion counts');
-            }
-            const emotionCounts = await response.json();
-            updateBarChart(emotionCounts);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-
-    function displayBarChart() {
-        fetchEmotionCounts();
-    }
-
-    function updateBarChart(emotionCounts) {
-        const labels = [
-            { img: '../../document/img/colored_happy.png', text: '😃', id: 1 },
-            { img: '../../document/img/colored_cool.png', text: '😎', id: 2 },
-            { img: '../../document/img/colored_surprised.png', text: '😮', id: 3 },
-            { img: '../../document/img/colored_soso.png', text: '😐', id: 4 },
-            { img: '../../document/img/colored_sad.png', text: '🥲', id: 5 }
-        ];
-
-        const data = labels.map(label => emotionCounts[label.id] || 0);
-
-        if (barChart) {
-            barChart.destroy();
-            barChart = null;
-        }
-
-        var barChartCanvas = document.getElementById("bar-chart-horizontal");
-        barChartCanvas.height = 240;
-        barChartCanvas.width = 400;
-        var ctx = barChartCanvas.getContext("2d");
-
-        ctx.clearRect(0, 0, barChartCanvas.width, barChartCanvas.height);
-
-
-        var images = [];
-        var imagesLoaded = 0;
-
-        labels.forEach((label, index) => {
-            var image = new Image();
-            image.src = label.img;
-            image.onload = () => {
-                imagesLoaded++;
-                if (imagesLoaded === labels.length) {
-                    drawBarChart();
-                }
-            };
-            images.push(image);
-        });
-
-        function drawBarChart() {
-            barChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels.map(label => label.text),
-                    datasets: [{
-                        backgroundColor: ["#8D7CB3", "#83A1B5", "#B39F7F", "#98B681", "#AE7E8A"],
-                        data: data
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'My Whole Mood',
-                            align: 'center',
-                            font: {
-                                size: 20,
-                                weight: 'normal',
-                                family: 'Yeon Sung'
-                            },
-                            padding: 20
-                        },
-                        legend: {
-                            display: false
-                        },
-                    },
-                    layout: {
-                        padding: {
-                            left: 30
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                beginAtZero: true
-                            },
-                            title: {
-                                display: true,
-                                font: {
-                                    size: 20,
-                                    family: 'Yeon Sung'
-                                }
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                display: true,
-                                callback: function(value, index) {
-                                    return '';
-                                }
-                            },
-                            barPercentage: 0.6,
-                            categoryPercentage: 1.8
-                        }
-                    }
-                },
-                plugins: [{
-                    afterDraw: chart => {
-                        var ctx = chart.ctx;
-                        chart.data.labels.forEach((label, index) => {
-                            var image = images[index];
-                            var y = chart.scales.y.getPixelForValue(index) - 15;
-                            var x = chart.scales.x.left - 40;
-                            ctx.drawImage(image, x, y, 30, 30);
-                        });
-                    }
-                }]
-            });
-        }
-    }
-
-    async function fetchMonthlyEmotionCounts(){
-        try {
-            const response = await fetch('/monthlyemotions?emotion_ids=1,2,3,4,5&months=1,2,3,4,5,6,7,8,9,10,11,12');
-
-            if(!response.ok){
-                throw new Error('Failed to fetch monthly emotion counts');
-            }
-            const monthlyEmotionCounts = await response.json();
-            console.log('Fetched data: ', monthlyEmotionCounts);
-            updateLineChart(monthlyEmotionCounts);
-        } catch (error) {
-            console.error('Error: ', error)
-        }
-    }
-
-    function displayLineChart() {
-        fetchMonthlyEmotionCounts();
-        }
-
-    function updateLineChart(monthlyEmotionCounts = {}){
-
-        console.log('Monthly Emotion Counts:', monthlyEmotionCounts);
-
-        const labels = [
-            { id: 1, label: "😀", borderColor: "#8D7CB3" },
-            { id: 2, label: "😎", borderColor: "#83A1B5" },
-            { id: 3, label: "😮", borderColor: "#B39F7F" },
-            { id: 4, label: "😐", borderColor: "#98B681" },
-            { id: 5, label: "😢", borderColor: "#AE7E8A" }
-        ];
-
-        const datasets = labels.map(label => ({
-            data: [],
-            label: label.label,
-            borderColor: label.borderColor,
-            fill: false
-        }));
-
-        labels.forEach(label => {
-            for(let month = 1; month <=12; month++){
-                datasets.find(dataset => dataset.label === label.label).data[month - 1] = monthlyEmotionCounts[label.id] && monthlyEmotionCounts[label.id][month] || 0;
-            }
-        });
-
-        console.log('Datasets: ', datasets);
-
-        if(lineChart){
-            lineChart.destroy();
-            lineChart = null;
-        }
-
-        var lineChartCanvas = document.getElementById("line-chart").getContext("2d");
-        drawLineChart(lineChartCanvas, datasets);
-    }
-
-    function drawLineChart(ctx, datasets) {
-        lineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                datasets: datasets
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Track My Mood',
-                        font: {
-                            size: 20,
-                            weight: 'normal',
-                            family: 'Yeon Sung'
-                        },
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        }
-                    },
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            display: false
-                        }
-                    }
-                }
-            },
-            plugins: [{
-                afterRender: function(chart) {
-                    const legendContainer = document.getElementById('legend');
-                    legendContainer.innerHTML = '';
-                    chart.data.datasets.forEach((dataset, i) => {
-                        const legendItem = document.createElement('div');
-                        legendItem.classList.add('legend-item');
-                        legendItem.onclick = function() {
-                            const meta = chart.getDatasetMeta(i);
-                            meta.hidden = meta.hidden === null ? !chart.data.datasets[i].hidden : null;
-                            chart.update();
-                        };
-                        const colorBox = document.createElement('span');
-                        colorBox.classList.add('color-box');
-                        colorBox.style.borderColor = dataset.borderColor;
-                        const img = document.createElement('img');
-                        img.src = getEmojiImage(dataset.label);
-                        img.classList.add('legend-image');
-                        legendItem.appendChild(colorBox);
-                        legendItem.appendChild(img);
-                        legendContainer.appendChild(legendItem);
-                    });
-                }
-            }]
-        });
-    }
-
-
-    function getEmojiImage(emoji) {
-        switch (emoji) {
-            case "😀": return '../../document/img/colored_happy.png';
-            case "😎": return '../../document/img/colored_cool.png';
-            case "😮": return '../../document/img/colored_surprised.png';
-            case "😐": return '../../document/img/colored_soso.png';
-            case "😢": return '../../document/img/colored_sad.png';
-            default: return '';
-        }
-    }
-
-</script>
 </body>
 </html>
