@@ -262,7 +262,7 @@
 
 .post-modal-left button{
     font-family: "Yeon Sung";
-    font-size: medium;
+    font-size: large;
 }
 
 .post-modal-left p{
@@ -325,7 +325,6 @@
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
-    border-left: 1px solid #ccc;
     margin-top: 20px;
     line-height: 1.3;
 }
@@ -344,7 +343,7 @@
     display: flex;
     margin-bottom: 18px;
     justify-content: space-between;
-    width: 190px;
+    width: 200px;
     align-items: center;
 }
 

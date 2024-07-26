@@ -34,7 +34,7 @@
 
 .user-profile p {
     position: absolute;
-    bottom: -5px;
+    bottom: 12px;
     left: 30px;
     font-size: 25px;
     font-family: "Nanum Pen Script";
@@ -417,7 +417,7 @@ form {
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 1000px;
-    height: 400px;
+    height: 450px;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
