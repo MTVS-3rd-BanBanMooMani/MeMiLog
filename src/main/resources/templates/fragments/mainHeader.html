@@ -11,7 +11,7 @@
     <a class="logo" th:href="@{/}">Me Mission Log</a>
     <div class="menu-bar">
         <a class="menu-btn" th:href="@{/mission}">둘러보기</a>
-        <a class="menu-btn" th:href="@{/post}">오늘일기</a>
+        <a class="menu-btn" th:href="@{/post/create}">오늘일기</a>
         <a class="menu-btn" th:href="@{/mydiary}">마이다이어리</a>
         <button class="login-btn"
                 th:if="${session.user_id == null}"
