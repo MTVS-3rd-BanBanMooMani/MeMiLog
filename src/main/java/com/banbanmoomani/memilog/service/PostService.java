@@ -86,18 +86,22 @@ public class PostService {
     }
 
     @Transactional
-    public void increaseLikeCount(int post_id, int user_id) {
+    public void increaseLikeCount(Long post_id, int user_id) {
         postMapper.increaseLikeCount(post_id);
+        PostDTO postDTO = postMapper.findPostById(post_id.intValue());
+        System.out.println("postDTO.getLike_count() = " + postDTO.getLike_count());
+        
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.insertLikeInfo(likeDTO);
     }
 
     @Transactional
-    public void decreaseLikeCount(int post_id, int user_id) {
+    public void decreaseLikeCount(Long post_id, int user_id) {
         postMapper.decreaseLikeCount(post_id);
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
     }
+
     @Transactional
     public void updateHidden() {
         postMapper.updateHidden();
@@ -134,4 +138,11 @@ public class PostService {
     }
 
     public MainTitleDTO showBanner(String date) { return postMapper.showBanner(date); }
+
+    @Transactional
+    public boolean getLikeInfo(Long postId, int user_id) {
+        LikeDTO likeDTO = new LikeDTO(user_id, postId);
+        int count = likeMapper.getLikeInfo(likeDTO);
+        return count > 0;
+    }
 }

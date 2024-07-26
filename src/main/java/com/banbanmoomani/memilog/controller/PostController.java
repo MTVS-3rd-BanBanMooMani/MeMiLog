@@ -186,18 +186,24 @@ public class PostController {
         return "redirect:/post/bymission";
     }
 
-    @GetMapping("like")
+    @GetMapping("/like")
     @ResponseBody
-    public ResponseEntity likePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+    public ResponseEntity<Map<String, Object>> likePost(@RequestParam(name = "post_id") Long post_id, @SessionAttribute(name = "user_id") int user_id) {
+        System.out.println("like post_id = " + post_id);
         postService.increaseLikeCount(post_id, user_id);
-        return new ResponseEntity(HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("dislike")
+    @GetMapping("/dislike")
     @ResponseBody
-    public ResponseEntity dislikePost(@RequestParam(name = "post_id") int post_id, @SessionAttribute(name = "user_id") int user_id) {
+    public ResponseEntity<Map<String, Object>> dislikePost(@RequestParam(name = "post_id") Long post_id, @SessionAttribute(name = "user_id") int user_id) {
+        System.out.println("dislike post_id = " + post_id);
         postService.decreaseLikeCount(post_id, user_id);
-        return new ResponseEntity(HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/delete")
@@ -229,7 +235,8 @@ public class PostController {
 
     @PostMapping(value = "/bymission", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req) {
+    public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req,
+                                         @SessionAttribute(name = "user_id") int user_id) {
         Long post_id = req.get("postId");
         System.out.println("post_id = " + post_id);
 
@@ -247,6 +254,12 @@ public class PostController {
 
         postDetail.setProfile_img(profile_img);
         postDetail.setPostUrl(postUrl);
+
+        // 현재 user가 해당 post에 대해 LIKE 테이블에 정보가 들어있는지 확인 후
+        // boolean 값을 postDetail에 넣어서 반환하기
+        boolean likeInfo = postService.getLikeInfo(post_id, user_id);
+        System.out.println("likeInfo = " + likeInfo);
+        postDetail.setLikeInfo(likeInfo);
 
         return postDetail;
 
