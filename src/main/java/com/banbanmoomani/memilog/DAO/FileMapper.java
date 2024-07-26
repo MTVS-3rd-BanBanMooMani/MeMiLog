@@ -23,5 +23,5 @@ public interface FileMapper {
 
     void getFile(UpdateFileDTO updateFileDTO);
 
-    void updatePictureOrder(@Param("srcUrl") String srcUrl, @Param("order") int order, @Param("userId") int userId, @Param("postId") int postId);
+    void updateOldFile(@Param("oldFile") Integer oldFile, @Param("order") int order);
 }

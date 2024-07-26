@@ -7,6 +7,7 @@ import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.service.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -131,6 +132,9 @@ public class PostController {
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
         List<UpdateFileDTO> updateFileDTOList = postService.updatefiles(postId);
+        for(UpdateFileDTO updateFileDTO : updateFileDTOList) {
+            System.out.println("updateFileDTO.getP = " + updateFileDTO.getPicture_id() + " " + updateFileDTO.getPicture_order());
+        }
         String mainFile = postService.findMainFile(postId);
 
         model.addAttribute("post", post);
@@ -140,7 +144,10 @@ public class PostController {
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
         model.addAttribute("imageUrls", updateFileDTOList);
+        System.out.println("updateFileDTOList = " + updateFileDTOList);
         model.addAttribute("mainImageUrl", mainFile);
+
+        System.out.println("mainFile = " + mainFile);
 
         return "main/postupdate";
     }
@@ -151,6 +158,7 @@ public class PostController {
         System.out.println("fileListDTO = " + fileListDTO);
         return ResponseEntity.ok(fileListDTO);
     }
+
 
     @PostMapping("/update")
     public String updatePostSubmit(@ModelAttribute PostDTO post,
@@ -165,7 +173,7 @@ public class PostController {
                                    @RequestParam(name = "newFile4", required = false) MultipartFile newFile4,
                                    @RequestParam(name = "newFile5", required = false) MultipartFile newFile5,
                                    @RequestParam(name = "post_id") Integer post_id,
-                                   @RequestParam(name = "imageOrder", required = false) String imageOrder, // 새로운 순서값
+                                   @RequestParam(name = "imageOrder") String imageOrder, // 새로운 순서값 JSON
                                    HttpSession session,
                                    RedirectAttributes rttr) throws IOException {
         System.out.println("Received postId: " + post_id);
@@ -184,8 +192,6 @@ public class PostController {
 
         Integer[] oldFiles = {oldFile1, oldFile2, oldFile3, oldFile4, oldFile5};
         MultipartFile[] newFiles = {newFile1, newFile2, newFile3, newFile4, newFile5};
-
-
         // 기존 파일 삭제 로직
         List<Integer> currentFileIds = postService.getFileIdsByPostId(post_id, userId);
         for (Integer fileId : currentFileIds) {
@@ -196,28 +202,30 @@ public class PostController {
 
         // 새로운 파일 추가 로직
         int existingFileCount = currentFileIds.size();
-        for (int i = 0; i < newFiles.length; i++) {
-            MultipartFile newFile = newFiles[i];
-            if (newFile != null && !newFile.isEmpty()) {
-                String newFileUrl = fileStorageService.saveFile(newFile, post_id); // URL 생성 및 파일 저장
+        String cleanedImageOrder = imageOrder.replaceAll("[\\[\\]\"]", "");
+        String[] fileList = cleanedImageOrder.split(",");
+        for (int i = 0; i < fileList.length; i++) {
+            System.out.println("fileList = " + fileList[i]);
+            if (fileList[i].startsWith("oldFile")) {
+                String number = fileList[i].replaceAll("[^0-9]", "");
+                int index = Integer.parseInt(number) - 1;
+
+                postService.updateOldFile(oldFiles[index], i + 1);
+            } else {
+                String number = fileList[i].replaceAll("[^0-9]", "");
+                int index = Integer.parseInt(number) - 1;
+
+                String newFileUrl = fileStorageService.saveFile(newFiles[index], post_id);
                 UpdateFileDTO newFileDTO = new UpdateFileDTO();
                 newFileDTO.setSrc_url(newFileUrl);
                 newFileDTO.setPost_id(post_id);
-                newFileDTO.setPicture_order(existingFileCount + i + 1); // 기존 파일 수에 따른 순서 지정
+                newFileDTO.setPicture_order(i+1); // 기존 파일 수에 따른 순서 지정
                 newFileDTO.setUser_id(userId); // 사용자 ID 설정
                 System.out.println(userId);
                 newFileDTO.setType("post"); // type 필드 설정
                 System.out.println(post);
                 postService.saveFile(newFileDTO);
             }
-        }
-
-        // 업데이트된 포스트 저장
-        try {
-            postService.updatePost(post);
-            rttr.addFlashAttribute("successMessage", "게시물이 성공적으로 업데이트되었습니다.");
-        } catch (IllegalArgumentException e) {
-            rttr.addFlashAttribute("failMessage", e.getMessage());
         }
 
         return "redirect:/post/bymission";

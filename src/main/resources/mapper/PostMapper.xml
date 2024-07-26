@@ -311,6 +311,7 @@
             FILE
         WHERE
             post_id = #{postId}
+        ORDER BY picture_order asc;
     </select>
     <select id="findMainFile" parameterType="int" resultType="string">
         SELECT
@@ -320,40 +321,8 @@
         WHERE
         post_id = #{postId}
         AND picture_order = 1
+        LIMIT 1
     </select>
-    <insert id="addImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        INSERT
-        INTO
-        FILE (
-            post_id,
-            src_url,
-            picture_order
-        )
-        VALUES
-        (
-            #{post_id},
-            #{src_url},
-            #{picture_order}
-        )
-    </insert>
-
-    <update id="updateImageOrder" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        UPDATE
-            FILE
-        SET
-            src_url = {src_url}
-        WHERE
-            picture_id = {}
-
-
-    </update>
-    <delete id="deleteImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        DELETE
-        FROM
-            FILE
-        WHERE
-            post_id = #{post_id} AND src_url = #{src_url}
-    </delete>
     <update id="updateFileUrl" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
         UPDATE
             FILE

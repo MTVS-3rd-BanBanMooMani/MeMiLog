@@ -114,5 +114,10 @@
         AND post_id = #{postId}
         AND type = 'post'
     </update>
+    <update id="updateOldFile" >
+        UPDATE FILE
+        SET picture_order = #{order}
+        WHERE picture_id = #{oldFile}
+    </update>
 </mapper>
 

@@ -103,19 +103,7 @@ function drop(event) {
     if (dropTarget.classList.contains("thumbnail")) {
         var parent = dropTarget.parentNode;
         parent.insertBefore(draggedElement, dropTarget.nextSibling);
-        updateImageOrder();
     }
-}
-
-function updateImageOrder() {
-    var thumbnails = document.querySelectorAll(".image-thumbnails .thumbnail");
-    var imageOrder = [];
-    thumbnails.forEach(function(thumbnail, index) {
-        if (thumbnail.id !== "addBtn") {
-            imageOrder.push(thumbnail.id + ":" + (index + 1));
-        }
-    });
-    document.getElementById("imageOrder").value = imageOrder.join(",");
 }
 
 function loadImageOrder() {
@@ -129,15 +117,6 @@ function loadImageOrder() {
             }
         });
     }
-}
-
-function prepareImageOrder() {
-    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
-    let imageOrder = [];
-    thumbnails.forEach((thumbnail, index) => {
-        imageOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
-    });
-    document.getElementById('imageOrder').value = JSON.stringify(imageOrder);
 }
 function toggleSelection(element) {
     var buttons = document.querySelectorAll('.answers .answer');
@@ -284,6 +263,21 @@ function addDragAndDropHandlers(element) {
     element.addEventListener('dragover', handleDragOver);
     element.addEventListener('drop', handleDrop);
     element.addEventListener('dragend', handleDragEnd);
+
+    // 여기서 imageOrder int형 배열을 JSON.stringfy()해서 저장할거임
+    var imageOrder = [];
+    var images = document.getElementById('plus-thumbnail').children;
+
+    for(var i = 0; i<images.length - 1; i++) {
+        if(images[i].classList.contains('new')) {
+            var btn = images[i].children[1]
+            imageOrder.push("newFile"+btn.getAttribute('data-index').toString())
+        } else if (images[i].classList.contains('old')) {
+            var btn = images[i].children[1]
+            imageOrder.push("oldFile"+btn.getAttribute('data-index').toString())
+        }
+    }
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder)
 }
 
 let draggedElement = null;
@@ -333,6 +327,20 @@ function handleDragEnd(event) {
         draggedElement.style.border = 'none';
     }
     draggedElement = null;
+
+    var imageOrder = [];
+    var images = document.getElementById('plus-thumbnail').children;
+
+    for(var i = 0; i<images.length - 1; i++) {
+        if(images[i].classList.contains('new')) {
+            var btn = images[i].children[1]
+            imageOrder.push("newFile"+btn.getAttribute('data-index').toString())
+        } else if (images[i].classList.contains('old')) {
+            var btn = images[i].children[1]
+            imageOrder.push("oldFile"+btn.getAttribute('data-index').toString())
+        }
+    }
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder)
 }
 
 document.querySelectorAll('.thumbnail[draggable="true"]').forEach(function(element) {

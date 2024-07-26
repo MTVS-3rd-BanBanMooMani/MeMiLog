@@ -122,15 +122,6 @@ public class PostService {
         return postMapper.findMainFile(postId);
     }
 
-    public void updateImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.updateImageOrder(imageOrderDTO);
-    }
-    public void deleteImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.deleteImageOrder(imageOrderDTO);
-    }
-    public void addImage(ImageOrderDTO imageOrderDTO) {
-        postMapper.addImage(imageOrderDTO);
-    }
 
     public List<Integer> getFileIdsByPostId(int postId, Integer userId) {
         System.out.println("getFileIdsByPostId = " + postId);
@@ -149,7 +140,8 @@ public class PostService {
         fileMapper.getFile(updateFileDTO);
     }
 
-    public void updatePictureOrderBySrcUrl(String srcUrl, Integer order, Integer userId, Integer postId) {
-        fileMapper.updatePictureOrder(srcUrl, order, userId, postId);
+    @Transactional
+    public void updateOldFile(Integer oldFile, int order) {
+        fileMapper.updateOldFile(oldFile, order);
     }
 }
