@@ -94,29 +94,16 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
-    ev.preventDefault();
-    let data = ev.dataTransfer.getData("text");
-    let mainImageContainer = document.getElementById("mainImageContainer");
-    let draggedImage = document.getElementById(data);
-    let mainImage = document.getElementById("main-image");
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var draggedElement = document.getElementById(data);
+    var dropTarget = event.target;
 
-    // Swap the images
-    let tempSrc = mainImage.src;
-    mainImage.src = draggedImage.src;
-    draggedImage.src = tempSrc;
-
-    // Update image order in local storage
-    updateImageOrder();
-}
-
-function updateImageOrder() {
-    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
-    let newOrder = [];
-    thumbnails.forEach((thumbnail, index) => {
-        newOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
-    });
-    localStorage.setItem('imageOrder', JSON.stringify(newOrder));
+    if (dropTarget.classList.contains("thumbnail")) {
+        var parent = dropTarget.parentNode;
+        parent.insertBefore(draggedElement, dropTarget.nextSibling);
+    }
 }
 
 function loadImageOrder() {
@@ -130,15 +117,6 @@ function loadImageOrder() {
             }
         });
     }
-}
-
-function prepareImageOrder() {
-    let thumbnails = document.querySelectorAll('.image-thumbnails .thumbnail img');
-    let imageOrder = [];
-    thumbnails.forEach((thumbnail, index) => {
-        imageOrder.push({ srcUrl: thumbnail.src, order: index + 1 });
-    });
-    document.getElementById('imageOrder').value = JSON.stringify(imageOrder);
 }
 function toggleSelection(element) {
     var buttons = document.querySelectorAll('.answers .answer');
@@ -285,6 +263,21 @@ function addDragAndDropHandlers(element) {
     element.addEventListener('dragover', handleDragOver);
     element.addEventListener('drop', handleDrop);
     element.addEventListener('dragend', handleDragEnd);
+
+    // 여기서 imageOrder int형 배열을 JSON.stringfy()해서 저장할거임
+    var imageOrder = [];
+    var images = document.getElementById('plus-thumbnail').children;
+
+    for(var i = 0; i<images.length - 1; i++) {
+        if(images[i].classList.contains('new')) {
+            var btn = images[i].children[1]
+            imageOrder.push("newFile"+btn.getAttribute('data-index').toString())
+        } else if (images[i].classList.contains('old')) {
+            var btn = images[i].children[1]
+            imageOrder.push("oldFile"+btn.getAttribute('data-index').toString())
+        }
+    }
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder)
 }
 
 let draggedElement = null;
@@ -334,6 +327,20 @@ function handleDragEnd(event) {
         draggedElement.style.border = 'none';
     }
     draggedElement = null;
+
+    var imageOrder = [];
+    var images = document.getElementById('plus-thumbnail').children;
+
+    for(var i = 0; i<images.length - 1; i++) {
+        if(images[i].classList.contains('new')) {
+            var btn = images[i].children[1]
+            imageOrder.push("newFile"+btn.getAttribute('data-index').toString())
+        } else if (images[i].classList.contains('old')) {
+            var btn = images[i].children[1]
+            imageOrder.push("oldFile"+btn.getAttribute('data-index').toString())
+        }
+    }
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder)
 }
 
 document.querySelectorAll('.thumbnail[draggable="true"]').forEach(function(element) {

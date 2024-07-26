@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
@@ -44,11 +45,6 @@ public interface PostMapper {
 
     String findMainFile(@Param("postId") int postId);
 
-    void updateImageOrder(ImageOrderDTO imageOrderDTO);
-
-    void deleteImageOrder(ImageOrderDTO imageOrderDTO);
-
-    void addImage(ImageOrderDTO imageOrderDTO);
 
     MainTitleDTO showBanner(@Param("date") String date);
 }
