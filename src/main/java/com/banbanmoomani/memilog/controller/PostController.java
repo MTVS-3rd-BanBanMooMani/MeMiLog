@@ -186,17 +186,14 @@ public class PostController {
                                    @RequestParam(name = "post_id") Integer post_id,
                                    @RequestParam(name = "imageOrder") String imageOrder, // 새로운 순서값 JSON
                                    HttpSession session,
-                                   RedirectAttributes rttr) throws IOException {
+                                   RedirectAttributes redirectAttributes) throws IOException {
         System.out.println("Received postId: " + post_id);
         System.out.println("Received oldFile1: " + oldFile1);
         System.out.println("Received newFile1: " + newFile1);
         System.out.println("imageOrder = " + imageOrder);
 
         Object user_id = session.getAttribute("user_id");
-        if (user_id == null) {
-            rttr.addFlashAttribute("failMessage", "사용자 정보가 없습니다.");
-            return "redirect:/post/bymission";
-        }
+        post.setUser_id((int) user_id);
 
         Integer userId = (Integer) user_id;
         post.setUser_id(userId);
@@ -237,7 +234,14 @@ public class PostController {
                 System.out.println(post);
                 postService.saveFile(newFileDTO);
             }
+            postService.updatePost(post);
         }
+        MissionDTO mission = missionService.findTodayMission();
+        String missionDate = mission.getMissionDate();
+
+        // RedirectAttributes를 사용하여 date 매개변수를 전달
+        redirectAttributes.addAttribute("date", missionDate);
+        System.out.println("missionDate123 = " + missionDate);
 
         return "redirect:/post/bymission";
     }
