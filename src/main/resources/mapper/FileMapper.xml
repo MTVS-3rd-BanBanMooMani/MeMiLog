@@ -44,21 +44,21 @@
     <insert id="insertFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
         INSERT
         INTO
-        FILE
+            FILE
         (
-        src_url,
-        post_id,
-        picture_order,
-        user_id,
-        type
+            src_url,
+            post_id,
+            picture_order,
+            user_id,
+            type
         )
         VALUES
         (
-        #{src_url},
-        #{post_id},
-        #{picture_order},
-        #{user_id},
-        #{type}
+            #{src_url},
+            #{post_id},
+            #{picture_order},
+            #{user_id},
+            #{type}
         )
     </insert>
 
@@ -99,28 +99,28 @@
         WHERE picture_id = #{fileId}
     </delete>
     <select id="selectFileIdsByPostIdAndUserId" parameterType="map" resultType="int">
-        SELECT picture_id
-        FROM FILE
-        WHERE post_id = #{post_id}
-        AND user_id = #{user_id}
+    SELECT picture_id
+    FROM FILE
+    WHERE post_id = #{post_id}
+    AND user_id = #{user_id}
     </select>
     <insert id="getFile" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
         INSERT
         INTO
         FILE
         (
-        src_url,
-        post_id,
-        picture_order,
-        type,user_id
+            src_url,
+            post_id,
+            picture_order,
+            type,user_id
         )
         VALUES
         (
-        #{src_url},
-        #{post_id},
-        #{picture_order},
-        #{type},
-        #{user_id}
+            #{src_url},
+            #{post_id},
+            #{picture_order},
+            #{type},
+            #{user_id}
         )
     </insert>
     <update id="updatePictureOrder" parameterType="map">

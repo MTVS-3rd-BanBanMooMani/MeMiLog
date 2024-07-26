@@ -35,7 +35,7 @@ public class PostService {
     public void createPost(CreateRequestDTO createRequestDTO) {
         postMapper.createPost(createRequestDTO);
     }
-    //    @Transactional
+//    @Transactional
 //    public void updatePost(PostDTO updateRequestDTO) {
 //        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
 //        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
@@ -46,7 +46,7 @@ public class PostService {
 //    }
     @Transactional
     public void updatePost(PostDTO updateRequestDTO) {
-        // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
+    // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
         PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
         if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
             System.out.println("updateRequestDTO = " + updateRequestDTO);
@@ -94,7 +94,7 @@ public class PostService {
         postMapper.increaseLikeCount(post_id);
         PostDTO postDTO = postMapper.findPostById(post_id.intValue());
         System.out.println("postDTO.getLike_count() = " + postDTO.getLike_count());
-
+        
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.insertLikeInfo(likeDTO);
     }
