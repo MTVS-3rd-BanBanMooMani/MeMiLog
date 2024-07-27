@@ -247,6 +247,9 @@ function displayPosts(posts) {
 }
 
 function showPostModal(postId){
+    const modalBg = document.querySelector('.modal-bg');
+    const postModal = document.querySelector('.post-modal');
+
     modalBg.style.display = 'flex';
     postModal.style.display = 'block';
 
@@ -266,7 +269,7 @@ function showPostModal(postId){
             document.getElementById("companion").innerText = data.companion_type;
             document.getElementById("missionContent").innerText = data.mission_content;
             document.getElementById("likeCount").innerText = data.like_count;
-            document.getElementById("nickname").innerText = data.nickname;
+            document.getElementById("modalNickname").innerText = data.nickname;
             document.getElementById("writtenDate").innerText = data.written_datetime;
             document.getElementById("content").innerText = data.content;
             document.getElementById("profileImg").src = data.profile_img;
@@ -295,16 +298,58 @@ function showPostModal(postId){
             const postModalBoardImg = document.querySelector(".post-modal-board-img");
             const existingImages = postModalBoardImg.querySelectorAll(".modal-image");
             existingImages.forEach(img => img.remove()); // Remove existing images
-            data.postUrl.forEach(url => {
-                const img = document.createElement("img");
-                img.src = url;
-                img.className = 'modal-image';
-                postModalBoardImg.insertBefore(img, arrowRight); // Insert images
-            });
+
+            const arrowLeft = document.querySelector(".arrow-left");
+            const arrowRight = document.querySelector(".arrow-right");
+
+            if (data.postUrl && data.postUrl.length > 0) {
+                data.postUrl.forEach(url => {
+                    const img = document.createElement("img");
+                    img.src = url;
+                    img.className = 'modal-image';
+                    postModalBoardImg.insertBefore(img, arrowRight); // Insert images
+                });
+            } else {
+                const noImageMessage = document.createElement("p");
+                noImageMessage.textContent = "이미지가 없습니다.";
+                postModalBoardImg.insertBefore(noImageMessage, arrowRight);
+            }
 
             initializeSlideShow(); // Initialize slideshow for images
         })
         .catch(error => console.error("post detail error: ", error));
+
+    const modifyBtn = document.querySelector(".post-edit-btn");
+    modifyBtn.addEventListener("click", () => {
+        location.href = "/post/update?postId=" + postId;
+    });
+
+    const deleteAlert = document.querySelector(".post-delete-btn");
+    deleteAlert.addEventListener("click", () => {
+        Swal.fire({
+            title: "정말로 삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "gray",
+            confirmButtonText: "네, 삭제하겠습니다.",
+            cancelButtonText: "취소",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/post/delete?postId=" + postId)
+                    .then(res => {
+                        if (res.ok) {
+                            location.href = "/post/bymission";
+                        } else {
+                            Swal.fire({
+                                title: "삭제 실패하였습니다!",
+                                icon: "error",
+                            });
+                        }
+                    });
+            }
+        });
+    });
 }
 
 async function fetchEmotionCounts() {

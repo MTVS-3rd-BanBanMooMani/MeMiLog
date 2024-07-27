@@ -45,9 +45,6 @@
 <main>
     <div class="content">
         <div class="modal-container">
-            <!--            <div class="modal-function">-->
-            <!--                <button class="modal-close-btn">&times;</button>-->
-            <!--            </div>-->
             <div class="modal-mission-container">
                 <img
                         class="modal-mission-img"
@@ -61,18 +58,18 @@
                     <span class="category-title">누구와</span>
                     <input type="hidden" id="companionType" name="type"/>
                     <input type="hidden" id="date" name="date" th:value="${date}"/>
-                    <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">친구</button>
-                    <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">가족</button>
-                    <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">학교</button>
-                    <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">동료</button>
-                    <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">반려동물</button>
+                    <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">나</button>
+                    <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">친구</button>
+                    <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">가족</button>
+                    <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">연인</button>
+                    <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">동료</button>
+                    <button type="button" value="6" onclick="addValue(this, this.value)" class="category-btn">반려동물</button>
                     <button type="button" onclick="submitForm()" class="searchBtn"></button>
                 </form>
             </div>
             <div class="modal-photo-greed-container">
                 <div class="modal-row">
                     <div th:each="post : ${posts}" class="photo-div" th:data-post-id="${post.post_id}">
-                        <!--                        <img src="../../document/img/home-post-photo.jpg" />-->
                         <img th:src="${post.src_url}" width="138px" height="180px" />
                         <p th:text="${post.nickname}"></p>
                     </div>
@@ -148,7 +145,7 @@
                                         alt="좋아요"
                                         width="30px"
                                         height="30px"
-                                        class="post-like-btn"
+                                        id="post-like-btn"
                                         style="cursor: pointer"
                                 />
                             </div>

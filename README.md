@@ -1,6 +1,6 @@
 # Me Mission Log
 <p align="center">
-   <img src="https://github.com/user-attachments/assets/97ac2926-4c36-4613-aa26-bae16bcedb78">
+   <img src="https://github.com/user-attachments/assets/3a3716cb-4368-482e-9a36-a38afa20a1da">
 </p>
 
 ## 서비스 특징
@@ -17,9 +17,6 @@
 
    오늘의 미션에 대하여 나와 비슷한 생각과 경험을 가지고 있는 사람들과 내 것을 공유해 앞으로를 계획하세요.
 
-4. 비공개 옵션 🔐
-
-   원하는 경우 비공개으로 설정하여 오직 나만 접근할 수 있도록 하세요. 나만의 기록 공간을 안전하게 유지할 수 있습니다.
 
 ### Me Mission Log를 통해 함께 즐거운 순간을 기록하고 공유하는 새로운 경험을 만나보세요. 다양한 활동을 즐기며 소중한 추억을 함께 쌓아가는 여정을 시작해보세요!
 

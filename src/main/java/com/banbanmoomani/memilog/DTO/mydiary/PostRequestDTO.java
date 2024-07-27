@@ -22,6 +22,26 @@ public class PostRequestDTO {
     private String profile_img;
     private List<String> postUrl;
 
+    private boolean likeInfo;
+
+    private boolean checkUser;
+
+    public boolean isCheckUser() {
+        return checkUser;
+    }
+
+    public void setCheckUser(boolean checkUser) {
+        this.checkUser = checkUser;
+    }
+
+    public boolean isLikeInfo() {
+        return likeInfo;
+    }
+
+    public void setLikeInfo(boolean likeInfo) {
+        this.likeInfo = likeInfo;
+    }
+
     public String getProfile_img() {
         return profile_img;
     }

@@ -265,18 +265,24 @@
             p.post_id DESC
     </select>
 
-    <update id="increaseLikeCount" parameterType="int">
+    <update id="increaseLikeCount" parameterType="long">
         UPDATE POST SET
-            `like_count` = `like_count` + 1
+            like_count = like_count + 1
         WHERE
             post_id = #{post_id}
     </update>
-    <update id="decreaseLikeCount" parameterType="int">
+
+    <update id="decreaseLikeCount" parameterType="long">
         UPDATE POST SET
-            `like_count` = `like_count` - 1
+            like_count = like_count - 1
         WHERE
             post_id = #{post_id}
     </update>
+
+    <select id="getLikeCount" parameterType="long" resultType="int">
+        SELECT like_count FROM POST WHERE post_id = #{post_id}
+    </select>
+
     <update id="updateHidden">
         UPDATE your_table_name
         SET hidden_YN =
@@ -314,11 +320,18 @@
     </select>
     <select id="updateFile" parameterType="_int" resultType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
         SELECT
-            src_url
+        picture_id,
+        src_url,
+        picture_order,
+        post_id,
+        user_id,
+        type
         FROM
-            FILE
+        FILE
         WHERE
-            post_id = #{postId}
+        post_id = #{postId}
+        ORDER BY
+        picture_order ASC
     </select>
     <select id="findMainFile" parameterType="int" resultType="string">
         SELECT
@@ -328,40 +341,8 @@
         WHERE
         post_id = #{postId}
         AND picture_order = 1
+        LIMIT 1
     </select>
-    <insert id="addImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        INSERT
-        INTO
-        FILE (
-            post_id,
-            src_url,
-            picture_order
-        )
-        VALUES
-        (
-            #{post_id},
-            #{src_url},
-            #{picture_order}
-        )
-    </insert>
-
-    <update id="updateImageOrder" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        UPDATE
-            FILE
-        SET
-            src_url = {src_url}
-        WHERE
-            picture_id = {}
-
-
-    </update>
-    <delete id="deleteImage" parameterType="com.banbanmoomani.memilog.DTO.ImageOrderDTO">
-        DELETE
-        FROM
-            FILE
-        WHERE
-            post_id = #{post_id} AND src_url = #{src_url}
-    </delete>
     <update id="updateFileUrl" parameterType="com.banbanmoomani.memilog.DTO.UpdateFileDTO">
         UPDATE
             FILE
@@ -385,7 +366,6 @@
         )
     </insert>
 
-
     <select id="showBanner" parameterType="String" resultMap="bannerRequestMap">
         SELECT
         m.mission_id
@@ -395,5 +375,19 @@
         LEFT JOIN FILE f ON m.mission_id = f.mission_id
         WHERE
         m.mission_date = #{date}
+    </select>
+
+    <select id="getPostUser" resultType="_int">
+        SELECT
+            COUNT(*)
+        FROM
+            `POST` p
+        WHERE
+            p.post_id = #{post_id}
+         AND
+            p.user_id = #{user_id}
+    </select>
+    <select id="hasUserPosted" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM POST WHERE user_id = #{userId}
     </select>
 </mapper>

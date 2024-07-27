@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.service;
 
+import com.banbanmoomani.memilog.DAO.FileMapper;
 import com.banbanmoomani.memilog.DAO.LikeMapper;
 import com.banbanmoomani.memilog.DAO.PostMapper;
 import com.banbanmoomani.memilog.DTO.*;
@@ -18,9 +19,12 @@ public class PostService {
 
     private final LikeMapper likeMapper;
 
-    public PostService(PostMapper postMapper, LikeMapper likeMapper) {
+    private final FileMapper fileMapper;
+
+    public PostService(PostMapper postMapper, LikeMapper likeMapper, FileMapper fileMapper) {
         this.postMapper = postMapper;
         this.likeMapper = likeMapper;
+        this.fileMapper = fileMapper;
     }
 
     public List<PostDTO> findAllPosts() {
@@ -31,15 +35,7 @@ public class PostService {
     public void createPost(CreateRequestDTO createRequestDTO) {
         postMapper.createPost(createRequestDTO);
     }
-//    @Transactional
-//    public void updatePost(PostDTO updateRequestDTO) {
-//        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
-//        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
-//            postMapper.updatePost(updateRequestDTO);
-//        } else {
-//            throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
-//        }
-//    }
+
     @Transactional
     public void updatePost(PostDTO updateRequestDTO) {
     // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
@@ -72,10 +68,6 @@ public class PostService {
         return postMapper.findAllPostOnMissionByDate(date);
     }
 
-//    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
-//        return postMapper.findPostsByCompanion(companionIds);
-//    }
-
     public List<PostRequestDTO> findPostsByCompanion(PostSearchCriteria postSearchCriteria) {
         return postMapper.findPostsByCompanion(postSearchCriteria);
     }
@@ -86,18 +78,22 @@ public class PostService {
     }
 
     @Transactional
-    public void increaseLikeCount(int post_id, int user_id) {
+    public void increaseLikeCount(Long post_id, int user_id) {
         postMapper.increaseLikeCount(post_id);
+        PostDTO postDTO = postMapper.findPostById(post_id.intValue());
+        System.out.println("postDTO.getLike_count() = " + postDTO.getLike_count());
+        
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.insertLikeInfo(likeDTO);
     }
 
     @Transactional
-    public void decreaseLikeCount(int post_id, int user_id) {
+    public void decreaseLikeCount(Long post_id, int user_id) {
         postMapper.decreaseLikeCount(post_id);
         LikeDTO likeDTO = new LikeDTO(user_id, post_id);
         likeMapper.deleteLikeInfo(likeDTO);
     }
+
     @Transactional
     public void updateHidden() {
         postMapper.updateHidden();
@@ -116,6 +112,7 @@ public class PostService {
     }
 
     public List<UpdateFileDTO> updatefiles(int postId) {
+        System.out.println("postId = " + postId);
         return postMapper.updateFile(postId);
     }
 
@@ -123,15 +120,49 @@ public class PostService {
         return postMapper.findMainFile(postId);
     }
 
-    public void updateImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.updateImageOrder(imageOrderDTO);
+
+    public List<Integer> getFileIdsByPostId(int postId, Integer userId) {
+        System.out.println("getFileIdsByPostId = " + postId);
+        List<Integer> integerList = fileMapper.selectFileIdsByPostId(postId);
+        for (Integer fileId : integerList) {
+            System.out.println("fileId = " + fileId);
+        }
+        return integerList;
     }
-    public void deleteImageOrder(ImageOrderDTO imageOrderDTO) {
-        postMapper.deleteImageOrder(imageOrderDTO);
+
+    public void deleteFileById(int fileId, Integer userId) {
+        fileMapper.deleteFileById(fileId);
     }
-    public void addImage(ImageOrderDTO imageOrderDTO) {
-        postMapper.addImage(imageOrderDTO);
+
+    public void saveFile(UpdateFileDTO updateFileDTO) {
+        fileMapper.getFile(updateFileDTO);
+    }
+
+    @Transactional
+    public void updateOldFile(Integer oldFile, int order) {
+        fileMapper.updateOldFile(oldFile, order);
     }
 
     public MainTitleDTO showBanner(String date) { return postMapper.showBanner(date); }
+
+    @Transactional
+    public boolean getLikeInfo(Long postId, int user_id) {
+        LikeDTO likeDTO = new LikeDTO(user_id, postId);
+        int count = likeMapper.getLikeInfo(likeDTO);
+        return count > 0;
+    }
+
+    @Transactional
+    public boolean getPostUser(Long postId, int user_id) {
+        int checkUser = postMapper.getPostUser(postId, user_id);
+        return checkUser > 0;
+    }
+
+    @Transactional
+    public boolean hasUserPosted(int userId) {
+        int count = postMapper.hasUserPosted(userId);
+        return count > 0;
+    }
+
+
 }

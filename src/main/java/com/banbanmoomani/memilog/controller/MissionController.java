@@ -63,20 +63,20 @@ public class MissionController {
 
     // ==================================연습용
     // 모든 미션 보기
-    @GetMapping("/allmission")
-    public String showAllMission(Model model, @RequestParam(name = "post_id",required = false)String post_id) {
-        if(post_id != null) {
-            System.out.println(post_id);
-            // mission 내용 조회
-            // post
-        }
-        List<MissionDTO> missions = missionService.findAllMission();
-        model.addAttribute("missions", missions);
-
-        System.out.println("==============모든 미션");
-        missions.forEach(System.out::println);
-        return "main/themeTest";
-    }
+//    @GetMapping("/allmission")
+//    public String showAllMission(Model model, @RequestParam(name = "post_id",required = false)String post_id) {
+//        if(post_id != null) {
+//            System.out.println(post_id);
+//            // mission 내용 조회
+//            // post
+//        }
+//        List<MissionDTO> missions = missionService.findAllMission();
+//        model.addAttribute("missions", missions);
+//
+//        System.out.println("==============모든 미션");
+//        missions.forEach(System.out::println);
+//        return "main/themeTest";
+//    }
 
     @GetMapping( "/theme")
     @ResponseBody
@@ -108,4 +108,9 @@ public class MissionController {
         return  ResponseEntity.ok(missions);
     }
 
+    @GetMapping("/allview")
+    public String allView(@RequestParam(required = false, name = "word") String word, Model model) {
+        model.addAttribute("word", word);
+        return "main/allview"; // "allview"는 "allview.html" 템플릿 파일을 의미
+    }
 }

@@ -1,5 +1,6 @@
 package com.banbanmoomani.memilog.DAO;
 
+import com.banbanmoomani.memilog.DTO.UpdateFileDTO;
 import com.banbanmoomani.memilog.DTO.*;
 import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
@@ -28,9 +29,9 @@ public interface PostMapper {
 
     void deletePostById(int postId);
 
-    void increaseLikeCount(@Param("post_id") int post_id);
+    void increaseLikeCount(@Param("post_id") Long post_id);
 
-    void decreaseLikeCount(@Param("post_id") int post_id);
+    void decreaseLikeCount(@Param("post_id") Long post_id);
 
     List<todayPostDTO> findTodayPost();
 
@@ -44,11 +45,10 @@ public interface PostMapper {
 
     String findMainFile(@Param("postId") int postId);
 
-    void updateImageOrder(ImageOrderDTO imageOrderDTO);
-
-    void deleteImageOrder(ImageOrderDTO imageOrderDTO);
-
-    void addImage(ImageOrderDTO imageOrderDTO);
 
     MainTitleDTO showBanner(@Param("date") String date);
+
+    int getPostUser(@Param("post_id") Long postId, @Param("user_id") int user_id);
+
+    int hasUserPosted(int userId);
 }
