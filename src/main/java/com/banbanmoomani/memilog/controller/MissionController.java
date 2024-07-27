@@ -107,6 +107,7 @@ public class MissionController {
 
         return  ResponseEntity.ok(missions);
     }
+
     @GetMapping("/allview")
     public String allView(@RequestParam(required = false, name = "word") String word, Model model) {
         model.addAttribute("word", word);
