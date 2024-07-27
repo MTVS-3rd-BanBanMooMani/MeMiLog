@@ -116,7 +116,7 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal('profilePicModal')">&times;</span>
                 <h2>프로필 사진 변경</h2>
-                <form id="profilePicForm" method="post" action="/editProfilePic" enctype="multipart/form-data">
+                <form id="profilePicForm" method="post" action="/file/upload" enctype="multipart/form-data">
                     <input type="file" id="profilePic" name="profilePic"><br><br>
                     <input type="hidden" name="type" value="profile">
                     <input type="hidden" name="user_id" value="${user_id}">
