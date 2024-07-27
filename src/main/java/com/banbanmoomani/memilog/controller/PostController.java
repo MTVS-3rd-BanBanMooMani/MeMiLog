@@ -347,8 +347,6 @@ public class PostController {
         List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
         model.addAttribute("reportCategory", reportCategory);
 
-        reportCategory.forEach(System.out::println);
-
         return "main/postview";
     }
 
