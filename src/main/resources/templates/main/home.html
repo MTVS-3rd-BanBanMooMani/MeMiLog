@@ -37,15 +37,11 @@
 <div class="container">
 <div class="middle-container">
     <div class="search-bar-container">
-        <form id="themeWordForm" action="/theme" method="get" class="search-box">
-            <input
-                    type="text"
-                    placeholder="찾고싶은 질문 키워드를 검색해보세요!"
-                    class="search-bar"
-                    name="word"
-            />
-            <button type="submit" class="search-btn"></button>
-            <input type="hidden" id="themeType" name="type">
+        <form action="/allview" method="get">
+            <input type="text" name="word">
+            <button type="submit">
+                <img th:src="@{/document/img/material-symbols-light.png}">
+            </button>
         </form>
     </div>
     <div class="mission-container">
