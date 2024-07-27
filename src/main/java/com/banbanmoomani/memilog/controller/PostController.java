@@ -301,11 +301,15 @@ public class PostController {
         postDetail.setProfile_img(profile_img);
         postDetail.setPostUrl(postUrl);
 
-        // 현재 user가 해당 post에 대해 LIKE 테이블에 정보가 들어있는지 확인 후
-        // boolean 값을 postDetail에 넣어서 반환하기
+        // 좋아요 확인
         boolean likeInfo = postService.getLikeInfo(post_id, user_id);
         System.out.println("likeInfo = " + likeInfo);
         postDetail.setLikeInfo(likeInfo);
+
+        // 작성자 확인
+        boolean checkUser = postService.getPostUser(post_id, user_id);
+        System.out.println("checkUser = " + checkUser);
+        postDetail.setCheckUser(checkUser);
 
         return postDetail;
 

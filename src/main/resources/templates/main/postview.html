@@ -45,9 +45,6 @@
 <main>
     <div class="content">
         <div class="modal-container">
-            <!--            <div class="modal-function">-->
-            <!--                <button class="modal-close-btn">&times;</button>-->
-            <!--            </div>-->
             <div class="modal-mission-container">
                 <img
                         class="modal-mission-img"
@@ -73,7 +70,6 @@
             <div class="modal-photo-greed-container">
                 <div class="modal-row">
                     <div th:each="post : ${posts}" class="photo-div" th:data-post-id="${post.post_id}">
-                        <!--                        <img src="../../document/img/home-post-photo.jpg" />-->
                         <img th:src="${post.src_url}" width="138px" height="180px" />
                         <p th:text="${post.nickname}"></p>
                     </div>

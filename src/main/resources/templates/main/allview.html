@@ -46,21 +46,14 @@
       <div class="content">
         <!-- 검색바 -->
         <form id="themeWordForm" action="/theme" method="get" class="search-box">
-<!--          <div class="search-box">-->
             <input
                     type="text"
                     placeholder="찾고싶은 질문 키워드를 검색해보세요!"
                     class="search-bar"
                     name="word"
             />
-<!--                        <img-->
-<!--                                src="../../document/img/search.png"-->
-<!--                                alt="search icon"-->
-<!--                                class="search-Img"-->
-<!--                        />-->
             <button type="submit" class="search-btn"></button>
           <input type="hidden" id="themeType" name="type">
-<!--          </div>-->
         </form>
         <!-- 테마 선택 -->
         <div class="category-box">
@@ -70,7 +63,7 @@
           <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">취미</button>
           <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">일상</button>
           <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">음식</button>
-          <button type="button" onclick="submitForm()">조회</button>
+          <button type="button" onclick="submitForm()" class="searchBtn"></button>
         </div>
         <div class="note-container" id="note-container"></div>
         <div class="pagination" id="pagination"></div>

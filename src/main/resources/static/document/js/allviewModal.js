@@ -160,6 +160,17 @@ photoDivs.forEach((photoDiv) => {
             likeBtn.src = "../../document/img/heart.png";
           }
 
+          // 작성자 확인
+          if(data.checkUser) {
+            document.querySelector(".post-report-btn").style.display = "none";
+            document.querySelector(".post-edit-btn").style.display = "block";
+            document.querySelector(".post-delete-btn").style.display = "block";
+          } else {
+            document.querySelector(".post-report-btn").style.display = "block";
+            document.querySelector(".post-edit-btn").style.display = "none";
+            document.querySelector(".post-delete-btn").style.display = "none";
+          }
+
         })
         .catch(error => console.error("post detail error: ", error));
   });

@@ -39,6 +39,8 @@
             *
         FROM
             MISSION
+        ORDER BY
+            mission_date DESC
     </select>
 
     <!-- 선택된 테마로 미션 조회 SQL문 -->
@@ -57,7 +59,10 @@
         <foreach item="themeId" index="index" collection="themeIds" open="(" separator="," close=")">
             #{themeId}
         </foreach>
+        ORDER BY
+            mission_date DESC
     </select>
+
     <select id="findTodayMission" resultMap="missionResultMap">
         SELECT
             m.mission_id,
@@ -70,6 +75,7 @@
         WHERE
             DATE_FORMAT(m.mission_date, '%Y-%m-%d') = #{today}
     </select>
+
     <select id="findPriThemeName" parameterType="int" resultType="string">
         SELECT
             theme_name
@@ -208,6 +214,8 @@
             </foreach>
             )
         </if>
+        ORDER BY
+         mission_date DESC
     </select>
 
     <select id="getMainTitle" resultMap="mainTitleResultMap">

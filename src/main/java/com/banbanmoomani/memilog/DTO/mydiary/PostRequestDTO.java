@@ -24,6 +24,16 @@ public class PostRequestDTO {
 
     private boolean likeInfo;
 
+    private boolean checkUser;
+
+    public boolean isCheckUser() {
+        return checkUser;
+    }
+
+    public void setCheckUser(boolean checkUser) {
+        this.checkUser = checkUser;
+    }
+
     public boolean isLikeInfo() {
         return likeInfo;
     }

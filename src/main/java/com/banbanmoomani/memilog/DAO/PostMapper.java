@@ -47,4 +47,6 @@ public interface PostMapper {
 
 
     MainTitleDTO showBanner(@Param("date") String date);
+
+    int getPostUser(@Param("post_id") Long postId, @Param("user_id") int user_id);
 }

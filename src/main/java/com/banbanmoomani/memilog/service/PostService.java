@@ -163,4 +163,10 @@ public class PostService {
         int count = likeMapper.getLikeInfo(likeDTO);
         return count > 0;
     }
+
+    @Transactional
+    public boolean getPostUser(Long postId, int user_id) {
+        int checkUser = postMapper.getPostUser(postId, user_id);
+        return checkUser > 0;
+    }
 }
