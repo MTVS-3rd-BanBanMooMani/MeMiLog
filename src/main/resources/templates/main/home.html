@@ -553,8 +553,16 @@
             if (result.isConfirmed) {
                 fetch("/post/delete?postId=" + currentPostId)
                     .then(res => {
-                        if(res.ok) {
-                            location.href = "/post/bymission"
+                        if (res.ok) {
+                            Swal.fire({
+                                title: "삭제 완료!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                // 페이지를 다시 로드합니다.
+                                location.reload();
+                            });
                         } else {
                             Swal.fire({
                                 title: "삭제 실패하였습니다!",
