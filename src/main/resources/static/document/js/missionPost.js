@@ -113,7 +113,8 @@ if (word) {
   fetch(`/theme?word=${word}`)
       .then(response => response.json())
       .then(data => {
-        console.log("검색 mission: ", data);
+        console.log(word)
+        // console.log("검색 mission: ", data);
         notesData = data; // notesData를 업데이트
         renderNotes(1);
         renderPagination();
@@ -136,29 +137,34 @@ function renderNotes(page) {
   const start = (page - 1) * notesPerPage;
   const end = start + notesPerPage;
   const notesToDisplay = notesData.slice(start, end);
+  if (notesToDisplay.length === 0) {
+    const messageElement = document.createElement('p');
+    messageElement.textContent = "해당하는 검색 결과가 없습니다. 다시 검색해주세요";
+    noteContainer.appendChild(messageElement);
+  } else {
+    notesToDisplay.forEach(note => {
+      const [year, month, day] = note.missionDate.split('-');
+      const formattedDate = `FROM.${year.slice(2)}${month}${day}`;
 
-  notesToDisplay.forEach(note => {
-    const [year, month, day] = note.missionDate.split('-');
-    const formattedDate = `FROM.${year.slice(2)}${month}${day}`;
-
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
+      const noteElement = document.createElement("div");
+      noteElement.className = "note";
+      noteElement.innerHTML = `
                         <div class="masking-tape"></div>
                         <span>${formattedDate}</span>
                         <span>${note.missionContent}</span>
                     `;
-    const randomIndex = Math.floor(Math.random() * noteColors.length);
-    const selectedNoteColor = noteColors[randomIndex];
-    const selectedTapeColor = tapeColors[randomIndex];
+      const randomIndex = Math.floor(Math.random() * noteColors.length);
+      const selectedNoteColor = noteColors[randomIndex];
+      const selectedTapeColor = tapeColors[randomIndex];
 
-    noteElement.style.backgroundColor = selectedNoteColor;
-    noteElement.querySelector(".masking-tape").style.backgroundColor = selectedTapeColor;
-    noteElement.addEventListener("click", () => {
-      location.href = "/post/bymission?date="+note["missionDate"];
+      noteElement.style.backgroundColor = selectedNoteColor;
+      noteElement.querySelector(".masking-tape").style.backgroundColor = selectedTapeColor;
+      noteElement.addEventListener("click", () => {
+        location.href = "/post/bymission?date="+note["missionDate"];
+      });
+      noteContainer.appendChild(noteElement);
     });
-    noteContainer.appendChild(noteElement);
-  });
+  }
 }
 
 function renderPagination() {
