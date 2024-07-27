@@ -37,15 +37,11 @@
 <div class="container">
 <div class="middle-container">
     <div class="search-bar-container">
-        <form id="themeWordForm" action="/theme" method="get" class="search-box">
-            <input
-                    type="text"
-                    placeholder="찾고싶은 질문 키워드를 검색해보세요!"
-                    class="search-bar"
-                    name="word"
-            />
-            <button type="submit" class="search-btn"></button>
-            <input type="hidden" id="themeType" name="type">
+        <form action="/mission" method="get">
+            <input type="text" name="word">
+            <button type="submit">
+                <img th:src="@{/document/img/material-symbols-light.png}">
+            </button>
         </form>
     </div>
     <div class="mission-container">
@@ -557,16 +553,8 @@
             if (result.isConfirmed) {
                 fetch("/post/delete?postId=" + currentPostId)
                     .then(res => {
-                        if (res.ok) {
-                            Swal.fire({
-                                title: "삭제 완료!",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                // 페이지를 다시 로드합니다.
-                                location.reload();
-                            });
+                        if(res.ok) {
+                            location.href = "/post/bymission"
                         } else {
                             Swal.fire({
                                 title: "삭제 실패하였습니다!",
