@@ -6,18 +6,6 @@ const word = params.get('word');
 
 console.log(word);
 
-if (word) {
-  fetch(`/theme?word=${word}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("검색 mission: ", data);
-        notesData = data; // notesData를 업데이트
-        renderNotes(1);
-        renderPagination();
-      })
-      .catch(error => console.error('Error fetching data:', error));
-}
-
 function addValue(button, value) {
   if(!selectedCategories.includes(value)) {
     const inputTag = document.getElementById('themeType');
@@ -121,15 +109,27 @@ const pagination = document.getElementById("pagination");
 let notesData = [];
 const notesPerPage = 24;
 
-fetch("/main/allMission")
-    .then(res => res.json())
-    .then(data => {
-      console.log("Fetched data:", data);
-      notesData = data;
-      renderNotes(1);
-      renderPagination();
-    })
-    .catch(error => console.error("Error fetching data:", error));
+if (word) {
+  fetch(`/theme?word=${word}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("검색 mission: ", data);
+        notesData = data; // notesData를 업데이트
+        renderNotes(1);
+        renderPagination();
+      })
+      .catch(error => console.error('Error fetching data:', error));
+} else {
+  fetch("/main/allMission")
+      .then(res => res.json())
+      .then(data => {
+        console.log("Fetched data:", data);
+        notesData = data;
+        renderNotes(1);
+        renderPagination();
+      })
+      .catch(error => console.error("Error fetching data:", error));
+}
 
 function renderNotes(page) {
   noteContainer.innerHTML = "";
