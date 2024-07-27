@@ -91,29 +91,32 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = "none";
 }
 
-document.getElementById('profilePicForm').onsubmit = function (event) {
+document.getElementById('profilePicForm').onsubmit = function(event) {
     event.preventDefault();
 
     var formData = new FormData(this);
 
-    $.ajax({
-        url: '/file/upload',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            var userConfirmed = confirm("프로필 사진이 성공적으로 변경되었습니다.");
-            if (userConfirmed) {
-                location.reload();
+    fetch('/file/upload', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        },
-        error: function(xhr, status, error) {
-            console.log("Error: " + error);
-            alert("프로필 사진 변경에 실패했습니다.");
-        }
-    });
-}
+            return response.text();
+        })
+        .then(data => {
+            Swal.fire('프로필 사진이 성공적으로 변경되었습니다.').then(() => {
+                window.location.href = '/mydiary';
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('프로필 사진 변경에 실패했습니다.');
+        });
+};
+
 
 function deleteProfilePic() {
     var user_id = document.querySelector('input[name="user_id"]').value;
