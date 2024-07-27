@@ -366,7 +366,6 @@
         )
     </insert>
 
-
     <select id="showBanner" parameterType="String" resultMap="bannerRequestMap">
         SELECT
         m.mission_id
@@ -376,5 +375,16 @@
         LEFT JOIN FILE f ON m.mission_id = f.mission_id
         WHERE
         m.mission_date = #{date}
+    </select>
+
+    <select id="getPostUser" resultType="_int">
+        SELECT
+            COUNT(*)
+        FROM
+            `POST` p
+        WHERE
+            p.post_id = #{post_id}
+         AND
+            p.user_id = #{user_id}
     </select>
 </mapper>

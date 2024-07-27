@@ -35,15 +35,7 @@ public class PostService {
     public void createPost(CreateRequestDTO createRequestDTO) {
         postMapper.createPost(createRequestDTO);
     }
-//    @Transactional
-//    public void updatePost(PostDTO updateRequestDTO) {
-//        PostDTO post = postMapper.findPostById(updateRequestDTO.getPost_id());
-//        if (post != null && post.getUser_id() == updateRequestDTO.getUser_id()) {
-//            postMapper.updatePost(updateRequestDTO);
-//        } else {
-//            throw new IllegalArgumentException("해당 포스트가 없거나 권한이 없습니다.");
-//        }
-//    }
+
     @Transactional
     public void updatePost(PostDTO updateRequestDTO) {
     // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
@@ -75,10 +67,6 @@ public class PostService {
 
         return postMapper.findAllPostOnMissionByDate(date);
     }
-
-//    public List<PostRequestDTO> findPostsByCompanion(List<Integer> companionIds) {
-//        return postMapper.findPostsByCompanion(companionIds);
-//    }
 
     public List<PostRequestDTO> findPostsByCompanion(PostSearchCriteria postSearchCriteria) {
         return postMapper.findPostsByCompanion(postSearchCriteria);
@@ -162,5 +150,11 @@ public class PostService {
         LikeDTO likeDTO = new LikeDTO(user_id, postId);
         int count = likeMapper.getLikeInfo(likeDTO);
         return count > 0;
+    }
+
+    @Transactional
+    public boolean getPostUser(Long postId, int user_id) {
+        int checkUser = postMapper.getPostUser(postId, user_id);
+        return checkUser > 0;
     }
 }

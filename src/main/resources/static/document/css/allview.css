@@ -23,6 +23,18 @@
   font-family: "Gowun Batang";
 }
 
+.searchBtn {
+  background-image: url(../../document/img/material-symbols-light.png);
+  background-color: #ffffff;
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .cancel-btn {
   position: absolute;
   top: -8px;
