@@ -66,14 +66,14 @@ public class MydiaryController {
     }
 
     @PostMapping("/editUserInfo")
-    public ResponseEntity<UserDTO> editUserInfo(@ModelAttribute UserDTO user) {
+    public String editUserInfo(@ModelAttribute UserDTO user) {
         try {
             userService.updateUser(user);
             UserDTO userDTO = userService.findByEmail(user.getEmail());
             System.out.println("userDTO = " + userDTO);
-            return ResponseEntity.ok(userDTO);
+            return "redirect:/mydiary";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return "fail";
         }
     }
 
