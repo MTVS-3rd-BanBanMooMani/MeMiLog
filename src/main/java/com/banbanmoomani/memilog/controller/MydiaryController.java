@@ -69,7 +69,9 @@ public class MydiaryController {
     public ResponseEntity<UserDTO> editUserInfo(@ModelAttribute UserDTO user) {
         try {
             userService.updateUser(user);
-            return ResponseEntity.ok(user);
+            UserDTO userDTO = userService.findByEmail(user.getEmail());
+            System.out.println("userDTO = " + userDTO);
+            return ResponseEntity.ok(userDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
