@@ -157,4 +157,12 @@ public class PostService {
         int checkUser = postMapper.getPostUser(postId, user_id);
         return checkUser > 0;
     }
+
+    @Transactional
+    public boolean hasUserPosted(int userId) {
+        int count = postMapper.hasUserPosted(userId);
+        return count > 0;
+    }
+
+
 }

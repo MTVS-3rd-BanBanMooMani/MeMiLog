@@ -52,10 +52,6 @@ public class PostController {
     @GetMapping("/create")
     public String createPost(Model model, HttpSession session, @SessionAttribute(name = "user_id", required = false) String userId, RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
-        if(user_id == null) {
-            rttr.addFlashAttribute("failMessage", "로그인을 먼저 해주세요!");
-            return "redirect:/user/login";
-        }
 
         MissionDTO mission = missionService.findTodayMission();
 
@@ -63,7 +59,6 @@ public class PostController {
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
         List<EmotionDTO> emotions = emotionService.findAllEmotions();
         List<CompanionDTO> companions = comPanionService.findAllCompanions();
-        System.out.println(mission);
 
 
         model.addAttribute("today", mission.getMissionDate());
@@ -86,7 +81,6 @@ public class PostController {
                              Model model,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) throws IOException {
-        System.out.println(createRequestDTO);
 
         Object user_id = session.getAttribute("user_id");
 
@@ -131,7 +125,6 @@ public class PostController {
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
         PostDTO post = postService.findPostById(postId);
-        System.out.println("post 1= " + post);
 
         if(post == null || post.getUser_id() != (int)user_id) {
             rttr.addFlashAttribute("failMessage", "수정 권한이 없습니다.");
@@ -155,10 +148,8 @@ public class PostController {
         model.addAttribute("emotions", emotions);
         model.addAttribute("companions", companions);
         model.addAttribute("imageUrls", updateFileDTOList);
-        System.out.println("updateFileDTOList = " + updateFileDTOList);
         model.addAttribute("mainImageUrl", mainFile);
 
-        System.out.println("mainFile = " + mainFile);
 
         return "main/postupdate";
     }
@@ -186,11 +177,7 @@ public class PostController {
                                    @RequestParam(name = "post_id") Integer post_id,
                                    @RequestParam(name = "imageOrder") String imageOrder, // 새로운 순서값 JSON
                                    HttpSession session,
-                                   RedirectAttributes redirectAttributes) throws IOException {
-        System.out.println("Received postId: " + post_id);
-        System.out.println("Received oldFile1: " + oldFile1);
-        System.out.println("Received newFile1: " + newFile1);
-        System.out.println("imageOrder = " + imageOrder);
+                                   RedirectAttributes redirectAttributes) throws IOException {;
 
         Object user_id = session.getAttribute("user_id");
         post.setUser_id((int) user_id);
@@ -229,9 +216,7 @@ public class PostController {
                 newFileDTO.setPost_id(post_id);
                 newFileDTO.setPicture_order(i+1); // 기존 파일 수에 따른 순서 지정
                 newFileDTO.setUser_id(userId); // 사용자 ID 설정
-                System.out.println(userId);
                 newFileDTO.setType("post"); // type 필드 설정
-                System.out.println(post);
                 postService.saveFile(newFileDTO);
             }
             postService.updatePost(post);
@@ -241,15 +226,13 @@ public class PostController {
 
         // RedirectAttributes를 사용하여 date 매개변수를 전달
         redirectAttributes.addAttribute("date", missionDate);
-        System.out.println("missionDate123 = " + missionDate);
 
-        return "redirect:/post/bymission";
+        return "redirect:/mydiary";
     }
 
     @GetMapping("/like")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> likePost(@RequestParam(name = "post_id") Long post_id, @SessionAttribute(name = "user_id") int user_id) {
-        System.out.println("like post_id = " + post_id);
         postService.increaseLikeCount(post_id, user_id);
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -259,7 +242,6 @@ public class PostController {
     @GetMapping("/dislike")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> dislikePost(@RequestParam(name = "post_id") Long post_id, @SessionAttribute(name = "user_id") int user_id) {
-        System.out.println("dislike post_id = " + post_id);
         postService.decreaseLikeCount(post_id, user_id);
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -271,7 +253,6 @@ public class PostController {
                              HttpSession session,
                              RedirectAttributes rttr) {
         Object user_id = session.getAttribute("user_id");
-        System.out.println("postId = " + postId);
 
         try {
             postService.deletePost(postId, (int) user_id);
@@ -287,7 +268,6 @@ public class PostController {
     @GetMapping("/all")
     public String viewAllPost(Model model) {
         List<PostDTO> post = postService.findAllPosts();
-        System.out.println("============all post");
         post.forEach(System.out::println);
         model.addAttribute("posts", postService.findAllPosts());
         return "main/allview";
@@ -298,31 +278,22 @@ public class PostController {
     public PostRequestDTO showPostDetail(@RequestBody Map<String, Long> req,
                                          @SessionAttribute(name = "user_id") int user_id) {
         Long post_id = req.get("postId");
-        System.out.println("post_id = " + post_id);
 
         PostRequestDTO postDetail = postService.showPostDetail(post_id);
-        System.out.println("=============포스트 디테일=============");
-        System.out.println(postDetail);
 
         String profile_img = fileService.getProfileUrl(post_id);
-        System.out.println("========프로필 img===============");
-        System.out.println("profile_img = " + profile_img);
 
         List<String> postUrl = fileService.getPostUrl(post_id);
-        System.out.println("=======포스트 img=======");
-        System.out.println("postUrl = " + postUrl);
 
         postDetail.setProfile_img(profile_img);
         postDetail.setPostUrl(postUrl);
 
         // 좋아요 확인
         boolean likeInfo = postService.getLikeInfo(post_id, user_id);
-        System.out.println("likeInfo = " + likeInfo);
         postDetail.setLikeInfo(likeInfo);
 
         // 작성자 확인
         boolean checkUser = postService.getPostUser(post_id, user_id);
-        System.out.println("checkUser = " + checkUser);
         postDetail.setCheckUser(checkUser);
 
         return postDetail;
@@ -334,22 +305,17 @@ public class PostController {
                                              @RequestParam(name = "date",required = false)String date,
                                              @RequestParam(name = "type", required = false) String companionTypes) {
 
-        System.out.println("date = " + date);
-        System.out.println("companionTypes = " + companionTypes);
 
         List<PostRequestDTO> posts = new ArrayList<>();
 
         if (date != null) {
 
             MainTitleDTO mainTitleDTO = postService.showBanner(date);
-            System.out.println("===============banner 정보");
-            System.out.println("mainTitleDTO = " + mainTitleDTO);
             model.addAttribute("bannerInfo", mainTitleDTO);
 
             posts = postService.findAllPostOnMissionByDate(date);
             model.addAttribute("posts", posts);
             model.addAttribute("date", date);
-            System.out.println("=======날짜별 post 조회");
             posts.forEach(System.out::println);
 
             // 날짜 형식 변환
@@ -374,14 +340,13 @@ public class PostController {
                 posts = postService.findPostsByCompanion(postSearchCriteria);
                 model.addAttribute("posts", posts);
 
-                System.out.println("========누구와 필터 적용 결과");
                 posts.forEach(System.out::println);
             }
         }
 
         List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
         model.addAttribute("reportCategory", reportCategory);
-        System.out.println("==========report 종류");
+
         reportCategory.forEach(System.out::println);
 
         return "main/postview";

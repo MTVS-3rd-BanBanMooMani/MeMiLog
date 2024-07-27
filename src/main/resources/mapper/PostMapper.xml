@@ -387,4 +387,7 @@
          AND
             p.user_id = #{user_id}
     </select>
+    <select id="hasUserPosted" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM POST WHERE user_id = #{userId}
+    </select>
 </mapper>
