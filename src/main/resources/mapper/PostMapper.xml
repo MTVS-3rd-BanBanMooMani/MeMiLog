@@ -79,7 +79,7 @@
         (
             #{content},
             0,
-            (SELECT mission_id FROM MISSION WHERE mission_content = #{mission_content}),
+            (SELECT mission_id FROM MISSION WHERE mission_content = #{mission_content} limit 1),
             NOW(),
             #{companion_id},
             #{emotion_id},
