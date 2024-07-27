@@ -68,6 +68,7 @@
         <if test="selectedDate != null and selectedDate != ''">
         AND DATE_FORMAT( m.mission_date, '%e' ) = #{selectedDate}
         </if>
+        ORDER BY written_datetime
     </select>
 
 </mapper>

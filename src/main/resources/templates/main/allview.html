@@ -1,77 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MeMissionLog</title>
-    <!-- css 초기화 -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-    />
-    <!-- 전체 레이아웃 css -->
-    <link
-      href="../../document/css/layout.css"
-      rel="stylesheet"
-    />
-    <link
-      href="../../document/css/searchbar.css"
-      rel="stylesheet"
-    />
-    <link
-      href="../../document/css/allview.css"
-      rel="stylesheet"
-    />
-
-    <!-- sweetalert2 -->
-    <link
-      href="
-    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.min.css
-    "
-      rel="stylesheet"
-    />
-    <script src="
-    https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js
-    "></script>
-
-    <!-- animate -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-  </head>
-  <body>
-  <div th:replace="~{fragments/mainHeader :: header}"></div>
-  <main>
-      <div class="content">
-        <!-- 검색바 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/document/css/layout.css">
+    <link rel="stylesheet" href="/document/css/searchbar.css">
+    <link rel="stylesheet" href="/document/css/allview.css">
+</head>
+<body>
+<div th:replace="~{fragments/mainHeader :: header}"></div>
+<main>
+    <div class="content">
         <form id="themeWordForm" action="/theme" method="get" class="search-box">
-            <input
-                    type="text"
-                    placeholder="찾고싶은 질문 키워드를 검색해보세요!"
-                    class="search-bar"
-                    name="word"
-            />
+            <input type="text" name="word" class="search-bar" placeholder="찾고싶은 질문 키워드를 검색해보세요!" th:value="${param.word}">
             <button type="submit" class="search-btn"></button>
-          <input type="hidden" id="themeType" name="type">
+            <input type="hidden" id="themeType" name="type">
         </form>
-        <!-- 테마 선택 -->
         <div class="category-box">
-          <span class="category-title">테마</span>
-          <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">자연</button>
-          <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">여행</button>
-          <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">취미</button>
-          <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">일상</button>
-          <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">음식</button>
-          <button type="button" onclick="submitForm()" class="searchBtn"></button>
+            <span class="category-title">테마</span>
+            <button type="button" value="1" onclick="addValue(this, this.value)" class="category-btn">자연</button>
+            <button type="button" value="2" onclick="addValue(this, this.value)" class="category-btn">여행</button>
+            <button type="button" value="3" onclick="addValue(this, this.value)" class="category-btn">취미</button>
+            <button type="button" value="4" onclick="addValue(this, this.value)" class="category-btn">일상</button>
+            <button type="button" value="5" onclick="addValue(this, this.value)" class="category-btn">음식</button>
+            <button type="button" onclick="submitForm()">조회</button>
         </div>
         <div class="note-container" id="note-container"></div>
         <div class="pagination" id="pagination"></div>
       </div>
     </main>
-
   <div th:replace="~{fragments/mainFooter :: footer}"></div>
-
   <script src="../../document/js/missionPost.js"></script>
   </body>
 </html>

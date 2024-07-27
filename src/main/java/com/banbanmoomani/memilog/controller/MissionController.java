@@ -108,4 +108,9 @@ public class MissionController {
         return  ResponseEntity.ok(missions);
     }
 
+    @GetMapping("/allview")
+    public String allView(@RequestParam(required = false, name = "word") String word, Model model) {
+        model.addAttribute("word", word);
+        return "main/allview"; // "allview"는 "allview.html" 템플릿 파일을 의미
+    }
 }
