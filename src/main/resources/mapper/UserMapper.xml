@@ -72,11 +72,13 @@
         INSERT INTO FILE
         (
             user_id
+          , src_url
           , type
         )
         VALUE
         (
               #{user_id}
+            , #{src_url}
             , #{type}
         )
     </insert>

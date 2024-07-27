@@ -49,6 +49,7 @@ public class UserService {
         FileDTO fileDTO = new FileDTO();
         fileDTO.setUser_id(userDTO.getUser_id());
         fileDTO.setType("profile");
+        fileDTO.setSrc_url("/document/img/default_profile.png");
         userMapper.setDefaultProfile(fileDTO);
     }
 
