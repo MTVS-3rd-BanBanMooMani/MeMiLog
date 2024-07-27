@@ -83,7 +83,7 @@ photoDivs.forEach((photoDiv) => {
   photoDiv.addEventListener("click", function () {
     modalBg.style.display = 'flex';
     postModal.style.display = 'block';
-
+    updateArrows();
     const postId = photoDiv.getAttribute('data-post-id');
     currentPostId = postId;
     console.log(postId);
@@ -135,6 +135,11 @@ photoDivs.forEach((photoDiv) => {
             default:
               emotionImg.src = "";
           }
+          const modifyBtn = document.querySelector(".post-edit-btn")
+
+          modifyBtn.addEventListener("click", () => {
+            location.href="/post/update?postId="+postId
+          })
 
           // Post 이미지 설정
           const postModalBoardImg = document.querySelector(".post-modal-board-img");
@@ -220,8 +225,6 @@ function dislikeFetch(postId) {
       })
       .catch(error => console.error("dislike error: ", error));
 }
-
-//---------------------------------------
 
 closePostModalBtn.addEventListener("click", function () {
   modalBg.style.display = "none";
@@ -352,7 +355,6 @@ const deleteAlert = document.querySelector(".post-delete-btn");
 deleteAlert.addEventListener("click", () => {
   Swal.fire({
     title: "정말로 삭제하시겠습니까?",
-    // text: "You won't be able to revert this!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#d33",
@@ -361,12 +363,25 @@ deleteAlert.addEventListener("click", () => {
     cancelButtonText: "취소",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire({
-        title: "삭제되었습니다!",
-        // text: "Your file has been deleted.",
-        icon: "success",
-      });
+      fetch("/post/delete?postId=" + currentPostId)
+          .then(res => {
+            if (res.ok) {
+              Swal.fire({
+                title: "삭제 완료!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                // 페이지를 다시 로드합니다.
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                title: "삭제 실패하였습니다!",
+                icon: "error",
+              });
+            }
+          })
     }
   });
 });
-// });
