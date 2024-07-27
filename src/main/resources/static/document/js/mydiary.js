@@ -156,22 +156,35 @@ document.getElementById('editForm').onsubmit = function(event) {
         alert("비밀번호가 일치하지 않습니다.");
         return;
     }
-    var formData = $(this).serialize();
-    $.ajax({
-        url: '/editUserInfo',
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            $('#userModal #userEmail').text(response.email);
-            $('#userModal #userNickname').text(response.nickname);
-            $('#userNickname').text(response.nickname);
-            alert("회원 정보가 성공적으로 수정되었습니다.");
-            closeModal('editModal');
-        },
-        error: function(xhr, status, error) {
-            console.log("Error: " + error);
-        }
-    });
+    const formData = new FormData(this);
+
+    fetch('/editUserInfo', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Response: ", data);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const userInfoElement = doc.getElementById('userInfo');
+            const errorMessageElement = doc.getElementById('errorMessage');
+            if (userInfoElement) {
+                document.getElementById('userInfo').outerHTML = userInfoElement.outerHTML;
+                Swal.fire('회원 정보가 성공적으로 수정되었습니다.');
+                closeModal('editModal');
+                window.location.href = '/mydiary';
+            } else if (errorMessageElement) {
+                document.getElementById('errorMessage').outerHTML = errorMessageElement.outerHTML;
+                Swal.fire('회원 정보 수정에 실패하였습니다. 다시 시도해주세요.');
+            } else {
+                Swal.fire('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire('오류가 발생했습니다. 다시 시도해주세요.');
+        });
 };
 
 document.getElementById('deleteForm').onsubmit = function(event) {

@@ -66,13 +66,14 @@ public class MydiaryController {
     }
 
     @PostMapping("/editUserInfo")
-    public ResponseEntity<UserDTO> editUserInfo(@ModelAttribute UserDTO user) {
+    public String editUserInfo(@ModelAttribute UserDTO user, Model model) {
         try {
             userService.updateUser(user);
-            return ResponseEntity.ok(user);
+            model.addAttribute("user", user);
+            return "main/mydiary :: #userInfo"; // 업데이트된 사용자 정보 부분만 반환
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            model.addAttribute("error", "회원 정보 수정에 실패하였습니다.");
+            return "main/mydiary :: #errorMessage"; // 에러 메시지 부분만 반환
         }
     }
-
 }
