@@ -47,7 +47,7 @@ public class MissionController {
     @GetMapping("/mission")
     public String allMission() {
         System.out.println("=======모든미션");
-        return "/main/allview";
+        return "main/allview";
     }
 
     @GetMapping(value = "/main/allMission", produces = "application/json; charset=UTF-8")
