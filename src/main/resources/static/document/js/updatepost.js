@@ -142,9 +142,10 @@ document.getElementById('imageUpload').addEventListener('change', function(event
             newThumbnail.classList.add('thumbnail');
             newThumbnail.classList.add('new')
             newThumbnail.setAttribute('draggable', 'true');
+            var btnId = "newFileBtn" + fileCount;
             newThumbnail.innerHTML = `
                 <img src="${e.target.result}" alt="이미지" onclick="showImageInContainer('${e.target.result}')">
-                <button data-index='${fileCount}' class="image-close-btn" onclick="removeThumbnail(this)"></button>
+                <button data-index='${fileCount}' id='${btnId}' class="image-close-btn" onclick="removeThumbnail(this)"></button>
             `;
             newInputThunmbnail.type = 'file';
             newInputThunmbnail.id = "newFile"+fileCount.toString();
@@ -192,7 +193,6 @@ function showImageInContainer(imageSrc) {
 }
 
 function removeThumbnail(button) {
-    fileCount--;
     const thumbnail = button.parentElement;
     const thumbnailsContainer = document.getElementById('plus-thumbnail');
     thumbnailsContainer.removeChild(thumbnail);
@@ -211,7 +211,37 @@ function removeThumbnail(button) {
         const newInputContainer = document.getElementById('newInputFileContainer');
         const newInput = document.getElementById("newFile"+dataIndex)
         newInputContainer.removeChild(newInput)
+
+        // 현재 newfile들에 대해서 현재 fileCount보다 높은 input과 div에 대해서 index 수정이 필요(한칸씩 낮추기)
+        // 그럼 imageOrder에 대한 값 업데이트는 아래에서 다시 진행함
+        for(var i = Number(dataIndex) + 1; i<5; i++) {
+            if(document.getElementById('newFile'+i.toString())){
+                var input = document.getElementById('newFile'+i.toString());
+                var div_button = document.getElementById('newFileBtn'+i.toString());
+
+                input.id = "newFile"+(i - 1).toString()
+                input.name = "newFile"+(i - 1).toString()
+                div_button.id = "newFileBtn"+(i - 1).toString()
+                div_button.setAttribute("data-index", (i - 1).toString())
+            }
+        }
+
+        fileCount--;
     }
+
+    var imageOrder = [];
+    var images = document.getElementById('plus-thumbnail').children;
+
+    for(var i = 0; i<images.length - 1; i++) {
+        if(images[i].classList.contains('new')) {
+            var btn = images[i].children[1]
+            imageOrder.push("newFile"+btn.getAttribute('data-index').toString())
+        } else if (images[i].classList.contains('old')) {
+            var btn = images[i].children[1]
+            imageOrder.push("oldFile"+btn.getAttribute('data-index').toString())
+        }
+    }
+    document.getElementById('imageOrder').value = JSON.stringify(imageOrder)
 
     // input type=file 없애는 로직
     // const inputFileContainer = document.getElementById('inputFileContainer');
@@ -328,6 +358,7 @@ function handleDragEnd(event) {
     }
     draggedElement = null;
 
+    // 여기서 imageOrder int형 배열을 JSON.stringfy()해서 저장할거임
     var imageOrder = [];
     var images = document.getElementById('plus-thumbnail').children;
 

@@ -204,8 +204,8 @@ public class PostController {
         }
 
         // 새로운 파일 추가 로직
-        int existingFileCount = currentFileIds.size();
         String cleanedImageOrder = imageOrder.replaceAll("[\\[\\]\"]", "");
+        System.out.println(cleanedImageOrder);
         String[] fileList = cleanedImageOrder.split(",");
         for (int i = 0; i < fileList.length; i++) {
             System.out.println("fileList = " + fileList[i]);
@@ -217,7 +217,6 @@ public class PostController {
             } else {
                 String number = fileList[i].replaceAll("[^0-9]", "");
                 int index = Integer.parseInt(number) - 1;
-
                 String newFileUrl = fileStorageService.saveFile(newFiles[index], post_id);
                 UpdateFileDTO newFileDTO = new UpdateFileDTO();
                 newFileDTO.setSrc_url(newFileUrl);
