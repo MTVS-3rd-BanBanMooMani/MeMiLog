@@ -115,7 +115,7 @@ public class PostController {
             String missionDate = mission.getMissionDate();
             redirectAttributes.addAttribute("date", missionDate);
 
-            return "redirect:/post/bymission";
+            return "redirect:/mydiary";
 
         } catch (Exception e) {
             // 예외 발생 시 에러 메시지를 추가하고 메인 페이지로 리디렉션
