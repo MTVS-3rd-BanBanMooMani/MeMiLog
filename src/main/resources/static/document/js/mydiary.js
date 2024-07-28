@@ -262,7 +262,7 @@ function displayPosts(posts) {
     });
 }
 
-function showPostModal(postId){
+function showPostModal(postId) {
     const modalBg = document.querySelector('.modal-bg');
     const postModal = document.querySelector('.post-modal');
 
@@ -274,7 +274,7 @@ function showPostModal(postId){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ postId: postId })
+        body: JSON.stringify({postId: postId})
     })
         .then(res => res.json())
         .then(data => {
@@ -355,19 +355,26 @@ function showPostModal(postId){
                 fetch("/post/delete?postId=" + postId)
                     .then(res => {
                         if (res.ok) {
-                            location.href = "/post/bymission";
+                            Swal.fire({
+                                title: "삭제 완료!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                // 페이지를 다시 로드합니다.
+                                location.reload();
+                            });
                         } else {
                             Swal.fire({
                                 title: "삭제 실패하였습니다!",
                                 icon: "error",
                             });
                         }
-                    });
+                    })
             }
         });
     });
 }
-
 async function fetchEmotionCounts() {
     try {
         const response = await fetch('/emotions?emotion_ids=1,2,3,4,5');

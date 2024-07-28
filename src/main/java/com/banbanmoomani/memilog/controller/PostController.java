@@ -7,9 +7,11 @@ import com.banbanmoomani.memilog.DTO.mydiary.PostRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.CreateRequestDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
+import com.banbanmoomani.memilog.config.Message;
 import com.banbanmoomani.memilog.service.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,42 +82,48 @@ public class PostController {
                              @RequestParam(name = "file5", required = false) MultipartFile file5,
                              Model model,
                              HttpSession session,
-                             RedirectAttributes redirectAttributes) throws IOException {
+                             RedirectAttributes redirectAttributes) {
 
-        Object user_id = session.getAttribute("user_id");
+        try {
+            Object user_id = session.getAttribute("user_id");
+            createRequestDTO.setUser_id((int) user_id);
 
-        createRequestDTO.setUser_id((int) user_id);
-        EmotionDTO emotion = emotionService.findEmotionById(createRequestDTO.getEmotion_id());
-        System.out.println(emotion);
-        CompanionDTO companion = comPanionService.findCompanionById(createRequestDTO.getCompanion_id());
-        System.out.println(companion);
-        createRequestDTO.setEmotion_id(emotion.getEmotionId());
-        createRequestDTO.setCompanion_id(companion.getCompanion_id());
+            // 미션 ID 설정
+            MissionDTO mission = missionService.findTodayMission();
+            createRequestDTO.setMission_id(mission.getMissionId());
+            System.out.println("mission = " + mission);
 
-        postService.createPost(createRequestDTO);
+            EmotionDTO emotion = emotionService.findEmotionById(createRequestDTO.getEmotion_id());
+            CompanionDTO companion = comPanionService.findCompanionById(createRequestDTO.getCompanion_id());
+            createRequestDTO.setEmotion_id(emotion.getEmotionId());
+            createRequestDTO.setCompanion_id(companion.getCompanion_id());
 
-        int postId = createRequestDTO.getPostId();
+            postService.createPost(createRequestDTO);
 
-        model.addAttribute("postId", postId);
+            int postId = createRequestDTO.getPostId();
+            model.addAttribute("postId", postId);
 
-        MultipartFile[] files = {file1, file2, file3, file4, file5};
-        int pictureOrder = 1;
-        for (MultipartFile file : files) {
-            if (file != null && !file.isEmpty()) {
-                String fileUrl = fileService.uploadFile(file, (int) user_id);
-                fileService.saveFileUrl(fileUrl, "post", postId, (int) user_id, pictureOrder++);
+            MultipartFile[] files = {file1, file2, file3, file4, file5};
+            int pictureOrder = 1;
+            for (MultipartFile file : files) {
+                if (file != null && !file.isEmpty()) {
+                    String fileUrl = fileService.uploadFile(file, (int) user_id);
+                    fileService.saveFileUrl(fileUrl, "post", postId, (int) user_id, pictureOrder++);
+                }
             }
+
+            String missionDate = mission.getMissionDate();
+            redirectAttributes.addAttribute("date", missionDate);
+
+            return "redirect:/post/bymission";
+
+        } catch (Exception e) {
+            // 예외 발생 시 에러 메시지를 추가하고 메인 페이지로 리디렉션
+            model.addAttribute("data", new Message(e.getMessage(), "/"));
+            return "fragments/message";
         }
-
-        // mission_date를 가져오기
-        MissionDTO mission = missionService.findTodayMission();
-        String missionDate = mission.getMissionDate();
-
-        // RedirectAttributes를 사용하여 date 매개변수를 전달
-        redirectAttributes.addAttribute("date", missionDate);
-
-        return "redirect:/post/bymission";
     }
+
 
 
     @GetMapping("/update")

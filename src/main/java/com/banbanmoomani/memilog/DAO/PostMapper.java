@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PostMapper {
@@ -51,4 +52,6 @@ public interface PostMapper {
     int getPostUser(@Param("post_id") Long postId, @Param("user_id") int user_id);
 
     int hasUserPosted(int userId);
+
+    int hasUserPostedForMission(Map<String, Object> params);
 }
