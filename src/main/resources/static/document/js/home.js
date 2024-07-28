@@ -2,8 +2,18 @@ let todayIndex = 0;
 const maxPhotos = 7;
 let todayPhotos;
 let archivePhotos;
+let isLoggedIn = false; // 로그인 상태를 저장할 변수
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 로그인 여부 확인
+    fetch('/user/check')
+        .then(response => response.json())
+        .then(data => {
+            isLoggedIn = data; // 로그인 상태를 변수에 저장
+            console.log('로그인 상태:', isLoggedIn); // 디버깅용 로그
+        })
+        .catch(error => console.error('Error checking login status:', error));
+
     todayPhotos = Array.from(document.querySelectorAll('#today-photo-container .photo-div'));
     archivePhotos = Array.from(document.querySelectorAll('#archive-photo-container .photo-div'));
     showPhotos(todayPhotos, todayIndex);
@@ -74,6 +84,16 @@ let likeCount = null;
 
 photoDivs.forEach((photoDiv) => {
     photoDiv.addEventListener("click", function () {
+        if (!isLoggedIn) {
+            Swal.fire({
+                title: '로그인 필요',
+                text: '포스트를 상세하게 보려면 로그인해야 합니다.',
+                icon: 'warning',
+                confirmButtonText: '확인'
+            });
+            return;
+        }
+
         modalBg.style.display = 'flex';
         postModal.style.display = 'block';
         updateArrows();
@@ -307,6 +327,16 @@ const reportModal = document.querySelector(".report-modal");
 const reportModalCloseBtn = document.querySelector(".report-modal-close-btn");
 
 document.querySelector(".post-report-btn").addEventListener("click", function() {
+    if (!isLoggedIn) {
+        Swal.fire({
+            title: '로그인 필요',
+            text: '포스트를 상세하게 보려면 로그인해야 합니다.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
+        return;
+    }
+
     console.log("신고버튼 클릭함");
     reportModalBg.style.display = "flex";
     reportModal.style.display = "flex";
@@ -345,6 +375,16 @@ window.addEventListener("click", function (event) {
 const deleteAlert = document.querySelector(".post-delete-btn");
 
 deleteAlert.addEventListener("click", () => {
+    if (!isLoggedIn) {
+        Swal.fire({
+            title: '로그인 필요',
+            text: '포스트를 상세하게 보려면 로그인해야 합니다.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
+        return;
+    }
+
     Swal.fire({
         title: "정말로 삭제하시겠습니까?",
         icon: "warning",
