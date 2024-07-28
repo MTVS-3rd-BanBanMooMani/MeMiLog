@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>401 Unauthorized</title>
+  <title>Page Not Found</title>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
+      background-color: #f8f9fa;
+    }
+    .content {
+      flex: 1;
+      display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #f8f9fa;
     }
     .error-container {
       background-color: #ffffff;
@@ -22,38 +28,39 @@
       text-align: center;
     }
     .error-container h1 {
-      margin-bottom: 20px;
-      font-size: 48px;
+      margin-bottom: 30px;
+      font-size: 24px;
       color: #333333;
     }
     .error-container p {
-      margin-bottom: 30px;
-      font-size: 18px;
+      font-size: 16px;
       color: #666666;
+      margin-bottom: 20px;
     }
-    .error-container a {
-      display: inline-block;
-      padding: 15px 30px;
+    .error-container button {
+      width: 100%;
+      padding: 15px;
       margin: 20px 0;
       background-color: #1f2d50;
       border: none;
       border-radius: 5px;
       color: white;
       font-size: 16px;
-      text-decoration: none;
       cursor: pointer;
     }
-    .error-container a:hover {
+    .error-container button:hover {
       background-color: #3e4a6b;
     }
   </style>
 </head>
 <body>
 <div th:replace="~{fragments/mainHeader :: header}"></div>
-<div class="error-container">
-  <h1>401</h1>
-  <p>이 페이지에 접근하려면 사용자 이름과 암호가 필요합니다.</p>
-  <button onclick="window.location.href='/'">홈페이지로 돌아가기</button>
+<div class="content">
+  <div class="error-container">
+    <h1>401 - Unauthorized</h1>
+    <p>이 페이지에 접근하려면 사용자 이름과 암호가 필요합니다.</p>
+    <button onclick="window.location.href='/'">홈페이지로 돌아가기</button>
+  </div>
 </div>
 <div th:replace="~{fragments/mainFooter :: footer}"></div>
 </body>
