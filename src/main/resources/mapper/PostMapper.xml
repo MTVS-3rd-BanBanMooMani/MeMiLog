@@ -79,13 +79,14 @@
         (
             #{content},
             0,
-            (SELECT mission_id FROM MISSION WHERE mission_date = CURDATE() LIMIT 1),
+            #{mission_id},
             NOW(),
             #{companion_id},
             #{emotion_id},
             #{user_id}
         )
     </insert>
+
     <select id="findPostById" resultMap="postResultMap" parameterType="_int">
     SELECT
     p.post_id,
@@ -260,7 +261,8 @@
             USER u ON p.user_id = u.user_id
         WHERE
             DATE_FORMAT(p.written_datetime, '%Y-%m-%d') = CURDATE()
-        AND f.picture_order = 1
+        AND
+            f.picture_order = 1
             ORDER BY
             p.post_id DESC
     </select>
@@ -390,4 +392,11 @@
     <select id="hasUserPosted" parameterType="int" resultType="int">
         SELECT COUNT(*) FROM POST WHERE user_id = #{userId}
     </select>
+    <select id="hasUserPostedForMission" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM POST
+        WHERE user_id = #{userId}
+        AND mission_id = #{missionId}
+    </select>
+
 </mapper>
