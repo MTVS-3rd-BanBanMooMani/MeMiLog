@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>401 Unauthorized</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .error-container h1 {
+            margin-bottom: 20px;
+            font-size: 48px;
+            color: #333333;
+        }
+        .error-container p {
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #666666;
+        }
+        .error-container a {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background-color: #1f2d50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .error-container a:hover {
+            background-color: #3e4a6b;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/mainHeader :: header}"></div>
+<div class="error-container">
+    <h1>403</h1>
+    <p>접근 권한이 없습니다. 이 페이지에 접근할 수 있는 권한이 없습니다.</p>
+    <button onclick="window.location.href='/'">홈페이지로 돌아가기</button>
+</div>
+<div th:replace="~{fragments/mainFooter :: footer}"></div>
+</body>
+</html>
