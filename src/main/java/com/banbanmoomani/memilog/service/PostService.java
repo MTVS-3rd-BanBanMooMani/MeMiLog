@@ -11,7 +11,9 @@ import com.banbanmoomani.memilog.DTO.post.PostSearchCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostService {
@@ -32,10 +34,19 @@ public class PostService {
     }
 
     @Transactional
-    public void createPost(CreateRequestDTO createRequestDTO) {
+    public void createPost(CreateRequestDTO createRequestDTO) throws Exception {
+        // 사용자와 미션 ID에 대한 포스트가 이미 존재하는지 확인
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", createRequestDTO.getUser_id());
+        params.put("missionId", createRequestDTO.getMission_id());
+
+        int postCount = postMapper.hasUserPostedForMission(params);
+        if (postCount > 0) {
+            throw new Exception("해당 미션에 대한 포스트가 이미 존재합니다. 하나의 포스트만 등록할 수 있습니다.");
+        }
+        // 포스트 생성
         postMapper.createPost(createRequestDTO);
     }
-
     @Transactional
     public void updatePost(PostDTO updateRequestDTO) {
     // 하드코딩된 post_id를 사용하여 게시물을 찾습니다.
@@ -163,6 +174,5 @@ public class PostService {
         int count = postMapper.hasUserPosted(userId);
         return count > 0;
     }
-
 
 }
