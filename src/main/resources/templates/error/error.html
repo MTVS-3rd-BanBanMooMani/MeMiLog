@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Page Not Found</title>
+    <title>Error - <span th:text="${error}"></span></title>
     <style>
         html, body {
             height: 100%;
@@ -57,9 +57,10 @@
 <div th:replace="~{fragments/mainHeader :: header}"></div>
 <div class="content">
     <div class="error-container">
-        <h1>403 - Forbidden</h1>
-        <p>접근 권한이 없습니다. 이 페이지에 접근할 수 있는 권한이 없습니다.</p>
-        <button onclick="window.location.href='/'">홈페이지로 돌아가기</button>
+        <h1 th:text="'Error ' + ${error}"></h1>
+        <p th:text="${message}"></p>
+        <button th:if="${dest}" th:onclick="'window.location.href=\'' + ${dest} + '\''">이전 페이지로 돌아가기</button>
+        <button th:if="${!dest}" onclick="window.location.href='/'">홈페이지로 돌아가기</button>
     </div>
 </div>
 <div th:replace="~{fragments/mainFooter :: footer}"></div>

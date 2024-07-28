@@ -31,6 +31,12 @@ public class StopWatchInterceptor implements HandlerInterceptor {
             }
         }
 
+        String query = request.getQueryString();
+        if (query != null) {
+            uri = uri + "?" + query;
+        }
+        session.setAttribute("dest", uri);
+
         return true;
     }
 }

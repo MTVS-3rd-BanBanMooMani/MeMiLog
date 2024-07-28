@@ -17,41 +17,31 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({NumberFormatException.class, IllegalArgumentException.class})
-    public String handleBadRequest(Exception ex, Model model) {
-        model.addAttribute("error", "400");
-        model.addAttribute("message", ex.getMessage());
-        return "error/400";
+    public String handleBadRequest(Exception ex) {
+        return "redirect:/error/400";
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public String handleUnauthorized(Exception ex, Model model) {
-        model.addAttribute("error", "401");
-        model.addAttribute("message", ex.getMessage());
-        return "error/401";
+    public String handleUnauthorized(Exception ex) {
+        return "redirect:/error/401";
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public String handleForbidden(Exception ex, Model model) {
-        model.addAttribute("error", "403");
-        model.addAttribute("message", ex.getMessage());
-        return "error/403";
+    public String handleForbidden(Exception ex) {
+        return "redirect:/error/403";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public String handleNotFound(Exception ex, Model model) {
-        model.addAttribute("error", "404");
-        model.addAttribute("message", ex.getMessage());
-        return "error/404";
+    public String handleNotFound(Exception ex) {
+        return "redirect:/error/404";
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({IOException.class, SQLException.class, NullPointerException.class, Exception.class})
-    public String handleInternalServerError(Exception ex, Model model) {
-        model.addAttribute("error", "500");
-        model.addAttribute("message", ex.getMessage());
-        return "error/500";
+    public String handleInternalServerError(Exception ex) {
+        return "redirect:/error/500";
     }
 }
