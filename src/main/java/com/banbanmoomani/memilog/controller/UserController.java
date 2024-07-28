@@ -157,4 +157,13 @@ public class UserController {
         }
     }
 
+    // 로그인 상태 확인을 위한 엔드포인트 추가
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkLoginStatus(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("user_id");
+        if (userId != null) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
+    }
 }
