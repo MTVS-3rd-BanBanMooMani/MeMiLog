@@ -96,17 +96,17 @@
 }
 
 .note {
-  width: 280px;
+  width: 245px;
   height: 210px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
-  padding: 20px 30px;
+  padding: 20px;
   text-align: center;
 }
 
@@ -115,7 +115,7 @@
   height: 16px;
   position: absolute;
   top: -8px;
-  left: 100px;
+  left: 120px;
   transform: rotate(-10deg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
