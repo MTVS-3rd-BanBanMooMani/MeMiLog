@@ -77,8 +77,13 @@ public class AdminController {
 
         // 최근 10일 간의 전체 회원 수 추이
         List<MeMiLogInfoDTO> meMiLogInfoDTOList = adminService.getMeMiLogInfo();
+        // 현재 날짜의 MeMiLogInfoDTO
+        MeMiLogInfoDTO meMiLogInfoDTO = adminService.getTodayMeMiLogInfo();
+        meMiLogInfoDTOList.add(meMiLogInfoDTO);
         int meMiLogCount = meMiLogInfoDTOList.size();
         MeMiLogInfoDiff meMiLogInfoDiff = adminService.calculateMeMiLogInfoDiff(meMiLogInfoDTOList.get(meMiLogCount - 1), meMiLogInfoDTOList.get(meMiLogCount - 2));
+
+
         model.addAttribute("meMiLogInfoDiff", meMiLogInfoDiff);
         model.addAttribute("meMiLogInfoDTOList", meMiLogInfoDTOList);
 
@@ -86,6 +91,7 @@ public class AdminController {
             MeMiLogInfoDTO latestMeMiLogInfo = meMiLogInfoDTOList.get(meMiLogInfoDTOList.size() - 1);
             model.addAttribute("latestMeMiLogInfo", latestMeMiLogInfo);
         }
+
 
         // 연령대 별 총 회원 수 추이
         List<AgeGroupMemberDTO> ageGroupMembers = adminService.getAgeGroupMembers();

@@ -131,4 +131,12 @@ public class AdminService {
 
         blackListMapper.releaseToday();
     }
+
+    public MeMiLogInfoDTO getTodayMeMiLogInfo() {
+        int todayUserTotalCount = meMiLogInfoMapper.getTodayUserTotalCount();
+        int todayUserCount = meMiLogInfoMapper.getTodayUserCount();
+        int todayPostCount = meMiLogInfoMapper.getTodayPostCount();
+
+        return new MeMiLogInfoDTO(LocalDate.now(), todayUserTotalCount, todayUserCount, todayPostCount);
+    }
 }
