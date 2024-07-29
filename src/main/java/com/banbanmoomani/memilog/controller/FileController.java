@@ -20,27 +20,6 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping("/upload")
-    public String uploadProfilePic(@RequestParam("profilePic") MultipartFile file, @RequestParam("type") String type, HttpSession session) {
-        if (file.isEmpty()) {
-            return "파일이 존재하지 않습니다.";
-        }
-        try {
-            Integer user_id = (Integer) session.getAttribute("user_id");
-            if (user_id == null) {
-                return "로그인이 필요합니다.";
-            }
-
-            FileDTO fileDTO = fileService.updateFile(file, type, user_id);
-
-            return "redirect:/mydiary";
-
-        } catch (IOException e) {
-            return "파일 저장에 실패했습니다.";
-        } catch (Exception e) {
-            return "서버 에러가 발생했습니다.";
-        }
-    }
 
     @PostMapping("/resetPic")
     public ResponseEntity<?> deleteProfilePic(@RequestParam("type") String type, HttpSession session) {
