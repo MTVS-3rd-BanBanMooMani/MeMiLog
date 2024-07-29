@@ -93,10 +93,11 @@ function closeModal(modalId) {
 
 document.getElementById('profilePicForm').onsubmit = function(event) {
     event.preventDefault();
+    console.log('폼 제출 이벤트 트리거됨'); // 디버깅 로그
 
     var formData = new FormData(this);
 
-    fetch('/file/upload', {
+    fetch('/upload', {
         method: 'POST',
         body: formData
     })
