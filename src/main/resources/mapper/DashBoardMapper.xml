@@ -10,7 +10,7 @@
         user_count as userCount,
         post_count as postCount
         FROM MeMiLogInfo
-        WHERE `date` >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
+        WHERE `date` >= DATE_SUB(CURDATE(), INTERVAL 9 DAY)
         ORDER BY `date` ASC
     </select>
 

@@ -12,4 +12,6 @@ public interface MeMiLogInfoMapper {
     int getTodayPostCount();
 
     void saveTodayMeMiLogInfoDTO(MeMiLogInfoDTO meMiLogInfoDTO);
+
+    MeMiLogInfoDTO getTodayMeMiLogInfo();
 }
