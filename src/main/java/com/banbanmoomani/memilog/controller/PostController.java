@@ -138,7 +138,7 @@ public class PostController {
             rttr.addFlashAttribute("failMessage", "수정 권한이 없습니다.");
             return "redirect:/post/all";
         }
-        MissionDTO mission = missionService.findTodayMission();
+        MissionDTO mission = missionService.findMissionById(post.getMission_id());
         String priThemeName = missionService.findPriThemeName(mission.getPriThemeId());
         String subThemeName = missionService.findSubThemeName(mission.getSubThemeId());
         List<EmotionDTO> emotions = emotionService.findAllEmotions();

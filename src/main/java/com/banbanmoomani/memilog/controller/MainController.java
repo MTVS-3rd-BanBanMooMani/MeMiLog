@@ -1,11 +1,13 @@
 package com.banbanmoomani.memilog.controller;
 
 import com.banbanmoomani.memilog.DTO.MainTitleDTO;
+import com.banbanmoomani.memilog.DTO.admin.report.RPTCategoryDTO;
 import com.banbanmoomani.memilog.DTO.archivePostDTO;
 import com.banbanmoomani.memilog.DTO.post.PostDTO;
 import com.banbanmoomani.memilog.DTO.todayPostDTO;
 import com.banbanmoomani.memilog.service.MissionService;
 import com.banbanmoomani.memilog.service.PostService;
+import com.banbanmoomani.memilog.service.RPTCategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +22,12 @@ public class MainController {
 
     private final MissionService missionService;
     private final PostService postService;
+    private final RPTCategoryService rptCategoryService;
 
-    public MainController(MissionService missionService, PostService postService) {
+    public MainController(MissionService missionService, PostService postService, RPTCategoryService rptCategoryService) {
         this.missionService = missionService;
         this.postService = postService;
+        this.rptCategoryService = rptCategoryService;
     }
 
     // index page
@@ -53,6 +57,9 @@ public class MainController {
         // today post count
         int todayPostCount = postService.getTodayPostCount();
         model.addAttribute("todayPostCount", todayPostCount);
+
+        List<RPTCategoryDTO> reportCategory = rptCategoryService.findAllCategorise();
+        model.addAttribute("reportCategory", reportCategory);
 
         return "main/home";
     }

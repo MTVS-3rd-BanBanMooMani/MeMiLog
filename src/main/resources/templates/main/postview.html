@@ -45,11 +45,9 @@
 <main>
     <div class="content">
         <div class="modal-container">
-            <div class="modal-mission-container">
-                <img
-                        class="modal-mission-img"
-                        th:src="${bannerInfo.src_url != null ? bannerInfo.src_url : '/document/img/banner.jpg'}"
-                />
+            <div
+                    class="modal-mission-container"
+                    th:style="'background-image: url(' + (${bannerInfo.src_url} != null ? ${bannerInfo.src_url} : '/document/img/banner.jpg') + ');'">
                 <div th:text="${formattedDate}"></div>
                 <div th:text="${bannerInfo.mission_content}">미션</div>
             </div>
