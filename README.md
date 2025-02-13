@@ -27,7 +27,7 @@
 
 <br>
 
-## 팀원 소개
+## 팀원 소개 [![GitHub contributors](https://img.shields.io/github/contributors/MTVS-3rd-BanBanMooMani/MeMiLog)](https://github.com/MTVS-3rd-BanBanMooMani/MeMiLog/graphs/contributors) 
 <table align="center">
   <tbody>
     <tr>
@@ -51,3 +51,16 @@
     
   </tbody>
 </table>
+
+[작업 내용](https://github.com/MTVS-3rd-BanBanMooMani/MeMiLog/blob/main/CONTRIBUTORS.md)
+
+<br>
+
+### 개발 환경
+---
+> Java 17 <br>
+> Spring Boot 3.3.1 <br>
+> MySQL 8.0.33 <br>
+> MyBatis 3.0.3 <br>
+
+<br>
