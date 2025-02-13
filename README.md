@@ -51,3 +51,15 @@
     
   </tbody>
 </table>
+
+## Setting
+
+### 개발 환경
+- Java 17
+- Spring Boot 3.3.1
+- MySQL 8.0.33
+- MyBatis 3.0.3
+
+### 환경 변수 설정
+
+
